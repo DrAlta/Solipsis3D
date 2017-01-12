@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>uictxtwww</title>
-        <script type="text/javascript" src="Navi-yui.js"></script>
+        <script type="text/javascript" src="Navi.js"></script>
         <script type="text/javascript">
             var ctxtNaviNameParam;
             function pageLoaded()
             {
-                ctxtNaviNameParam = $PND.get('ctxtNaviName');
-                $ND('pageLoaded').add({naviName:'uictxtwww'}).add({ctxtNaviName:ctxtNaviNameParam}).send();
+                ctxtNaviNameParam = Client.ctxtNaviName;
+				Client.pageLoaded('uictxtwww', ctxtNaviNameParam);  
             }
             function navCommand(command)
             {
-                $ND('navCommand').add({ctxtNaviName:ctxtNaviNameParam}).add({cmd:command}).send();
+				Client.navCommand(ctxtNaviNameParam, command);  
             }
         </script>
         <style type="text/css">

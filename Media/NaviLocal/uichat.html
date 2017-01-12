@@ -2,19 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>uichat</title>
-        <script type="text/javascript" src="Navi-yui.js"></script>
+        <script type="text/javascript" src="Navi.js"></script>
         <script type="text/javascript">
             function pageLoaded()
             {
-                new NaviData('pageLoaded').send();
+				Client.pageLoaded();
             }
             function pageClosed()
             {
-                new NaviData('pageClosed').send();
+				Client.pageClosed();
             }
             function sendMessage(message)
             {
-                new NaviData('sendMessage').add({msg:message}).send();
+				Client.sendMessage(message);
             }
         </script>
         <style type="text/css">

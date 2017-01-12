@@ -51,15 +51,35 @@ namespace Solipsis
         };
 
         static bool createAndShowPanel(int x, int y, NaviContext ctxtPanel, const String& params);
-        static void hideMenu();
+        static void destroyMenu();
         static bool isContextVisible();
         static bool isContextFocused();
 
     protected:
         GUI_ContextMenu();
         virtual bool show(int x, int y, NaviContext ctxtPanel, const String& params);
-        virtual void hide();
+        //virtual void hide();
         virtual void destroy();
+
+        // avatar callbacks
+       void onAvatarSelect(Navi* caller, const Awesomium::JSArguments& args);
+        void onPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
+
+        // WWW callbacks 
+       void onWWWPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
+       void onWWWCommand(Navi* caller, const Awesomium::JSArguments& args);
+
+       // SWF callbacks 
+       void onSWFPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
+       void onSWFCommand(Navi* caller, const Awesomium::JSArguments& args);
+
+       // VLC callbacks 
+       void onVLCPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
+       void onVLCCommand(Navi* caller, const Awesomium::JSArguments& args);
+
+       // VNC callbacks 
+       void onVNCPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
+       void onVNCCommand(Navi* caller, const Awesomium::JSArguments& args);
 
         static GUI_ContextMenu * stGUI_ContextMenu;
         static const std::string ms_NavisContexts[NAVI_CTXTCOUNT];

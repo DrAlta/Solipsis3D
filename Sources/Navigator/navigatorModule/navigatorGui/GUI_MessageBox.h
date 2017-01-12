@@ -86,8 +86,8 @@ namespace Solipsis {
         MsgBoxButtons mMsgBoxButtons;
         MsgBoxIcon mMsgBoxIcon;
 
-        void onPageLoaded(const NaviData& naviData);
-        void onResponse(const NaviData& naviData);
+        void onPageLoaded(Navi* caller, const Awesomium::JSArguments& args);
+        void onResponse(Navi* caller, const Awesomium::JSArguments& args);
     };
 
 } // namespace Solipsis

@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>uictxtswf</title>
-        <script type="text/javascript" src="Navi-yui.js"></script>
+        <script type="text/javascript" src="Navi.js"></script>
         <script type="text/javascript">
             var ctxtSWFNameParam;
             function pageLoaded()
             {
-                ctxtSWFNameParam = $PND.get('ctxtSWFName');
-                $ND('pageLoaded').add({naviName:'uictxtswf'}).add({ctxtSWFName:ctxtSWFNameParam}).send();
+                ctxtSWFNameParam = Client.ctxtSWFName; 
+				Client.pageLoaded('uictxtswf'); 
             }
             function swfCommand(command)
             {
-                $ND('swfCommand').add({ctxtSWFName:ctxtSWFNameParam}).add({cmd:command}).send();
+				Client.swfCommand(ctxtSWFNameParam, command); 
             }
         </script>
         <style type="text/css">

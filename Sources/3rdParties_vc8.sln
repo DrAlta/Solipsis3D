@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Navi", "DevTools\navi\Navi\Navi_vc8.vcproj", "{C308342C-9C74-4AA7-86F0-93B294657452}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Navi", "DevTools\Navi2\navi\Navi_vc8.vcproj", "{C308342C-9C74-4AA7-86F0-93B294657452}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pthread", "DevTools\pthreads\pthread_vc8.vcproj", "{938D2C05-A26E-4C35-8EC0-44F1B7B06B8C}"
 EndProject

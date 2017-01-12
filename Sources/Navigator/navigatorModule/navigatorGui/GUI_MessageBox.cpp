@@ -61,7 +61,8 @@ bool GUI_MessageBox::protectedShow(const std::string& titleText,
     {
         // Create Navi panel
         // Lua
-        createNavi("local://uimsgbox.html", Center, 512, 128);
+        createNavi(Center, 512, 128);
+        mNavi->loadFile("uimsgbox.html");
         mNavi = NavigatorGUI::getNavi(mPanelName);
         mNavi->setMask("uimsgbox.png");
 
@@ -83,7 +84,7 @@ bool GUI_MessageBox::protectedShow(const std::string& titleText,
 
 
 //-------------------------------------------------------------------------------------
-void GUI_MessageBox::onPageLoaded(const NaviData& naviData)
+void GUI_MessageBox::onPageLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::messageBoxPageLoaded()");
 
@@ -98,7 +99,7 @@ void GUI_MessageBox::onPageLoaded(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_MessageBox::onResponse(const NaviData& naviData)
+void GUI_MessageBox::onResponse(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::messageBoxResponse()");
     destroy();

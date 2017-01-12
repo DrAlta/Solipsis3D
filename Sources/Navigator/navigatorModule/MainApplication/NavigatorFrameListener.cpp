@@ -333,7 +333,16 @@ bool NavigatorFrameListener::keyPressed(const KeyboardEvt& evt)
     if (mNavigator->isNaviSupported() && NaviManager::Get().isAnyNaviFocused())
         return true;
 
-    GUI_ContextMenu::hideMenu();
+    // 2D Panels
+    if ((Panel2DMgr::getSingleton().getFocusedPanel() != 0) && (mEscapeHitsB4CancellingFocus >= ESCAPE_HITS_CANCEL_FOCUS))
+    {
+        mEscapeHitsB4CancellingFocus = 0;
+        Panel2DMgr::getSingleton().defocus();
+        return true;
+    }
+    Panel2DMgr::getSingleton().keyPressed(evt);
+
+    GUI_ContextMenu::destroyMenu();
 
     // VNC panel ?
     if (mNavigator->getPickedMovable() && (mNavigator->getPickedMovable()->getQueryFlags() & Navigator::QFVNCPanel))
@@ -993,7 +1002,7 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
 bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
 {
     NavigatorGUI* navigatorGUI = mNavigator->getNavigatorGUI();
-    if ((navigatorGUI != 0) && NaviLibrary::NaviMouse::Get().isVisible())
+    if (navigatorGUI != 0)
     {
         int buttonsId = (evt.mState.mButtons & MBLeft) ? LeftMouseButton : ((evt.mState.mButtons & MBRight) ? RightMouseButton : MiddleMouseButton);
 
@@ -1009,7 +1018,7 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
             NaviManager::Get().injectMouseDown(buttonsId);
 
         if (GUI_ContextMenu::isContextVisible() && !GUI_ContextMenu::isContextFocused())
-            GUI_ContextMenu::hideMenu();
+            GUI_ContextMenu::destroyMenu();
 
         // 2D Panels
         if (!NaviManager::Get().isAnyNaviFocused())
@@ -1130,7 +1139,7 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
 bool NavigatorFrameListener::mouseReleased(const MouseEvt& evt)
 {
     NavigatorGUI* navigatorGUI = mNavigator->getNavigatorGUI();
-    if ((navigatorGUI != 0) && NaviLibrary::NaviMouse::Get().isVisible())
+    if (navigatorGUI != 0)
     {
         int buttonsId = (evt.mState.mButtons & MBLeft) ? LeftMouseButton : ((evt.mState.mButtons & MBRight) ? RightMouseButton : MiddleMouseButton);
 

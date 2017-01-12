@@ -1,88 +1,0 @@
-10
-
-dir
-2096
-svn://scm.gforge.inria.fr/svn/solipsis/branches/Navi2/Sources/DevTools
-svn://scm.gforge.inria.fr/svn/solipsis
-
-
-
-2009-05-28T16:01:01.978153Z
-1673
-cfloutier
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-7ea74831-013a-0410-a089-d2f2f1b183c3
-
-lua
-dir
-
-gecode-2.2.0
-dir
-
-speex
-dir
-
-vlc
-dir
-
-md5wrapper
-dir
-
-zlib123
-dir
-
-brep
-dir
-
-postagger
-dir
-
-xmlrpc++
-dir
-
-navi
-dir
-
-ogreMax
-dir
-
-tinyxml
-dir
-
-libiconv
-dir
-
-curl
-dir
-
-Triangle
-dir
-
-hikari
-dir
-
-pthreads
-dir
-
-Antlr2.7.6
-dir
-
-vnc_winsrc
-dir
-
-CSG
-dir
-

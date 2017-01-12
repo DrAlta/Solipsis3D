@@ -58,7 +58,8 @@ bool GUI_Chat::show()
     // Lua
     if (m_curState == NSNotCreated)
     {
-        createNavi("local://uichat.html", BottomLeft, 512, 128);
+        createNavi( BottomLeft, 512, 128);
+        mNavi->loadFile("uichat.html");
 
         mNavi = NavigatorGUI::getNavi(mPanelName);
         mNavi->hide();
@@ -81,29 +82,31 @@ void GUI_Chat::addText(const std::wstring& message)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::addChatText()");
 
+    Awesomium::JSArguments args;
+    args[0] = Awesomium::JSValue(StringHelpers::convertWStringToString(message) );
     // Navi MultiValue will encode the wstring in URI encoded string and add 1 call to decodeURIComponent on it
-    stGUI_Chat->mNavi->evaluateJS("$('textChat').value += ?", NaviLibrary::NaviUtilities::Args(message));
+    stGUI_Chat->mNavi->evaluateJS("$('textChat').value += ?", args);
     stGUI_Chat->mNavi->evaluateJS("$('textChat').value += '\\n'");
     stGUI_Chat->mNavi->evaluateJS("$('textChat').scrollTop = $('textChat').scrollHeight;");
 }
 
-void GUI_Chat::onPageLoaded(const NaviData& naviData)
+void GUI_Chat::onPageLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     mNavi->show();
 }
 
-void GUI_Chat::onPageClosed(const NaviData& naviData)
+void GUI_Chat::onPageClosed(Navi* caller, const Awesomium::JSArguments& args)
 {
     mNavi->hide();
 }
 
-void GUI_Chat::onSendMessage(const NaviData& naviData)
+void GUI_Chat::onSendMessage(Navi* caller, const Awesomium::JSArguments& args)
 {
     // Reset input
     mNavi->evaluateJS("$('inputChat').value = ''");
     //           -- Send the message
     // navigator:sendMessage(param["msg"])
-    Navigator::getSingletonPtr()->sendMessage(naviData["msg"].str());
+    Navigator::getSingletonPtr()->sendMessage(args[0].toString());
 }
 
 

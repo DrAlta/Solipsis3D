@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>uictxtvlc</title>
-        <script type="text/javascript" src="Navi-yui.js"></script>
+        <script type="text/javascript" src="Navi.js"></script>
         <script type="text/javascript">
             var ctxtVLCNameParam;
             function pageLoaded()
             {
-                ctxtVLCNameParam = $PND.get('ctxtVLCName');
-                $ND('pageLoaded').add({naviName:'uictxtvlc'}).add({ctxtVLCName:ctxtVLCNameParam}).send();
+                ctxtVLCNameParam = Client.ctxtVLCName;
+				Client.pageLoaded('uictxtvlc', ctxtVLCNameParam);  
             }
             function vlcCommand(command)
             {
-                $ND('vlcCommand').add({ctxtVLCName:ctxtVLCNameParam}).add({cmd:command}).send();
+				Client.vlcCommand(ctxtVLCNameParam, command);  
             }
         </script>
         <style type="text/css">

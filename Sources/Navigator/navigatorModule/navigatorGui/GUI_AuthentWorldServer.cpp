@@ -65,15 +65,17 @@ bool GUI_AuthentWorldServer::show(const std::string& pwd)
         std::string uiauthentwsUrl = "http://" + mNavigator->getWorldsServerAddress() + "/uiauthentws.html";
         uiauthentwsUrl += "?navVersion=" + StringHelpers::toHexString(mNavigator->getVersion());
         uiauthentwsUrl += "&login=" + mNavigator->getLogin() + "&pwd=" + pwd;
-        createNavi( "", NaviPosition(Center), 256, 128);
+        createNavi( NaviPosition(Center), 256, 128);
+
         mNavi->setMovable(false);
-        mNavi->hide();
+        mNavi->show();
         mNavi->setOpacity(0.75f);
-        mNavi->bind("pageLoaded", NaviDelegate(this, &GUI_Panel::onPanelLoaded));
-        mNavi->bind("ok", NaviDelegate(this, &GUI_AuthentWorldServer::onOk));
+
+ //       mNavi->bind("pageLoaded", NaviDelegate(this, &GUI_Panel::onPanelLoaded));
+ //       mNavi->bind("ok", NaviDelegate(this, &GUI_AuthentWorldServer::onOk));
         // Add 1 event listener to detect network errors
-        mNavi->addEventListener(this);
-        mNavi->navigateTo(uiauthentwsUrl);
+        //mNavi->addEventListener(this);
+        mNavi->loadURL(uiauthentwsUrl);
         m_curState = NSCreated;
     }
 
@@ -99,12 +101,12 @@ bool GUI_AuthentWorldServer::show(const std::string& pwd)
 // }
 
 //-------------------------------------------------------------------------------------
-void GUI_AuthentWorldServer::onOk(const NaviData& naviData)
+void GUI_AuthentWorldServer::onOk(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk()");
 
-    std::string result = naviData["result"].str();
-    NodeId nodeId = naviData["nodeId"].str();
+    std::string result = args.at(0).toString();
+    NodeId nodeId = args.at(1).toString();
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk() result=%s, nodeId=%s", result.c_str(), nodeId.c_str());
     if (nodeId.empty())
     {

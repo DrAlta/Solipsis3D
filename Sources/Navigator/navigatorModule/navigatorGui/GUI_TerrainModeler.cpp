@@ -71,8 +71,8 @@ bool GUI_TerrainModeler::show()
         LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_TerrainModeler::show()");
 
         // Create Navi UI modeler
-        createNavi( "local://uimdlrterrain.html" , NaviPosition(TopRight), 512, 512);
-
+        createNavi(  TopRight, 512, 512);
+        mNavi->loadFile("uimdlrterrain.html");
         mNavi->setMovable(true);
         mNavi->hide();
         mNavi->setMask("uimdlrterrain.png");//Eliminate the black shadow at the margin of the menu
@@ -97,7 +97,7 @@ bool GUI_TerrainModeler::show()
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_TerrainModeler::onPageLoaded(const NaviData& naviData)
+void GUI_TerrainModeler::onPageLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_TerrainModeler::modelerSceneFromTextPageLoaded()");
 
@@ -107,17 +107,17 @@ void GUI_TerrainModeler::onPageLoaded(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_TerrainModeler::onExec(const NaviData& naviData)
+void GUI_TerrainModeler::onExec(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_TerrainModeler::onExec()");
 
     int nbOctaves = 5;
 
-    std::string noiseScale = mNavi->evaluateJS("noiseScale.getValue()");	
+    std::string noiseScale = mNavi->evaluateJSWithResult("noiseScale.getValue()").get().toString();
     std::string msg = "noiseScale="+noiseScale;
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, msg.data());
 
-    std::string granularity = mNavi->evaluateJS("granularity.getValue()");	
+    std::string granularity = mNavi->evaluateJSWithResult("granularity.getValue()").get().toString();
     msg = "granularity="+granularity;
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, msg.data());
 
@@ -126,7 +126,7 @@ void GUI_TerrainModeler::onExec(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_TerrainModeler::onCancelled(const NaviData& naviData)
+void GUI_TerrainModeler::onCancelled(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_TerrainModeler::modelerSceneFromTextSetUpCancelled()");
     destroy();

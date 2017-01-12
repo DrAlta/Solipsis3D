@@ -1,37 +1,0 @@
-10
-
-dir
-2096
-svn://scm.gforge.inria.fr/svn/solipsis/branches/Navi2/Sources/DevTools/vlc/libraries/i686-win32
-svn://scm.gforge.inria.fr/svn/solipsis
-
-
-
-2009-01-29T08:41:14.619755Z
-1257
-jangre
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7ea74831-013a-0410-a089-d2f2f1b183c3
-
-include
-dir
-
-runtime
-dir
-
-lib
-dir
-

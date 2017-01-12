@@ -87,7 +87,9 @@ bool GUI_AuthentFacebook::show()
     if (m_curState == NSNotCreated)
     {
         // Create Navi UI authentication on Facebook
-        createNavi( "local://uiauthentfb.html", NaviPosition(Center), 256, 128);
+        createNavi(Center, 256, 128);
+
+        mNavi->loadFile("uiauthentfb.html");
         mNavi->setMovable(false);
         mNavi->hide();
         mNavi->setOpacity(0.75f);
@@ -117,7 +119,7 @@ void GUI_AuthentFacebook::onError()
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_AuthentFacebook::onLoaded(const NaviData& naviData)
+void GUI_AuthentFacebook::onLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentFacebookPageLoaded()");
 
@@ -131,7 +133,7 @@ void GUI_AuthentFacebook::onLoaded(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_AuthentFacebook::onOk(const NaviData& naviData)
+void GUI_AuthentFacebook::onOk(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentFacebookOk()");
 
@@ -158,7 +160,7 @@ void GUI_AuthentFacebook::onOk(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_AuthentFacebook::onCancel(const NaviData& naviData)
+void GUI_AuthentFacebook::onCancel(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentFacebookCancel()");
 

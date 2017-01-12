@@ -58,7 +58,8 @@ bool GUI_Commands::show()
     // Lua
     if (m_curState == NSNotCreated)
     {  
-        createNavi("local://uicommands.html", Center, 512, 256);
+        createNavi( Center, 512, 256);
+        mNavi->loadFile("uicommands.html");
         mNavi = NavigatorGUI::getNavi(mPanelName);
         mNavi->hide();
         mNavi->setMovable(true);
@@ -75,12 +76,12 @@ bool GUI_Commands::show()
     return true;
 }
 
-void GUI_Commands::onPageLoaded(const NaviData& naviData)
+void GUI_Commands::onPageLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     mNavi->show();
 }
 
-void GUI_Commands::onPageClosed(const NaviData& naviData)
+void GUI_Commands::onPageClosed(Navi* caller, const Awesomium::JSArguments& args)
 {
     mNavi->hide();
 }

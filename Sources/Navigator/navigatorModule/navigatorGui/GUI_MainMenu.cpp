@@ -83,7 +83,9 @@ bool GUI_MainMenu::show()
     if (m_curState == GUI_Panel::NSNotCreated)
     {
         // Create Navi panel
-        createNavi("local://uimainmenu.html", TopLeft, 512, 16);
+        createNavi(TopLeft, 512, 16);
+        mNavi->loadFile("uimainmenu.html");
+
         mNavi = NavigatorGUI::getNavi(mPanelName);
         mNavi->setMask("alphafade512x16.png");
         mNavi->hide();
@@ -107,15 +109,15 @@ bool GUI_MainMenu::show()
 
 #ifdef UIDEBUG
 //-------------------------------------------------------------------------------------
-void GUI_MainMenu::debugCommand(const NaviData& naviData)
+void GUI_MainMenu::debugCommand(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::debugCommand()");
 
     // Get message to send
     std::string cmd;
     std::string params;
-    cmd = naviData["cmd"].str();
-    params = naviData["params"].str();
+    cmd = args[0].toString();
+    params = args[1].toString();
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "cmd=%s, params=%s", cmd.c_str(), params.c_str());
 
     // Push debug command
@@ -123,22 +125,15 @@ void GUI_MainMenu::debugCommand(const NaviData& naviData)
 }
 #endif
 
-void GUI_MainMenu::onNaviDataEvent(Navi *caller, const NaviData &naviData)
+void GUI_MainMenu::onCallback(const std::string& name, const Awesomium::JSArguments& args)
 {
     m_curState = NSCreated;
-   // OutputDebugTrace("GUI_MainMenu::onNaviDataEvent name %s\n" , naviData.getName().c_str());
-    if (naviData.getName() == "menuClick" && naviData.size())
+    // OutputDebugTrace("GUI_MainMenu::onNaviDataEvent name %s\n" , naviData.getName().c_str());
+    if (name == "menuClick" && args.size())
     {
-     //   OutputDebugTrace("GUI_MainMenu::onNaviDataEvent data %s\n" , naviData["item"].str().c_str());
-        onClick(naviData["item"].str());
-
+        //   OutputDebugTrace("GUI_MainMenu::onNaviDataEvent data %s\n" , naviData["item"].str().c_str());
+        onClick(args[0].toString());
     }
-    //  
-}
-
-void GUI_MainMenu::onLinkClicked(Navi *caller, const std::string &linkHref)
-{
-    m_curState = NSCreated;
 }
 
 //-------------------------------------------------------------------------------------

@@ -1,89 +1,0 @@
-10
-
-dir
-2096
-svn://scm.gforge.inria.fr/svn/solipsis/branches/Navi2/Sources/Modelers/ProceduralModeler
-svn://scm.gforge.inria.fr/svn/solipsis
-
-
-
-2009-05-18T07:43:39.539800Z
-1653
-vhuiban
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7ea74831-013a-0410-a089-d2f2f1b183c3
-
-utils
-dir
-
-viewer
-dir
-
-Extruder
-dir
-
-main
-dir
-
-Linear
-dir
-
-procedural modeling.sln
-file
-
-
-
-
-2012-05-24T06:08:05.628235Z
-b87c7b2036bff4daed2b531b06e12486
-2009-05-18T07:43:39.539800Z
-1653
-vhuiban
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6031
-
-BSpline
-dir
-
-roge
-dir
-
-gdal16
-dir
-
-trax
-dir
-

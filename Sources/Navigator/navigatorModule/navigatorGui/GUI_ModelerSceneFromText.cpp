@@ -75,7 +75,8 @@ bool GUI_ModelerSceneFromText::show()
         std::string firstLocalIP = myIPAddresses.front();
 
         // Create Navi UI modeler
-        createNavi( "local://uimdlrscenefromtext.html" /*?localIP=" + firstLocalIP*/, NaviPosition(TopRight), 512, 512);
+        createNavi(NaviPosition(TopRight), 512, 512);
+        mNavi->loadFile("uimdlrscenefromtext.html" /*?localIP=" + firstLocalIP*/);
         mNavi->setMovable(true);
         mNavi->hide();
         mNavi->setMask("uimdlrscenefromtext.png");//Eliminate the black shadow at the margin of the menu
@@ -97,7 +98,7 @@ bool GUI_ModelerSceneFromText::show()
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerSceneFromText::onPageLoaded(const NaviData& naviData)
+void GUI_ModelerSceneFromText::onPageLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_ModelerSceneFromText::modelerSceneFromTextPageLoaded()");
 
@@ -107,11 +108,11 @@ void GUI_ModelerSceneFromText::onPageLoaded(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerSceneFromText::onExec(const NaviData& naviData)
+void GUI_ModelerSceneFromText::onExec(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_ModelerSceneFromText::modelerSceneFromTextExec()");
 
-    std::string value = mNavi->evaluateJS("document.getElementById('scenedescription').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('scenedescription').value").get().toString();
 
     //modelerSceneSetUpUnload(); // no unloading of the window unless the user explicitely closes it.
     std::string errMsg( "" );
@@ -140,7 +141,7 @@ void GUI_ModelerSceneFromText::onExec(const NaviData& naviData)
     }
 }
 //-------------------------------------------------------------------------------------
-void GUI_ModelerSceneFromText::onCancelled(const NaviData& naviData)
+void GUI_ModelerSceneFromText::onCancelled(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_ModelerSceneFromText::modelerSceneFromTextSetUpCancelled()");
     destroy();

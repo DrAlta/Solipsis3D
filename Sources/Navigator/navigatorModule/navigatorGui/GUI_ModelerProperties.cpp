@@ -101,7 +101,8 @@ bool GUI_ModelerProperties::show()
         std::string firstLocalIP = myIPAddesses.front();
 
         // Create Navi UI modeler
-        createNavi("local://uimdlrprop.html?localIP=" + firstLocalIP, NaviPosition(TopRight), 512, 512);
+        createNavi(TopRight, 512, 512);
+        mNavi->loadFile("uimdlrprop.html?localIP=" + firstLocalIP);
         mNavi->setMovable(true);
         mNavi->hide();
         mNavi->setMask("uimdlrprop.png");//Eliminate the black shadow at the margin of the menu
@@ -234,7 +235,7 @@ void GUI_ModelerProperties::destroy()
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerActionUndo(const NaviData& naviData)
+void GUI_ModelerProperties::modelerActionUndo(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_Modeler::modelerActionUndo()");
 
@@ -247,7 +248,7 @@ void GUI_ModelerProperties::modelerActionUndo(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPageLoaded(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPageLoaded(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_ModelerProperties::modelerPropPageLoaded()");
 
@@ -260,7 +261,7 @@ void GUI_ModelerProperties::modelerPropPageLoaded(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPageClosed(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPageClosed(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_ModelerProperties::modelerPropPageClosed()");
 
@@ -274,9 +275,9 @@ void GUI_ModelerProperties::modelerPropPageClosed(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropObjectName(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropObjectName(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('objectName').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('objectName').value").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -284,9 +285,9 @@ void GUI_ModelerProperties::modelerPropObjectName(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropCreator(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropCreator(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('creator').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('creator').value").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -294,9 +295,9 @@ void GUI_ModelerProperties::modelerPropCreator(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropOwner(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropOwner(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('owner').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('owner').value").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -304,9 +305,9 @@ void GUI_ModelerProperties::modelerPropOwner(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropGroup(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropGroup(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('group').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('group').value").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -314,9 +315,9 @@ void GUI_ModelerProperties::modelerPropGroup(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropDescription(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropDescription(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('description').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('description').value").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -324,9 +325,9 @@ void GUI_ModelerProperties::modelerPropDescription(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTags(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTags(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('tags').value");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('tags').value").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -334,21 +335,21 @@ void GUI_ModelerProperties::modelerPropTags(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropModification(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropModification(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('modification').checked");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('modification').checked").get().toString();
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropCopy(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropCopy(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("document.getElementById('copy').checked");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('copy').checked").get().toString();
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTaperX(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTaperX(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("taperX.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("taperX.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -359,9 +360,9 @@ void GUI_ModelerProperties::modelerPropTaperX(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTaperY(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTaperY(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("taperY.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("taperY.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -372,9 +373,9 @@ void GUI_ModelerProperties::modelerPropTaperY(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTopShearX(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTopShearX(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("topShearX.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("topShearX.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -385,9 +386,9 @@ void GUI_ModelerProperties::modelerPropTopShearX(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTopShearY(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTopShearY(Navi* caller, const Awesomium::JSArguments& args)
 {
-    std::string value = mNavi->evaluateJS("topShearY.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("topShearY.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -398,10 +399,10 @@ void GUI_ModelerProperties::modelerPropTopShearY(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTwistBegin(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTwistBegin(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("twistBegin.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("twistBegin.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -412,10 +413,10 @@ void GUI_ModelerProperties::modelerPropTwistBegin(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTwistEnd(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTwistEnd(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("twistEnd.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("twistEnd.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -426,10 +427,10 @@ void GUI_ModelerProperties::modelerPropTwistEnd(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropDimpleBegin(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropDimpleBegin(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("dimpleBegin.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("dimpleBegin.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -440,10 +441,10 @@ void GUI_ModelerProperties::modelerPropDimpleBegin(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropDimpleEnd(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropDimpleEnd(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("dimpleEnd.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("dimpleEnd.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -454,10 +455,10 @@ void GUI_ModelerProperties::modelerPropDimpleEnd(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPathCutBegin(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPathCutBegin(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("pathCutBegin.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("pathCutBegin.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -468,10 +469,10 @@ void GUI_ModelerProperties::modelerPropPathCutBegin(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPathCutEnd(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPathCutEnd(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("pathCutEnd.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("pathCutEnd.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -482,10 +483,10 @@ void GUI_ModelerProperties::modelerPropPathCutEnd(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropHoleSizeX(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropHoleSizeX(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("holeSizeX.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("holeSizeX.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -496,10 +497,10 @@ void GUI_ModelerProperties::modelerPropHoleSizeX(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropHoleSizeY(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropHoleSizeY(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("holeSizeY.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("holeSizeY.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -510,10 +511,10 @@ void GUI_ModelerProperties::modelerPropHoleSizeY(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropHollowShape(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropHollowShape(Navi* caller, const Awesomium::JSArguments& args)
 {
     std::string value;
-    value = naviData["shape"].str();
+    value = args[0].toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -524,10 +525,10 @@ void GUI_ModelerProperties::modelerPropHollowShape(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropSkew(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropSkew(Navi* caller, const Awesomium::JSArguments& args)
 {
-    
-    std::string value = mNavi->evaluateJS("skew.getValue()");
+
+    std::string value = mNavi->evaluateJSWithResult("skew.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -538,10 +539,10 @@ void GUI_ModelerProperties::modelerPropSkew(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropRevolution(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropRevolution(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("revolution.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("revolution.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -552,10 +553,10 @@ void GUI_ModelerProperties::modelerPropRevolution(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropRadiusDelta(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropRadiusDelta(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("radiusDelta.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("radiusDelta.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -566,12 +567,12 @@ void GUI_ModelerProperties::modelerPropRadiusDelta(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerColorAmbient(const NaviData& naviData)
+void GUI_ModelerProperties::modelerColorAmbient(Navi* caller, const Awesomium::JSArguments& args)
 {
     unsigned idRGB = 0;
     std::string str, color;
     int rgb[3]; 
-    str = naviData["rgb"].str();
+    str = args[0].toString();
 
     for (unsigned id = 0; id < str.length(); id++)
     {
@@ -595,12 +596,12 @@ void GUI_ModelerProperties::modelerColorAmbient(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerColorDiffuse(const NaviData& naviData)
+void GUI_ModelerProperties::modelerColorDiffuse(Navi* caller, const Awesomium::JSArguments& args)
 {
     unsigned idRGB = 0;
     std::string str, color;
     int rgb[3]; 
-    str = naviData["rgb"].str();
+    str = args[0].toString();
 
     for (unsigned id = 0; id < str.length(); id++)
     {
@@ -624,12 +625,13 @@ void GUI_ModelerProperties::modelerColorDiffuse(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerColorSpecular(const NaviData& naviData)
+void GUI_ModelerProperties::modelerColorSpecular(Navi* caller, const Awesomium::JSArguments& args)
 {
     unsigned idRGB = 0;
     std::string str, color;
     int rgb[3]; 
-    str = naviData["rgb"].str();
+    str = args[0].toString();
+
 
     for (unsigned id = 0; id < str.length(); id++)
     {
@@ -649,16 +651,16 @@ void GUI_ModelerProperties::modelerColorSpecular(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerColorLockAmbientDiffuse(const NaviData& naviData)
+void GUI_ModelerProperties::modelerColorLockAmbientDiffuse(Navi* caller, const Awesomium::JSArguments& args)
 { 
-    std::string value = mNavi->evaluateJS("$('lockAmbientdiffuse').checked");
+    std::string value = mNavi->evaluateJSWithResult("$('lockAmbientdiffuse').checked").get().toString();
     mLockAmbientDiffuse = (value == "true")?true:false;
 }
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerDoubleSide(const NaviData& naviData)
+void GUI_ModelerProperties::modelerDoubleSide(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("$('doubleSide').checked");
+    std::string value = mNavi->evaluateJSWithResult("$('doubleSide').checked").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -668,10 +670,10 @@ void GUI_ModelerProperties::modelerDoubleSide(const NaviData& naviData)
     }
 }
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropShininess(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropShininess(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("shininess.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("shininess.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -679,10 +681,10 @@ void GUI_ModelerProperties::modelerPropShininess(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTransparency(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTransparency(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("transparency.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("transparency.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -694,10 +696,10 @@ void GUI_ModelerProperties::modelerPropTransparency(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScrollU(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScrollU(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("scrollU.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("scrollU.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -708,10 +710,10 @@ void GUI_ModelerProperties::modelerPropScrollU(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScrollV(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScrollV(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("scrollV.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("scrollV.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -722,10 +724,10 @@ void GUI_ModelerProperties::modelerPropScrollV(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScaleU(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScaleU(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("scaleU.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("scaleU.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -736,10 +738,10 @@ void GUI_ModelerProperties::modelerPropScaleU(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScaleV(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScaleV(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("scaleV.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("scaleV.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -750,10 +752,10 @@ void GUI_ModelerProperties::modelerPropScaleV(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropRotateU(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropRotateU(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("rotateU.getValue()");
+    std::string value = mNavi->evaluateJSWithResult("rotateU.getValue()").get().toString();
 
     Object3D *obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -761,7 +763,7 @@ void GUI_ModelerProperties::modelerPropRotateU(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTextureAdd(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTextureAdd(Navi* caller, const Awesomium::JSArguments& args)
 {
     char * PathTexture = FileBrowser::displayWindowForLoading( 
         "Image Files (*.png;*.bmp;*.jpg)\0*.png;*.bmp;*.jpg\0", string("") ); 
@@ -799,7 +801,7 @@ void GUI_ModelerProperties::modelerPropTextureAdd(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTextureRemove(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTextureRemove(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -818,7 +820,7 @@ void GUI_ModelerProperties::modelerPropTextureRemove(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTextureApply(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTextureApply(Navi* caller, const Awesomium::JSArguments& args)
 {
 
     Modeler *modeler = mNavigator->getModeler();
@@ -836,7 +838,7 @@ void GUI_ModelerProperties::modelerPropTextureApply(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropWWWTextureApply(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropWWWTextureApply(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -862,10 +864,10 @@ void GUI_ModelerProperties::modelerPropWWWTextureApply(const NaviData& naviData)
         }
 
         
-        std::string urlStr = mNavi->evaluateJS("$('MaterialWWWUrl').value");
-        std::string widthStr = mNavi->evaluateJS("$('MaterialWWWWidth').value");
-        std::string heightStr = mNavi->evaluateJS("$('MaterialWWWHeight').value");
-        std::string fpsStr = mNavi->evaluateJS("$('MaterialWWWFps').value");
+        std::string urlStr = mNavi->evaluateJSWithResult("$('MaterialWWWUrl').value").get().toString();
+        std::string widthStr = mNavi->evaluateJSWithResult("$('MaterialWWWWidth').value").get().toString();
+        std::string heightStr = mNavi->evaluateJSWithResult("$('MaterialWWWHeight').value").get().toString();
+        std::string fpsStr = mNavi->evaluateJSWithResult("$('MaterialWWWFps').value").get().toString();
         int width = atoi(widthStr.c_str());
         int height = atoi(heightStr.c_str());
         int fps = atoi(fpsStr.c_str());
@@ -901,7 +903,7 @@ void GUI_ModelerProperties::modelerPropWWWTextureApply(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropSWFMrlBrowse(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropSWFMrlBrowse(Navi* caller, const Awesomium::JSArguments& args)
 {
     std::string mrl;
     if (System::showDlgOpenFilename(mrl, "Flash Media File,(*.swf)\0*.swf\0", ""))
@@ -914,7 +916,7 @@ void GUI_ModelerProperties::modelerPropSWFMrlBrowse(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropSWFTextureApply(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropSWFTextureApply(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -941,13 +943,13 @@ void GUI_ModelerProperties::modelerPropSWFTextureApply(const NaviData& naviData)
         }
 
         
-        std::string urlStr = mNavi->evaluateJS("$('MaterialSWFUrl').value");
-        std::string widthStr = mNavi->evaluateJS("$('MaterialSWFWidth').value");
-        std::string heightStr = mNavi->evaluateJS("$('MaterialSWFHeight').value");
-        std::string fpsStr = mNavi->evaluateJS("$('MaterialSWFFps').value");
-        std::string sp3dStr = mNavi->evaluateJS("$('MaterialSWFSP3d').checked");
-        std::string spMinStr = mNavi->evaluateJS("$('MaterialSWFSPMin').value");
-        std::string spMaxStr = mNavi->evaluateJS("$('MaterialSWFSPMax').value");
+        std::string urlStr = mNavi->evaluateJSWithResult("$('MaterialSWFUrl').value").get().toString();
+        std::string widthStr = mNavi->evaluateJSWithResult("$('MaterialSWFWidth').value").get().toString();
+        std::string heightStr = mNavi->evaluateJSWithResult("$('MaterialSWFHeight').value").get().toString();
+        std::string fpsStr = mNavi->evaluateJSWithResult("$('MaterialSWFFps').value").get().toString();
+        std::string sp3dStr = mNavi->evaluateJSWithResult("$('MaterialSWFSP3d').checked").get().toString();
+        std::string spMinStr = mNavi->evaluateJSWithResult("$('MaterialSWFSPMin').value").get().toString();
+        std::string spMaxStr = mNavi->evaluateJSWithResult("$('MaterialSWFSPMax').value").get().toString();
 
         int width = atoi(widthStr.c_str());
         int height = atoi(heightStr.c_str());
@@ -985,7 +987,7 @@ void GUI_ModelerProperties::modelerPropSWFTextureApply(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropVLCTextureApply(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropVLCTextureApply(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -1011,15 +1013,15 @@ void GUI_ModelerProperties::modelerPropVLCTextureApply(const NaviData& naviData)
         }
 
         
-        std::string mrlStr = mNavi->evaluateJS("$('MaterialVLCMrl').value");
-        std::string widthStr = mNavi->evaluateJS("$('MaterialVLCWidth').value");
-        std::string heightStr = mNavi->evaluateJS("$('MaterialVLCHeight').value");
-        std::string fpsStr = mNavi->evaluateJS("$('MaterialVLCFps').value");
-        std::string paramsStr = mNavi->evaluateJS("$('MaterialVLCParams').value");
-        std::string remoteMrlStr = mNavi->evaluateJS("$('MaterialVLCRemoteMrl').value");
-        std::string sp3dStr = mNavi->evaluateJS("$('MaterialVLCSP3d').checked");
-        std::string spMinStr = mNavi->evaluateJS("$('MaterialVLCSPMin').value");
-        std::string spMaxStr = mNavi->evaluateJS("$('MaterialVLCSPMax').value");
+        std::string mrlStr = mNavi->evaluateJSWithResult("$('MaterialVLCMrl').value").get().toString();
+        std::string widthStr = mNavi->evaluateJSWithResult("$('MaterialVLCWidth').value").get().toString();
+        std::string heightStr = mNavi->evaluateJSWithResult("$('MaterialVLCHeight').value").get().toString();
+        std::string fpsStr = mNavi->evaluateJSWithResult("$('MaterialVLCFps').value").get().toString();
+        std::string paramsStr = mNavi->evaluateJSWithResult("$('MaterialVLCParams').value").get().toString();
+        std::string remoteMrlStr = mNavi->evaluateJSWithResult("$('MaterialVLCRemoteMrl').value").get().toString();
+        std::string sp3dStr = mNavi->evaluateJSWithResult("$('MaterialVLCSP3d').checked").get().toString();
+        std::string spMinStr = mNavi->evaluateJSWithResult("$('MaterialVLCSPMin').value").get().toString();
+        std::string spMaxStr = mNavi->evaluateJSWithResult("$('MaterialVLCSPMax').value").get().toString();
         int width = atoi(widthStr.c_str());
         int height = atoi(heightStr.c_str());
         int fps = atoi(fpsStr.c_str());
@@ -1072,7 +1074,7 @@ void GUI_ModelerProperties::modelerPropVLCTextureApply(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropVLCMrlBrowse(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropVLCMrlBrowse(Navi* caller, const Awesomium::JSArguments& args)
 {
     std::string mrl;
     if (System::showDlgOpenFilename(mrl, "Media File,(*.*)\0*.*\0", ""))
@@ -1086,7 +1088,7 @@ void GUI_ModelerProperties::modelerPropVLCMrlBrowse(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropVNCTextureApply(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropVNCTextureApply(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -1112,9 +1114,9 @@ void GUI_ModelerProperties::modelerPropVNCTextureApply(const NaviData& naviData)
         }
 
         
-        std::string hostStr = mNavi->evaluateJS("$('MaterialVNCHost').value");
-        std::string portStr = mNavi->evaluateJS("$('MaterialVNCPort').value");
-        std::string pwdStr = mNavi->evaluateJS("$('MaterialVNCPwd').value");
+        std::string hostStr = mNavi->evaluateJSWithResult("$('MaterialVNCHost').value").get().toString();
+        std::string portStr = mNavi->evaluateJSWithResult("$('MaterialVNCPort').value").get().toString();
+        std::string pwdStr = mNavi->evaluateJSWithResult("$('MaterialVNCPwd').value").get().toString();
         unsigned short port = atoi(portStr.c_str());
         std::string address = "vnc://" + hostStr + ":" + StringConverter::toString(port);
         std::string password = "vncpwd:" + pwdStr;
@@ -1143,7 +1145,7 @@ void GUI_ModelerProperties::modelerPropVNCTextureApply(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTexturePrev(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTexturePrev(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -1153,11 +1155,11 @@ void GUI_ModelerProperties::modelerPropTexturePrev(const NaviData& naviData)
         obj->getMaterialManager()->setPreviousTexture();
     }
     //modelerUpdateTextures();
-    modelerPropTextureApply( naviData );
+    modelerPropTextureApply( caller, args );
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropTextureNext(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropTextureNext(Navi* caller, const Awesomium::JSArguments& args)
 {
     Modeler *modeler = mNavigator->getModeler();
     if( modeler != 0 )
@@ -1167,14 +1169,13 @@ void GUI_ModelerProperties::modelerPropTextureNext(const NaviData& naviData)
             obj->getMaterialManager()->setNextTexture();
     }
     //modelerUpdateTextures();
-    modelerPropTextureApply( naviData );
+    modelerPropTextureApply(caller, args );
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPositionX(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPositionX(Navi* caller, const Awesomium::JSArguments& args)
 {
-    
-    std::string value = mNavi->evaluateJS("document.getElementById('positionX').value * 10000");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('positionX').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     Vector3 vec = modeler->getSelection()->getCenterPosition();
@@ -1182,10 +1183,10 @@ void GUI_ModelerProperties::modelerPropPositionX(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPositionY(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPositionY(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('positionY').value * 10000");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('positionY').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     Vector3 vec = modeler->getSelection()->getCenterPosition();
@@ -1193,10 +1194,10 @@ void GUI_ModelerProperties::modelerPropPositionY(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropPositionZ(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropPositionZ(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('positionZ').value * 10000");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('positionZ').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     Vector3 vec = modeler->getSelection()->getCenterPosition();
@@ -1204,43 +1205,43 @@ void GUI_ModelerProperties::modelerPropPositionZ(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropOrientationX(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropOrientationX(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('orientationX').value * 10000");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('orientationX').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     modeler->getSelection()->rotateTo(atoi(value.c_str())/10000., 0, 0);
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropOrientationY(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropOrientationY(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('orientationY').value * 10000");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('orientationY').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     modeler->getSelection()->rotateTo(0, atoi(value.c_str())/10000., 0);
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropOrientationZ(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropOrientationZ(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('orientationZ').value * 10000");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('orientationZ').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     modeler->getSelection()->rotateTo(0, 0, atoi(value.c_str())/10000.);
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScaleX(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScaleX(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    //std::string value = mNavi->evaluateJS("document.getElementById('scaleX').value * 10000");
-    std::string valueX = mNavi->evaluateJS("document.getElementById('scaleX').value * 10000");
-    std::string valueY = mNavi->evaluateJS("document.getElementById('scaleY').value * 10000");
-    std::string valueZ = mNavi->evaluateJS("document.getElementById('scaleZ').value * 10000");
+    //std::string value = mNavi->evaluateJSWithResult("document.getElementById('scaleX').value * 10000");
+    std::string valueX = mNavi->evaluateJSWithResult("document.getElementById('scaleX').value * 10000").get().toString();
+    std::string valueY = mNavi->evaluateJSWithResult("document.getElementById('scaleY').value * 10000").get().toString();
+    std::string valueZ = mNavi->evaluateJSWithResult("document.getElementById('scaleZ').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     //modeler->getSelection()->scaleTo(atoi(value.c_str())/10000., 1., 1. );
@@ -1248,13 +1249,13 @@ void GUI_ModelerProperties::modelerPropScaleX(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScaleY(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScaleY(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    //std::string value = mNavi->evaluateJS("document.getElementById('scaleY').value * 10000");
-    std::string valueX = mNavi->evaluateJS("document.getElementById('scaleX').value * 10000");
-    std::string valueY = mNavi->evaluateJS("document.getElementById('scaleY').value * 10000");
-    std::string valueZ = mNavi->evaluateJS("document.getElementById('scaleZ').value * 10000");
+    //std::string value = mNavi->evaluateJSWithResult("document.getElementById('scaleY').value * 10000");
+    std::string valueX = mNavi->evaluateJSWithResult("document.getElementById('scaleX').value * 10000").get().toString();
+    std::string valueY = mNavi->evaluateJSWithResult("document.getElementById('scaleY').value * 10000").get().toString();
+    std::string valueZ = mNavi->evaluateJSWithResult("document.getElementById('scaleZ').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     //modeler->getSelection()->scaleTo(1, atoi(value.c_str())/10000., 1);
@@ -1262,13 +1263,13 @@ void GUI_ModelerProperties::modelerPropScaleY(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropScaleZ(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropScaleZ(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    //std::string value = mNavi->evaluateJS("document.getElementById('scaleZ').value * 10000");
-    std::string valueX = mNavi->evaluateJS("document.getElementById('scaleX').value * 10000");
-    std::string valueY = mNavi->evaluateJS("document.getElementById('scaleY').value * 10000");
-    std::string valueZ = mNavi->evaluateJS("document.getElementById('scaleZ').value * 10000");
+    //std::string value = mNavi->evaluateJSWithResult("document.getElementById('scaleZ').value * 10000");
+    std::string valueX = mNavi->evaluateJSWithResult("document.getElementById('scaleX').value * 10000").get().toString();
+    std::string valueY = mNavi->evaluateJSWithResult("document.getElementById('scaleY').value * 10000").get().toString();
+    std::string valueZ = mNavi->evaluateJSWithResult("document.getElementById('scaleZ').value * 10000").get().toString();
 
     Modeler *modeler = mNavigator->getModeler();
     //modeler->getSelection()->scaleTo(1, 1, atoi(value.c_str())/10000.);
@@ -1276,33 +1277,31 @@ void GUI_ModelerProperties::modelerPropScaleZ(const NaviData& naviData)
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropCollision(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropCollision(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('collision').checked");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('collision').checked").get().toString();
 }
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerPropGravity(const NaviData& naviData)
+void GUI_ModelerProperties::modelerPropGravity(Navi* caller, const Awesomium::JSArguments& args)
 {
     
-    std::string value = mNavi->evaluateJS("document.getElementById('gravity').checked");
+    std::string value = mNavi->evaluateJSWithResult("document.getElementById('gravity').checked").get().toString();
 }
 
 
 //-------------------------------------------------------------------------------------
-void GUI_ModelerProperties::modelerTabberChange(const NaviData& naviData)
+void GUI_ModelerProperties::modelerTabberChange(Navi* caller, const Awesomium::JSArguments& args)
 {
     unsigned tab;
-    tab = atoi(naviData["tab"].str().c_str());
+    tab = args[0].toInteger();
     modelerTabberLoad (tab);
 }
 
 //-------------------------------------------------------------------------------------
 void GUI_ModelerProperties::modelerTabberLoad(unsigned pTab)
 {
-    
-
     // get the current object3D
     Object3D* obj = mNavigator->getModeler()->getSelected();
     if( obj != 0 )
@@ -1352,50 +1351,50 @@ void GUI_ModelerProperties::modelerTabberLoad(unsigned pTab)
             modelerUpdateDeformationSliders();
             break;
         case 2:	// material tab
-            text = mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getAmbient().r * 255) + ")");
-            text += mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getAmbient().g * 255) + ")");
-            text += mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getAmbient().b * 255) + ")");
-            mNavi->evaluateJS("$S('pAmbient').background='#" + text + "'");
-            text = mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getDiffuse().r * 255) + ")");
-            text += mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getDiffuse().g * 255) + ")");
-            text += mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getDiffuse().b * 255) + ")");
-            mNavi->evaluateJS("$S('pDiffuse').background='#" + text + "'");
-            text = mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getSpecular().r * 255) + ")");
-            text += mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getSpecular().g * 255) + ")");
-            text += mNavi->evaluateJS("decToHex(" + StringConverter::toString(obj->getSpecular().b * 255) + ")");
-            mNavi->evaluateJS("$S('pSpecular').background='#" + text + "'");
-
-            mNavi->evaluateJS("shininess.onchange = function() {}");
-            mNavi->evaluateJS("transparency.onchange = function() {}");
-            mNavi->evaluateJS("scrollU.onchange = function() {}");
-            mNavi->evaluateJS("scrollV.onchange = function() {}");
-            mNavi->evaluateJS("scaleU.onchange = function() {}");
-            mNavi->evaluateJS("scaleV.onchange = function() {}");
-            mNavi->evaluateJS("rotateU.onchange = function() {}");
-
-            mNavi->evaluateJS("shininess.setValue(" + StringConverter::toString(Real(obj->getShininess()/128.)*100) + ")");
-            mNavi->evaluateJS("transparency.setValue(" + StringConverter::toString(obj->getAlpha()*100) + ")");
-            UV = obj->getMaterialManager()->getTextureScroll();
-            mNavi->evaluateJS("scrollU.setValue(" + StringConverter::toString(UV.x*100+50) + ")");
-            mNavi->evaluateJS("scrollV.setValue(" + StringConverter::toString(UV.y*100+50) + ")");
-            UV = obj->getMaterialManager()->getTextureScale();
-            mNavi->evaluateJS("scaleU.setValue(" + StringConverter::toString(UV.x*100-50) + ")");
-            mNavi->evaluateJS("scaleV.setValue(" + StringConverter::toString(UV.y*100-50) + ")");
-            mNavi->evaluateJS("rotateU.setValue(" + StringConverter::toString(obj->getMaterialManager()->getTextureRotate()/Math::TWO_PI*100) + ")");
-
-            mNavi->evaluateJS("shininess.onchange = function() {elementClicked('MdlrShininess')}");
-            mNavi->evaluateJS("transparency.onchange = function() {elementClicked('MdlrTransparency')}");
-            mNavi->evaluateJS("scrollU.onchange = function() {elementClicked('MdlrScrollU')}");
-            mNavi->evaluateJS("scrollV.onchange = function() {elementClicked('MdlrScrollV')}");
-            mNavi->evaluateJS("scaleU.onchange = function() {elementClicked('MdlrScaleU')}");
-            mNavi->evaluateJS("scaleV.onchange = function() {elementClicked('MdlrScaleV')}");
-            mNavi->evaluateJS("rotateU.onchange = function() {elementClicked('MdlrRotateU')}");
             {
-                MaterialPtr mat = obj->getMaterialManager()->getModifiedMaterial()->getOwner();
-                CullingMode mode = mat->getTechnique(0)->getPass(0)->getCullingMode();
-                mNavi->evaluateJS("document.getElementById('doubleSide').checked = " + (mode == CULL_NONE)?"true":"false" );
+                char color[32];
+
+                sprintf(color, "%.2X%.2X%.2X", obj->getAmbient().r * 255, obj->getAmbient().g * 255, obj->getAmbient().b * 255);
+                mNavi->evaluateJS("$S('pAmbient').background='#" + String(color) + "'");
+
+                sprintf(color, "%.2X%.2X%.2X", obj->getDiffuse().r * 255, obj->getDiffuse().g * 255, obj->getDiffuse().b * 255);
+                mNavi->evaluateJS("$S('pDiffuse').background='#" + String(color) + "'");
+
+                sprintf(color, "%.2X%.2X%.2X", obj->getSpecular().r * 255, obj->getSpecular().g * 255, obj->getSpecular().b * 255);
+                mNavi->evaluateJS("$S('pSpecular').background='#" + String(color) + "'");
+
+                mNavi->evaluateJS("shininess.onchange = function() {}");
+                mNavi->evaluateJS("transparency.onchange = function() {}");
+                mNavi->evaluateJS("scrollU.onchange = function() {}");
+                mNavi->evaluateJS("scrollV.onchange = function() {}");
+                mNavi->evaluateJS("scaleU.onchange = function() {}");
+                mNavi->evaluateJS("scaleV.onchange = function() {}");
+                mNavi->evaluateJS("rotateU.onchange = function() {}");
+
+                mNavi->evaluateJS("shininess.setValue(" + StringConverter::toString(Real(obj->getShininess()/128.)*100) + ")");
+                mNavi->evaluateJS("transparency.setValue(" + StringConverter::toString(obj->getAlpha()*100) + ")");
+                UV = obj->getMaterialManager()->getTextureScroll();
+                mNavi->evaluateJS("scrollU.setValue(" + StringConverter::toString(UV.x*100+50) + ")");
+                mNavi->evaluateJS("scrollV.setValue(" + StringConverter::toString(UV.y*100+50) + ")");
+                UV = obj->getMaterialManager()->getTextureScale();
+                mNavi->evaluateJS("scaleU.setValue(" + StringConverter::toString(UV.x*100-50) + ")");
+                mNavi->evaluateJS("scaleV.setValue(" + StringConverter::toString(UV.y*100-50) + ")");
+                mNavi->evaluateJS("rotateU.setValue(" + StringConverter::toString(obj->getMaterialManager()->getTextureRotate()/Math::TWO_PI*100) + ")");
+
+                mNavi->evaluateJS("shininess.onchange = function() {elementClicked('MdlrShininess')}");
+                mNavi->evaluateJS("transparency.onchange = function() {elementClicked('MdlrTransparency')}");
+                mNavi->evaluateJS("scrollU.onchange = function() {elementClicked('MdlrScrollU')}");
+                mNavi->evaluateJS("scrollV.onchange = function() {elementClicked('MdlrScrollV')}");
+                mNavi->evaluateJS("scaleU.onchange = function() {elementClicked('MdlrScaleU')}");
+                mNavi->evaluateJS("scaleV.onchange = function() {elementClicked('MdlrScaleV')}");
+                mNavi->evaluateJS("rotateU.onchange = function() {elementClicked('MdlrRotateU')}");
+                {
+                    MaterialPtr mat = obj->getMaterialManager()->getModifiedMaterial()->getOwner();
+                    CullingMode mode = mat->getTechnique(0)->getPass(0)->getCullingMode();
+                    mNavi->evaluateJS("document.getElementById('doubleSide').checked = " + (mode == CULL_NONE)?"true":"false" );
+                }
+                //modelerUpdateTextures();
             }
-            //modelerUpdateTextures();
             break;
         case 3:	// 3D tab
             mNavi->evaluateJS("document.getElementById('positionX').value = " + StringConverter::toString(obj->getPosition().x));
@@ -1748,9 +1747,9 @@ void GUI_ModelerProperties::modelerUpdateTextures()
         }
         else if (plugin == "vlc")
         {
-            std::string mrl = (*textureExtParamsMap)["mrl"];
-            StringHelpers::replaceSubStr(mrl, "\\", "\\\\");
-            NaviUtilities::encodeURIComponent(StringHelpers::convertStringToWString((*textureExtParamsMap)["mrl"]));
+            std::string mrl;// = (*textureExtParamsMap)["mrl"];
+            // StringHelpers::replaceSubStr(mrl, "\\", "\\\\");
+            mrl = NaviUtilities::encodeURIComponent(StringHelpers::convertStringToWString((*textureExtParamsMap)["mrl"]));
             mNavi->evaluateJS("$('MaterialVLCMrl').value = '" + mrl + "'");
             mNavi->evaluateJS("$('MaterialVLCWidth').value = '" + (*textureExtParamsMap)["width"] + "'");
             mNavi->evaluateJS("$('MaterialVLCHeight').value = '" + (*textureExtParamsMap)["height"] + "'");
@@ -1762,9 +1761,9 @@ void GUI_ModelerProperties::modelerUpdateTextures()
         }
         else if (plugin == "swf")
         {
-            std::string url = (*textureExtParamsMap)["url"];
-            StringHelpers::replaceSubStr(url, "\\", "\\\\");
-            NaviUtilities::encodeURIComponent(StringHelpers::convertStringToWString((*textureExtParamsMap)["url"]));
+            std::string url;// = (*textureExtParamsMap)["url"];
+            //StringHelpers::replaceSubStr(url, "\\", "\\\\");
+            url = NaviUtilities::encodeURIComponent(StringHelpers::convertStringToWString((*textureExtParamsMap)["url"]));
             mNavi->evaluateJS("$('MaterialSWFUrl').value = '" + url + "'");
             mNavi->evaluateJS("$('MaterialSWFWidth').value = '" + (*textureExtParamsMap)["width"] + "'");
             mNavi->evaluateJS("$('MaterialSWFHeight').value = '" + (*textureExtParamsMap)["height"] + "'");
@@ -1836,7 +1835,7 @@ void GUI_ModelerProperties::modelerAddNewDeformation(Object3D::Command pCommand)
 }
 
 /*
-void GUI_ModelerProperties::modelerProperties(const NaviData& naviData)
+void GUI_ModelerProperties::modelerProperties(Navi* caller, const Awesomium::JSArguments& args)
 {
 std::string slider;
 slider = naviData["slider"].str();

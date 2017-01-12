@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "Panel2DExtTextSrcEx.h"
 #include <CTLog.h>
 #include <CTMaths.h>
-#include <NaviMouse.h>
+//#include <NaviMouse.h>
 
 using namespace Ogre;
 using namespace CommonTools;
@@ -80,7 +80,7 @@ Panel2DMgr::~Panel2DMgr()
 //-------------------------------------------------------------------------------------
 void Panel2DMgr::initializeMouseCursors()
 {
-    NaviLibrary::NaviMouse *naviMouse = NaviLibrary::NaviMouse::GetPointer();
+/*    NaviLibrary::NaviMouse *naviMouse = NaviLibrary::NaviMouse::GetPointer();
     if (naviMouse == 0)
         return;
 
@@ -92,7 +92,7 @@ void Panel2DMgr::initializeMouseCursors()
     newCursor = naviMouse->createCursor("resize45", 19, 19);
     newCursor->addFrame(0, "cursorResize45.png");
     newCursor = naviMouse->createCursor("resize315", 19, 19);
-    newCursor->addFrame(0, "cursorResize315.png");
+    newCursor->addFrame(0, "cursorResize315.png");*/
 }
 
 //-------------------------------------------------------------------------------------
@@ -412,8 +412,16 @@ bool Panel2DMgr::mouseReleased(const MouseEvt& evt)
 
     bool eventHandled = mFocusedPanel->mouseReleased(evt);
 
-    mMoving = false;
-    mSizingPart = Panel2D::PNone;
+    if (mMoving)
+    {
+        mFocusedPanel->onMoved();
+        mMoving = false;
+    }
+    if (mSizingPart != Panel2D::PNone)
+    {
+        mFocusedPanel->onResized();
+        mSizingPart = Panel2D::PNone;
+    }
 
     return eventHandled;
 }

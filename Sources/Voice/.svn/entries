@@ -1,40 +1,0 @@
-10
-
-dir
-2096
-svn://scm.gforge.inria.fr/svn/solipsis/branches/Navi2/Sources/Voice
-svn://scm.gforge.inria.fr/svn/solipsis
-
-
-
-2009-05-06T16:27:44.040257Z
-1643
-cfloutier
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-7ea74831-013a-0410-a089-d2f2f1b183c3
-
-FaceController
-dir
-
-DummyPhonetizer
-dir
-
-Phonetizer
-dir
-
-voiceEngine
-dir
-

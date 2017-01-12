@@ -1,46 +1,0 @@
-10
-
-dir
-2096
-svn://scm.gforge.inria.fr/svn/solipsis/branches/Navi2/Archive_oldSources
-svn://scm.gforge.inria.fr/svn/solipsis
-
-
-
-2009-03-02T11:20:25.110395Z
-1386
-cfloutier
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7ea74831-013a-0410-a089-d2f2f1b183c3
-
-P2N
-dir
-
-3rdParties
-dir
-
-peerModuleSimulator
-dir
-
-OgreOde
-dir
-
-node
-dir
-
-navigatorPhysics
-dir
-
