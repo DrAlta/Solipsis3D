@@ -33,6 +33,7 @@ using namespace NaviLibrary;
 namespace Solipsis 
 {
     class Navigator;
+	class Facebook;
 
     class GUI_AuthentFacebook : public GUI_FromServer
     {
@@ -50,11 +51,9 @@ namespace Solipsis
 
     protected:
         GUI_AuthentFacebook();
-		~GUI_AuthentFacebook();
 
         static GUI_AuthentFacebook * stGUI_AuthentFacebook;
         Facebook *mFacebook;
-
     };
 } // namespace Solipsis
 

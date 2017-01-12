@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include "Prerequisites.h"
-
 #include "Navigator.h"
 #include "NavigatorGui/GUI_MessageBox.h"
 #include "navigatorGui/GUI_login.h"
@@ -37,6 +36,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "navigatorGui/GUI_About.h"
 #include "navigatorGui/GUI_Commands.h"
 
+// - KH - adding retrieval of SNids from the world server via GUI
+#include "navigatorGui/GUI_AuthentWorldServer.h"
 
 #include "NavigatorFrameListener.h"
 #include "OgreTools/OgreHelpers.h"
@@ -55,10 +56,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <CharacterInstance.h>
 #include <VoiceEngineManager.h>
 
+#include "Facebook.h"
+//#include "TwitterCon.h"
+
+// ASA/LF
+#include <windows.h>
+#include <process.h>
+#include <commdlg.h>
+#include <shellapi.h>
+
+// For debugging purpose
+//#include <crtdbg.h>
+//#include <vld.h>
+
 using namespace Solipsis;
 using namespace CommonTools;
+using namespace std;
 
 Navigator* Navigator::ms_singletonPtr = 0;
+
+// The following macros set and clear, respectively, given bits
+// of the C runtime library debug flag, as specified by a bitmask.
+//#ifdef   _DEBUG
+//#define  SET_CRT_DEBUG_FIELD(a) \
+//            _CrtSetDbgFlag((a) | _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG))
+//#define  CLEAR_CRT_DEBUG_FIELD(a) \
+//            _CrtSetDbgFlag(~(a) & _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG))
+//#else
+//#define  SET_CRT_DEBUG_FIELD(a)   ((void) 0)
+//#define  CLEAR_CRT_DEBUG_FIELD(a) ((void) 0)
+//#endif
 
 //-------------------------------------------------------------------------------------
 Navigator::Navigator(const String name, IApplication* application) :
@@ -92,6 +119,11 @@ mMaxNaviPickingDistance(10),
 mMaxVLCPickingDistance(10),
 mMaxVNCPickingDistance(8),
 mMaxSWFPickingDistance(8),
+
+//BM ASA added hybridcom plugin
+mMaxHybridcomPickingDistance(10),
+//EM ASA added hybridcom plugin
+
 mMaxAvatarPickingDistance(10),
 mMaxObjectPickingDistance(20),
 mRaySceneQuery(0),
@@ -102,14 +134,42 @@ mMainCameraSupportMgr(0),
 mModeler(0),
 isOnLeftCTRL(false),
 isOnRightCTRL(false),
-isOnGizmo(false)
+isOnGizmo(false),
+mFriendUserDB(0), // - KH - add on to handle SN identities
+mUseFacebookSN(false), // - KHbis - new authentication method
+mUseTwitterSN(false),
+mTwitterConsumerKey("kvnRgUAU0KHTVwTdMIh5tQ"),
+mTwitterConsumerSecret("zUF31CetVqFjBfQSXkXQdxBrQKUyxeDygucYs"),
+mOauthAccessToken(""),
+mOauthAccessTokenSecret(""),
+mFacebook(0),
+mFacebookUid(""),
+// mTwitterCon(0),
+mTwitterUid(""),
+mGuestAvatarsList(),
+mModuloFriend(1),
+mShowFriendModeEnabled(false)
 {
+
+	   // Send all reports to STDOUT
+   //_CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE );
+   //_CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
+   //_CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
+   //_CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDOUT );
+   //_CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
+   //_CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDOUT );
+
+   //////////////////////////////////////////////////////////////////
+
     ms_singletonPtr = this;
 
     LogHandler::setLogHandler(&mOgreLogger);
     LogHandler::getLogHandler()->setVerbosityLevel(LogHandler::VL_DEBUG);
     String logFilename = IO::getCWD() + "\\" + LogManager::getSingletonPtr()->getDefaultLog()->getName();
     LogHandler::getLogHandler()->setLogFilename(logFilename);
+
+	// - KH - Create the SN Friend List storage
+	mFriendUserDB = new FriendUserDB();
 
     // Lua initialization
     mLuaState = lua_open();
@@ -125,6 +185,17 @@ Navigator::~Navigator()
     if (mState != SLogin)
         disconnect(true);
 
+
+#ifdef   _DEBUG
+	//// Check for memory leaks
+	//OutputHeading( "Examine outstanding allocations (dump memory leaks)" );
+	//_CrtDumpMemoryLeaks( );
+#endif
+
+   // Set the debug-heap flag so that memory leaks are reported when
+   // the process terminates. Then, exit.
+   //OutputHeading( "Program exits without freeing a memory block" );
+   //SET_CRT_DEBUG_FIELD( _CRTDBG_LEAK_CHECK_DF );
     // Stop the node events listener thread
     NodeEventListener::stop();
     NodeEventListener::finalize();
@@ -148,6 +219,10 @@ Navigator::~Navigator()
     // Destroy the modeler
     delete mModeler;
 
+	// - KH - Destroy the SN Friend List storage
+	delete mFriendUserDB;
+	mGuestAvatarsList.clear();
+
     // Destroy the GUI
     delete mNavigatorGUI;
 
@@ -168,6 +243,17 @@ Navigator::~Navigator()
         delete mMainCameraSupportMgr;
 
     mConfiguration.saveConfig();
+	String lockf = mMetaverseHome + "metaverse_lock";
+	//remove("C:\\WINDOWS\\Temp\\metaverse_lock");
+	remove(lockf.c_str());
+
+#ifdef _DEBUG
+	// Set the debug-heap flag so that memory leaks are reported when
+	// the process terminates. Then, exit.
+   //OutputHeading( "Program exits without freeing a memory block" );
+   //SET_CRT_DEBUG_FIELD( _CRTDBG_LEAK_CHECK_DF );
+#endif
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -211,6 +297,7 @@ void Navigator::setPeerAddress(const String& address)
 {
     mPeerAddress = address;
     mConfiguration.findParam("PeerAddress")->setValueString(mPeerAddress);
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -408,6 +495,36 @@ Navigator::NavigationInterface Navigator::getNavigationInterface()
     return mNavigationInterface; 
 }
 
+//////// - KH - Adding handling of SN identities
+//-------------------------------------------------------------------------------------
+// Will be called when the user wants to bring his SN 
+void Navigator::computeFacebookFriendList()
+{
+	//	- get list of friend from Facebook site
+	if (mFacebook != 0)
+	{
+		const string& fcbkUId = mFacebook->getUid();
+		// the Facebook instance is created: user is authenticated  and a session is created
+		storeFCBKFriendList(fcbkUId, mFacebook->getFriendList());
+	}
+}
+
+//-------------------------------------------------------------------------------------
+// Will be called when the user wants to bring his SN 
+void Navigator::computeTwitterFriendList()
+{
+	//	- login to twitter site
+	//	- get list of Friends
+	// - store it 
+	// - KH - trials with Twitter
+	if (!mOauthAccessToken.empty() && !mOauthAccessTokenSecret.empty())
+	{
+		//const string& twtrUId = mTwitterCon->getUserIdString();
+		//storeTWTRFriendList(twtrUId, mTwitterCon->getFriendList());
+	}
+}
+
+
 void Navigator::loadConfigurationValues()
 {
     mConfiguration.loadConfig("SolipsisConfiguration.xml");
@@ -442,6 +559,48 @@ void Navigator::loadConfigurationValues()
     mCastShadows = mConfiguration.findParam("CastShadows", "false")->getValueBool();
     mNavigationInterface = (NavigationInterface ) mConfiguration.findParam("NavigationInterface", "false")->getValueInt();
 
+	// - KH - add SN identities handling
+	// - KHbis- Should save Twitter oauth authentication !!!!
+	//mFacebookLogin = mConfiguration.findParam("FacebookLogin","")->getValueString();
+	// for hidden passwd, use : valuesgetProtectedValueString instead
+	//mFacebookPassword = mConfiguration.findParam("FacebookPassword","")->getValueString();
+	//mTwitterLogin = mConfiguration.findParam("TwitterLogin","")->getValueString();
+	// for hidden passwd, use : valuesgetProtectedValueString instead
+	//mTwitterPassword = mConfiguration.findParam("TwitterPassword","")->getValueString();
+	// - KHbis - adding twitter authentication parameters
+	mTwitterConsumerKey = mConfiguration.findParam("TwitterConsumerKey", "kvnRgUAU0KHTVwTdMIh5tQ")->getValueString();
+	mTwitterConsumerSecret = mConfiguration.findParam("TwitterConsumerSecret", "zUF31CetVqFjBfQSXkXQdxBrQKUyxeDygucYs")->getValueString();
+    mOauthAccessToken = mConfiguration.findParam("TwitterOauthAccessToken", "")->getValueString();
+    mOauthAccessTokenSecret = mConfiguration.findParam("TwitterOauthAccessTokenSecret", "")->getValueString();
+
+	// For simulation purpose
+	mModuloFriend = mConfiguration.findParam("ModuloFriend", "1")->getValueInt();
+	// mTwitterAuthorizeUrl = mConfiguration.findParam("TwitterAuthorizeUrl", "http://api.twitter.com/oauth/authorize")->getValueString();
+
+	// BM ASA/LF HybridCom add conf params
+	mMetaverseHome = mConfiguration.findParam("MetaverseHome","")->getValueString();
+	mMediaServer = mConfiguration.findParam("MediaServer","")->getValueString();
+	mAppName = mConfiguration.findParam("AppName","")->getValueString();	
+	mStreamName= "as_" + mConfiguration.findParam("MetaverseVid","")->getValueString();
+
+	char *bufferParams = (char *)malloc (256);
+	memset(bufferParams, '\0', 256);
+	String jmc = mMetaverseHome + "MetaverseRtmpClient.jar";
+	//sprintf (bufferParams, " -jar C:\\Development\\HybridCom\\MetaverseRtmpClient.jar %s %s %s %s", 
+	//	mMediaServer.c_str(), mAppName.c_str(), mStreamName.c_str(), mMetaverseHome.c_str());
+	sprintf (bufferParams, " -jar %s %s %s %s %s", 
+		jmc.c_str(), 
+		mMediaServer.c_str(), 
+		mAppName.c_str(), 
+		mStreamName.c_str(),
+		mMetaverseHome.c_str());
+		
+	ShellExecute(NULL, NULL, 
+		"java",
+		bufferParams, //" -jar C:\\Development\\HybridCom\\MetaverseRtmpClient.jar",
+		NULL, SW_SHOWNORMAL);
+	
+	// EM ASA/LF HybridCom add conf params
 }
 
 
@@ -718,113 +877,72 @@ void Navigator::demoVoice(const String params)
     setVoIPServerAddress(params);
 
     // start/stop speaking
-    toggleVoIP();
+   
+	toggleVoIP();
 }
 #endif
 
+// BM ASA added hybridcom plugin
 //-------------------------------------------------------------------------------------
-void Navigator::applyNewEmotion(const std::string& uid, const std::string& emotionName)
+#ifdef DEMO_HYBRIDCOM
+
+void Navigator::demoHybridcom()
 {
-    // tester si une emotion est déjà en cours de rendu sur l'avatar concerné
-    // auquel cas on force à terminer cette emotion (pose) et on empile la nouvelle
-    if (mEmotionTodoLst.find(uid) != mEmotionTodoLst.end())
-    {
-        // one or many emotions are already applied on this entity UId, then force them to finish
-        // and apply the new one
-        std::list<Emotion*>::iterator iter = mEmotionTodoLst[uid].begin();
-        for (; iter!=mEmotionTodoLst[uid].end(); ++iter)
-        {
-            (*iter)->forceToFinish();
-        }
-    }
+    static bool active = false;
+    if (active) return;
+    active = true;
 
+    SceneNode* userAvatarSceneNode = mUserAvatar->getSceneNode();
 
-    // add this new emotion and apply it
-    OgrePeer* peer = getOgrePeerManager()->getOgrePeer( uid );
-    if (peer)
-    {
-        Avatar* avatar = dynamic_cast<Avatar*>(peer);
-        if (avatar)
-        {
+    // Create a plane
+    Plane plane(Vector3::NEGATIVE_UNIT_Z, -1.1);
+    MeshManager::getSingleton().createPlane("demoHybridcomPlane", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1.5, 1.5, 1, 1, true, 1, 1, 1, Vector3::UNIT_Y);
 
-			//CharacterInstance* ci = avatar->getCharacterInstance();
-            Entity* entity = avatar->getEntity();
-            if (entity)
-            {
-                Ogre::MeshPtr mesh = entity->getMesh();
-                if (! mesh.isNull())
-                {
-                    Ogre::PoseList poseList = mesh->getPoseList();
-                    if (! poseList.empty())
-                    {
-						// Get the character SAF Name : Mesh Name is XXX_edition.mesh
-						std::string avatarSAFName = mesh->getName().substr(0,mesh->getName().length() - 13);
+    // Creates the Video Plane and subsequent HybridcomMaterial
+    Entity* vidEnt = mSceneMgr->createEntity("demoHybridcomVideo", "demoHybridcomPlane");
+    vidEnt->setQueryFlags(QFHybridcomPanel);
+    NaviLibrary::Navi* vidHybridcom = NaviLibrary::NaviManager::Get().createNaviMaterial(getEntityNaviName(*vidEnt), 512, 512);
+    vidHybridcom->loadURL( "http://www.dundal.com");
+    vidHybridcom->show(true);
+    vidHybridcom->setMaxUPS(15);
+    // Awesomium ?
+    //vidHybridcom->setForceMaxUpdate(true);
+    vidHybridcom->setOpacity(0.75f);
+    vidEnt->setMaterialName(vidHybridcom->getMaterialName());
+    SceneNode* videoNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("demoHybridcomVideoNode", userAvatarSceneNode->getPosition() + Vector3(1, 1.5, 1));
+    videoNode->attachObject(vidEnt);
+    videoNode->yaw(Degree(45), Node::TS_WORLD);
 
-                        std::string animName = "";
-                        if (emotionName == "")
-							animName = avatarSAFName + "_Emo_Neutral";
-                        else if (emotionName == "joy" || emotionName == "happy")
-                            animName = avatarSAFName + "_Emo_Hapiness";
-                        else if (emotionName == "sadness")
-                            animName = avatarSAFName + "_Emo_Sadness";
-                        else if (emotionName == "anger")
-                            animName = avatarSAFName + "_Emo_Anger";
-                        else if (emotionName == "fear")
-                            animName = avatarSAFName + "_Emo_Fear";
-                        else if (emotionName == "surprise")
-                            animName = avatarSAFName + "_Emo_Surprise";
-                        else if (emotionName == "disgust")
-                            animName = avatarSAFName + "_Emo_Disgust";
+    // Creates the Text Plane and subsequent NaviMaterial
+    Entity* txtEnt = mSceneMgr->createEntity("demoHybridcomText", "demoHybridcomPlane");
+    txtEnt->setQueryFlags(QFHybridcomPanel);
+    NaviLibrary::Navi* txtNavi = NaviLibrary::NaviManager::Get().createNaviMaterial(getEntityNaviName(*txtEnt),  512, 512);
+    txtNavi->loadURL("lgpl-3.0.txt");
+    txtNavi->show(true);
+    txtNavi->setMaxUPS(8);
+    txtEnt->setMaterialName(txtNavi->getMaterialName());
+    SceneNode* txtNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("demoHybridcomTextNode", userAvatarSceneNode->getPosition() + Vector3(1, 1.5, 1));
+    txtNode->attachObject(txtEnt);
+    txtNode->yaw(Degree(-25), Node::TS_WORLD);
 
-                        Ogre::AnimationStateSet* animations = entity->getAllAnimationStates();
-                        if (animations && animations->hasAnimationState( animName ))
-                        {
-                            Ogre::AnimationState* animation = entity->getAnimationState( animName );
-
-                            unsigned long elapsedTime = Root::getSingleton().getTimer()->getMilliseconds();
-                            Emotion* emotion = new Emotion( emotionName, animation, elapsedTime, 5000., 500., 500. );
-                            mEmotionTodoLst[uid].push_back( emotion );
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // web knot
+    Entity* knotEnt = mSceneMgr->createEntity("demoHybridcomWebKnot", "knot.mesh");
+    knotEnt->setQueryFlags(QFHybridcomPanel);
+    NaviLibrary::Navi* knotNavi = NaviLibrary::NaviManager::Get().createNaviMaterial(getEntityNaviName(*knotEnt),  512, 512);
+    knotNavi->loadURL("http://www.dundal.com");
+    knotNavi->show(true);
+    knotNavi->setMaxUPS(8);
+ 	std::string dundalMtlName = knotNavi->getMaterialName();
+    MaterialPtr dundalMtl = (MaterialPtr)MaterialManager::getSingletonPtr()->getByName(dundalMtlName);
+    dundalMtl->setDepthWriteEnabled(true);
+    knotEnt->setMaterialName(dundalMtlName);
+    SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode("demoHybridcomWebKnotNode", userAvatarSceneNode->getPosition() + Vector3(-3, 1.75, 4));
+    node->setScale(Vector3(0.015f, 0.015f, 0.015f));
+    node->attachObject(knotEnt);
 }
 
-//-------------------------------------------------------------------------------------
-void Navigator::updateEmotions()
-{
-    unsigned long elapsedTime = Root::getSingleton().getTimer()->getMilliseconds();
-
-    std::map<std::string, std::list<Emotion*> >::iterator iter = mEmotionTodoLst.begin();
-    for (; iter != mEmotionTodoLst.end(); )
-    {
-        std::list<Emotion*>::iterator iterEmotion = (*iter).second.begin();
-        for (; iterEmotion != (*iter).second.end(); )
-        {
-            Emotion* emotion = (*iterEmotion);
-            if (emotion->isFinish())
-            {
-				delete emotion;
-				emotion = NULL;
-                iterEmotion = (*iter).second.erase( iterEmotion );
-            }
-            else
-            {
-                emotion->update( elapsedTime );
-                ++iterEmotion;
-            }
-        }
-
-        if ((*iter).second.empty())
-		{
-			iter = mEmotionTodoLst.erase( iter );
-		}
-        else
-            ++iter;
-    }
-}
+#endif
+// EM ASA added hybridcom plugin
 
 //-------------------------------------------------------------------------------------
 String Navigator::getEntityNaviName(const Entity& entity)
@@ -1005,7 +1123,9 @@ bool Navigator::computeMousePicking(Ray& mouseRay)
                         if (((it->movable->getQueryFlags() & QFNaviPanel) && (it->distance < mMaxNaviPickingDistance)) ||
                             ((it->movable->getQueryFlags() & QFVNCPanel) && (it->distance < mMaxVNCPickingDistance)) ||
                             ((it->movable->getQueryFlags() & QFSWFPanel) && (it->distance < mMaxSWFPickingDistance)) ||
-                            ((it->movable->getQueryFlags() & QFVLCPanel) && (it->distance < mMaxVLCPickingDistance)))
+                            ((it->movable->getQueryFlags() & QFVLCPanel) && (it->distance < mMaxVLCPickingDistance)) ||
+                            ((it->movable->getQueryFlags() & QFHybridcomPanel) && (it->distance < mMaxHybridcomPickingDistance))							
+							)
                             mPickedMovable = it->movable;
                     }
                 }
@@ -1025,6 +1145,7 @@ bool Navigator::computeMousePicking(Ray& mouseRay)
     return false;
 }
 
+#if 1 // GILLES MDLR
 //-------------------------------------------------------------------------------------
 bool Navigator::computeGizmo()
 {
@@ -1078,7 +1199,7 @@ bool Navigator::computeGizmo()
     }
     return false;
 }
-
+#endif
 //-------------------------------------------------------------------------------------
 bool Navigator::is1NaviHitByMouse(String& naviName, int& naviX, int& naviY)
 {
@@ -1208,6 +1329,57 @@ void Navigator::computeVncHit(Vector2& closestUV,
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::computeVncHit() uv=%s, dt1=%s, dt2=%s, vncXY=%s", StringConverter::toString(Vector2(closestUV.x, closestUV.y)).c_str(), StringConverter::toString(dt1).c_str(), StringConverter::toString(dt2).c_str(), StringConverter::toString(vncXY).c_str());
 }
 
+
+//-------------------------------------------------------------------------------------
+// BM ASA added hybridcom plugin
+bool Navigator::is1HybridcomHitByMouse(String& naviName, int& naviX, int& naviY)
+{
+    // if 1 Navi entity hit
+    if ((mPickedMovable != 0) && (mPickedMovable->getQueryFlags() & QFHybridcomPanel))
+    {
+        Entity* pickedEntity = static_cast<Entity*>(mPickedMovable->getParentSceneNode()->getAttachedObject(0));
+        String mtlName = pickedEntity->getSubEntity(0)->getMaterialName();
+        naviName = NaviLibrary::NaviManager::Get().getNaviFromMtlName(mtlName)->getName();
+        // compute texture coordinates of the hit
+        computeNaviHit(naviName,
+            mClosestUV,
+            mClosestTriUV0, mClosestTriUV1, mClosestTriUV2,
+            naviX, naviY);
+        LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::is1HybridcomHitByMouse() found Navi movable=%s, naviName=%s, (naviX, naviY)=(%d, %d)", mPickedMovable->getName().c_str(), naviName.c_str(), naviX, naviY);
+        return true;
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------------
+void Navigator::computeHybridcomHit(const String& naviName,
+                               Vector2& closestUV,
+                               Vector2& closestTriUV0, Vector2& closestTriUV1, Vector2& closestTriUV2,
+                               int& naviX, int& naviY)
+{
+    // uv computation found into the "Pick" sample of MS Direct SDK
+    Vector2 dt1 = closestTriUV1 - closestTriUV0;
+    Vector2 dt2 = closestTriUV2 - closestTriUV0;
+    Vector2 closestResultUV;
+    closestResultUV.x = closestTriUV0.x + closestUV.x*dt1.x + closestUV.y*dt2.x;
+    closestResultUV.y = closestTriUV0.y + closestUV.x*dt1.y + closestUV.y*dt2.y;
+    // Navi textures are repeated not clamped so bound results to [0..1]
+    unsigned short naviWidth, naviHeight;
+    NaviLibrary::Navi* navi = NaviLibrary::NaviManager::Get().getNavi(naviName);
+    if (navi == 0)
+    {
+        LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::computeHybridcomHit() naviName=%s not found !", naviName.c_str());
+        return;
+    }
+    navi->getExtents(naviWidth, naviHeight);
+    naviX = ((int)(closestResultUV.x*naviWidth))%naviWidth;
+    naviY = ((int)(closestResultUV.y*naviHeight))%naviHeight;
+    //    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::computeNaviHit() uv=%s, dt1=%s, dt2=%s, closestResultUV=%s", StringConverter::toString(Vector2(closestUV.x, closestUV.y)).c_str(), StringConverter::toString(dt1).c_str(), StringConverter::toString(dt2).c_str(), StringConverter::toString(closestResultUV).c_str());
+}
+
+// EM ASA added hybridcom plugin
+
 //-------------------------------------------------------------------------------------
 bool Navigator::is1AvatarHitByMouse(Avatar*& avatar)
 {
@@ -1325,6 +1497,7 @@ bool Navigator::initPostOgreCore()
         return false;
     }
 
+
     // Initialize sound system
     mNavigatorSound = new NavigatorSound();
     if (!mNavigatorSound->initialize(mVoIPSilenceLevel, mVoIPSilenceLatency))
@@ -1332,6 +1505,7 @@ bool Navigator::initPostOgreCore()
         LOGHANDLER_LOGF(LogHandler::VL_ERROR, "Navigator::initPostOgreCore() Unable to initialize sound");
         return false;
     }
+	
     // Register our sound system as sound handler for "vlc" external texture source plugin
     ExternalTextureSource *vlcExtTextSrc = ExternalTextureSourceManager::getSingleton().getExternalTextureSource("vlc");
     if (vlcExtTextSrc != 0)
@@ -1430,6 +1604,8 @@ void Navigator::OgreLogger::log(VerbosityLevel level, const char* msg)
 bool Navigator::quit()
 {
     mFrameListener->requestShutDown();
+	//LF
+	remove("C:\\Development\\HybridCom\\metaverse_lock");
     return true;
 }
 
@@ -1438,6 +1614,10 @@ bool Navigator::connect()
 {
     if (mLogin.empty() || mNodeId.empty() || mWorldAddress.empty())
         return false;
+
+	// - KH - be sure not trying to connect twice if already connected 
+	if (isConnected())
+		return true;
 
     std::string peerHost;
     unsigned short peerPort;
@@ -1520,23 +1700,8 @@ void Navigator::disconnect(bool force)
         }
     }
 
-    //if (mXmlRpcClient == 0)
-    //    return;
-
-	// Cleanup emotions list if any
-    std::map<std::string, std::list<Emotion*> >::iterator iter = mEmotionTodoLst.begin();
-    for (; iter != mEmotionTodoLst.end(); )
-    {
-        std::list<Emotion*>::iterator iterEmotion = (*iter).second.begin();
-        for (; iterEmotion != (*iter).second.end(); )
-        {
-            Emotion* emotion = (*iterEmotion);
-			delete emotion;
-			emotion = NULL;
-            iterEmotion = (*iter).second.erase( iterEmotion );
-        }
-		iter = mEmotionTodoLst.erase( iter );
-    }
+    if (mXmlRpcClient == 0)
+        return;
 
     // voice engine : stop speaking
     IVoiceEngine* voiceEngine = VoiceEngineManager::getSingleton().getSelectedEngine();
@@ -1563,12 +1728,9 @@ void Navigator::disconnect(bool force)
     NodeEventListener::stop();
     NodeEventListener::finalize();
 
-    if (mXmlRpcClient)
-	{
-		// Destroy XMLRPC client
-		delete mXmlRpcClient;
-		mXmlRpcClient = 0;
-	}
+    // Destroy XMLRPC client
+    delete mXmlRpcClient;
+    mXmlRpcClient = 0;
 
     // reset the camera mode
     setCameraMode(CMDetached);
@@ -1638,8 +1800,7 @@ bool Navigator::sendMessage(const String& message)
         throw Exception(Exception::ERR_INTERNAL_ERROR, "Attempt to send message without XMLRPC client", "Navigator::sendMessage");
 
     // decode URI encoded string into a wide-char string
-    std::wstring messageWStr = NaviUtilities::toWide(message);
-    //std::wstring messageWStr = NaviUtilities::decodeURIComponent(message);
+    std::wstring messageWStr = NaviUtilities::decodeURIComponent(message);
     // log with locale string
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::sendMessage(%s)", StringHelpers::convertWStringToString(messageWStr).c_str());
 
@@ -1696,6 +1857,8 @@ bool Navigator::sendURLUpdate(const EntityUID& entityUID, const String& naviName
 
 void Navigator::onPeerNew(RefCntPoolPtr<XmlEntity>& xmlEntity)
 {
+	if (xmlEntity.isNull())
+		return;
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::onPeerNew() uid:%s", xmlEntity->getUid().c_str());
 
 #ifdef UIDEBUG
@@ -1712,11 +1875,28 @@ void Navigator::onPeerNew(RefCntPoolPtr<XmlEntity>& xmlEntity)
 
 void Navigator::onPeerLost(RefCntPoolPtr<XmlEntity>& xmlEntity)
 {
-    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::onPeerLost() uid:%s", xmlEntity->getUid().c_str());
+	if (xmlEntity.isNull())
+		return;
 
+	const String& uid = xmlEntity->getUid().c_str();
+    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::onPeerLost() uid:%s", uid);
+
+	// First : Delete avatar from local guest avatars List
+	for (list<Avatar*>::iterator guestAvatar_ptr = mGuestAvatarsList.begin(); guestAvatar_ptr != mGuestAvatarsList.end(); ++guestAvatar_ptr){
+		// Get vId equivalent for snid and check if present in current pair elt
+		Avatar* gAvatar_ptr(*guestAvatar_ptr);
+		RefCntPoolPtr<XmlEntity>& gxmlEntity = gAvatar_ptr->getXmlEntity();
+		const String& gUid = gxmlEntity->getUid().c_str();
+		if (uid.compare(gUid) == 0){
+			mGuestAvatarsList.erase(guestAvatar_ptr);
+			break;
+		}
+	}
+
+	// 2.nd Remove associated peer
     if (!mOgrePeerManager->remove(xmlEntity->getUid()))
     {
-        LOGHANDLER_LOGF(LogHandler::VL_ERROR,  "Navigator::onPeerLost() Unable to remove lost peer %s !", xmlEntity->getUid().c_str());
+        LOGHANDLER_LOGF(LogHandler::VL_ERROR,  "Navigator::onPeerLost() Unable to remove lost peer %s !", uid);
         //     throw Exception(Exception::ERR_INTERNAL_ERROR, "Unable to remove lost peer " + xmlEntity->getUid() + " !", "Navigator::onPeerLost");
     }
 }
@@ -1725,13 +1905,16 @@ void Navigator::onPeerLost(RefCntPoolPtr<XmlEntity>& xmlEntity)
 
 void Navigator::onPeerUpdated(RefCntPoolPtr<XmlEntity>& xmlEntity)
 {
-    //    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::onPeerUpdated()");
+	if (xmlEntity.isNull())
+		return;
 
-    if (!mOgrePeerManager->updateEntity(xmlEntity))
+	if (!mOgrePeerManager->updateEntity(xmlEntity))
     {
         LOGHANDLER_LOGF(LogHandler::VL_ERROR,  "Navigator::onPeerUpdated() Unable to update peer %s !", xmlEntity->getUid().c_str());
         //     throw Exception(Exception::ERR_INTERNAL_ERROR, "Unable to remove lost peer " + xmlEntity->getUid() + " !", "Navigator::onPeerUpdated");
     }
+	       
+	LOGHANDLER_LOGF(LogHandler::VL_DEBUG,  "Navigator::onPeerUpdated() : update peer %s !", xmlEntity->getUid().c_str());
 }
 
 //-------------------------------------------------------------------------------------
@@ -1783,9 +1966,6 @@ void Navigator::onLocationChange(Navi *caller, const std::string &url)
     }
     sendURLUpdate(object->getXmlEntity()->getUid(), caller->getName(), url);
 }
-
-
-
 
 //-------------------------------------------------------------------------------------
 void Navigator::processEvents()
@@ -1858,7 +2038,10 @@ void Navigator::onAvatarNodeCreate(OgrePeer* ogrePeer)
 
         // Set the ThirdPersonCam as active
         setCameraMode(CM3rdPerson);
-    }
+	} else {
+		// - KH - store guest avatars in a local list for future SN management purpose
+		mGuestAvatarsList.push_back((Avatar*)ogrePeer);
+	}
 }
 
 //-------------------------------------------------------------------------------------
@@ -2046,8 +2229,10 @@ void Navigator::MdlrModifGizmo(Vector3 dep)
     SceneNode* node = mSceneMgr->getSceneNode("NodeSelection");
     Vector3 vec;
 
+#if 1 // GILLES MDLR
     if(mModeler->getSelected() == NULL)
         return;
+#endif
 
     switch (mModeler->getSelection()->mTransformation->getMode())
     {
@@ -2372,4 +2557,154 @@ void Navigator::toggleVoIP()
     GUI_Debug::refreshDemoVoiceTalkButtonName();
 }
 
+
+//----------------------------------------------------------------------
+//  - KH - Extract the user Id from a node Id (uid_avatarindex)
+String Navigator::getId(const String& pUid)
+{
+	size_t ind_ = pUid.find_last_of('_');
+	// TBC :  the first letter is S or F or ...
+	//		-> causes an identification pb in the world server
+	//		-> Remove also last _
+	string id = pUid.substr(1, ind_ -  1); 
+
+	return id;
+}
+
 //-------------------------------------------------------------------------------------
+//  - KH - Check if guestAvatarSnid ( = uid in Social networks of a guest avatar = non local) 
+//         is a friend of the local user 
+bool Navigator::checkIsFriendOfLocal(const SNTypeEnum snId, const String& guestAvatarSnid)
+{
+	bool isFriendOfLocal = false;
+	
+	if (mUserAvatar) {
+		// be sure an avatar for localUser is built
+		const String& localUserId = mUserAvatar->getCharacterInstance()->getUid();
+
+		// - KH - DEMO fake for demo purpose only  
+		//isFriendOfLocal = mFriendUserDB->matchFriend(snId, getId(localUserId), getId(guestAvatarSnid));
+		const String& lId = getId(localUserId);
+		const String& gId = getId(guestAvatarSnid);
+		isFriendOfLocal = ( (lId.compare("100000990433545") == 0) && (gId.compare("100000995083531") == 0)) || 
+						  ( (lId.compare("100000995083531") == 0) && (gId.compare("100000990433545") == 0));
+	}
+	return isFriendOfLocal;
+}
+
+//-------------------------------------------------------------------------------------
+//  - KH - Switch to Showfriends mode related to SN handling 
+void Navigator::toggleShowFriendsMode()
+{
+	const string& userId = getId(mUserAvatar->getCharacterInstance()->getUid());
+	mShowFriendModeEnabled = !mShowFriendModeEnabled;
+
+	// Iterate through the list of guest avatars to display or not the SN friendship icon
+	// For each avatar : 
+	//	- check if is a friend of local (done in methods of avatars) 
+	//	- if yes ->  display SN friend icon  
+	//  - if no -> normal display
+	for (list<Avatar*>::iterator guestAvatar_ptr = mGuestAvatarsList.begin(); guestAvatar_ptr != mGuestAvatarsList.end(); ++guestAvatar_ptr){
+		// Get vId equivalent for snid and check if present in current pair elt
+		Avatar* gAvatar_ptr(*guestAvatar_ptr);
+
+		// If Mode is on -> display SN identifiers above head
+		if (!mShowFriendModeEnabled) {
+			// Reset Social Radar Display Mode == hide SN icons
+			gAvatar_ptr->onSocialModeDisabled();
+		} else {
+			// Display SN identifiers above head (for the moment only twitter)
+			gAvatar_ptr->onSocialModeEnabled();
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------
+bool Navigator::stubbedCheckIsFriendOfLocal(const String& pUid)
+{
+	return checkIsFriendOfLocal(SNFacebook, pUid);
+
+	//const string& userId = getId(pUid);
+	//int n = atoi(userId.c_str());
+	//return (n % mModuloFriend == 0);
+}
+
+//  - KH - Switch to Showfriends mode related to SN handling 
+void Navigator::toggleStubbedShowFriendsMode()
+{	
+	// Perform a memory check...//
+	//OutputHeading( "Perform a memory check before modifying social display mode" );
+	//_CrtCheckMemory( );
+
+	// Iterate through the list of guest avatars to display or not the SN friendship icon
+	//list<avatar *> mGuestAvatarsList;
+	// For each avatar : 
+	//	- check if a friend
+	//	- if yes ->  display SN friend icon  
+	//  - if no -> normal display
+	for (list<Avatar*>::iterator guestAvatar_ptr = mGuestAvatarsList.begin(); guestAvatar_ptr != mGuestAvatarsList.end(); ++guestAvatar_ptr){
+		// Get vId equivalent for snid and check if present in current pair elt
+		Avatar* gAvatar_ptr(*guestAvatar_ptr);
+
+		// If ShowFriend mode is disabled re-enable again all non friend avatars that 
+		// have been previously disabled
+		if (!mShowFriendModeEnabled) {
+			// Reset Social Radar Display Mode == hide SN icons
+			gAvatar_ptr->onSocialModeDisabled();                 //onStubbedSocialModeDisabled();
+			// Enable normal avatar display for those that have been hidden
+			if (gAvatar_ptr->getStubbedFriendOfLocal()){
+				//onPeerNew(gAvatar_ptr->getXmlEntity()); 
+				//onPeerUpdated(gAvatar_ptr->getXmlEntity());
+			}
+		} else {
+			// If ShowFriend mode is enabled disable all avatars not friend of the local
+			gAvatar_ptr->onSocialModeEnabled(); //onStubbedSocialModeEnabled();
+			// if avatar is not a friend of the local hide it = disconnect from the current scen navigator
+			if (!gAvatar_ptr->getStubbedFriendOfLocal()){
+				//onPeerLost(gAvatar_ptr->getXmlEntity()); 
+				//Perhaps has to update immediately current navigator ???
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------
+//  - KH - Check and Set friendship of the given nodeId with the local user
+void Navigator::setFriendOfLocal(const void* avatarPtr, const String& uid, const String& fcbkUid, const String& twtrUid)
+{
+	// Check if this user identified by uid and (SN)LoginName is a friend of the local user
+	if (getUseFacebookSN())
+		((Avatar*)avatarPtr)->setFacebookFriendOfLocal(checkIsFriendOfLocal(SNFacebook, fcbkUid)); 
+	if (getUseTwitterSN())
+		((Avatar*)avatarPtr)->setTwitterFriendOfLocal(checkIsFriendOfLocal(SNTwitter, twtrUid));
+
+	// KH - Demo - Fake for demo purpose only
+	bool isFriendOfLocal = checkIsFriendOfLocal(SNFacebook, fcbkUid);
+	((Avatar*)avatarPtr)->setFacebookFriendOfLocal(checkIsFriendOfLocal(SNFacebook, fcbkUid));
+}
+
+//-------------------------------------------------------------------------------------
+//  - KH - Store the list of friends for this user relative to Facebook 
+void Navigator::storeFCBKFriendList(const string& nId, const list<String_Pair>& fcbkfl)
+{
+	mFriendUserDB->addUserFriendList(nId, SNFacebook, fcbkfl);
+}
+//-------------------------------------------------------------------------------------
+// Store the list of friends for this user relative to Twitter 
+void Navigator::storeTWTRFriendList(const string& nId, const list<String_Pair>& twtrfl)
+{
+	mFriendUserDB->addUserFriendList(nId, SNTwitter, twtrfl);
+}
+//-------------------------------------------------------------------------------------
+// Store the list of friends for this user relative to Opensocial base SN 
+void Navigator::storePNSCLFriendList(const string& nId, const list<String_Pair>& opnsclfl)
+{
+	mFriendUserDB->addUserFriendList(nId, SNOpensocial, opnsclfl);
+}
+
+void Navigator::OutputHeading( const char * explanation )
+{
+//   _RPT1( _CRT_WARN, "\n\n%s:\n**************************************\
+//************************************\n", explanation );
+}
+

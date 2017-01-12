@@ -40,13 +40,11 @@
             {
 				generalResetDisplayConfig = document.getElementById("checkboxGeneralResetDisplayConfig").checked;
 				castShadow = document.getElementById("castShadow").checked;
-			
+				
                 if (document.getElementById("radioIdAuthentTypeFacebook").checked)
                     radioIdAuthentType = 'F';
-                else if (document.getElementById("radioIdAuthentTypeSolipsis").checked)
-                    radioIdAuthentType = 'S';
                 else
-                    radioIdAuthentType = 'F';
+                    radioIdAuthentType = 'S';
 					
                 wsHost = document.getElementById("inputWSHost").value;
                 wsPort = document.getElementById("inputWSPort").value;
@@ -72,13 +70,14 @@
                     radioControlType = 'WiimoteAndNunchuk';
                 else 
                     radioControlType = 'WiimoteAndNunchukAndIR';
-					
+								
 				Client.ok(generalResetDisplayConfig,
                           castShadow,
                           radioIdAuthentType,
                           wsHost, wsPort, peerHost, peerPort,
                           radioProxyType, proxyHttpHost, proxyHttpPort, proxyAutoconfUrl,
-                          radioControlType);
+                          radioControlType
+						  );
             }
         </script>
         <style type="text/css">
@@ -133,7 +132,7 @@
 	            position: absolute;
 	            left: 0px;
 	            top: 0px;
-	            width: 400px;
+	            width: 450px;
 	            height: 400px;
             }
             #wsText
@@ -321,13 +320,13 @@
                         	</div>
 				</div>
 				<div id="ID" class="mootabs_panel">
-                        	<div id="idAuthentTypeFacebookRadio">
-                            		<input id="radioIdAuthentTypeFacebook" name="radioIdAuthentType" type="radio" />
-                            		Facebook authentication
-                        	</div>
                         	<div id="idAuthentTypeSolipsisRadio">
                             		<input id="radioIdAuthentTypeSolipsis" name="radioIdAuthentType" checked="checked" type="radio" />
                             		Solipsis authentication (Worlds server)
+                        	</div>
+                        	<div id="idAuthentTypeFacebookRadio">
+                            		<input id="radioIdAuthentTypeFacebook" name="radioIdAuthentType" type="radio" />
+                            		Facebook authentication
                         	</div>
 				</div>
                     	<div id="Worlds" class="mootabs_panel">

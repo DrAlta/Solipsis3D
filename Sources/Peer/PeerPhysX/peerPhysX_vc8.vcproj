@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;&quot;..\..\..\Dependencies\peerModule\lib\$(ConfigurationName)&quot;"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;&quot;..\..\..\Dependencies\peerModule\lib\$(ConfigurationName)&quot;"
@@ -223,7 +223,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;..\..\..\Dependencies\peerModule\lib\Debug"
@@ -302,7 +302,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;..\..\..\Dependencies\peerModule\lib\Release"

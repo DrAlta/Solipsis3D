@@ -49,8 +49,6 @@ namespace Solipsis
 
     protected:
         GUI_Avatar();
-		~GUI_Avatar();
-
         static GUI_Avatar * stGUI_Avatar;
 
         void avatarMainPageLoaded(Navi* caller, const Awesomium::JSArguments& args);

@@ -57,7 +57,6 @@ namespace Solipsis
 
     protected:
         GUI_Modeler();
-		~GUI_Modeler();
         static GUI_Modeler * stGUI_Modeler;
         Navigator * mNavigator;
 

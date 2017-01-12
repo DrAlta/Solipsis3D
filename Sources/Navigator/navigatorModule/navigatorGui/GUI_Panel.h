@@ -23,11 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #ifndef __GUI_Panel_h__
 #define __GUI_Panel_h__
-#include <fstream>
+
 #include "NavigatorGui.h"
 
 using namespace NaviLibrary;
-using namespace std;
 
 namespace Solipsis 
 {
@@ -45,7 +44,6 @@ namespace Solipsis
 
         // Show the login page
         virtual bool show();
-
         virtual void hide();
         virtual void destroy();
         virtual bool isVisible();

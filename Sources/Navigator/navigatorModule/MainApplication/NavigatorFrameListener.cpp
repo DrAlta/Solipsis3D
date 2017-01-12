@@ -42,6 +42,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "navigatorGui/GUI_AvatarProperties.h"
 #include "navigatorGui/GUI_Chat.h"
 #include "navigatorGui/GUI_Debug.h"
+#include "navigatorGui/GUI_MessageBox.h"
+
+#include "HybridComAudio.h"
+#include <CTTimer.h>
+#include <Socket.h>
+
+Camera *myCamera;
+Camera *naviCam;
+Ogre::Vector3 hybridComPosition;
+Ogre::Vector3 hybridComRelative;
+bool _sendVideo = false;
 
 using namespace NaviLibrary;
 using namespace Solipsis;
@@ -51,6 +62,7 @@ using namespace CommonTools;
 #define ESCAPE_HITS_CANCEL_FOCUS_DURATION 1000
 #define ESCAPE_HITS_CANCEL_FOCUS 2
 
+Ogre::Viewport *genViewport;
 //-------------------------------------------------------------------------------------
 NavigatorFrameListener::NavigatorFrameListener(Navigator* navigator) :
     OgreFrameListener(navigator->getRenderWindowPtr(),navigator->getCameraPtr(),navigator->getSceneMgrPtr()),
@@ -65,6 +77,66 @@ NavigatorFrameListener::NavigatorFrameListener(Navigator* navigator) :
     mStandardOverlay = OverlayManager::getSingleton().getByName("Solipsis/StandardOverlay");
     if (mStandardOverlay != 0)
         mStandardOverlay->show();
+
+	// lion
+	/*m_spTex = Ogre::TextureManager::getSingleton().createManual("StreamTex",
+       Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D,
+	   320, 240, 0, 0, Ogre::PF_A8R8G8B8, Ogre::TU_RENDERTARGET, Ogre::TU_DEFAULT, 0, false, 4);*/
+
+	m_spTex = Ogre::TextureManager::getSingleton().createManual("StreamTex",
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, Ogre::TEX_TYPE_2D, 400, 240, 0, 0, Ogre::PF_A8R8G8B8, Ogre::TU_RENDERTARGET, 0 , false, 4);
+
+	//m_spTex->setFSAA(2);
+	genViewport = navigator->getCameraPtr()->getViewport();
+	Ogre::RenderTexture *pRenderTex = m_spTex ->getBuffer()->getRenderTarget();
+
+// Begin Test VV	
+	//navigator->setCameraMode(Navigator::CMAroundPerson);
+	naviCam = navigator->getCameraPtr();
+
+	myCamera = mSceneMgr->createCamera("MyCam");
+	
+    // Position it at 500 in Z direction
+	myCamera->setPosition(naviCam->getPosition());
+    myCamera->setOrientation(Quaternion::IDENTITY);
+    // Look back along -Z
+    myCamera->lookAt(Vector3(0,0,-1));
+    myCamera->setNearClipDistance(0.1f);
+	Ogre::Viewport *vp = pRenderTex->addViewport(myCamera);
+// End Test VV
+
+
+	//Ogre::Viewport *vp = pRenderTex->addViewport(navigator->getCameraPtr());
+	vp->setClearEveryFrame(true);
+	vp->setOverlaysEnabled(false);
+	pRenderTex->setAutoUpdated(true);
+
+	// Lion
+	struct sockaddr_in address, address1;
+	int destport = 0;
+	
+	hmedia = new HybridComAudio(0);
+	hmedia->sethlid("toto_audio"); // l'hyperlien
+	hmedia->sethost("www.dundal.com"); // server web dundal
+
+	hmedia->setDestPort(8974); // la ou on veux envoyer les frames.
+	hmedia->setRecvPort(8976); // reply.
+	hmedia->setDestHost("127.0.0.1");
+
+	hmedia -> winsockInit();
+
+	//address.sin_addr.s_addr = inet_addr(hmedia->getDestHost());
+	//int destport = hmedia->getDestPort();
+
+	lfSock = hmedia ->createSocket(SOCK_DGRAM, &destport, &address);
+
+	int recvport = hmedia->getRecvPort();
+	lfSock1 = hmedia ->createSocket(SOCK_DGRAM, &recvport, &address1);
+
+	nb_frame = 0;
+	timer.reset();
+	time_frame = timer.getMilliseconds();
+	currentView = "view0";
 }
 
 
@@ -98,12 +170,99 @@ bool NavigatorFrameListener::frameStarted(const FrameEvent& evt)
     if (mNavigator->getNavigatorSound() != 0)
         mNavigator->getNavigatorSound()->update();
 
-    // Updating emotions on the characters
-    if (mNavigator)
-        mNavigator->updateEmotions();
-
     return OgreFrameListener::frameStarted(evt);
 }
+
+
+bool NavigatorFrameListener::frameEnded(const FrameEvent& evt)
+{
+	if (_sendVideo) {
+		char log[256];
+		char mess [128];
+		char filename[64];
+		CommonTools::Timer::Time t;
+	        
+		Ogre::HardwarePixelBufferSharedPtr buffer;
+		Ogre::Image finaleImage, img;
+		
+		if ((t=timer.getMilliseconds()) < (time_frame + 50)){
+			return true;
+		}
+		int reftime=t - time_frame;
+		time_frame=t;
+		
+		buffer = m_spTex->getBuffer();
+		
+		Ogre::PixelBox pb(buffer->getWidth(), 
+			buffer->getHeight(), buffer->getDepth(), buffer->getFormat());
+		unsigned int len = buffer->getSizeInBytes();
+		pb.data = new unsigned char[len];
+		
+		buffer->blitToMemory(pb);
+
+		Ogre::uchar *readrefdata = static_cast<Ogre::uchar *>(pb.data);	
+		
+		sprintf (filename, "c://Images/image%d.png", nb_frame);
+		nb_frame ++;
+		finaleImage = finaleImage.loadDynamicImage( readrefdata, 
+			pb.getWidth(), pb.getHeight(), Ogre::PF_A8R8G8B8);
+		
+		finaleImage.save(filename);
+
+		_snprintf(log, sizeof(log) - 2, "frame event, save %s\n", filename);
+		OutputDebugString(log);
+
+		_snprintf ( mess, sizeof(mess), "%s", filename );
+
+		hmedia -> sendVideoFrame (lfSock, (const char *) mess, strlen(mess));	
+		delete pb.data;
+
+		char *reply = hmedia ->readFrom(lfSock1);
+
+		if (strcmp(reply, "view1")== 0){
+			if (strcmp(currentView.c_str(), reply) != 0 ){
+
+				myCamera->setOrientation(Quaternion::IDENTITY);
+				// Look back along -Z
+				myCamera->lookAt(Vector3(0,0,-1));
+
+				// switch to new position
+				myCamera->setPosition(hybridComPosition);
+				//myCamera->moveRelative(Vector3(0.8,1.8,-2.8));
+				myCamera->moveRelative(Vector3(1,2,-2.8));
+				myCamera->lookAt(hybridComPosition);
+				myCamera->setAutoTracking(false);
+				myCamera->setFOVy(Radian(110 * (Math::PI/180)));
+				myCamera->setNearClipDistance(0.5f);
+
+				currentView.erase();
+				currentView = "view1";
+			}
+		}
+		else {
+			// hybridcom camera
+			if (strcmp(currentView.c_str(), reply) != 0 ){
+
+				myCamera->setOrientation(Quaternion::IDENTITY);
+				// Look back along -Z
+				myCamera->lookAt(Vector3(0,0,-1));
+
+				// switch to hybridcom camera position
+				myCamera->setPosition(hybridComPosition);
+				myCamera->moveRelative(hybridComRelative);
+				myCamera->setAutoTracking(true, mNavigator->getUserAvatar()->getSceneNode(),Vector3(0,1,0));
+				myCamera->setFOVy(Radian(80 * (Math::PI/180)));
+				myCamera->setNearClipDistance(0.5f);
+
+				currentView.erase();
+				currentView = "view0";
+			}
+		}
+	}
+
+	return true;
+}
+
 
 //-------------------------------------------------------------------------------------
 bool NavigatorFrameListener::keyPressed(const KeyboardEvt& evt)
@@ -112,8 +271,9 @@ bool NavigatorFrameListener::keyPressed(const KeyboardEvt& evt)
     Modeler* modeler = mNavigator->getModeler();
     AvatarEditor* avatarEditor = mNavigator->getAvatarEditor();
 
-	// Force update of modeler tools
+#if 1 // GILLES MDLR
     mNavigator->computeGizmo();
+#endif
 
     // Escape hits count to cancel focus Navi/VNC/...
     if (evt.mKey == KC_ESCAPE)
@@ -410,24 +570,6 @@ bool NavigatorFrameListener::keyPressed(const KeyboardEvt& evt)
         }
         break;
 
-
-	/* Sample XDE Engine -- Remove when approved */
-	case KC_F1:
-        if (navigatorGUI != 0)
-            if(mNavigator->getState() == Navigator::SInWorld)
-            {
-				/*if (mNavigator->getUserAvatar()->getState() != ASAvatarXDE)
-				{
-					mNavigator->getUserAvatar()->setState(ASAvatarXDE);
-				}
-				else
-				{
-					mNavigator->getUserAvatar()->setState(ASAvatarFly);
-				}*/
-				mNavigator->getUserAvatar()->getCharacterInstance()->setToLowLevel(!mNavigator->getUserAvatar()->getCharacterInstance()->isLowLevel());
-            }
-            break;
-
     case KC_F8:
         if (navigatorGUI != 0)
             if(mNavigator->getState() == Navigator::SInWorld)
@@ -591,8 +733,9 @@ bool NavigatorFrameListener::keyReleased(const KeyboardEvt& evt)
 { 
     NavigatorGUI* navigatorGUI = mNavigator->getNavigatorGUI();
 
-	// Force update of modeler tools.
+#if 1 // GILLES MDLR
     mNavigator->computeGizmo();
+#endif
 
     // In modeler ?
     if (mNavigator->getState() == Navigator::SModeling)
@@ -701,9 +844,11 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
     // 3D picking of Navi panels if any NaviMaterial focused
     if (mNavigator->isNaviSupported())
     {
+#if 1 // GILLES MDLR
         mNavigator->computeGizmo();
+#endif
 
-		if ((mNavigator->getState() == Navigator::SInWorld) &&
+        if ((mNavigator->getState() == Navigator::SInWorld) &&
             NaviManager::Get().isAnyNaviFocused() 
             && NaviManager::Get().getFocusedNavi()->isMaterialOnly()
             && (Panel2DMgr::getSingleton().getFocusedPanel() == 0)
@@ -712,7 +857,8 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
             std::string focusedNavi = NaviManager::Get().getFocusedNavi()->getName();
             if (evt.mState.mZrel != 0) NaviManager::Get().getFocusedNavi()->injectMouseWheel(evt.mState.mZrel);
             // normalize (x, y) on 0..1 and get the ray emitted from the camera
-            Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+            //Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+			Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
             // Compute Navi panel mouse location
             Real closestDistance = -1.0f;
             Vector2 closestUV;
@@ -749,7 +895,8 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
             MovableObject* vncMovableObj = mNavigator->getPickedMovable();
             Entity* pickedEntity = static_cast<Entity*>(vncMovableObj->getParentSceneNode()->getAttachedObject(0));
             // normalize (x, y) on 0..1 and get the ray emitted from the camera
-            Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+            //Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+			Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
             // Compute VNC panel mouse location
             Real closestDistance = -1.0f;
             Vector2 closestUV;
@@ -782,7 +929,7 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
             MovableObject* swfMovableObj = mNavigator->getPickedMovable();
             Entity* pickedEntity = static_cast<Entity*>(swfMovableObj->getParentSceneNode()->getAttachedObject(0));
             // normalize (x, y) on 0..1 and get the ray emitted from the camera
-            Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+            Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
             // Compute SWF panel mouse location
             Real closestDistance = -1.0f;
             Vector2 closestUV;
@@ -946,9 +1093,10 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
         if( mNavigator->isOnGizmo )//&& !selection->isEmpty() )
         {
             //Calculate drag and drop :
-			Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
-
-			SceneNode *gizmoNode = mNavigator->getSceneMgrPtr()->getSceneNode("NodeSelection");
+			//Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+			Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
+#if 1 // GILLES MDLR
+            SceneNode *gizmoNode = mNavigator->getSceneMgrPtr()->getSceneNode("NodeSelection");
             Quaternion lYawGizmo(gizmoNode->getOrientation().getYaw(),Vector3::UNIT_Y);
             Quaternion lYawGizmoInverse(-gizmoNode->getOrientation().getYaw(),Vector3::UNIT_Y);
             //gizmoNode->setOrientation(Quaternion::IDENTITY);
@@ -964,7 +1112,9 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
             }
             else
                 dragNdrop = selection->mTransformation->drapNdrop( lYawGizmoInverse * selection->mTransformation->getMousePosOnDummyPlane(mouseRay) );
-
+#else
+			dragNdrop = selection->mTransformation->drapNdrop( selection->mTransformation->getMousePosOnDummyPlane(mouseRay) );			
+#endif
             if( dragNdrop != Vector3::ZERO )
             {
                 //Apply the transformation
@@ -1025,6 +1175,7 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
 		if (mNavigator->getMainCameraSupportManager()->getActiveCameraSupportName() == "ThirdPersonCameraSupport"/*getCameraMode() == CM3rdPerson*/)
 		{
 			//Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+			Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
 		}
 	}
 	else if (mNavigator->getMainCameraSupportManager()->getActiveCameraSupportName() == "AroundObjectCameraSupport"/*getCameraMode() == CMAroundObject*/) // We come back to the third person camera
@@ -1039,7 +1190,7 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
 //-------------------------------------------------------------------------------------
 bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
 {
-    if (evt.mState.mButtons & MBMiddle)
+	if (evt.mState.mButtons & MBMiddle)
         mMouseMiddlePressed = true;
 
 	if (evt.mState.mButtons & MBRight)
@@ -1083,9 +1234,11 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
         // 3D picking if no 2D panel focused
         MovableObject* previousPickedObj = mNavigator->getPickedMovable();
         mNavigator->resetMousePicking();
-        mNavigator->computeGizmo();
 
-		if (!NaviManager::Get().isAnyNaviFocused() &&
+#if 1 // GILLES MDLR
+        mNavigator->computeGizmo();
+#endif
+        if (!NaviManager::Get().isAnyNaviFocused() &&
             (Panel2DMgr::getSingleton().getFocusedPanel() == 0) &&
             (mNavigator->getState() == Navigator::SInWorld))
         {
@@ -1097,7 +1250,8 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
             else
             {
                 // normalize (x, y) on 0..1 and get the ray emitted from the camera
-                Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+				//Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+				Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
                 // compute the picking
                 mNavigator->computeMousePicking(mouseRay);
                 // Avatar/WWW Navi/VLC/VNC/SWF ?
@@ -1122,6 +1276,79 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
                         navi->injectMouseDown(naviX, naviY);
                     }
                 }
+				// BM ASA Added hybridcom plugin
+				else if (mNavigator->is1HybridcomHitByMouse(naviName, naviX, naviY))
+                {
+					// - KH - Check the local user is a friend of the object owner
+					// First extract the owner identifier from the movable name
+					const String& mvblName = mNavigator->getPickedMovable()->getName();
+					// Check the owner of the object is a friend of the local user
+					bool isFriendOfLocal = Navigator::getSingletonPtr()->checkIsFriendOfLocal(SNFacebook, mvblName);		//stubbedCheckIsFriendOfLocal(pUid);
+					LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorFrameListener::mousePressed() Owner of movable :%s %s a friend of local !", 
+												mvblName.c_str(), isFriendOfLocal ? "is" : "is not");
+
+					if (!isFriendOfLocal) {
+						GUI_MessageBox::getMsgBox()->show("Communication Control", "Sorry : communication not Allowed !", 
+															GUI_MessageBox::MBB_OK, 
+															GUI_MessageBox::MBB_EXCLAMATION);
+						// return to normal state					
+						return false;
+					} /*else {
+						GUI_MessageBox::getMsgBox()->show("Communication Control", "You are my Friend : talk to me !", 
+															GUI_MessageBox::MBB_OK, 
+															GUI_MessageBox::MBB_EXCLAMATION);
+					}*/
+					// set Camera relative to the HC Object clicked
+					if (mNavigator->getPickedMovable() != 0) {
+						// Position it at 500 in Z direction
+						hybridComPosition = mNavigator->getPickedMovable()->getParentNode()->getPosition();
+						myCamera->setPosition(hybridComPosition);
+						hybridComRelative = Vector3(0,mNavigator->getPickedMovable()->getBoundingBox().getMaximum().y / 2, 0);
+						myCamera->moveRelative(hybridComRelative);
+						//myCamera->setOrientation(mNavigator->getPickedMovable()->getParentSceneNode()->_getDerivedOrientation());
+						// Look back along -Z
+						//myCamera->lookAt(mNavigator->getUserAvatar()->getSceneNode()->_getDerivedPosition());
+						myCamera->setAutoTracking(true, mNavigator->getUserAvatar()->getSceneNode(),Vector3(0,1,0));
+						myCamera->setFOVy(Radian(80 * (Math::PI/180)));
+
+						currentView = "view0";
+					}
+					
+					// enable output video stream
+					_sendVideo = true;
+
+                    if ((evt.mState.mButtons & MBRight) && !GUI_ContextMenu::isContextVisible())
+                        GUI_ContextMenu::createAndShowPanel(evt.mState.mX, evt.mState.mY, GUI_ContextMenu::NAVI_CTXTHybridcom, naviName);
+                    else if (evt.mState.mButtons & MBLeft)
+                    {
+                        NaviLibrary::Navi* navi = NaviManager::Get().getNavi(naviName);
+                        NaviManager::Get().focusNavi(navi);
+                        navi->injectMouseDown(naviX, naviY);
+                    }
+//// Begin Test VV
+//						Vector3 pos;
+//						Quaternion orientation;
+//						pos = mUserAvatar->getSceneNode()->_getDerivedPosition();
+//						orientation = mUserAvatar->getSceneNode()->_getDerivedOrientation();
+//						Vector3 size = mUserAvatar->getEntity()->getBoundingBox().getSize();
+//
+//						mMainCameraSupportMgr->activeCameraSupport(CMAroundPerson);
+//						OrbitalCameraSupport* APSupportCam = (OrbitalCameraSupport*)mMainCameraSupportMgr->getCameraSupport(CMAroundPerson);
+//						APSupportCam->resetCameraSupport();
+//						mCamera->setOrientation(Quaternion::IDENTITY);
+//						// As x-axis is in front of the avatar, we need to put the z-axis of the camera along it
+//						APSupportCam->yaw(Radian(-Math::PI/2));
+//						// Put camera on the front of the avatar 
+//						APSupportCam->yaw(Radian(Math::PI));
+//						// Translate the origin of the camera support along the y axis to the middle of the avatar bbox
+//						APSupportCam->translateCameraSupport(0.0, 0.5*size.y, 0.0);
+//						APSupportCam->pitch(Degree(-15.));
+//						APSupportCam->setDistanceFromTarget(2*size.y);
+//						mUserAvatar->setMvtType(Avatar::MT3rdPerson);
+//// End Test VV
+                }
+
+// EM ASA Added hybridcom plugin
                 else if (mNavigator->is1VLCHitByMouse(movableObj))
                 {
                     if ((evt.mState.mButtons & MBRight) && !GUI_ContextMenu::isContextVisible())
@@ -1185,7 +1412,7 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
         {
             // the mouse is out of a naviPanel
             // normalize (x, y) on 0..1 and get the ray emitted from the camera
-            Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+            Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
             // compute the picking
             mNavigator->computeMousePicking(mouseRay);
         }
@@ -1216,7 +1443,10 @@ bool NavigatorFrameListener::mouseReleased(const MouseEvt& evt)
     {
         int buttonsId = (evt.mState.mButtons & MBLeft) ? LeftMouseButton : ((evt.mState.mButtons & MBRight) ? RightMouseButton : MiddleMouseButton);
 
+#if 1 // GILLES MDLR
         mNavigator->computeGizmo();
+#endif
+
         // Navi panels
         NaviManager::Get().injectMouseUp(buttonsId);
 
@@ -1233,7 +1463,7 @@ bool NavigatorFrameListener::mouseReleased(const MouseEvt& evt)
             {
                 std::string focusedNavi = NaviManager::Get().getFocusedNavi()->getName();
                 // normalize (x, y) on 0..1 and get the ray emitted from the camera
-                Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+                Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
                 // Compute Navi panel mouse location
                 Real closestDistance = -1.0f;
                 Vector2 closestUV;
@@ -1258,7 +1488,8 @@ bool NavigatorFrameListener::mouseReleased(const MouseEvt& evt)
                 MovableObject* vncMovableObj = mNavigator->getPickedMovable();
                 Entity* pickedEntity = static_cast<Entity*>(vncMovableObj->getParentSceneNode()->getAttachedObject(0));
                 // normalize (x, y) on 0..1 and get the ray emitted from the camera
-                Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+                //Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+				Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
                 // Compute VNC panel mouse location
                 Real closestDistance = -1.0f;
                 Vector2 closestUV;
@@ -1290,7 +1521,8 @@ bool NavigatorFrameListener::mouseReleased(const MouseEvt& evt)
                 MovableObject* swfMovableObj = mNavigator->getPickedMovable();
                 Entity* pickedEntity = static_cast<Entity*>(swfMovableObj->getParentSceneNode()->getAttachedObject(0));
                 // normalize (x, y) on 0..1 and get the ray emitted from the camera
-                Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+                //Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
+				Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)genViewport->getActualWidth(), (Real)evt.mState.mY/(Real)genViewport->getActualHeight());
                 // Compute SWF panel mouse location
                 Real closestDistance = -1.0f;
                 Vector2 closestUV;

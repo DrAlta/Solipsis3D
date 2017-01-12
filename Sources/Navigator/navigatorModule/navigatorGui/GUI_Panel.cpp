@@ -45,6 +45,7 @@ GUI_Panel::GUI_Panel(const std::string & panelName)
 //-------------------------------------------------------------------------------------
 GUI_Panel::~GUI_Panel()
 {
+    NavigatorGUI::unregisterGuiPanel(this);
 }
 
 //-------------------------------------------------------------------------------------
@@ -61,8 +62,6 @@ bool GUI_Panel::show()
 
     return true;
 }
-
-
 
 //-------------------------------------------------------------------------------------
 bool GUI_Panel::isVisible()
@@ -104,6 +103,11 @@ void GUI_Panel::destroy()
     NaviLibrary::NaviManager::Get().destroyNavi(mNavi);
     m_curState = NSNotCreated;
     mNavi = NULL;
+
+    if (NavigatorGUI::getCurrentPanel() == this)
+    {
+        NavigatorGUI::setCurrentPanel(NULL);
+    }
 }
 
 //-------------------------------------------------------------------------------------

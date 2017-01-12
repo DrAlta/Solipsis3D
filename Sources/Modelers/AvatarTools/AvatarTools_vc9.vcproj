@@ -190,10 +190,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Emotion.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Goody.cpp"
 				>
 			</File>
@@ -207,14 +203,6 @@
 			</File>
 			<File
 				RelativePath=".\src\IFaceControllerCreator.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ManualPoseV2.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\ManualPoseV2.h"
 				>
 			</File>
 			<File
@@ -261,10 +249,6 @@
 			</File>
 			<File
 				RelativePath=".\include\CoupleOfPoses.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\Emotion.h"
 				>
 			</File>
 			<File

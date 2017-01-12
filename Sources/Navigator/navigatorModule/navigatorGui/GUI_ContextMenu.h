@@ -47,6 +47,9 @@ namespace Solipsis
             NAVI_CTXTVNC,
             NAVI_CTXTSWF,
 
+// BM ASA added hybridcom plugin
+			NAVI_CTXTHybridcom,
+// EM ASA added hybridcom plugin
             NAVI_CTXTCOUNT
         };
 
@@ -57,8 +60,6 @@ namespace Solipsis
 
     protected:
         GUI_ContextMenu();
-		~GUI_ContextMenu();
-
         virtual bool show(int x, int y, NaviContext ctxtPanel, const String& params);
         //virtual void hide();
         virtual void destroy();
@@ -85,6 +86,12 @@ namespace Solipsis
         // VNC callbacks 
         void onVNCPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
         void onVNCCommand(Navi* caller, const Awesomium::JSArguments& args);
+
+		// ASA BM added hybridcom plugin
+        // Hybridcom callbacks 
+        void onHybridcomPanelLoaded(Navi* caller, const Awesomium::JSArguments& args);
+        void onHybridcomCommand(Navi* caller, const Awesomium::JSArguments& args);
+		// ASA EM added hybridcom plugin
 
         static GUI_ContextMenu * stGUI_ContextMenu;
         static const std::string ms_NavisContexts[NAVI_CTXTCOUNT];

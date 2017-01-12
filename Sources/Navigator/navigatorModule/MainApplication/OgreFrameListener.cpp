@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "OgreFrameListener.h"
 #include "OgreTools/OgreHelpers.h"
 
+
 using namespace Solipsis;
 
 // used to add or remove the debug overlay
@@ -56,7 +57,6 @@ OgreFrameListener::OgreFrameListener(RenderWindow* win, Camera* cam, SceneManage
     showDebugOverlay(true);
 #endif
 
-
     // Populate the camera and scene manager containers
     if ((cam != 0) && (cam->getParentSceneNode() != 0))
         mCamNode = cam->getParentSceneNode()->getParentSceneNode();
@@ -65,10 +65,12 @@ OgreFrameListener::OgreFrameListener(RenderWindow* win, Camera* cam, SceneManage
 
     mRotate = 0.13;
     mMove = 250;
-    mDirection = Vector3::ZERO;
+	mDirection = Vector3::ZERO;
     mContinue = true; // continue rendering
     mFocused = mWindow->isActive();
     mWindow->setDeactivateOnFocusChange(false);
+
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -107,7 +109,7 @@ bool OgreFrameListener::frameEnded(const FrameEvent& evt)
     updateStats();
 #endif
 
-    return true;
+	return true;
 }
 
 //-------------------------------------------------------------------------------------
@@ -144,6 +146,7 @@ bool OgreFrameListener::mouseMoved(const MouseEvt& evt)
 //-------------------------------------------------------------------------------------
 bool OgreFrameListener::mousePressed(const MouseEvt& evt)
 {
+	
     return true;
 }
 

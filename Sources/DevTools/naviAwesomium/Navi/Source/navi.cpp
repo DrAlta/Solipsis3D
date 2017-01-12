@@ -73,8 +73,6 @@ Navi::Navi(const std::string& name, unsigned short width, unsigned short height,
 
     mtlName = "";
     internalMtl = false;
-
-	eventListeners.resize(0);
 // END GREG
 
 	createMaterial();

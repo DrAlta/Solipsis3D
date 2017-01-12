@@ -53,6 +53,7 @@ VLCTextureSource::VLCTextureSource(VLCPlugin *plugin)
     : mPlugin(plugin)
 {
     mDictionaryName = "vlc";
+    mParamDictName = "vlc";
     mPlugInName = "VLC texture source plugin";
     mMrl = "";
     mWidth = DEFAULT_WIDTH;

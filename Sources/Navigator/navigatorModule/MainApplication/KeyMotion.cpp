@@ -88,7 +88,7 @@ void KeyMotion::update(Real timeSinceLastFrame)
         // Approximation
         mMotion *= 1.0 - std::max(1.0, (1.0 - mDecelerationFactor)*(timeSinceLastFrame*60.0));
         if (mMotion < mImpulse)
-            mMotion = 0.0f;
+			mMotion = 0.0f;
     }
 }
 

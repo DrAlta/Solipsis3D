@@ -44,8 +44,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "AvatarEditor.h"
 #include "Cameras/CameraSupportManager.h"
 #include "Configuration\NavigatorConfiguration.h"
-#include <Emotion.h>
 
+// To manage SN friend Lists 
+#include "FriendUserDB.h"
 
 namespace Solipsis {
 
@@ -58,6 +59,8 @@ namespace Solipsis {
 class Modeler;
 class AvatarEditor;
 
+// - KH - 
+class Facebook;
 
 /** The main class of Navigator application.
  */
@@ -85,20 +88,24 @@ public:
     static const uint32 QFVLCPanel = QFNaviPanel<<1;
     static const uint32 QFVNCPanel = QFVLCPanel<<1;
     static const uint32 QFSWFPanel = QFVNCPanel<<1;
-    static const uint32 QFAvatar = QFSWFPanel<<1;
+	static const uint32 QFAvatar = QFSWFPanel<<1;
     static const uint32 QFObject = QFAvatar<<1;
     static const uint32 QFGizmo = QFObject<<1;
+   // BM ASA added hybridcom plugin
+	static const uint32 QFHybridcomPanel = QFGizmo<<1;
+   // EM ASA added hybridcom plugin
+
     enum NavigationInterface
     {
         NIMouseKeyboard = 0,
         NIWiimoteNunchuk,
         NIWiimoteNunchukIR
     };
-
-    void saveConfiguration()
-    {
+   
+     void saveConfiguration()
+     {
         mConfiguration.saveConfig();
-    }
+     }
 
 private:
     static Navigator* ms_singletonPtr;
@@ -125,6 +132,36 @@ protected:
 	unsigned int mVoIPSilenceLatency;
     bool mCastShadows;
 
+	//// - KH -  adding SN friends handling //////////
+	FriendUserDB* mFriendUserDB;
+    Facebook *mFacebook;
+//	TwitterCon *mTwitterCon;
+	std::list<Avatar*> mGuestAvatarsList;
+
+	//// - KHbis -  adding new twitter authentication scheme
+	std::string mTwitterConsumerKey;
+    std::string mTwitterConsumerSecret;
+    std::string mOauthAccessToken;
+    std::string mOauthAccessTokenSecret;
+
+	bool mUseFacebookSN;
+	bool mUseTwitterSN;
+
+	bool mShowFriendModeEnabled;
+
+	String mFacebookUid;
+	String mTwitterUid;
+
+	int mModuloFriend;
+	// - KH - end 
+
+	// BM ASA/LF HybridCom add conf params
+	String mMetaverseHome;
+	String mMediaServer;
+	String mAppName;	
+	String mStreamName;
+//	String mVid;
+	// EM ASA/LF HybridCom add conf params
 
     Configuration mConfiguration;
 
@@ -150,6 +187,9 @@ protected:
     Real mMaxVLCPickingDistance;
     Real mMaxVNCPickingDistance;
     Real mMaxSWFPickingDistance;
+	// BM ASA added hybridcom plugin
+	Real mMaxHybridcomPickingDistance;
+	// BM ASA added hybridcom plugin
     RaySceneQuery* mRaySceneQuery;
     MovableObject* mPickedMovable;
     Real mClosestDistance;
@@ -163,12 +203,11 @@ protected:
 
     Avatar* mUserAvatar;
 
+//    bool mFakeTerrain;
+
     NavigatorSound* mNavigatorSound;
 
     std::map<String, String> mNaviURLUpdatePending;
-
-    // the emotion todo list (map)
-    std::map<std::string, std::list<Emotion*> > mEmotionTodoLst;
 
 public:
     Navigator(const String name, IApplication* application);
@@ -220,6 +259,52 @@ public:
     void setCastShadows(bool castShadows);
     bool getCastShadows();
 
+//////// - KH - Adding handling of SN identities
+	const Facebook* getFacebookCon() {return mFacebook;}
+	void setFacebookCon(Facebook* fcbk) {mFacebook = fcbk;}
+	void computeFacebookFriendList();
+	void computeTwitterFriendList();
+	bool getUseFacebookSN(){return mUseFacebookSN;}
+	bool getUseTwitterSN(){return mUseTwitterSN;}
+	void setUseFacebookSN(const bool useFcbkId) {mUseFacebookSN = useFcbkId;}
+	void setUseTwitterSN(const bool useTwitterId){mUseTwitterSN = useTwitterId;}
+
+	const String& getTwitterConsumerKey() { return mTwitterConsumerKey; }
+    void setTwitterConsumerKey(const String& apiKey) { mTwitterConsumerKey = apiKey; }
+    const String& getTwitterConsumerSecret() { return mTwitterConsumerSecret; }
+    void setTwitterConsumerSecret(const String& secret) { mTwitterConsumerSecret = secret; }
+
+	const String& getFacebookLogin();
+	void setFacebookLogin(const String& fcbklogin);
+	const String& getFacebookPwd();
+	void setFacebookPwd(const String& fcbkpwd);
+	const String& getTwitterLogin();
+	void setTwitterLogin(const String& twitterlogin);
+	const String& getTwitterPwd();
+	void setTwitterPwd(const String& pwd);
+	// Check if pUid has friend relation ship with local user
+	bool checkIsFriendOfLocal(const SNTypeEnum snId, const String& snLoginName);
+	// Toggle Showing Friends Mode icons for friends
+	void toggleShowFriendsMode();
+	// Extract user Id name from a nodeId
+	String getId(const String&);
+	// Check and Set friendship of the given nodeId with the local user
+	void setFriendOfLocal(const void* avatarPtr, const String& uid, const String& fcbkUid, const String& twtrUid);
+
+	String getFacebookUid(){ return mFacebookUid;}
+	void setFacebookUid(const String& uid){mFacebookUid = uid;}
+	String getTwitterUid(){ return mTwitterUid;}
+	void setTwitterUid(const String& uid){mTwitterUid = uid;}
+
+	bool getShowFriendMode(){ return mShowFriendModeEnabled;}
+
+	// - KH - Stubbed methods to manage SN links
+	bool stubbedCheckIsFriendOfLocal(const String& pUid);
+	void toggleStubbedShowFriendsMode();
+	void OutputHeading( const char * explanation );
+
+	//-------------------------------------------------------------------------------------
+
     void setNavigationInterface(NavigationInterface ni);
     NavigationInterface getNavigationInterface(); 
 
@@ -261,7 +346,9 @@ public:
 #ifdef DEMO_VOICE
     void demoVoice(const String params);
 #endif
-
+#ifdef DEMO_HYBRIDCOM
+    void demoHybridcom();
+#endif
     // Navi 3D panels management
     String getEntityNaviName(const Entity& entity);
     Entity* getNaviEntity(const String& naviName);
@@ -269,9 +356,10 @@ public:
     // Mouse ray picking
     void resetMousePicking();
     bool computeMousePicking(Ray& mouseRay);
+#if 1 // GILLES MDLR
     bool computeGizmo();
-
-	MovableObject* getPickedMovable() { return mPickedMovable; }
+#endif
+    MovableObject* getPickedMovable() { return mPickedMovable; }
     bool is1NaviHitByMouse(String& naviName, int& naviX, int& naviY);
     void computeNaviHit(const String& naviName,
                         Vector2& closestUV,
@@ -286,13 +374,18 @@ public:
     void computeVncHit(Vector2& closestUV,
                        Vector2& closestTriUV0, Vector2& closestTriUV1, Vector2& closestTriUV2,
                        Vector2& vncXY);
+// BM ASA added hybridcom plugin
+
+    bool is1HybridcomHitByMouse(String& naviName, int& naviX, int& naviY);
+    void computeHybridcomHit(const String& naviName,
+                        Vector2& closestUV,
+                        Vector2& closestTriUV0, Vector2& closestTriUV1, Vector2& closestTriUV2,
+                        int& naviX, int& naviY);
+// EM ASA added hybridcom plugin
+
+
     bool is1AvatarHitByMouse(Avatar*& avatar);
     bool is1ObjectHitByMouse(Object*& object);
-
-    // update the emotions rendering
-    void updateEmotions();
-    // Add a new emotion to the emotion todo list (to render)
-    void applyNewEmotion(const std::string& uid, const std::string& emotionName);
 
     bool quit();
     bool connect();
@@ -366,6 +459,15 @@ public:
     void onMouseReleased(const MouseEvt& evt);
 
     void MdlrModifGizmo(Vector3 dep);
+
+	/// KH add-ons
+	void storeFCBKFriendList(const NodeId&, const list<String_Pair>&);
+	void storeTWTRFriendList(const NodeId&, const list<String_Pair>&);
+	void storePNSCLFriendList(const NodeId&, const list<String_Pair>&);
+
+	//StreamListener * streamListener;
+
+	//////////////////////////////////////
 
 protected:
     /** These methods implement Instance

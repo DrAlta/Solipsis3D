@@ -282,6 +282,22 @@ FModSpeexVoipHandler::FModSpeexVoipHandler(FMOD::System* system,
 
     CodecPtr speexCodec(new VoiceCodecSpeex(frequency));
     setRecordCodec(speexCodec);
+
+	// Lion
+//	int port=0;
+//	struct sockaddr_in address;
+
+//	hmedia = new HybridComAudio(0);
+//	hmedia->sethlid("toto_audio"); // l'hyperlien
+//	hmedia->sethost("www.dundal.com"); // server web dundal
+
+//	hmedia->setDestPort(3000); // la ou on veux envoyer les frames.
+//	hmedia->setDestHost("172.25.71.148");
+
+//	hmedia -> winsockInit();
+//	lfSock = hmedia ->createSocket(SOCK_DGRAM, &port, &address);
+
+
 }
 
 FModSpeexVoipHandler::~FModSpeexVoipHandler()
@@ -987,6 +1003,10 @@ int FModSpeexVoipHandler::sendAudioFrames(unsigned int from, unsigned int to)
                 unsigned short frameEncodedSize = encodeAudioFrame(lastFrom, lastFrom+frameSizePCM, &encBuffer[encodedSize]);
 //                 unsigned short encodedSize = encodeAudioFrame(&audioBuffer[i*frameSizePCM*mRecordSampleSize],
 //                                                    lastFrom, lastFrom+frameSizePCM, &encBuffer[size]);
+				if (frameEncodedSize != 38) {
+					int i = 0;
+				}
+
                 lastFrom += frameSizePCM;
                 if (frameEncodedSize == 0)
                 {
@@ -1071,12 +1091,54 @@ int FModSpeexVoipHandler::sendAudioFrames(unsigned int from, unsigned int to)
                     mSock.send((const char*)&flagsDatas, flagsSize);
                 mSock.send((const char*)frameHeaders, frameHeadersSize);
                 mSock.send(encBuffer, header.audioSize);
-            }
+          
+				// Code lion
+				char *bufferInfos = (char *)malloc (128);
+				memset(bufferInfos, '\0', 128);
 
+				  //sprintf (bufferInfos, "Before header len=%d", strlen((const char *)&header));
+				//sprintf (bufferInfos, "NumFrames=%d EncodedSize=%d", numFrames, encodedSize);
+				  //hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos, strlen(bufferInfos));
+				  memset(bufferInfos, '\0', 128);
+				//hmedia -> sendAudioFrame (lfSock, (const char *) &header);
+				//  sprintf (bufferInfos, "After header");
+				//  hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				 // memset(bufferInfos, '\0', 128);
+
+				if (flagsSize > 0){
+				   // sprintf (bufferInfos, "Before flagsDatas len=%d", strlen((const char *)&flagsDatas));
+				   // hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				   // memset(bufferInfos, '\0', 128);
+                  //hmedia -> sendAudioFrame(lfSock, (const char*)&flagsDatas);
+				    //sprintf (bufferInfos, "After flagsDats");
+				    //hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				    //memset(bufferInfos, '\0', 128);
+				}
+				  //sprintf (bufferInfos, "Before frameHeaders len=%d", strlen((const char *)frameHeaders));
+				  //hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				  //memset(bufferInfos, '\0', 128);
+				//hmedia -> sendAudioFrame (lfSock, (const char *) frameHeaders);
+				  //sprintf (bufferInfos, "After frameHeaders");
+				  //hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				  //memset(bufferInfos, '\0', 128);
+				  
+				  //sprintf (bufferInfos, "Before encBuffer len=%d", strlen((const char *)encBuffer));
+				  //hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				  //memset(bufferInfos, '\0', 128);
+				//hmedia -> sendAudioFrame (lfSock, (const char *) encBuffer, header.audioSize); 
+				  //sprintf (bufferInfos, "After encBuffer");
+				  //hmedia -> sendAudioFrame (lfSock, (const char *) bufferInfos);
+				  //memset(bufferInfos, '\0', 128);
+				
+			}
 			// send phonemes
 			{
 				Solipsis::SocketOStream stream( mSock );
 				pPhonemeSequence->serialize( stream );
+
+				//Solipsis::SocketOStream stream1( lfSock );
+				//pPhonemeSequence->serialize( stream1 );
+				
 			}
 			//std::string talkingAvatarUid = "SAmLRc8iixAu66ssbS-ke0F_00000000";
 

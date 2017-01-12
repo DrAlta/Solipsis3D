@@ -55,7 +55,7 @@ namespace Solipsis
      
     protected:
         GUI_ChooseWorld();
-		~GUI_ChooseWorld();
+
  
         static GUI_ChooseWorld * stGUI_ChooseWorld;
 

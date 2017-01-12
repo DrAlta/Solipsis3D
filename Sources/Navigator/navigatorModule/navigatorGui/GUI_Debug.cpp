@@ -39,22 +39,18 @@ GUI_Debug * GUI_Debug::stGUI_Debug = NULL;
 //-------------------------------------------------------------------------------------
 GUI_Debug::GUI_Debug() : GUI_Panel("uidebug")
 {
-	m_curState = NSNotCreated;
+    stGUI_Debug = this;
+
     mNavigator = Navigator::getSingletonPtr();
     mNaviMgr = NavigatorGUI::getNaviMgr();
 }
 
-GUI_Debug::~GUI_Debug()
-{
-	stGUI_Debug = NULL;
-}
-
 //-------------------------------------------------------------------------------------
-void GUI_Debug::switchPanel()
+/*static*/ void GUI_Debug::switchPanel()
 {
     if (!stGUI_Debug)
     {
-        stGUI_Debug = new GUI_Debug();
+        new GUI_Debug();
         stGUI_Debug->show();
     }
     else

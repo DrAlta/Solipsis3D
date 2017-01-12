@@ -47,7 +47,6 @@ NavigatorGUI::NavigatorGUI(Navigator* navigator) :
     mLoginInfosText(""),
     m_pCurrentPanel(NULL)
 {
-	m_panels.clear();
     // Initializing Navi
     mNaviMgr = new NaviLibrary::NaviManager(mNavigator->getRenderWindowPtr()->getViewport(0), "./NaviLocal");
     mNaviMgr->setZOrderMinMax(200, 299);
@@ -68,10 +67,18 @@ NavigatorGUI::~NavigatorGUI()
     // Remove ourself as a Window listener
     WindowEventUtilities::removeWindowEventListener(mNavigator->getRenderWindowPtr(), this);
 
-	destroyAllRegisteredPanels();
-
     // Finalizing 2D Panels manager
     delete mPanel2DMgr;
+
+    for (std::map<std::string, GUI_Panel *>::iterator it = m_panels.begin(); 
+        it != m_panels.end(); 
+        it = m_panels.begin())
+    {
+        GUI_Panel * pPanel = it->second;
+        pPanel->destroy();
+        // panel deletion will remove it from the list
+        delete pPanel;
+    }
 
     // Finalizing Navi
     delete mNaviMgr;
@@ -124,9 +131,9 @@ void NavigatorGUI::update()
     if (Mouse::getSingletonPtr() != 0)
         Mouse::getSingletonPtr()->update();
 
-    if (mNaviGui->m_pCurrentPanel)
+    if (m_pCurrentPanel)
     {
-        mNaviGui->m_pCurrentPanel->update();
+        m_pCurrentPanel->update();
     }
 
     GUI_StatusBar::updateBar();
@@ -163,8 +170,9 @@ bool NavigatorGUI::isMouseVisible()
 void NavigatorGUI::inWorld()
 {
     destroyAllRegisteredPanels();
+
     // show menu and status bar
-	GUI_MainMenu::createAndShowPanel();
+    GUI_MainMenu::createAndShowPanel();
     GUI_StatusBar::createAndShowPanel();
 }
 
@@ -237,21 +245,18 @@ void NavigatorGUI::registerGuiPanel(GUI_Panel *pPanel)
 }
 
 //-------------------------------------------------------------------------------------
+void NavigatorGUI::unregisterGuiPanel(GUI_Panel *pPanel)
+{
+    mNaviGui->m_panels.erase(pPanel->getPanelName());//  .remove(pPanel->getPanelName());
+}
+
+//-------------------------------------------------------------------------------------
 void NavigatorGUI::destroyAllRegisteredPanels()
 {
-	int l = mNaviGui->m_panels.size();
-	std::map<std::string, GUI_Panel *>::iterator it = mNaviGui->m_panels.begin();
-	while (it != mNaviGui->m_panels.end())
-	{
+    for (std::map<std::string, GUI_Panel *>::iterator it = mNaviGui->m_panels.begin(); it != mNaviGui->m_panels.end(); it++)
+    {
         it->second->destroy();
-		GUI_Panel *lPanel = it->second;
-		delete lPanel;
-		lPanel = NULL;
-		it++;
     }
-	mNaviGui->m_panels.clear();
-	// The current panel has been destroyed
-	mNaviGui->m_pCurrentPanel = NULL;
 }
 
 //-------------------------------------------------------------------------------------
@@ -260,16 +265,7 @@ void NavigatorGUI::destroyCurrentPanel()
     if (mNaviGui->m_pCurrentPanel)
     {
         mNaviGui->m_pCurrentPanel->destroy();
-		// unregister the current panel
-		mNaviGui->m_panels.erase(mNaviGui->m_pCurrentPanel->getPanelName());
-		delete mNaviGui->m_pCurrentPanel;
-		mNaviGui->m_pCurrentPanel = NULL;
     }
 }
 
-//-------------------------------------------------------------------------------------
-void NavigatorGUI::setCurrentPanel(GUI_Panel * pCurrentPanel)
-{
-    mNaviGui->m_pCurrentPanel = pCurrentPanel;
-}
 //-------------------------------------------------------------------------------------

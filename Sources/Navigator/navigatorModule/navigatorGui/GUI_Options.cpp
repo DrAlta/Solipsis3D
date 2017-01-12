@@ -26,12 +26,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "GUI_Options.h"
 #include "GUI_login.h"
 
-
 #include <CTLog.h>
 #include <CTStringHelpers.h>
 #include <Navi.h>
 
 #include "GUI_ChooseWorld.h"
+#include <Facebook.h>
 
 using namespace Solipsis;
 using namespace CommonTools;
@@ -41,25 +41,20 @@ GUI_Options * GUI_Options::stGUI_Options = NULL;
 //-------------------------------------------------------------------------------------
 GUI_Options::GUI_Options() : GUI_Panel("uioptions")
 {
-	m_curState = NSNotCreated;
+    stGUI_Options = this;
     mNavigator = Navigator::getSingletonPtr();
     mNaviMgr = NavigatorGUI::getNaviMgr();
 }
 
-GUI_Options::~GUI_Options()
-{
-	stGUI_Options = NULL;
-}
-
 //-------------------------------------------------------------------------------------
-bool GUI_Options::createAndShowPanel()
+/*static*/ bool GUI_Options::createAndShowPanel()
 {
-	// Hide previous Navi UI
-	NavigatorGUI::destroyAllRegisteredPanels();
-	// stGUI_Options is now invalid because destroyAllRegisteredPanels() has destroyed this panel 
-	// => we start with a new one
-	stGUI_Options = new GUI_Options();
-	return stGUI_Options->show();
+    if (!stGUI_Options)
+    {
+        new GUI_Options();
+    }
+
+    return stGUI_Options->show();
 }
 
 //-------------------------------------------------------------------------------------
@@ -67,6 +62,8 @@ bool GUI_Options::show()
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_Options::show()");
 
+    // Hide previous Navi UI
+    NavigatorGUI::destroyAllRegisteredPanels();
 
     if (m_curState == NSNotCreated)
     {
@@ -210,9 +207,15 @@ void GUI_Options::onOk(Navi* caller, const Awesomium::JSArguments& args)
     radioControlType =  args.at(11).toString();
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "radioProxyType=%s, proxyHttpHost=%s, proxyHttpPort=%d, proxyAutoconfUrl=%s, controlType=%s", radioProxyType.c_str(), proxyHttpHost.c_str(), proxyHttpPort, proxyAutoconfUrl.c_str(), radioControlType.c_str());
 
-    // Check
+	// - KH - Add social networks identities
+	// - KHbis - use SN to authenticate and compute friend list 
+    bool useFcbkId;
+
+	// Check
     AuthentType authentType = (AuthentType)radioIdAuthentType.c_str()[0];
-    bool valid_options = true;
+	useFcbkId = (authentType == ATFacebook);
+
+	bool valid_options = true;
     if (wsHost.length() < 2)
     {
         // Bad hostname
@@ -318,10 +321,14 @@ void GUI_Options::onOk(Navi* caller, const Awesomium::JSArguments& args)
 
         mNavigator->setNavigationInterface(controlType);
 
-        // empty info text
+		// - KHbis - indicate to appli that SN networks should be taken into account
+		mNavigator->setUseFacebookSN(useFcbkId);
+		mNavigator->setUseTwitterSN(false);
+
+		// empty info text
         mNavi->evaluateJS("$('infosText').innerHTML = ''");
 
-        mNavigator->saveConfiguration();
+		mNavigator->saveConfiguration();
 
         // Return to Navi UI login
         GUI_Login::createAndShowPanel();

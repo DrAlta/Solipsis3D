@@ -48,7 +48,6 @@ namespace Solipsis
 
     protected:
         GUI_MainMenu();
-		~GUI_MainMenu();
         static GUI_MainMenu * stGUI_MainMenu;
         Navigator * mNavigator;
     };

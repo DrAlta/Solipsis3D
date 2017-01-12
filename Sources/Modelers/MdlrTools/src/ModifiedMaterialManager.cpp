@@ -290,7 +290,7 @@ void ModifiedMaterialManager::clearTextures()
         TextureNameExtParamsMap::iterator it;
         while (itText != mTextures.end())
         {        
-
+#if 1 // GILLES
             Solipsis::TextureExtParamsMap *textureExtParamsMap;
             textureExtParamsMap = getTextureExtParamsMap((*itText));
             if (textureExtParamsMap)
@@ -303,6 +303,7 @@ void ModifiedMaterialManager::clearTextures()
                         ms_MMMTextureManager->pauseEffect( this, (*itText)->getName(), *textureExtParamsMap );
                 }
             }
+#endif
             it = mTextureNameExtParamsMap.find((*itText)->getName());
             if (it != mTextureNameExtParamsMap.end())
                 ms_MMMTextureManager->releaseTexture(this, (*itText)->getName(), it->second);
@@ -335,6 +336,7 @@ void ModifiedMaterialManager::deleteTexture(TexturePtr pTexture)
         // Destroy texture
         if (ms_MMMTextureManager != 0)
         {
+#if 1 // GILLES
             Solipsis::TextureExtParamsMap *textureExtParamsMap;
             textureExtParamsMap = getTextureExtParamsMap(pTexture);
             if (textureExtParamsMap)
@@ -347,6 +349,7 @@ void ModifiedMaterialManager::deleteTexture(TexturePtr pTexture)
                         ms_MMMTextureManager->pauseEffect( this, pTexture->getName(), *textureExtParamsMap );
                 }
             }
+#endif
             TextureNameExtParamsMap::iterator it = mTextureNameExtParamsMap.find(pTexture->getName());
             if (it != mTextureNameExtParamsMap.end())
             {

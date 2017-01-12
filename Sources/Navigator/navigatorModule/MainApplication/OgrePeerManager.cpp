@@ -187,13 +187,13 @@ bool OgrePeerManager::action(RefCntPoolPtr<XmlAction>& xmlAction)
 {
     if (xmlAction->getType() == ATChat)
     {
-        //String from = "???";
-        //OgrePeersMap::iterator it = mOgrePeersMap.find(xmlAction->getSourceEntityUid());
-        //if (it != mOgrePeersMap.end())
-        //    from = it->second->getXmlEntity()->getName();
-		// We send the UUID to the chat
-		GUI_Chat::addText(xmlAction->getSourceEntityUid(), xmlAction->getDesc());
-   }
+        String from = "???";
+        OgrePeersMap::iterator it = mOgrePeersMap.find(xmlAction->getSourceEntityUid());
+        if (it != mOgrePeersMap.end())
+            from = it->second->getXmlEntity()->getName();
+
+        GUI_Chat::addText(StringHelpers::convertStringToWString(from) + L" " + xmlAction->getDesc());
+    }
 
     OgrePeersMap::iterator it = mOgrePeersMap.find(xmlAction->getTargetEntityUid());
     if ((it == mOgrePeersMap.end()) || (it->second == 0))
@@ -448,8 +448,9 @@ OgrePeer* OgrePeerManager::createAvatarNode(RefCntPoolPtr<XmlEntity>& xmlEntity)
         throw Exception(Exception::ERR_INTERNAL_ERROR, "No scene manager !", "OgrePeerManager::CreateAvatarNode");
 
     bool isLocal = (xmlEntity->getOwner() == mNodeId);
+	String pUid = xmlEntity->getUid();
 
-    String defaultCharacterName = "";
+	String defaultCharacterName = "";
     XmlLodContent::LodContentFileList& lodContentFileList = xmlEntity->getContent()->getContentLodMap()[0]->getLodContentFileList();
     for (XmlLodContent::LodContentFileList::const_iterator it = lodContentFileList.begin(); it != lodContentFileList.end(); ++it)
         if (it->mFilename.find(".saf") == it->mFilename.length() - 4)
@@ -457,9 +458,10 @@ OgrePeer* OgrePeerManager::createAvatarNode(RefCntPoolPtr<XmlEntity>& xmlEntity)
     CharacterInstance* characterInstance = CharacterManager::getSingletonPtr()->loadCharacterInstance(xmlEntity->getUid(), defaultCharacterName);
     if (characterInstance == 0)
         throw Exception(Exception::ERR_INTERNAL_ERROR, "Unable to create character instance !", "OgrePeerManager::CreateAvatarNode");
-    if (isLocal)
+	if (isLocal) {
         // set the current user character editable by the avatar editor
         AvatarEditor::getSingletonPtr()->setCharacterInstance(characterInstance);
+	}
 
     characterInstance->getEntity()->setCastShadows(Navigator::getSingletonPtr()->getCastShadows());
 
@@ -469,10 +471,12 @@ OgrePeer* OgrePeerManager::createAvatarNode(RefCntPoolPtr<XmlEntity>& xmlEntity)
     peerAvatar->setStateAnimName(ASAvatarRun, "Run");
     peerAvatar->setStateAnimName(ASAvatarFly, "Fly");
     peerAvatar->setStateAnimName(ASAvatarSwim, "Swim");
-	peerAvatar->setStateAnimName(ASAvatarXDE, "XDE");
+#if 0 // GILLES FLY
+    peerAvatar->setState(ASAvatarFly);
+#else
+    peerAvatar->setState(ASAvatarIdle);
+#endif
 
-	// init to Fly by default
-	peerAvatar->setState(ASAvatarFly);
 
     if (isLocal)
     {
@@ -480,10 +484,22 @@ OgrePeer* OgrePeerManager::createAvatarNode(RefCntPoolPtr<XmlEntity>& xmlEntity)
 
 /*	    characterInstance->saveModified();
         OnUserAvatarSave();*/
-    }
-
-    if (mCallbacks != 0)
+    } else {
+		// if not the local user -> check potential friend relationship between the local user of this avatar owner
+		Navigator::getSingletonPtr()->setFriendOfLocal(peerAvatar, pUid, pUid, "");		// setStubbedFriendOfLocal(isFriendOfLocal);
+		
+		// - KH -
+		bool isFriendOfLocal = peerAvatar->isFacebookFriendOfLocal(); // Navigator::getSingletonPtr()->checkIsFriendOfLocal(SNFacebook, pUid);		//stubbedCheckIsFriendOfLocal(pUid);
+        LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "OgrePeerManager::createAvatarNode() uid:%s %s a friend of local !", 
+												pUid.c_str(), isFriendOfLocal ? "is" : "is not");
+		isFriendOfLocal = Navigator::getSingletonPtr()->checkIsFriendOfLocal(SNFacebook, pUid);
+	}
+    if (mCallbacks != 0 )
         mCallbacks->onAvatarNodeCreate(peerAvatar);
+
+#if 0 // GILLES FLY
+    peerAvatar->onSceneNodeChanged();
+#endif
 
     return peerAvatar;
 }

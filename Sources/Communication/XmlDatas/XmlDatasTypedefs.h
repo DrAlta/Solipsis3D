@@ -33,6 +33,7 @@ typedef std::string EntityUID;
 
 enum AuthentType {
     ATFacebook = 'F',   // User is authenticated by facebook site on external browser
+    ATTwitter = 'T',   // User is authenticated by Twitter site on external browser    ATFixed = 't'       // User specified its own nodeId into boot.lua (no authentication)
     ATSolipsis = 'S',   // User is authenticated by the Solipsis Worlds server
     ATFixed = 'f'       // User specified its own nodeId into boot.lua (no authentication)
 };
@@ -99,8 +100,7 @@ static const AnimationState ASAvatarWalk = (AnimationState)2;      /// Avatar is
 static const AnimationState ASAvatarRun = (AnimationState)3;       /// Avatar is running
 static const AnimationState ASAvatarFly = (AnimationState)4;       /// Avatar is flying
 static const AnimationState ASAvatarSwim = (AnimationState)5;      /// Avatar is swimming
-static const AnimationState ASAvatarXDE = (AnimationState)6;      /// Avatar is XDE controlled
-static const AnimationState ASAvatarAnimCount = (ASAvatarXDE - ASAvatarNone + 1); /// Number of animations for avatar
+static const AnimationState ASAvatarAnimCount = (ASAvatarSwim - ASAvatarNone + 1); /// Number of animations for avatar
 
 typedef struct {
     bool mGravity;

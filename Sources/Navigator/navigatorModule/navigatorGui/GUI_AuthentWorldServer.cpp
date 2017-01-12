@@ -33,15 +33,12 @@ using namespace CommonTools;
 
 GUI_AuthentWorldServer * GUI_AuthentWorldServer::stGUI_AuthentWorldServer = NULL;
 
+static bool done = false;
+
 //-------------------------------------------------------------------------------------
 GUI_AuthentWorldServer::GUI_AuthentWorldServer() : GUI_FromServer("uiauthentws")
 {
-	m_curState = NSNotCreated;
-}
-
-GUI_AuthentWorldServer::~GUI_AuthentWorldServer()
-{
-	stGUI_AuthentWorldServer = NULL;
+    stGUI_AuthentWorldServer = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -49,9 +46,10 @@ bool GUI_AuthentWorldServer::createAndShowPanel(const std::string& pwd)
 {
     if (!stGUI_AuthentWorldServer)
     {
-		stGUI_AuthentWorldServer = new GUI_AuthentWorldServer();
+        new GUI_AuthentWorldServer();
     }
-    return stGUI_AuthentWorldServer->show(pwd);
+
+	return stGUI_AuthentWorldServer->show(pwd);
 }
 
 //-------------------------------------------------------------------------------------
@@ -69,19 +67,23 @@ bool GUI_AuthentWorldServer::show(const std::string& pwd)
         std::string uiauthentwsUrl = "http://" + mNavigator->getWorldsServerAddress() + "/uiauthentws.html";
         uiauthentwsUrl += "?navVersion=" + StringHelpers::toHexString(mNavigator->getVersion());
         uiauthentwsUrl += "&login=" + mNavigator->getLogin() + "&pwd=" + pwd;
-        createNavi(NaviPosition(Center), 256, 128);
+		createNavi(NaviPosition(Center), 256, 128);
 
         mNavi->setMovable(false);
         mNavi->hide();
         mNavi->setOpacity(0.75f);
 
         mNavi->bind("pageLoaded", NaviDelegate(this, &GUI_Panel::onPanelLoaded));
-        mNavi->bind("ok", NaviDelegate(this, &GUI_AuthentWorldServer::onOkPressed));
+		mNavi->bind("ok", NaviDelegate(this, &GUI_AuthentWorldServer::onOkPressed));
 
         // Add 1 event listener to detect network errors
         mNavi->addEventListener(this);
         mNavi->loadURL(uiauthentwsUrl);
         m_curState = NSCreated;
+	
+		// -KH-
+		done = false;
+
     }
 
     NavigatorGUI::setCurrentPanel(this);
@@ -94,21 +96,33 @@ bool GUI_AuthentWorldServer::show(const std::string& pwd)
 //-------------------------------------------------------------------------------------
 void GUI_AuthentWorldServer::onOkPressed(Navi* caller, const Awesomium::JSArguments& args)
 {
-    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk()");
-	mNavi->removeEventListener(this);
+	// because onOkPressed is executed twice !!! Must prevent a 2nd useless execution 
+	if (done)
+		return;
 
+	done = !done;
+
+	LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk()");
+
+	int size = (int)args.size();
     std::string result = args.at(0).toString();
     NodeId nodeId = args.at(1).toString();
-    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk() result=%s, nodeId=%s", result.c_str(), nodeId.c_str());
+
+	LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk() result=%s, nodeId=%s", 
+					result.c_str(), nodeId.c_str());
     if (nodeId.empty())
     {
         GUI_Login::createAndShowPanel();
         return;
     }
+	
+	AuthentType authentType = mNavigator->getAuthentType();
+	mNavigator->setNodeId(XmlHelpers::convertAuthentTypeToRepr(authentType) + nodeId);
 
-    mNavigator->setNodeId(XmlHelpers::convertAuthentTypeToRepr(ATSolipsis) + nodeId);
-    // Call connect
-    bool connected = mNavigator->connect();
+	hide();
+    NavigatorGUI::destroyCurrentPanel();
+	// Call connect
+	bool connected = mNavigator->connect();
 }
 
 //-------------------------------------------------------------------------------------

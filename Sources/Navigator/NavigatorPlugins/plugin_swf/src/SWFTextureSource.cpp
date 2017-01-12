@@ -48,6 +48,7 @@ SWFTextureSource::SWFTextureSource(SWFPlugin *plugin)
     : mPlugin(plugin)
 {
     mDictionaryName = "swf";
+    mParamDictName = "swf";
     mPlugInName = "SWF texture source plugin";
     mUrl = "";
     mWidth = DEFAULT_WIDTH;

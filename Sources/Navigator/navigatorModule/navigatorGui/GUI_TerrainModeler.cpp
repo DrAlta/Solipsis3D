@@ -39,12 +39,7 @@ GUI_TerrainModeler * GUI_TerrainModeler::stGUI_TerrainModeler = NULL;
 //-------------------------------------------------------------------------------------
 GUI_TerrainModeler::GUI_TerrainModeler() : GUI_Panel("uimdlrTerrain")
 {
-  	m_curState = NSNotCreated;
-}
-
-GUI_TerrainModeler::~GUI_TerrainModeler()
-{
-  	stGUI_TerrainModeler = NULL;
+    stGUI_TerrainModeler = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -52,7 +47,7 @@ void GUI_TerrainModeler::showPanel()
 {
     if (!stGUI_TerrainModeler)
     {
-       stGUI_TerrainModeler = new GUI_TerrainModeler();
+        new GUI_TerrainModeler();
     }
 
     stGUI_TerrainModeler->show();

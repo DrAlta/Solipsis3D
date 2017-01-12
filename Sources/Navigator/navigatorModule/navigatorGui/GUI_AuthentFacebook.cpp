@@ -39,26 +39,21 @@ using namespace CommonTools;
 
 GUI_AuthentFacebook * GUI_AuthentFacebook::stGUI_AuthentFacebook = NULL;
 
-//-------------------------------------------------------------------------------------
-GUI_AuthentFacebook::GUI_AuthentFacebook() : GUI_FromServer("uiauthentfb")
+GUI_AuthentFacebook::GUI_AuthentFacebook() : 
+	GUI_FromServer("uiauthentfb")
 {
+    stGUI_AuthentFacebook = this;
     mFacebook = 0;
-	m_curState = NSNotCreated;
 }
-
-GUI_AuthentFacebook::~GUI_AuthentFacebook()
-{
-	stGUI_AuthentFacebook = NULL;
-}
-
 
 //-------------------------------------------------------------------------------------
 bool GUI_AuthentFacebook::createAndShowPanel()
 {
     if (!stGUI_AuthentFacebook)
     {
-        stGUI_AuthentFacebook = new GUI_AuthentFacebook();
+        new GUI_AuthentFacebook();
     }
+
     return stGUI_AuthentFacebook->show();
 }
 
@@ -71,8 +66,8 @@ bool GUI_AuthentFacebook::show()
     NavigatorGUI::destroyCurrentPanel();
 
     // Create the Facebook instance
-    if (mFacebook != 0)
-        delete mFacebook;
+	if (mFacebook != 0)
+       delete mFacebook;
 
     mFacebook = new Facebook(mNavigator->getFacebookApiKey(), mNavigator->getFacebookSecret(), mNavigator->getFacebookServer());
  
@@ -107,7 +102,6 @@ bool GUI_AuthentFacebook::show()
     NavigatorGUI::setCurrentPanel(this);
 
     return true;
-
 }
 
 //-------------------------------------------------------------------------------------
@@ -142,25 +136,26 @@ void GUI_AuthentFacebook::onOk(Navi* caller, const Awesomium::JSArguments& args)
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentFacebookOk()");
 
     // Session ?
-    if (!mFacebook->getSession())
+    if (mFacebook && mNavigator->getFacebookUid().empty() && !mFacebook->getSession())
     {
         mNavi->evaluateJS("$('msgText').innerHTML = 'Unable to get session ... Are you logged ?'");
         return;
     }
-    // Get uid
-    NodeId nodeId = mFacebook->getUid();
+
+	// In this version it NodeId is built from the unique Facebook uid !
+	NodeId nodeId = mFacebook->getUid();
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentFacebookOk() nodeId=%s", nodeId.c_str());
     mNavigator->setNodeId(XmlHelpers::convertAuthentTypeToRepr(ATFacebook) + nodeId);
+	mNavigator->setFacebookUid(mFacebook->getUid());
 
-    // Destroy Facebook instance
-    if (mFacebook != 0)
-    {
-        delete mFacebook;
-        mFacebook = 0;
-    }
+	// Now, we keep the facebook connector until friends list can be computed
+	mNavigator->setFacebookCon(mFacebook);
+	mNavigator->computeFacebookFriendList();
 
-    // Call connect
-    bool connected = mNavigator->connect();
+	if (m_curState == NSCreated)
+		mNavi->hide();
+	// Call connect
+	bool connected = mNavigator->connect();
 }
 
 //-------------------------------------------------------------------------------------

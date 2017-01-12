@@ -43,6 +43,7 @@ TightVNCTextureSystem::TightVNCTextureSystem(VNCPlugin *plugin)
     : mPlugin(plugin)
 {
     mDictionaryName = "vnc";
+    mParamDictName = "vnc";
 // GREG BEGIN
     mPlugInName = "VNC texture source plugin";
 // END BEGIN

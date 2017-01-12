@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "OgreFrameListener.h"
 #include "MainApplication/Navigator.h"
 
+#include "HybridComAudio.h"
+
 namespace Solipsis {
 
 /** This class is the dedicated frame listener of the Navigator application.
@@ -34,6 +36,14 @@ namespace Solipsis {
 class NavigatorFrameListener : public OgreFrameListener
 {
 public:
+	// Lion
+	Ogre::TexturePtr m_spTex;
+	int lfSock, lfSock1;
+	HybridComAudio * hmedia;
+	int nb_frame;
+	CommonTools::Timer::Time time_frame;
+	CommonTools::Timer timer;
+	std::string currentView;
 
 protected:
     Navigator* mNavigator;
@@ -50,7 +60,8 @@ public:
 
     /** See OgreFrameListener. */
     virtual bool frameStarted(const FrameEvent& evt);
-
+    /** See OgreFrameListener. */
+    virtual bool frameEnded(const FrameEvent& evt);
     /** See OgreFrameListener. */
     virtual bool keyPressed(const KeyboardEvt& evt);
     /** See OgreFrameListener. */

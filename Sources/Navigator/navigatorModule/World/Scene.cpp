@@ -68,6 +68,7 @@ void Scene::update(Ogre::Real timeSinceLastFrame)
     if(NO_OGREMAX_STATIC_GEOM && mOgreMaxScene != 0)
     {
         mOgreMaxScene->Update( timeSinceLastFrame );
+#if 1 // GILLES
         // Load all animation states
         std::vector<Ogre::AnimationState*>::iterator animationState = mVertexAnimationStates.begin();
         for( ; animationState != mVertexAnimationStates.end(); animationState++ )
@@ -75,7 +76,9 @@ void Scene::update(Ogre::Real timeSinceLastFrame)
             Ogre::AnimationState* animState = (*animationState);
             animState->addTime( timeSinceLastFrame );
         }
+#endif
     }
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -143,9 +146,12 @@ bool Scene::updateEntity(RefCntPoolPtr<XmlEntity>& xmlEntity)
                 0,
                 mResourceGroup );
 
+#if 1 // GILLES
             // Load all animation states
             mVertexAnimationStates.clear();
             scanSceneNode( sceneNode );
+#endif
+
             if (NO_OGREMAX_STATIC_GEOM) mSceneNode = sceneNode;
         }
         else
@@ -186,6 +192,7 @@ bool Scene::updateEntity(RefCntPoolPtr<XmlEntity>& xmlEntity)
         // Destroy the scene collision mesh
         if (!xmlSceneLodContent0->getCollision().empty())
         {
+//            sceneMgr->destroySceneNode(xmlSceneLodContent0->getCollision());
             SceneNode* collisionSceneNode = sceneMgr->getSceneNode(xmlSceneLodContent0->getCollision());
             OgreHelpers::removeAndDestroySceneNode(collisionSceneNode);
         }
@@ -247,6 +254,7 @@ bool Scene::updateEntity(RefCntPoolPtr<XmlEntity>& xmlEntity)
     return true;
 }
 
+#if 1 // GILLES
 //-------------------------------------------------------------------------------------
 void Scene::scanSceneNode(SceneNode* pSceneNode)
 {
@@ -289,6 +297,7 @@ void Scene::scanSceneNode(SceneNode* pSceneNode)
         }
     }
 }
+#endif
 
 //-------------------------------------------------------------------------------------
 
@@ -324,6 +333,7 @@ void Scene::destroy()
                 sceneMgr->destroyAnimationState((*anim).first);
                 anim++;
             }
+#if 1 // GILLES
             // remove all animation states (vertex & skeleton animations)
             std::vector<Ogre::AnimationState*>::iterator animationState = mVertexAnimationStates.begin();
             while( animationState != mVertexAnimationStates.end() )
@@ -334,6 +344,7 @@ void Scene::destroy()
                 animationState++;
             }
             mVertexAnimationStates.clear();
+#endif
             // remove the scene
             delete mOgreMaxScene;
             mOgreMaxScene = 0;

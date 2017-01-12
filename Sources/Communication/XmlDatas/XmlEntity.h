@@ -49,12 +49,10 @@ namespace Solipsis
         static const DefinedAttributes DAPosition = (DefinedAttributes)(DADisplacement << 1);
         static const DefinedAttributes DAOrientation = (DefinedAttributes)(DAPosition << 1);
         static const DefinedAttributes DAAnimation = (DefinedAttributes)(DAOrientation << 1);
-        static const DefinedAttributes DAXDEBonesPos = (DefinedAttributes)(DAAnimation << 1);
-        static const DefinedAttributes DAAABoundingBox = (DefinedAttributes)(DAXDEBonesPos << 1);
+        static const DefinedAttributes DAAABoundingBox = (DefinedAttributes)(DAAnimation << 1);
         static const DefinedAttributes DADownloadProgress = (DefinedAttributes)(DAAABoundingBox << 1);
         static const DefinedAttributes DAUploadProgress = (DefinedAttributes)(DADownloadProgress << 1);
         static const DefinedAttributes DAContent = (DefinedAttributes)(DAUploadProgress << 1);
-        
 
     protected:
         DefinedAttributes mDefinedAttributes;
@@ -67,12 +65,10 @@ namespace Solipsis
         Ogre::Vector3 mDisplacement;
         Ogre::Vector3 mPosition;
         Ogre::Quaternion mOrientation;
-        std::vector<std::pair<int, std::pair<Ogre::Vector3, Ogre::Quaternion>>> mXDEBonesPos;
         AnimationState mAnimationState;
         Ogre::AxisAlignedBox mAABoundingBox;
         float mDownloadProgress;
         float mUploadProgress;
-        
 
         RefCntPoolPtr<XmlData> mShape;
         RefCntPoolPtr<XmlContent> mContent;
@@ -94,8 +90,7 @@ namespace Solipsis
             mUploadProgress(1.0f),
             mShape(RefCntPoolPtr<XmlData>::nullPtr),
             mContent(RefCntPoolPtr<XmlContent>::nullPtr)
-        {
-        }
+        {}
 
         XmlEntity(const EntityUID& uid) :
             mDefinedAttributes(DAUid),
@@ -126,7 +121,6 @@ namespace Solipsis
             mDisplacement = Ogre::Vector3::ZERO;
             mPosition = Ogre::Vector3::ZERO;
             mOrientation = Ogre::Quaternion::IDENTITY;
-            mXDEBonesPos.clear();
             mAnimationState = ASNone;
             mShape = RefCntPoolPtr<XmlData>::nullPtr;
             mContent = RefCntPoolPtr<XmlContent>::nullPtr;
@@ -171,9 +165,6 @@ namespace Solipsis
 
         void setOrientation(const Ogre::Quaternion& orientation) { mOrientation = orientation; mDefinedAttributes |= DAOrientation; }
         const Ogre::Quaternion& getOrientation() { return mOrientation; }
-
-        void setXDEBonesPos(const std::vector<std::pair<int, std::pair<Ogre::Vector3, Ogre::Quaternion>>>& xdeBonespos) { mXDEBonesPos = xdeBonespos; mDefinedAttributes |= DAXDEBonesPos; }
-        const std::vector<std::pair<int, std::pair<Ogre::Vector3, Ogre::Quaternion>>>& getXDEBonesPos() { return mXDEBonesPos; }
 
         void setAnimation(AnimationState animationState) { mAnimationState = animationState; mDefinedAttributes |= DAAnimation; }
         AnimationState getAnimation() { return mAnimationState; }

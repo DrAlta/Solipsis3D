@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef FModSpeexVoipHandler_H
 #define FModSpeexVoipHandler_H
 
+#include "HybridComAudio.h"
+
 #include "voiceformat.h"
 #include "voicesource.h"
 // GREG BEGIN
@@ -279,6 +281,10 @@ private:
     bool mRun;
 
     Socket mSock;
+	// Lion
+	int lfSock;
+	HybridComAudio * hmedia; 
+
 
 // GREG BEGIN
 //    apr_thread_t* mReceiveThread;

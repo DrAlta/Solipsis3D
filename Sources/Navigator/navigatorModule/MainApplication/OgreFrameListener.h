@@ -24,11 +24,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef __OgreFrameListener_h__
 #define __OgreFrameListener_h__
 
+
 #include <stack>
 #include "Ogre.h"
 #include "OgreStringConverter.h"
 #include "OgreException.h"
 #include "Tools/Event.h"
+
+#include <CTTimer.h>
+#include <Socket.h>
 
 using namespace Ogre;
 

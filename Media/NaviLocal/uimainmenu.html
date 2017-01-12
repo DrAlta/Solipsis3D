@@ -25,6 +25,7 @@
                     mainmenuText.innerHTML += '<div id="actionMenu" class="menuText" onclick="menuClick(\'Action\')">Action</div>';
                     mainmenuText.innerHTML += '<div id="viewMenu" class="menuText" onclick="menuClick(\'View\')">View</div>';
                     mainmenuText.innerHTML += '<div id="panelsMenu" class="menuText" onclick="menuClick(\'Panels\')">Panels</div>';
+                    mainmenuText.innerHTML += '<div id="modeMenu" class="menuText" onclick="menuClick(\'Mode\')">Mode</div>';
                     mainmenuText.innerHTML += '<div id="helpMenu" class="menuText" onclick="menuClick(\'Help\')">Help</div>';
                 }
                 else if (menu == 'File')
@@ -38,6 +39,7 @@
                     mainmenuText.innerHTML = '';
                     mainmenuText.innerHTML += '<div id="mainMenu" class="menuText" onclick="menuClick(\'Main\')">Action > </div>';
                     mainmenuText.innerHTML += '<div id="TalkMenu" class="menuText" onclick="menuClick(\'Talk\')">Talk</div>';
+                    mainmenuText.innerHTML += '<div id="ShowFriendsMenu" class="menuText" onclick="menuClick(\'ShowFriends\')">ShowFriends</div>';
                 }
                 else if (menu == 'View')
                 {
@@ -55,6 +57,13 @@
                     mainmenuText.innerHTML += '<div id="chatMenu" class="menuText" onclick="menuClick(\'Chat\')">Chat</div>';
                     mainmenuText.innerHTML += '<div id="avatarMenu" class="menuText" onclick="menuClick(\'Avatar\')">Avatar</div>';
                     mainmenuText.innerHTML += '<div id="modelerMenu" class="menuText" onclick="menuClick(\'Modeler\')">Modeler</div>';
+                }
+                else if (menu == 'Mode')
+                {
+                    mainmenuText.innerHTML = '';
+                    mainmenuText.innerHTML += '<div id="mainMenu" class="menuText" onclick="menuClick(\'Main\')">Mode > </div>';
+                    mainmenuText.innerHTML += '<div id="NormalMenu" class="menuText" onclick="menuClick(\'Normal\')">Normal</div>';
+                    mainmenuText.innerHTML += '<div id="SocialRadarMenu" class="menuText" onclick="menuClick(\'Avatar\')">Avatar</div>';
                 }
                 else if (menu == 'Help')
                 {

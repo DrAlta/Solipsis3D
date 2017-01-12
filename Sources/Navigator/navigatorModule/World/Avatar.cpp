@@ -42,8 +42,7 @@ String Avatar::mDefaultStateAnimName[ASAvatarAnimCount] = {
     "Walk",
     "Run",
     "Fly",
-    "Swim",
-	"XDE"
+    "Swim"
 };
 
 #define EPSILON_SPEED 0.1f
@@ -80,10 +79,15 @@ Avatar::Avatar(RefCntPoolPtr<XmlEntity>& xmlEntity, bool isLocal, CharacterInsta
 ,   mVoiceMinDist(1.0f)
 ,   mVoiceMaxDist(100.0f)
 ,   mGhost(false)
+,	mIsTwitterFriendOfLocal(false)
+,	mIsFacebookFriendOfLocal(false)
+,	mTwitterIcon(0)
+,	mFacebookIcon(0)
+,	mStubbedIsFriendOfLocal(false)
+,	mIsVisible(true)
 {
     for (int a = 0;a < ASAvatarAnimCount; ++a)
         mStateAnimName[a] = mDefaultStateAnimName[a];
-
 
     if (isLocal)
     {
@@ -93,9 +97,6 @@ Avatar::Avatar(RefCntPoolPtr<XmlEntity>& xmlEntity, bool isLocal, CharacterInsta
     }
 
     setCharacterInstance(characterInstance);
-
-//	if(!entity->isAttached())
-//		getSceneNode()->attachObject(entity);
 
     if (mXmlEntity->getDefinedAttributes() & XmlEntity::DAPosition)
         getSceneNode()->setPosition(mXmlEntity->getPosition());
@@ -130,6 +131,7 @@ Avatar::~Avatar()
         voiceEngine->removeAvatarHandler(mXmlEntity->getUid());
 
     if (mCharacterInstance == 0) return;
+
     if (getSceneNode() == 0) return;
 
     if (mCamerasSceneNode != 0)
@@ -150,12 +152,25 @@ Avatar::~Avatar()
         getSceneNode()->detachObject(mChatLabel);
         delete mChatLabel;
     }
-    if (mSoundIcon != 0)
+	if (mSoundIcon != 0)
     {
-        mSoundIcon->detach();
+		mSoundIcon->detach();
         delete mSoundIcon;
     }
-    CharacterManager::getSingletonPtr()->destroyCharacterInstance(mCharacterInstance);
+
+	/// - KH - Social Link display mode management
+	if (mTwitterIcon != 0)
+	{
+		mTwitterIcon->detach();
+		delete mTwitterIcon;
+	}
+	if (mFacebookIcon != 0)
+   {
+        mFacebookIcon->detach();
+        delete mFacebookIcon;
+    }
+
+	CharacterManager::getSingletonPtr()->destroyCharacterInstance(mCharacterInstance);
 }
 
 //-------------------------------------------------------------------------------------
@@ -175,6 +190,11 @@ void Avatar::setCharacterInstance(CharacterInstance* characterInstance)
 //-------------------------------------------------------------------------------------
 void Avatar::onSceneNodeChanged()
 {
+
+	// -KH- Do'nt update not visible avatar (specially not friend in Showfriendmode)
+	if (!mIsVisible)
+		return;
+
     AxisAlignedBox entityBbox = getEntity()->getBoundingBox();
     Vector3 avatarSize = entityBbox.getSize();
     Vector3 avatarHalfSize = entityBbox.getHalfSize();
@@ -222,7 +242,21 @@ void Avatar::onSceneNodeChanged()
     }
     mSoundIcon->attach(getSceneNode());
 
-    // Picking
+    /// - KH - Social Link display mode management only for non local users
+    if (!isLocal())
+    {
+		if (mTwitterIcon == 0){
+			mTwitterIcon = new TwitterIcon(getSceneMgr(), mXmlEntity->getUid() + "Billboard_Twitter", avatarSize.y + 0.35f);
+			mTwitterIcon->attach(getSceneNode());
+		}
+		if (mFacebookIcon == 0){
+			mFacebookIcon = new FacebookIcon(getSceneMgr(), mXmlEntity->getUid() + "Billboard_Facebook", avatarSize.y + 0.30f);
+			mFacebookIcon->attach(getSceneNode());
+		}
+
+	}
+ 
+	// Picking
 /* simple test about color picking, bind 1 unique color to each pickable entity, set 1 flag when
    picking is expected, switch material of pickable entities, render into 1 picking texture, switch
    back materials and finally get the entity according to the picked color value */
@@ -243,10 +277,13 @@ void Avatar::onSceneNodeChanged()
 
     getSceneNode()->setPosition(mXmlEntity->getPosition());
     getSceneNode()->setOrientation(mXmlEntity->getOrientation());
+#if 1 // GILLES FLY
+    setState(ASAvatarFly);
+#else
+    setState(ASAvatarIdle);
+#endif
 
-	setState(ASAvatarFly);
-
-	// Attach all camera supports to the new user avatar 
+    // Attach all camera supports to the new user avatar 
     if (isLocal())
         Navigator::getSingletonPtr()->getMainCameraSupportManager()->attachAllCameraSupportsToNode(getSceneNode());
 }
@@ -267,6 +304,13 @@ void Avatar::detachFromSceneNode()
 
     // Picking
     getSceneNode()->detachObject(mSelectionObject);
+
+    /// - KH - TwitterIcon to display sn Id
+	if (mTwitterIcon != 0)
+		mTwitterIcon->detach();
+    if (mFacebookIcon != 0)
+		mFacebookIcon->detach();
+	
 }
 
 //-------------------------------------------------------------------------------------
@@ -413,6 +457,10 @@ void Avatar::getVoiceDistances(float &minDist, float &maxDist)
 //-------------------------------------------------------------------------------------
 void Avatar::update(Real timeSinceLastFrame)
 {
+	// -KH- Do'nt update not visible avatar (specially not friend in Showfriendmode)
+	if (!mIsVisible)
+		return;
+
     animate(timeSinceLastFrame);
 
     if (mChatLabelAlphaTimer > 0.0f)
@@ -436,6 +484,18 @@ void Avatar::update(Real timeSinceLastFrame)
     {	
         mSoundIcon->animate(timeSinceLastFrame);
     }
+	//// - KH - Adding Social Network : twitter
+
+    if (mTwitterIcon)
+    {	
+        mTwitterIcon->animate(timeSinceLastFrame);
+    }
+    if (mFacebookIcon)
+    {	
+        mFacebookIcon->animate(timeSinceLastFrame);
+    }
+
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -444,7 +504,12 @@ bool Avatar::updateEntity(RefCntPoolPtr<XmlEntity>& xmlEntity)
 {
     static int c;
     static unsigned long l = (unsigned long)-1;
-    unsigned long n = Root::getSingleton().getTimer()->getMilliseconds();
+   
+	// -KH- Do'nt update not visible avatar (specially not friend in Showfriendmode)
+	if (!mIsVisible)
+		return true;
+
+	unsigned long n = Root::getSingleton().getTimer()->getMilliseconds();
     if (l == (unsigned long)-1) { l = n; c = 0; }
     c++;
     if (n - l > 10000)
@@ -545,14 +610,12 @@ bool Avatar::action(RefCntPoolPtr<XmlAction>& xmlAction)
 //-------------------------------------------------------------------------------------
 void Avatar::startAnimation(const String &name, bool loop)
 {
-    if (name.length() == 0) return;
-
-	// XDE Animation state is a fake one 
-	if (name == "XDE") 
-		// Do nothing because the animationState does not exist into Ogre engine.	
+	// -KH- Do'nt update not visible avatar (specially not friend in Showfriendmode)
+	if (!mIsVisible)
 		return;
 
-	mAnimationState = getEntity()->getAnimationState(name);
+	if (name.length() == 0) return;
+    mAnimationState = getEntity()->getAnimationState(name);
     mAnimationState->setLoop(loop);
     mAnimationState->setEnabled(true);
 }
@@ -560,23 +623,11 @@ void Avatar::startAnimation(const String &name, bool loop)
 //-------------------------------------------------------------------------------------
 void Avatar::stopAnimation()
 {
-    if (mStateAnimName[mState].length() == 0) return;
-	
-	// XDE Animation state is a fake one ==> Bones were controlled by an external engine
-	if (mStateAnimName[mState] == "XDE") 
-	{
-		Ogre::SkeletonInstance* lSkeleton = getEntity()->getSkeleton();
-		Ogre::Skeleton::BoneIterator itSkel = lSkeleton->getBoneIterator();
-		// For each bone
-		while (itSkel.hasMoreElements())
-		{
-			Ogre::Bone *lBone = itSkel.getNext();
-			// Reset bone state => It will be controlled by skeleton animation
-			lBone->setManuallyControlled(false); 
-		}
+	// -KH- Do'nt update not visible avatar (specially not friend in Showfriendmode)
+	if (!mIsVisible)
 		return;
-	}
 
+	if (mStateAnimName[mState].length() == 0) return;
     Ogre::AnimationState* animationStateToStop = getEntity()->getAnimationState(mStateAnimName[mState]);
     animationStateToStop->setLoop(false);
     animationStateToStop->setEnabled(false);
@@ -585,16 +636,26 @@ void Avatar::stopAnimation()
 //-------------------------------------------------------------------------------------
 void Avatar::animate(Real timeSinceLastFrame)
 {
-    if (timeSinceLastFrame == 0.0)
+	// -KH- Do'nt update not visible avatar (specially not friend in Showfriendmode)
+	if (!mIsVisible)
+		return;
+ 
+	if (timeSinceLastFrame == 0.0)
         return;
 
     AnimationState nextState = mState;
     Real animOffset = 0;
     Real animLength = 0;
 
+#if 1 // GILLES FLY
 	//Height between -4 and 100
-	Real nodeHeight = (20+getSceneNode()->getPosition().y)/10.0;
+Real nodeHeight = (20+getSceneNode()->getPosition().y)/10.0;
+//Real factFly = std::max( (float)1.0 , std::min( (float)20.0 , (float)(nodeHeight*nodeHeight/2.0 ) ) ) ;
+
+//Real nodeHeight = (30+getSceneNode()->getPosition().y)/10.0;
+//Real factFly = std::max( (float)1.0 , std::min( (float)30.0 , (float)(nodeHeight*nodeHeight/2.0 ) ) ) ;
     Real factFly = 2.0;
+#endif
 
     if (isLocal())
     {
@@ -612,6 +673,9 @@ void Avatar::animate(Real timeSinceLastFrame)
         mDownKeyMotion.update(timeSinceLastFrame);
         frontBackMvt = mUpKeyMotion.getMotion() - mDownKeyMotion.getMotion();
 
+#if 0 // GILLES FLY
+        mvt += vpn*frontBackMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
+#endif
         if ((Math::Abs(frontBackMvt) > EPSILON_SPEED) && (Math::Abs(frontBackMvt) < MAX_SPEED*0.9) && (mState != ASAvatarWalk))
             nextState = ASAvatarWalk;
         if ((Math::Abs(frontBackMvt) > MAX_SPEED*0.9) && (mState != ASAvatarRun))
@@ -623,6 +687,10 @@ void Avatar::animate(Real timeSinceLastFrame)
         if (mMvtType == MT1stPerson)
         {
             // First person straff
+ 
+#if 0 // GILLES FLY
+            mvt += -vri*leftRightMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
+#endif
             if ((Math::Abs(leftRightMvt) > EPSILON_SPEED) && (mState == ASAvatarIdle))
                 nextState = ASAvatarWalk;
         }
@@ -644,7 +712,10 @@ void Avatar::animate(Real timeSinceLastFrame)
         mPgupKeyMotion.update(timeSinceLastFrame);
         mPgdownKeyMotion.update(timeSinceLastFrame);
         upDownMvt = mPgupKeyMotion.getMotion() - mPgdownKeyMotion.getMotion();
+    //    if ((Math::Abs(upDownMvt) > MAX_SPEED*0.9) && (mState != ASAvatarFly))
+    //        nextState = ASAvatarFly;
 
+#if 1 // GILLES FLY
 		//Translation speed variation in fly mode
 		if(!isGravityEnabled())
 		{
@@ -662,17 +733,17 @@ void Avatar::animate(Real timeSinceLastFrame)
             mvt += vpn*frontBackMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
             mvt += vup*upDownMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
         }
+#endif
 
         animLength = mAnimationState->getLength();
         if ((mState == ASAvatarWalk) || (mState == ASAvatarRun))
-		{
-			if (Math::Abs(frontBackMvt) > EPSILON_SPEED)    // Avatar is walking or running
+            if (Math::Abs(frontBackMvt) > EPSILON_SPEED)    // Avatar is walking or running
                 animOffset = frontBackMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame*(animLength/TRANSLATION_ANIM_LOOP);
             else if (Math::Abs(leftRightMvt) > EPSILON_SPEED)   // Avatar is rotating : mState = ASAvatarWalk
                 animOffset = leftRightMvt*ROTATION_SPEED_RPS.valueRadians()*timeSinceLastFrame*(animLength/ROTATION_ANIM_LOOP.valueRadians());
             else
                 nextState = ASAvatarIdle;
-		}
+#if 1 // GILLES FLY
 		//Animation speed  variation in fly mode
 		else if(mState == ASAvatarFly)
 		{
@@ -692,49 +763,8 @@ void Avatar::animate(Real timeSinceLastFrame)
 			else
 				nextState = ASAvatarIdle;
 		}
-		else if (mState == ASAvatarXDE)
-		{	// Avatar is controlled by XDE Platform
-			animOffset = 0.0;
-
-			/* Sample framework for the control of an avatar by an external engine (could be mocap or physic)*/
-
-			// We will rotate the sample bone from sRotation degrees
-			static float sRotation = 0.0f;
-			sRotation += 1.0f;
-			if( sRotation > 90.0 * 3 )
-			{
-				sRotation = 0.0;
-			}
-
-			// The Skeleton update informations. 
-			SkeletonInfo lSkeletonInfo;
-			lSkeletonInfo.mLocalPosition = getXmlEntity()->getPosition();
-			{
-				BoneInfo lBoneInfo;
-				//This sample applies to the 6th bone of the skeleton
-				lBoneInfo.mBoneName = getEntity()->getSkeleton()->getBone(6)->getName();
-
-				Ogre::Vector3 lAxe = Ogre::Vector3::UNIT_Y;
-				if( sRotation > 90.0)
-				{
-					lAxe = Ogre::Vector3::UNIT_X;
-				}
-				if( sRotation > 180.0)
-				{
-					lAxe = Ogre::Vector3::UNIT_Z;
-				}
-				lBoneInfo.mLocalOrientation.FromAngleAxis( Ogre::Degree( fmod( sRotation, 90) ),  lAxe);
-				lBoneInfo.mLocalOrientation.normalise();
-				lSkeletonInfo.mBones.push_back( lBoneInfo );
-			}
-
-			// Force the update. 
-			manualUpdate(lSkeletonInfo,  *(getEntity()));
-
-			return; // Orientation and position have already been set by physic.
-		}
-		else
-		// mState = ASAvatarIdle / ASAvatarFly / ASAvatarSwim
+#endif
+        else // mState = ASAvatarIdle / ASAvatarFly / ASAvatarSwim
             animOffset = timeSinceLastFrame;
         if (mAnimationState != 0)
             mAnimationState->addTime(animOffset);
@@ -743,7 +773,12 @@ void Avatar::animate(Real timeSinceLastFrame)
             setState(nextState);
 
         // Move physics character
+#if 1 // GILLES FLY
         Vector3 displacement = mvt;
+        //Vector3 displacement = mvt + (vup*upDownMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame * factFly);
+#else
+        Vector3 displacement = mvt + (vup*upDownMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame);
+#endif
 
 		// update facial animation
 		IFaceController* pFaceController = getCharacterInstance()->getFaceController();
@@ -896,22 +931,43 @@ void Avatar::updateVoiceEngine(bool updatePosDirVel, bool updateDist)
 }
 
 //-------------------------------------------------------------------------------------
-void Avatar::manualUpdate(SkeletonInfo &pSkeletonInfo, Ogre::Entity& pEntity)
+//-------------------------------------------------------------------------------------
+/* - KH- stubbed method to set Social FriendShip */ 
+void Avatar::setStubbedFriendOfLocal(bool isFriend)
 {
-	Ogre::SceneNode* lSceneNode = pEntity.getParentSceneNode();
-	lSceneNode->setPosition( pSkeletonInfo.mLocalPosition );
-	lSceneNode->setOrientation( pSkeletonInfo.mLocalOrientation);
-	Ogre::SkeletonInstance* lSkeleton = pEntity.getSkeleton();
-	// For each bone
-	std::vector<BoneInfo>::iterator lBoneInfoIter = pSkeletonInfo.mBones.begin();
-	std::vector<BoneInfo>::iterator lBoneInfoIterEnd = pSkeletonInfo.mBones.end();
-	for(; lBoneInfoIterEnd != lBoneInfoIter; ++lBoneInfoIter)
-	{
-		Ogre::Bone * lBone = lSkeleton->getBone( lBoneInfoIter->mBoneName );
-		lBone->setManuallyControlled(true); 
-		// Set Bone position 
-		lBone->setPosition(lBoneInfoIter->mLocalPosition);
-		// Set Bone orientation 
-		lBone->setOrientation( lBoneInfoIter->mLocalOrientation );
+    // Update XML entity
+	mStubbedIsFriendOfLocal = isFriend;
+}
+/* - KH- stubbed method to get Social FriendShip */ 
+bool Avatar::getStubbedFriendOfLocal()
+{
+	// Update XML entity
+	return mStubbedIsFriendOfLocal;
+}
+void Avatar::onStubbedSocialModeEnabled()
+{
+	if (!isLocal()){
+		if (mStubbedIsFriendOfLocal)
+			mFacebookIcon->addStatus(FacebookIcon::SVisible);
+		else
+			mFacebookIcon->addStatus(FacebookIcon::SNone);
+	}		
+
+	if (!isLocal() && !mStubbedIsFriendOfLocal){
+		LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Avatar::onStubbedSocialModeEnabled() avatar uid:%s is not a friend : hidding...", mXmlEntity->getUid().c_str());
+		mIsVisible = false;
+		detachFromSceneNode();
+	}
+}
+
+void Avatar::onStubbedSocialModeDisabled()
+{
+	if (!isLocal()){
+		mIsVisible = true;
+//		mCharacterInstance->getSceneNode()->flipVisibility(true);
+		if (mStubbedIsFriendOfLocal)
+	            mTwitterIcon->delStatus(TwitterIcon::SVisible);
+		int i = 0;
+		i++;
 	}
 }

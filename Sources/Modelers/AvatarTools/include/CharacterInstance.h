@@ -178,15 +178,6 @@ public:
     /// brief Set the ghost attribute
     void setGhost(bool ghost);
 
-	/**
-		@brief	set low lewel Detail on the user
-	*/
-	void setToLowLevel (bool pLowLevel);
-	/**
-		@brief	tell the low lewel detail state of the user
-	*/
-	bool isLowLevel();
-
 protected:
     String mUid;										///brief UID string.
 	Character* mCharacter;								///brief Character of our instance.
@@ -201,7 +192,6 @@ protected:
 
     MeshPtr mMesh;
 	Entity* mEntity;									///brief Ogre entity associated to the character.
-	Entity* mEntityLow;									///brief Ogre entity associated to the character.
 	SceneNode* mSceneNode;								///brief Scene node on which the entity is attached.
 	IFaceController*	mFaceController;				///brief The face controller associated with this character instance (owned)
     bool mGhost;										///brief Ghost flag.

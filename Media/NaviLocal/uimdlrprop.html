@@ -133,6 +133,12 @@
                 document.getElementById('MaterialVNCHost').value = 'localhost';
                 document.getElementById('MaterialVNCPort').value = '5900';
                 document.getElementById('MaterialVNCPwd').value = 'secret';
+               <!-- BM ASA added hybridcom plugin -->
+                  document.getElementById('MaterialHybridcomHyperlink').value = 'file:///C:/Development/Solipsis/branches/HybridCom/Common/bin/navigator/Release/NaviLocal/uimdlrprop.html';
+                  document.getElementById('MaterialHybridcomCamera').value = '512';
+                  document.getElementById('MaterialHybridcomMicrophone').value = '512';
+                  document.getElementById('MaterialHybridcomName').value = 'hybridcom';
+				
             }
         </script>
 
@@ -480,6 +486,27 @@
                                     <tr><td><input type="button" value="Apply" onclick="Client.MdlrApplyWWWTexture();"/></td></tr>
 						        </table>
  	                        </div>
+							
+							<!-- ASA BM added hybridcom plugin  -->
+	                        <div class="tabbertab">
+		                        <!-- Hybridcom -->
+		                        <h2>Hybridcom</h2>
+						        <table>
+                                    <tr><td>Hyperlink</td><td><input type="text" size="50" id="MaterialHybridcomHyperlink" value="file:///C:/Development/Solipsis/branches/HybridCom/Media/NaviLocal/hybridcomtrigger.html"/></td></tr>
+						        </table>
+						        <table>
+                                    <tr>
+                                        <td>Camera</td><td><input type="text" size="6" id="MaterialHybridcomCamera" value="512"/></td>
+                                        <td>Microphone</td><td><input type="text" size="6" id="MaterialHybridcomMicrophone" value="512"/></td>
+                                        <td>CalleeName</td><td><input type="text" size="6" id="MaterialHybridcomName" value="HybridcomName"/></td>
+                                    </tr>
+						        </table>
+						        <table>
+                                    <tr><td><input type="button" value="Apply" onclick="Client.MdlrApplyHybridcomTexture();"/></td></tr>
+						        </table>
+ 	                        </div>
+						<!-- ASA BM added hybridcom plugin  -->
+							
 							<div class="tabbertab">
 		                        <!-- SWF -->
 		                        <h2>SWF</h2>

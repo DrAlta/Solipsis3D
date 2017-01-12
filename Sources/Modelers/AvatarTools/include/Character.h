@@ -21,6 +21,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/*
+		COPYRIGHTS (c) ARTEFACTO 
+		
+			!! Licence GPL !!	
+*/
+
 #ifndef __Character_h__
 #define __Character_h__
 
@@ -76,8 +82,6 @@ public:
     static String getEditionConfFilename(const String& prefix);
     ///brief Return the MESH edition filename
     static String getEditionMeshFilename(const String& prefix);
-    ///brief Return the LOW MESH edition filename
-    static String getEditionLowMeshFilename(const String& prefix);
 
 	///brief Add an instance of the character.
     void addInstance(const String& pUidString, CharacterInstance* pCharacterInstance);
@@ -96,9 +100,6 @@ public:
 	///brief Method that return the entity associated to the Character.
 	///return entity associated with the Character.
     Entity* getEntity() { return mEntity; }
-	///brief Method that return the low level entity associated to the Character.
-	///return low level entity associated with the Character.
-	Entity* getEntityLow() { return mEntityLow; }
 	///brief Method that return the pathname of the Character.
 	///return Character's pathname.
     Path* getPath() { return mPath; }
@@ -177,12 +178,7 @@ public:
 	const IFaceControllerCreator*	getFaceControllerCreator( void ) const { return mFaceControllerCreator; }
 	IFaceControllerCreator*	getFaceControllerCreator( void ) { return mFaceControllerCreator; }
 
-	/// Set the LOD of the Avatar : pass true for low and false for High.
-	void updateDefinitionLevel(bool setToLow = false);
-	bool isLowLevel() {return mIsLowLevel;};
-
 protected:
-
 	Path* mPath;										///brief Path informing us where is placed the character on the disks.
 	MyZipArchive* mZipArchive;							///brief Zip archive containing our character.
 
@@ -195,17 +191,11 @@ protected:
 	String mSkeletonName;
 	String mMeshName;
 
-    MeshPtr mMesh;										/// The high definition mesh
-	MeshPtr mMeshLow;									/// The low definition mesh
-
-	// Tell if we are in Low level Mode
-	bool	mIsLowLevel; 
-
+    MeshPtr mMesh;
 	Animation* mCustomizationAnimation;
 	VertexAnimationTrack* mAnimationTrack;
 
     Entity* mEntity;									///brief Ogre entity associated to the character.
-    Entity* mEntityLow;									///brief Ogre entity associated to the character for the low level.
 
 	BodyPartsMap mBodyParts;							///brief Map of all the BodyParts of the character (For example "Head","Arms","Legs",...).
 	GoodiesMap mGoodies;								///brief Map of all the Goodies of the character (For example "Watch","Hat"...).

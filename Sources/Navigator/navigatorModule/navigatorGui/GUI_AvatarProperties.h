@@ -46,7 +46,6 @@ namespace Solipsis
 
     protected:
         GUI_AvatarProperties();
-		~GUI_AvatarProperties();
         static GUI_AvatarProperties * stGUI_AvatarProperties;
 
 

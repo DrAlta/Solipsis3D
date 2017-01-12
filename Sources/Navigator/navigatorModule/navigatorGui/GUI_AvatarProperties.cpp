@@ -44,22 +44,18 @@ GUI_AvatarProperties * GUI_AvatarProperties::stGUI_AvatarProperties = NULL;
 GUI_AvatarProperties::GUI_AvatarProperties() : GUI_Panel("uiavatarprop"),
 mLockAmbientDiffuse(false)
 {
+    stGUI_AvatarProperties = this;
     mNavigator = Navigator::getSingletonPtr();
-	m_curState = NSNotCreated;
-}
-
-GUI_AvatarProperties::~GUI_AvatarProperties()
-{
-	stGUI_AvatarProperties = NULL;
 }
 
 //-------------------------------------------------------------------------------------
-bool GUI_AvatarProperties::createAndShowPanel()
+/*static*/ bool GUI_AvatarProperties::createAndShowPanel()
 {
     if (!stGUI_AvatarProperties)
     {
-      stGUI_AvatarProperties =  new GUI_AvatarProperties();
+        new GUI_AvatarProperties();
     }
+
     return stGUI_AvatarProperties->show();
 }
 

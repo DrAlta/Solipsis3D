@@ -44,12 +44,7 @@ GUI_ChooseWorld * GUI_ChooseWorld::stGUI_ChooseWorld = NULL;
 //-------------------------------------------------------------------------------------
 GUI_ChooseWorld::GUI_ChooseWorld() : GUI_FromServer("uiworlds")
 {
-	m_curState = NSNotCreated;
-}
-
-GUI_ChooseWorld::~GUI_ChooseWorld() 
-{
-	stGUI_ChooseWorld = NULL;
+    stGUI_ChooseWorld = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -57,8 +52,9 @@ bool GUI_ChooseWorld::createAndShowPanel()
 {
     if (!stGUI_ChooseWorld)
     {
-      stGUI_ChooseWorld =  new GUI_ChooseWorld();
+        new GUI_ChooseWorld();
     }
+
     return stGUI_ChooseWorld->show();
 }
 
@@ -107,9 +103,6 @@ bool GUI_ChooseWorld::show()
 void GUI_ChooseWorld::onOkPressed(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::worldOk()");
-
-	// FromServer version
-	mNavi->removeEventListener(this);
 
     std::string world = args[0].toString();
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::worldOk() world=%s", world.c_str());

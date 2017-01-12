@@ -10,12 +10,14 @@
 #include "tinyxml.h"
 #include "curl/curl.h"
 #include "curl/easy.h"
-#include "facebook.h"
+#include "Facebook.h"
+
+using namespace Solipsis;
 
 int main()
 {
-    const string apiKey  = "8d81e4c64ac0039b209c4a53b21ba220";
-    const string secret  = "695a02e3645bed085e1802c7e9952d73";
+    const string apiKey  = "8d81e4c64ac0039b209c4a53b21ba220"; //"";93dbe01c43a4e7dc57901d45eb4a0e37
+    const string secret  = "695a02e3645bed085e1802c7e9952d73"; //"";6f6643e147595ee07164169b0e54d199
     const string server  = "api.facebook.com/restserver.php";
     const string login   = "http://api.facebook.com/login.php";
 

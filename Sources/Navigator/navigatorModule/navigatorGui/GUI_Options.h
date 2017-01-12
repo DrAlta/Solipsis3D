@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef __GUI_Options_h__
 #define __GUI_Options_h__
 
-// #include <Facebook.h>
 #include "NavigatorGui.h"
 #include "MainApplication/Navigator.h"
 #include "GUI_Panel.h"
@@ -49,7 +48,6 @@ namespace Solipsis
        
     protected:
         GUI_Options();
-		~GUI_Options();
 
         void applyLoginDatas(); 
 

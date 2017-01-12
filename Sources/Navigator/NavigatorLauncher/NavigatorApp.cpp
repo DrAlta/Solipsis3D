@@ -49,8 +49,7 @@ class PeerOgreRenderSystemLock : public IPeerRenderSystemLock
 public:
     /// Constructor
     PeerOgreRenderSystemLock(IApplication* application) :
-      mApplication(application)
-      {}
+      mApplication(application) {}
     /// See IPeerRenderSystemLock::lock()
     virtual void lock() { mApplication->lock(); }
     /// See IPeerRenderSystemLock::unlock()

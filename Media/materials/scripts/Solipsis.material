@@ -113,16 +113,6 @@ material Solipsis/Panel2DButtons
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
 material Solipsis/SkyBox1
 {
 	technique
@@ -174,3 +164,40 @@ material Solipsis/SkyBox3
 		}
 	}
 }
+
+material Solipsis/Facebook
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture facebook-128x128.png
+			}
+		}
+	}
+}
+
+material Solipsis/Twitter
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture twitter-128x128.png
+			}
+		}
+	}
+}
+

@@ -95,7 +95,9 @@ class UsersManager:
             usersXmlFile.close()
             userElts = usersDoc.getElementsByTagName('user')
             for userElt in userElts:
-                self.users[userElt.getAttribute('login')] = [userElt.getAttribute('pwd'), userElt.getAttribute('nodeId')]
+                self.users[userElt.getAttribute('login')] = [ userElt.getAttribute('pwd'),
+                                                              userElt.getAttribute('nodeId')
+                                                            ]
             usersDoc.unlink()
         except IOError, errno:
             if errno == 2:
@@ -162,16 +164,14 @@ class UsersManager:
                 print 'nodeId128 in integer : ', nodeId128
                 # compress it on 22bytes sbase64 string instead of 32bytes hexa string
                 nodeId = self.convertInt2SBase64(nodeId128, 128)
-                self.users[login] = [pwd, nodeId]
                 statsManager.addEvent(StatEvent(statId=StatEvent.StatEventId['SEI_WSERVER_NEW_USER'], statDesc='%s/%s/%s' % (login, pwd, nodeId)))
-                statsManager.addEvent(StatEvent(statId=StatEvent.StatEventId['SEI_WSERVER_NB_USERS'], statType=StatEvent.StatEventType['SET_ABSOLUTE'], statDesc='%d' % len(self.users)))
                 result = True
-            print 'Authenticated %s/%s -> %s, %s' % (login, pwd, result, nodeId)
+            print 'Authenticated %s/%s -> %s, %s !' % (login, pwd, result, nodeId)
 #            print 'Converted in integer : ', self.convertSBase642Int(nodeId)
+            self.users[login] = [pwd, nodeId]
             return result, nodeId
         finally:
             self.usersMutex.release()
-
 
 class TimeoutHTTPRequestHandler(SimpleHTTPRequestHandler):
     """
@@ -229,13 +229,15 @@ class WSRequestHandler(TimeoutHTTPRequestHandler):
                 if not self.checkNavigatorVersion(query):
                     return
                 try:
-                    login = query['login'][0]
-                    pwd = query['pwd'][0]
+                    login = query.get('login', [''])[0]
+                    pwd = query.get('pwd', [''])[0]
+                    print 'before authenticating : received args = %s/%s -> ' % (login, pwd)
                 except:
                     # login param is missing !
                     statsManager.addEvent(StatEvent(statId=StatEvent.StatEventId['SEI_WSERVER_RESP_ERROR']))
-                    self.send_error(404, 'Malformed url ...')
-                    return
+                    if len(login) == 0 or len(pwd) == 0:
+                       self.send_error(404, 'Malformed url : login or pwd  empty ...')
+                       return
                 authenticated, nodeId = usersManager.authenticate(login, pwd)
                 loginHtmlFile = open('uiauthentws.html', 'r')
                 loginHtmlFileContent = loginHtmlFile.read()

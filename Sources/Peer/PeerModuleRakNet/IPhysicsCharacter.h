@@ -65,10 +65,12 @@ public:
     */
     virtual void getPosition(Ogre::Vector3& position) = 0;
 
+#if 1 // GILLES YES
     /** Get a collision test.
     @remarks An implementation must be supplied for this method.
     */
     virtual void getCollision(bool &collision) = 0;
+#endif
 };
 
 } // end namespace

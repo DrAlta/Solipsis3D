@@ -96,13 +96,7 @@ TiXmlElement* AvatarNode::getSavedElt()
 
     // Add last site uid where avatar was connected
     TiXmlElement* lastSiteUidElt = new TiXmlElement("lastSiteUid");
-	
-	// Bug fix : To avoid a crash when reloading. If there has been an error with the background scene loading 
-	// we default the scene to DeltaStation = 11112222
-	if (mLastSiteUid == "")
-		mLastSiteUid = "11112222";
-	
-	TiXmlText* lastSiteUid = new TiXmlText(mLastSiteUid.c_str());
+    TiXmlText* lastSiteUid = new TiXmlText(mLastSiteUid.c_str());
     lastSiteUidElt->LinkEndChild(lastSiteUid);
     nodeElt->LinkEndChild(lastSiteUidElt); 
 
@@ -346,8 +340,16 @@ bool AvatarNode::processEvt(RefCntPoolPtr<XmlEvt>& xmlEvt, std::string& xmlRespS
             XmlEntity::DefinedAttributes definedAttributes = xmlEntity->getDefinedAttributes();
             if (definedAttributes & XmlEntity::DAFlags)
             {
+#if 1 // GILLES FLY
 			    entity->setGravity(xmlEntity->getFlags() & EFGravity);
 			    entity->getXmlEntity()->setFlags(xmlEntity->getFlags());
+#else
+                EntityFlags diff = entity->getXmlEntity()->getFlags() ^ xmlEntity->getFlags();
+                if (diff & EFGravity)
+                    entity->setGravity(xmlEntity->getFlags() & EFGravity);
+                if (diff & EFGravity) { LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "RCV uid:%s setGravity(%s)", xmlEntity->getUid().c_str(), LOGHANDLER_LOGBOOL(xmlEntity->getFlags() & EFGravity)); }
+                entity->getXmlEntity()->setFlags(xmlEntity->getFlags());
+#endif
             }
             if (definedAttributes & XmlEntity::DADisplacement)
             {
@@ -593,11 +595,14 @@ bool AvatarNode::tick(Real timeSinceLastTick)
             xmlEvt->setType(ETUpdatedEntity);
             entity->mUpdatedXmlEntity->setUid(entity->getXmlEntity()->getUid());
             entity->mUpdatedXmlEntity->setPosition(entity->getXmlEntity()->getPosition());
+#if 1 // GILLES FLY
 			if(entity->isGravityEnabled())
 				entity->mUpdatedXmlEntity->setFlags(EFGravity);
 			else
 				entity->mUpdatedXmlEntity->setFlags(EFNone);
-
+#endif
+//            if (entity->mUpdatedXmlEntity->getDefinedAttributes() & XmlEntity::DAFlags)
+//                LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "AvatarNode::tick() ETUpdatedEntity evt sent uid=%s flags=%08x", entity->mUpdatedXmlEntity->getUid().c_str(), entity->mUpdatedXmlEntity->getFlags());
 #ifdef LOGSNDRCV
             LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "SND uid:%s p:%s", entity->getXmlEntity()->getUid().c_str(), StringConverter::toString(entity->getXmlEntity()->getPosition()).c_str());
 #endif

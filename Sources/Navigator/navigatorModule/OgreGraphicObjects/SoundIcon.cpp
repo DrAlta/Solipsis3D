@@ -49,8 +49,11 @@ void SoundIcon::attach(SceneNode* pNode)
 
 void SoundIcon::detach()
 {
-	mParentNode->detachObject(mSoundIcon);
-	mParentNode = 0;
+	if (mParentNode != 0)
+	{
+		mParentNode->detachObject(mSoundIcon);
+		mParentNode = 0;
+	}
 }
 
 void SoundIcon::setStatus(Status status)

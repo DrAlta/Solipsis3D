@@ -96,19 +96,6 @@ bool XmlEntity::toXmlElt(TiXmlElement& xmlElt) const
         animationElt->SetAttribute("state", XmlHelpers::convertAnimationStateToHexString(mAnimationState).c_str());
         entityElt->LinkEndChild(animationElt);
     }
-    if (mDefinedAttributes & DAXDEBonesPos)
-    {
-        TiXmlElement* xdeBonesPos = new TiXmlElement("XDEBonesPos");
-        for (unsigned int i = 0 ; i < mXDEBonesPos.size() ; i++)
-        {
-            TiXmlElement* xdeBonePos = new TiXmlElement("BonePos");
-            xdeBonePos->SetAttribute("BoneId", XmlHelpers::convertUIntToHexString((unsigned int) mXDEBonesPos[i].first).c_str());
-            xdeBonePos->LinkEndChild(XmlHelpers::toXmlEltVector3("position", mXDEBonesPos[i].second.first));
-            xdeBonePos->LinkEndChild(XmlHelpers::toXmlEltQuaternion("orientation", mXDEBonesPos[i].second.second));
-            xdeBonesPos->LinkEndChild(xdeBonePos);
-        }
-        entityElt->LinkEndChild(xdeBonesPos);
-    }
     if (mDefinedAttributes & DAAABoundingBox)
     {
         TiXmlElement* aabbElt = new TiXmlElement("aabb");
@@ -189,31 +176,6 @@ bool XmlEntity::fromXmlElt(TiXmlElement* xmlElt)
         XmlHelpers::fromXmlEltQuaternion(elt, mOrientation);
         mDefinedAttributes |= DAOrientation;
     }
-    if ((elt = xmlElt->FirstChildElement("XDEBonesPos")) != 0)
-    {
-       TiXmlElement* subElt = elt->FirstChildElement("BonePos");
-       while (subElt != 0)
-       {
-           int boneId;
-           Ogre::Vector3 position(Ogre::Vector3::ZERO);
-           Ogre::Quaternion orientation(Ogre::Quaternion::IDENTITY);
-           TiXmlElement* subSubElt;
-
-           if (!XmlHelpers::getAttribute(subElt, "BoneId", attr)) return false;
-                boneId = (int) XmlHelpers::convertHexStringToUInt(attr);
-           
-           if (( subSubElt = subElt->FirstChildElement("position")) != 0)
-                XmlHelpers::fromXmlEltVector3(subSubElt, position);
-
-           if (( subSubElt = subElt->FirstChildElement("orientation")) != 0)
-                XmlHelpers::fromXmlEltQuaternion(subSubElt, orientation);
-            
-           std::pair<Ogre::Vector3, Ogre::Quaternion> displacement(position, orientation);
-           std::pair<int, std::pair<Ogre::Vector3, Ogre::Quaternion>> bonePos(boneId, displacement);
-           mXDEBonesPos.push_back(bonePos);
-       }
-       mDefinedAttributes |= DAXDEBonesPos;
-    }
     if ((elt = xmlElt->FirstChildElement("animation")) != 0)
     {
         if (XmlHelpers::getAttribute(elt, "state", attr))
@@ -270,8 +232,6 @@ void XmlEntity::copyEntityDefinedAttributes(RefCntPoolPtr<XmlEntity>& srcXmlEnti
         dstXmlEntity->setPosition(srcXmlEntity->getPosition());
     if (definedAttributes & XmlEntity::DAOrientation)
         dstXmlEntity->setOrientation(srcXmlEntity->getOrientation());
-    if (definedAttributes & XmlEntity::DAXDEBonesPos)
-        dstXmlEntity->setXDEBonesPos(srcXmlEntity->getXDEBonesPos());
     if (definedAttributes & XmlEntity::DAAnimation)
         dstXmlEntity->setAnimation(srcXmlEntity->getAnimation());
     if (definedAttributes & XmlEntity::DAAABoundingBox)

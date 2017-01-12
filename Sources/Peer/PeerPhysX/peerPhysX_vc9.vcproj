@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="peerPhysX"
 	ProjectGUID="{35F18913-F384-43A8-B664-624682177FBF}"
 	RootNamespace="peerPhysX"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;&quot;..\..\..\Dependencies\peerModule\lib\$(ConfigurationName)&quot;"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;&quot;..\..\..\Dependencies\peerModule\lib\$(ConfigurationName)&quot;"
@@ -222,7 +222,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain_d.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;..\..\..\Dependencies\peerModule\lib\Debug"
@@ -300,7 +300,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
+				AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib OgreMain.lib Peer.lib"
 				OutputFile="$(OutDir)\PeerPlugin_PhysX.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib&quot;;&quot;$(PHYSX_DIR)\SDKs\lib\win32&quot;;..\..\..\Dependencies\peerModule\lib\Release"

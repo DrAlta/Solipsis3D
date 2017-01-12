@@ -50,7 +50,6 @@ namespace Solipsis
 
     protected:
         GUI_ModelerProperties();
-		~GUI_ModelerProperties();
 
         // callback
         void modelerActionUndo(Navi* caller, const Awesomium::JSArguments& args);
@@ -107,6 +106,11 @@ namespace Solipsis
         void modelerPropVLCTextureApply(Navi* caller, const Awesomium::JSArguments& args);
         void modelerPropVLCMrlBrowse(Navi* caller, const Awesomium::JSArguments& args);
         void modelerPropVNCTextureApply(Navi* caller, const Awesomium::JSArguments& args);
+
+		// ASA BM 
+		void modelerPropHybridcomTextureApply(Navi* caller, const Awesomium::JSArguments& args);
+		// ASA EM
+
         // Modeler 3D callbacks
         void modelerPropPositionX(Navi* caller, const Awesomium::JSArguments& args);
         void modelerPropPositionY(Navi* caller, const Awesomium::JSArguments& args);

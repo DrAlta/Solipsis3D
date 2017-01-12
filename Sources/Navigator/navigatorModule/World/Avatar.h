@@ -34,6 +34,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "OgreGraphicObjects/SoundIcon.h"
 #include "OgreGraphicObjects/ProgressBar.h"
 
+//// - KH - Adding Social Network Display features
+#include "OgreGraphicObjects/TwitterIcon.h"
+#include "OgreGraphicObjects/FacebookIcon.h"
 
 using namespace Ogre;
 
@@ -92,6 +95,17 @@ protected:
     bool mGhost;
 
 private:
+    /// Animation name for Idle
+    String mIdleAnimName;
+    /// Animation name for Walk
+    String mWalkAnimName;
+    /// Animation name for Run
+    String mRunAnimName;
+    /// Animation name for Fly
+    String mFlyAnimName;
+    /// Animation name for Swim
+    String mSwimAnimName;
+
     /// Motion for Up key
     KeyMotion mUpKeyMotion;
     /// Motion for Down key
@@ -104,6 +118,87 @@ private:
     KeyMotion mPgupKeyMotion;
     /// Motion for PgDown key
     KeyMotion mPgdownKeyMotion;
+
+	// - KH - Store friendship link indicator with local
+	bool mIsTwitterFriendOfLocal;
+	bool mIsFacebookFriendOfLocal;
+	bool mStubbedIsFriendOfLocal;
+	bool mIsVisible;
+
+public:
+	/// - KH - TwitterIcon to display sn Id
+	TwitterIcon* mTwitterIcon;
+	FacebookIcon* mFacebookIcon;
+
+	// - KH - Check if avatar is a SN friend of the local user
+	inline bool isTwitterFriendOfLocal(){ return mIsTwitterFriendOfLocal; };
+	inline bool isFacebookFriendOfLocal(){ return mIsFacebookFriendOfLocal; };
+	// - KH - Set friend relationship with local user of this avatar
+	inline void setTwitterFriendOfLocal(bool isFriend){ mIsTwitterFriendOfLocal = isFriend; };
+	inline void setFacebookFriendOfLocal(bool isFriend){ mIsFacebookFriendOfLocal = isFriend; };
+
+	//// - KH - Adding Social Network 
+	// from navigator application
+    /** Called when ShowFriendMode is enabled.
+    */
+	bool getStubbedFriendOfLocal();
+	void setStubbedFriendOfLocal(bool isFriend);
+
+    void onStubbedSocialModeEnabled();
+
+    void onStubbedSocialModeDisabled();
+
+	// Manage Social mode display
+	void onSocialModeEnabled()
+    {
+		if (!isLocal()){
+			//if (isTwitterFriendOfLocal())
+			//	mTwitterIcon->addStatus(TwitterIcon::SVisible);
+			//else
+			//	mTwitterIcon->addStatus(TwitterIcon::SNone);
+
+			if (isFacebookFriendOfLocal())
+				mFacebookIcon->addStatus(FacebookIcon::SVisible);
+			else
+				mFacebookIcon->addStatus(FacebookIcon::SNone);
+		} else {
+			mFacebookIcon->addStatus(FacebookIcon::SNone);
+			//mTwitterIcon->addStatus(TwitterIcon::SNone);
+		}		
+    }
+
+    /** Called when ShowFriendMode is disabled.
+    @remarks An implementation must be supplied for this method to uniquely identify the engine.
+    */
+    void onSocialModeDisabled()
+    {
+		if (!isLocal()){
+			//if (isTwitterFriendOfLocal())
+			//    mTwitterIcon->delStatus(TwitterIcon::SVisible);
+			if (isFacebookFriendOfLocal())
+				mFacebookIcon->delStatus(FacebookIcon::SVisible);
+		}
+    };
+
+    /** Not sure this is usefull method !!!!!!!!!!!!.
+    @param displaySocialLinkMode TRUE if ShowFriends mode is enabled FALSE otherwise
+    */
+    void OnSocialModeUpdate (bool displaySocialLinkMode)
+    {
+		if (displaySocialLinkMode){
+			if (isTwitterFriendOfLocal())
+				mTwitterIcon->addStatus(TwitterIcon::SAnimated);
+			else
+				mTwitterIcon->delStatus(TwitterIcon::SAnimated);
+			if (isFacebookFriendOfLocal())
+				mFacebookIcon->addStatus(FacebookIcon::SAnimated);
+			else
+				mFacebookIcon->delStatus(FacebookIcon::SAnimated);
+		} else {
+            mTwitterIcon->delStatus(TwitterIcon::SAnimated);
+			mFacebookIcon->delStatus(FacebookIcon::SAnimated);
+		}
+    }
 
 public:
     /** Constructor. */
@@ -185,7 +280,6 @@ public:
     /** See OgrePeer. */
     virtual bool action(RefCntPoolPtr<XmlAction>& xmlAction);
 
-
     /** Starts 1 animation. */
     void startAnimation(const String &name, bool loop = true);
     /** Stop the current animation. */
@@ -233,38 +327,6 @@ public:
 protected:
     /** Update the avatar properties into the voice engine. */
     void updateVoiceEngine(bool updatePosDirVel, bool updateDist);
-
-public : 
-
-	/** One bone information. */
-	struct BoneInfo
-	{
-		BoneInfo():mBoneName(),mLocalPosition(Ogre::Vector3::ZERO),mLocalOrientation(Ogre::Quaternion::IDENTITY){}
-		/// Bone position
-		Ogre::Vector3 mLocalPosition;
-		/// Bone orientation - parent based
-		Ogre::Quaternion mLocalOrientation;
-		/// Bone name.
-		std::string mBoneName;
-	};
-
-	/** One skeleton informations. */
-	struct SkeletonInfo
-	{
-		SkeletonInfo():mLocalPosition(Ogre::Vector3::ZERO),mLocalOrientation(Ogre::Quaternion::IDENTITY),mBones(){}
-		/// Position of the entity.
-		Ogre::Vector3 mLocalPosition;
-		/// Orientation of the entity
-		Ogre::Quaternion mLocalOrientation;
-		/// The bones list.
-		std::vector<BoneInfo> mBones;
-	};
-	
-	// Conditions  : 
-	//		=> Entity must have a skeleton
-	//		=> Entity must be attached to a SceneNode that is not the RootSceneNode
-	//		=> pSkeletonInfo's Quaternions has to be normalised.
-	void manualUpdate(SkeletonInfo &pSkeletonInfo, Ogre::Entity& pEntity);
 };
 
 } // namespace Solipsis

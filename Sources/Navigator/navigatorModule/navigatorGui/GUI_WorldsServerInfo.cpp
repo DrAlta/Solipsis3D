@@ -36,20 +36,15 @@ GUI_WorldsServerInfo * GUI_WorldsServerInfo::stGUI_WorldsServerInfo = NULL;
 //-------------------------------------------------------------------------------------
 GUI_WorldsServerInfo::GUI_WorldsServerInfo() : GUI_FromServer("uiinfows")
 {
-	m_curState = NSNotCreated;
+    stGUI_WorldsServerInfo = this;
 }
-
-GUI_WorldsServerInfo::~GUI_WorldsServerInfo()
-{
-	stGUI_WorldsServerInfo = NULL;
-} 
 
 //-------------------------------------------------------------------------------------
 bool GUI_WorldsServerInfo::createAndShowPanel()
 {
     if (!stGUI_WorldsServerInfo)
     {
-       stGUI_WorldsServerInfo = new GUI_WorldsServerInfo();
+        new GUI_WorldsServerInfo();
     }
 
     return stGUI_WorldsServerInfo->show();
@@ -91,12 +86,10 @@ bool GUI_WorldsServerInfo::show()
 //-------------------------------------------------------------------------------------
 void GUI_WorldsServerInfo::onOkPressed(Navi* caller, const Awesomium::JSArguments& args)
 {
-	LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::worldsServerInfoOk()");
-	// FromServer version
-	mNavi->removeEventListener(this);
+    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::worldsServerInfoOk()");
 
-	// Return to Navi UI login
-	GUI_Login::createAndShowPanel();
+    // Return to Navi UI login
+    GUI_Login::createAndShowPanel();
 }
 
 //-------------------------------------------------------------------------------------

@@ -49,22 +49,16 @@ GUI_ModelerProperties * GUI_ModelerProperties::stGUI_ModelerProperties = NULL;
 GUI_ModelerProperties::GUI_ModelerProperties() : GUI_Panel("uimdlrprop") ,
     mLockAmbientDiffuse(false)
 {
-	m_curState = NSNotCreated;
+    stGUI_ModelerProperties = this;
     mNavigator = Navigator::getSingletonPtr();
 }
-
-GUI_ModelerProperties::~GUI_ModelerProperties()
-{
-	stGUI_ModelerProperties = NULL;
-}
-
 
 //-------------------------------------------------------------------------------------
 /*static*/ bool GUI_ModelerProperties::createAndShowPanel()
 {
     if (!stGUI_ModelerProperties)
     {
-       stGUI_ModelerProperties = new GUI_ModelerProperties();
+        new GUI_ModelerProperties();
     }
 
     return stGUI_ModelerProperties->show();
@@ -176,10 +170,15 @@ bool GUI_ModelerProperties::show()
         mNavi->bind("MdlrNextTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropTextureNext));
         mNavi->bind("MdlrApplyWWWTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropWWWTextureApply));
         mNavi->bind("MdlrApplySWFTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropSWFTextureApply));
-        mNavi->bind("MdlrApplyVLCTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropVLCTextureApply));
+        mNavi->bind("MdlrApplyTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropVLCTextureApply));
         mNavi->bind("MdlrVLCMrlBrowse", NaviDelegate(this, &GUI_ModelerProperties::modelerPropVLCMrlBrowse));
         mNavi->bind("MdlrApplyVNCTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropVNCTextureApply));
-        // 3D
+     
+		// ASA BM
+        mNavi->bind("MdlrApplyHybridcomTexture", NaviDelegate(this, &GUI_ModelerProperties::modelerPropHybridcomTextureApply));
+		// ASA EM
+		
+		// 3D
         mNavi->bind("MdlrPositionX", NaviDelegate(this, &GUI_ModelerProperties::modelerPropPositionX));
         mNavi->bind("MdlrPositionY", NaviDelegate(this, &GUI_ModelerProperties::modelerPropPositionY));
         mNavi->bind("MdlrPositionZ", NaviDelegate(this, &GUI_ModelerProperties::modelerPropPositionZ));
@@ -861,6 +860,12 @@ void GUI_ModelerProperties::modelerPropWWWTextureApply(Navi* caller, const Aweso
         float sound3dMin = 0;
         float sound3dMax = 10;
 
+		LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_ModelerProperties::modelerPropWWWTextureApply(%s)",urlStr.c_str());
+
+		GUI_MessageBox::getMsgBox()->show("ASA WWW MSG", "ASA", 
+                GUI_MessageBox::MBB_OK, 
+                GUI_MessageBox::MBB_INFO);
+
         TextureExtParamsMap textureExtParamsMap;
         textureExtParamsMap["plugin"] = "www";
         textureExtParamsMap["query_flags"] = StringConverter::toString(Navigator::QFNaviPanel);
@@ -1133,6 +1138,100 @@ void GUI_ModelerProperties::modelerPropVNCTextureApply(Navi* caller, const Aweso
         //modelerUpdateTextures();
     }
 }
+
+// ASA BM Added hybridcom plugin 
+//-------------------------------------------------------------------------------------
+void GUI_ModelerProperties::modelerPropHybridcomTextureApply(Navi* caller, const Awesomium::JSArguments& args)
+{
+    
+	fprintf (stdout,"ASA : hybridcom message ...");
+	Modeler *modeler = mNavigator->getModeler();
+    if( modeler != 0 )
+    {
+        Object3D * obj = modeler->getSelected();
+
+        // only 1 WWW per modifiedMaterial for instance ... TODO
+        ModifiedMaterialManager* modifiedMaterialManager = obj->getMaterialManager();
+        TexturePtr texture;
+        TextureVectorIterator tvIter = modifiedMaterialManager->getTextureIterator();
+        while (tvIter.hasMoreElements())
+        {
+            texture = tvIter.getNext();
+            TextureExtParamsMap* textureExtParamsMap = modifiedMaterialManager->getTextureExtParamsMap(texture);
+            if (textureExtParamsMap == 0) continue;
+            TextureExtParamsMap::const_iterator it = textureExtParamsMap->find("plugin");
+            if (it == textureExtParamsMap->end()) continue;
+            if (it->second == "hybridcom")
+            {
+                obj->deleteTexture(texture);
+                break;
+            }
+        }
+
+        std::string hyperlinkStr = mNavi->evaluateJSWithResult("$('MaterialHybridcomHyperlink').value").get().toString();
+        std::string cameraStr = mNavi->evaluateJSWithResult("$('MaterialHybridcomCamera').value").get().toString();
+        std::string microphoneStr = mNavi->evaluateJSWithResult("$('MaterialHybridcomMicrophone').value").get().toString();
+        std::string nameStr = mNavi->evaluateJSWithResult("$('MaterialHybridcomName').value").get().toString();
+          
+/*	ASA commented this code, no need to go through another html trigger page	
+		std::string triggerpage = "file:///C:/Development/Solipsis/branches/HybridCom/Media/NaviLocal/hybridcomtrigger.html";
+		std::string param = "?comhyperlink=";
+		std::string hyperlinkRef = triggerpage + param + hyperlinkStr;
+		
+		hyperlinkStr = hyperlinkRef;
+
+		std::string sParamsValue = hyperlinkStr+":\n"+cameraStr+":\n"+microphoneStr+":\n"+nameStr;
+
+
+		LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "sPropValue : %s", hyperlinkRef.c_str());
+
+		GUI_MessageBox::getMsgBox()->show("ASA MSG", sParamsValue, 
+                GUI_MessageBox::MBB_OK, 
+                GUI_MessageBox::MBB_INFO);
+*/
+
+		int camera = atoi(cameraStr.c_str());
+        int microphone = atoi(microphoneStr.c_str());
+
+        
+		bool sound3d = true;
+        float sound3dMin = 0;
+        float sound3dMax = 10;
+/*
+		GUI_MessageBox::getMsgBox()->show("ASA MSG", "Hybridcom", 
+                GUI_MessageBox::MBB_OK, 
+                GUI_MessageBox::MBB_INFO);
+*/
+
+        TextureExtParamsMap textureExtParamsMap;
+        textureExtParamsMap["plugin"] = "hybridcom";
+        textureExtParamsMap["query_flags"] = StringConverter::toString(Navigator::QFHybridcomPanel);
+        textureExtParamsMap["hyperlink"] = hyperlinkStr;
+        textureExtParamsMap["camera"] = StringConverter::toString(camera);
+        textureExtParamsMap["microphone"] = StringConverter::toString(microphone);
+        textureExtParamsMap["object_name"] = nameStr;
+        
+		textureExtParamsMap["sound_params"] = (sound3d ? "3d " + StringConverter::toString(sound3dMin) + " " + StringConverter::toString(sound3dMax) : "");
+        TexturePtr PtrTexture = modeler->loadTexture(obj->getMaterialManager(), "", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, textureExtParamsMap);
+
+        //Test if this texture is already in the list :
+        if( obj->getMaterialManager()->isPresentInList( PtrTexture ) )
+        {
+            GUI_MessageBox::getMsgBox()->show("Modeler error", GUI_Modeler::ms_ModelerErrors[GUI_Modeler::ME_TEXTUREALREADYOPEN], 
+                GUI_MessageBox::MBB_OK, 
+                GUI_MessageBox::MBB_INFO);
+            return;
+        }
+
+        //Add texture for the object (with obj->mModifiedMaterialManager)
+        obj->addTexture(PtrTexture, textureExtParamsMap);
+        obj->setCurrentTexture(PtrTexture);
+
+        //modelerUpdateTextures();
+    }
+}
+// ASA EM Added Hybridcom plugin 
+
 
 //-------------------------------------------------------------------------------------
 void GUI_ModelerProperties::modelerPropTexturePrev(Navi* caller, const Awesomium::JSArguments& args)
@@ -1625,7 +1724,12 @@ void GUI_ModelerProperties::modelerUpdateTextures()
             //text +=	"' width=128 height=128/>";
 
             TextureExtParamsMap::iterator it = textureExtParamsMap->find("plugin");
-            if ((it->second == "vlc") || (it->second == "swf") || (it->second == "www"))
+            //if ((it->second == "vlc") || (it->second == "swf") || (it->second == "www"))
+			
+			// ASA BM added hybridcom plugin
+			if ((it->second == "vlc") || (it->second == "swf") || (it->second == "www") || (it->second == "hybridcom"))
+			// ASA EM added hybridcom plugin
+
             {
                 //text = "document.getElementById('imgSelec').setAttribute('style','background-image:url(__" + it->second + ".jpg)')";
                 //text += "<img src='./NaviLocal/__";
@@ -1775,6 +1879,17 @@ void GUI_ModelerProperties::modelerUpdateTextures()
             mNavi->evaluateJS("$('MaterialVNCPort').value = '" + port + "'");
             mNavi->evaluateJS("$('MaterialVNCPwd').value = '" + password + "'");
         }
+
+		// BM ASA added hybridcom plugin 
+		else if (plugin == "hybridcom")
+        {
+            mNavi->evaluateJS("document.getElementById('MaterialHybridcomHyperlink').value = '" + (*textureExtParamsMap)["hyperlink"] + "'");
+            mNavi->evaluateJS("document.getElementById('MaterialHybridcomCamera').value = '" + (*textureExtParamsMap)["camera"] + "'");
+            mNavi->evaluateJS("document.getElementById('MaterialHybridcomMicrophone').value = '" + (*textureExtParamsMap)["microphone"] + "'");
+            mNavi->evaluateJS("document.getElementById('MaterialHybridcomName').value = '" + (*textureExtParamsMap)["object_name"] + "'");
+        }
+		// EM ASA added hybridcom plugin
+
     }
 
     // Go back to the main directory

@@ -21,7 +21,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include "facebook.h"
+
+/*********** Revision Updates  ***********/
+// 26/01/10 : KH - Add - getFriendList() : get the list of Facebook Uids of the user
+
+/*********** End Revision Update *********/
+
+#include "Facebook.h"
 #include <curl/curl.h>
 #include <md5wrapper/md5wrapper.h>
 #include <tinyxml.h>
@@ -37,7 +43,8 @@ Facebook::Facebook(string apiKey, string secret, string server) :
     mVersion("1.0"),
     mHasSession(false),
     mCallId(0),
-    mCurl(0)
+    mCurl(0),
+	mFriendList(0)
 {
     mMd5 = new md5wrapper();
 }
@@ -167,6 +174,9 @@ void Facebook::cleanup()
     if (mCurl == 0) return;
     curl_easy_cleanup(mCurl);
     mCurl = 0;
+
+	/// KH
+	mFriendList.empty();
 }
 
 //-------------------------------------------------------------------------------------
@@ -197,5 +207,79 @@ size_t Facebook::writeCallback(void *ptr, size_t size, size_t nmemb, void *userp
 }
 
 //-------------------------------------------------------------------------------------
+// add-ons to get friend list
+const list<String_Pair>& Facebook::getFriendList()
+{
+	if (!hasSession())
+		return mFriendList;
+
+	// Now we retrieve a list of the user's friends and the result is stored
+    // in xml.
+    list<string> args;
+    string xml;
+    if (!request("facebook.friends.get", args, &xml))
+    {
+        cerr << "Could not get friends list." << endl;
+		// return an empty list
+		return mFriendList;
+    }
+
+    // We parse the XML document to get the user's friends' ids.
+    TiXmlDocument doc;
+    doc.Parse(xml.c_str());
+    TiXmlHandle docHandle(&doc);
+    TiXmlNode *response = doc.FirstChild("friends_get_response");
+    if (!response)
+    {
+		cerr << "Error : getting friends list." << endl;
+		// return an empty list
+		return mFriendList;
+    }
+
+	// Now we take that list of uids and request their name. 
+	TiXmlNode *friends = 0;
+    string uids;
+    while (friends = response->IterateChildren("uid",friends))
+    {
+		uids.append(friends->ToElement()->GetText());
+		uids.append(",");
+    }
+
+    args.clear();
+    xml.clear();
+    uids.erase(uids.size()-1,1);
+    args.push_back("uids=" + uids);
+    // We're going to obtain the name of the friends in uids.
+    args.push_back("fields=name");
+    if (!request("facebook.users.getInfo",args, &xml))
+    {
+        cerr << "Could not get users info." << endl;
+        return mFriendList;
+    }
+
+    doc.Parse(xml.c_str());
+    doc.Print();
+    response = doc.FirstChild("users_getInfo_response");
+    if (!response)
+    {
+        cerr << "Error getting friends' names." << endl;
+        return mFriendList;
+    }
+
+    // Print out each user's name.
+    TiXmlNode *user = docHandle.FirstChild("users_getInfo_response").FirstChild("user").ToNode();
+    for (; user; user = user->NextSibling())
+    {
+        
+		string name = user->FirstChild("name")->ToElement()->GetText();
+		string uidFcbk = user->FirstChild("uid")->ToElement()->GetText();
+		
+		String_Pair *p = new String_Pair(name, uidFcbk);
+		mFriendList.push_back(*p);
+   }
+    // It could be usefull to take that list of uids and request their name.
+	// but for the moment just return the list of Uids
+	return mFriendList;
+}
 
 } // namespace Solipsis

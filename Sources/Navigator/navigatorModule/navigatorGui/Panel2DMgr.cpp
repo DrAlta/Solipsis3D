@@ -28,8 +28,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "Panel2D.h"
 #include "Panel2DWWW.h"
 #include "Panel2DExtTextSrcEx.h"
+#include "Panel2DHybridcom.h"
 #include <CTLog.h>
 #include <CTMaths.h>
+
 
 using namespace Ogre;
 using namespace CommonTools;
@@ -43,6 +45,10 @@ Panel2DWWWFactory panel2DWWWFactory;
 Panel2DVLCFactory panel2DVLCFactory;
 Panel2DVNCFactory panel2DVNCFactory;
 Panel2DSWFFactory panel2DSWFFactory;
+
+// BM ASA added hybridcom plugin 
+Panel2DHybridcomFactory panel2DHybridcomFactory;
+// EM ASA added hybridcom plugin 
 
 const ushort Panel2DMgr::ms_DefaultMinZOrder = 100;
 const ushort Panel2DMgr::ms_DefaultMaxZOrder = 199;
@@ -64,6 +70,9 @@ Panel2DMgr::Panel2DMgr() :
     registerPanel2DFactory(&panel2DVLCFactory);
     registerPanel2DFactory(&panel2DVNCFactory);
     registerPanel2DFactory(&panel2DSWFFactory);
+	// BM ASA added hybridcom plugin
+	registerPanel2DFactory(&panel2DHybridcomFactory);
+	// EM ASA added hybridcom plugin 
 }
 
 //-------------------------------------------------------------------------------------
@@ -75,6 +84,9 @@ Panel2DMgr::~Panel2DMgr()
     unregisterPanel2DFactory(&panel2DVLCFactory);
     unregisterPanel2DFactory(&panel2DVNCFactory);
     unregisterPanel2DFactory(&panel2DSWFFactory);
+	// BM ASA added hybridcom plugin
+	unregisterPanel2DFactory(&panel2DHybridcomFactory);
+	// EM ASA added hybridcom plugin 
 }
 
 //-------------------------------------------------------------------------------------

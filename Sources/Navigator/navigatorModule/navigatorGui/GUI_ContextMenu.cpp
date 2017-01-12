@@ -41,7 +41,10 @@ const std::string GUI_ContextMenu::ms_NavisContexts[] =
     "uictxtwww",
     "uictxtswf",
     "uictxtvlc",
-    "uictxtvnc"
+    "uictxtvnc",
+	// BM ASA added hybridcom plugin
+	"uictxthybridcom"
+	// EM ASA added hybridcom plugin
 };
 
 GUI_ContextMenu * GUI_ContextMenu::stGUI_ContextMenu = NULL;
@@ -50,12 +53,7 @@ GUI_ContextMenu * GUI_ContextMenu::stGUI_ContextMenu = NULL;
 GUI_ContextMenu::GUI_ContextMenu() : GUI_Panel("contextMenu")
 {
     m_curContext = NAVI_CTXTCOUNT;
-	m_curState = NSNotCreated;
-}
-
-GUI_ContextMenu::~GUI_ContextMenu()
-{
-	stGUI_ContextMenu = NULL;
+    stGUI_ContextMenu = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -63,7 +61,7 @@ bool GUI_ContextMenu::createAndShowPanel(int x, int y, NaviContext ctxtPanel, co
 {
     if (!stGUI_ContextMenu)
     {
-        stGUI_ContextMenu = new GUI_ContextMenu();
+        new GUI_ContextMenu();
     }
 
     return stGUI_ContextMenu->show(x, y, ctxtPanel, params);
@@ -238,7 +236,36 @@ bool GUI_ContextMenu::show(int x, int y, NaviContext ctxtPanel, const String& pa
 
             mNavi->loadFile("uictxtswf.html");
        }
-        break;
+		break;
+		// BM ASA added hybridcom plugin
+    case NAVI_CTXTHybridcom:
+        {
+            naviW = 256; naviH = 48;  
+            clampNaviOnScreen(x, y, naviW, naviH);
+
+            createNavi(NaviPosition(x, y), naviW, naviH);
+            mNavi->setMovable(false);
+            mNavi->hide();
+
+            // Awesomium ?
+            //mNavi->setColorKey("#010203", 0, "#000000");
+            mNavi->setTransparent(true);
+            mNavi->setOpacity(0.8);
+            mNavi->setMaxUPS(8);
+            // Awesomium ?
+            //mNavi->setForceMaxUpdate(false);
+            mNavi->setAutoUpdateOnFocus(true);
+
+			//mNavi->setProperty("ctxtNaviName", params);
+            mNavi->setProperty("ctxtHybridcomName", params);
+
+            mNavi->bind("pageLoaded", NaviDelegate(this, &GUI_ContextMenu::onHybridcomPanelLoaded));
+            mNavi->bind("navCommand", NaviDelegate(this, &GUI_ContextMenu::onHybridcomCommand));
+ 
+            mNavi->loadFile("uictxtwww.html"); // ASA use www ctxt since it executed in a browser
+        }
+		// BM ASA added hybridcom plugin
+
     }
   
     m_curState = NSCreated;
@@ -472,4 +499,72 @@ void GUI_ContextMenu::onSWFCommand(Navi* caller, const Awesomium::JSArguments& a
     destroy();
 }
 
+// BM ASA added hybridcom plugin
 //-------------------------------------------------------------------------------------
+void GUI_ContextMenu::onHybridcomPanelLoaded(Navi* caller, const Awesomium::JSArguments& args)
+{
+    String ctxtHybridcomName = args[1].toString();
+
+    // Awesomium ?
+    //if (NaviLibrary::NaviManager::Get().getNavi(ctxtNaviName)->canNavigateBack())
+    //{
+    //    mNavi->evaluateJS("$('mTbIconBack').addClass('mozToolbarBackActive')");
+    //    
+    //}
+    //if (NaviLibrary::NaviManager::Get().getNavi(ctxtNaviName)->canNavigateForward())
+    //{
+    //    mNavi->evaluateJS("$('mTbIconFwd').addClass('mozToolbarFwdActive')");
+    //}    
+    
+    String location =  NaviLibrary::NaviManager::Get().getNavi(ctxtHybridcomName)->getCurrentLocation();
+    String JSCommand = "$('inputUrl').value = '" + location + "'";
+    mNavi->evaluateJS(JSCommand);
+
+    mNavi->show(); 
+}
+
+//-------------------------------------------------------------------------------------
+void GUI_ContextMenu::onHybridcomCommand(Navi* caller, const Awesomium::JSArguments& args)
+{
+    String ctxtHybridcomName = args[0].toString();
+    Navi * pNaviDest = NaviLibrary::NaviManager::Get().getNavi(ctxtHybridcomName);
+    String cmd = args[1].toString();
+
+    if (cmd == "go") 
+    {
+       String url = mNavi->evaluateJSWithResult("$('inputUrl').value").get().toString();
+       pNaviDest->loadURL(url);
+    }
+    // Awesomium ?
+    //else if (cmd == "back") 
+    //{
+    //    pNaviDest->navigateBack();
+    //}
+    //else if (cmd == "fwd") 
+    //{
+    //    pNaviDest->navigateForward();
+
+    //}
+    else if (cmd == "refresh") 
+    {
+        pNaviDest->evaluateJS("window.location.reload(false)");
+    }
+    // Awesomium ?
+    //else if (cmd == "stop") 
+    //{
+    //    pNaviDest->navigateStop();
+    //}
+    else if (cmd == "home") 
+    {
+        pNaviDest->loadURL( "file:///C:/Development/Solipsis/branches/HybridCom/Media/NaviLocal/hybridcomtrigger.html");//"http://www.solipsis.org" );
+    }
+    else if (cmd == "maximize") 
+    {
+        Navigator::getSingletonPtr()->getNavigatorGUI()->createPanel2D("hybridcom", ctxtHybridcomName);   
+		//Navigator::getSingletonPtr()->getNavigatorGUI()->createPanel2D("www", ctxtHybridcomName);   
+
+    }
+
+    destroy();
+}
+// EM ASA added hybridcom plugin

@@ -91,7 +91,7 @@ void VoiceServerMainThread::run()
 int main(int argc, char* argv[])
 {
     VoiceServerMainThread* voiceServerMainThread = 0;
-    #define DEFAULT_PORT 30000
+    #define DEFAULT_PORT 30003
     #define DEFAULT_VERBOSITY 5
     int port;
     int verbosity;
@@ -99,6 +99,7 @@ int main(int argc, char* argv[])
     printf("Voice server test application\n");
     printf("=============================\n");
     printf("\n");
+
 
     port = DEFAULT_PORT;
     verbosity = DEFAULT_VERBOSITY;

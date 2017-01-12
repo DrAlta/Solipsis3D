@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define __Facebook_h__
 
 #include <iostream>
+#include <utility>
 #include <list>
 #include <string>
 #include <sstream>
@@ -32,6 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 using namespace std;
 
 typedef void CURL;
+typedef pair<string, string> String_Pair;
+
 class md5wrapper;
 
 namespace Solipsis {
@@ -40,6 +43,7 @@ namespace Solipsis {
     This Facebook class is a modification of James Custer & Joel Seligstein's.
     It uses the TinyXML, curl, and md5wrapper libraries.
  */
+
 class Facebook
 {
 public:
@@ -80,6 +84,9 @@ public:
     /// Returns true if the user has a session
     bool hasSession() { return mHasSession; }
 
+    /// Returns the list of Facebook Ids of the Facebook friends
+	const list<String_Pair>& getFriendList();
+
 private:
     string mApiKey;
     string mSecret;
@@ -107,6 +114,10 @@ private:
     static string getArgsString(list<string> args, bool separate);
     /* Callback function for curl. */
     static size_t writeCallback(void *ptr, size_t size, size_t nmemb, void *userp);
+
+
+	/// Facebook friend list
+	list<String_Pair> mFriendList;
 };
 
 } // namespace Solipsis

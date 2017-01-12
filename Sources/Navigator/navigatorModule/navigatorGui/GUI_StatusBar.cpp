@@ -36,21 +36,17 @@ GUI_StatusBar * GUI_StatusBar::stGUI_StatusBar = NULL;
 //-------------------------------------------------------------------------------------
 GUI_StatusBar::GUI_StatusBar() : GUI_Panel("uistatusbar")
 {
-	m_curState = NSNotCreated;
-}
-
-//-------------------------------------------------------------------------------------
-GUI_StatusBar::~GUI_StatusBar()
-{
-	stGUI_StatusBar = NULL;
+    stGUI_StatusBar = this;
 }
 
 //-------------------------------------------------------------------------------------
 bool GUI_StatusBar::createAndShowPanel()
 {
-	// This function is called after destroyAllRegisteredPanels() 
-	// This function has destroyed all panels
-    stGUI_StatusBar = new GUI_StatusBar();
+    if (!stGUI_StatusBar)
+    {
+        new GUI_StatusBar();
+    }
+
     return stGUI_StatusBar->show();
 }
 
@@ -83,6 +79,7 @@ void GUI_StatusBar::updateBar()
         return;
 
     stGUI_StatusBar->update();
+
 }
 
 //-------------------------------------------------------------------------------------

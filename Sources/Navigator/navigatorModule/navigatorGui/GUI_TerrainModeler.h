@@ -50,7 +50,6 @@ namespace Solipsis
 
     protected:
         GUI_TerrainModeler();
-		~GUI_TerrainModeler();
         static GUI_TerrainModeler * stGUI_TerrainModeler;
     };
 } // namespace Solipsis
