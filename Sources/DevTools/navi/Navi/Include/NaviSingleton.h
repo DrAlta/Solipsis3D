@@ -1,9 +1,9 @@
 /*
-	This file is part of Navi, a library that allows developers to embed movable 
-	'Navis' (Dynamic, HTML/JS/CSS-Driven GUI Overlays) within an Ogre3D application.
+	This file is part of NaviLibrary, a library that allows developers to create and 
+	interact with web-content as an overlay or material in Ogre3D applications.
 
-	Copyright (C) 2007 Adam J. Simmons
-	http://www.agelessanime.com/Navi/
+	Copyright (C) 2009 Adam J. Simmons
+	http://princeofcode.com/navilibrary.php
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public

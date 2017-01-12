@@ -71,9 +71,8 @@ if "%rebuildAll%"=="y" (
 	set BuildType=build
 )
 
-if not "%VS80COMNTOOLS%"=="" set SUFFIX=_vc8
 if not "%VS90COMNTOOLS%"=="" set SUFFIX=_vc9
-
+if not "%VS80COMNTOOLS%"=="" set SUFFIX=_vc8
 
 echo -------------------------------------------
 echo Parameters : 

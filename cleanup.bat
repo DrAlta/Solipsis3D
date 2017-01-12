@@ -50,7 +50,6 @@ del Statistics\*.pyc
 rmdir Dependencies\llmozlib /S /Q
 rmdir Dependencies\lua /S /Q
 rmdir Dependencies\navi /S /Q
-rmdir Dependencies\naviAwesomium /S /Q
 rmdir Dependencies\navigatorModule /S /Q
 rmdir Dependencies\navigatorPlugin /S /Q
 rmdir Dependencies\ode /S /Q
@@ -105,12 +104,6 @@ rmdir Sources\DevTools\llmozlib\Release_vc8 /S /Q
 rmdir Sources\DevTools\llmozlib\Release_vc9 /S /Q
 rmdir Sources\DevTools\lua\bin /S /Q
 rmdir Sources\DevTools\lua\lib /S /Q
-rmdir Sources\DevTools\naviAwesomium\Dependencies\awesomium\bin\vc8 /S /Q
-rmdir Sources\DevTools\naviAwesomium\Dependencies\awesomium\bin\vc9 /S /Q
-rmdir Sources\DevTools\naviAwesomium\Navi\Lib /S /Q
-rmdir Sources\DevTools\naviAwesomium\Navi\Objects\Release DLL /S /Q
-rmdir Sources\DevTools\naviAwesomium\Navi\Objects\DebugDLL /S /Q
-del   Sources\DevTools\naviAwesomium\Dependencies\awesomium\bin\icudt38.dll /S /Q
 rmdir Sources\DevTools\navi\Navi\Objects_vc7 /S /Q
 rmdir Sources\DevTools\navi\Navi\Objects_vc8 /S /Q
 rmdir Sources\DevTools\navi\Navi\Objects_vc9 /S /Q
@@ -188,8 +181,8 @@ rmdir Sources\DevTools\Antlr2.7.6\Debug /S /Q
 rmdir Sources\DevTools\Antlr2.7.6\Release /S /Q
 rmdir Sources\DevTools\Gecode-2.2.0\Debug /S /Q
 rmdir Sources\DevTools\Gecode-2.2.0\Release /S /Q
-rmdir Sources\DevTools\postagger\postagger\Debug /S /Q
-rmdir Sources\DevTools\postagger\postagger\Release /S /Q
+rmdir Sources\DevTools\postagger\Debug /S /Q
+rmdir Sources\DevTools\postagger\Release /S /Q
 rmdir Sources\DevTools\Triangle\Debug /S /Q
 rmdir Sources\DevTools\Triangle\Release /S /Q
 
@@ -254,7 +247,6 @@ rmdir Sources\Communication\P2N\P2NServer\ulxmlrpcpp\Release /S /Q
 rmdir Sources\Communication\P2N\P2NNullClientServer\Debug /S /Q
 rmdir Sources\Communication\P2N\P2NNullClientServer\Release /S /Q
 
-del Sources\Communication\RakNetObjects\DependentRakNetVersion.h
 rmdir Sources\Communication\RakNetObjects\Debug /S /Q
 rmdir Sources\Communication\RakNetObjects\Release /S /Q
 

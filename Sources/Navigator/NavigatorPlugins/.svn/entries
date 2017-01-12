@@ -1,0 +1,46 @@
+10
+
+dir
+2096
+svn://scm.gforge.inria.fr/svn/solipsis/branches/Navi2/Sources/Navigator/NavigatorPlugins
+svn://scm.gforge.inria.fr/svn/solipsis
+
+
+
+2009-05-06T16:27:44.040257Z
+1643
+cfloutier
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7ea74831-013a-0410-a089-d2f2f1b183c3
+
+StereoPlugin
+dir
+
+VLCPlugin
+dir
+
+VNCPlugin
+dir
+
+plugin_3ds
+dir
+
+plugin_skp
+dir
+
+plugin_swf
+dir
+
