@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+	<script type="text/javascript">
+			function sendMessage(message)
+            {
+				document.forms.form.textChat.value = message+"\n"+document.forms.form.textChat.value;
+				document.forms.chatForm.inputChat.value="";
+            }
+            function pageLoaded()
+            {
+				Client.pageLoaded();
+            }
+            function pageClosed()
+            {
+				Client.pageClosed();
+            }
+			
+        </script>
+	<style type="text/css">
+            body
+            {
+                padding-left: 11em;
+	            background-color: #ffffff;
+	            overflow: hidden;
+	            font-family: Verdana;
+	            font-size: small;
+	            color: #FFFFFF;
+            }
+            #container
+            {
+	            position: absolute;
+	            left: 0px;
+	            top: 0px;
+	            width: 512px;
+	            height: 128px;
+            }
+            #chatInput
+            {
+	            position: absolute;
+	            left: 0px;
+	            top: 0px;
+            }
+            .inputText
+            {
+                background-color: #FFFFFF;
+                color: #000000;
+            }
+            #chatTextArea
+            {
+	            position: absolute;
+	            left: 0px;
+	            top: 24px;
+            }
+            .solipsisIcons
+            {
+                display: block;
+                width: 24px;
+                height: 24px;
+                background-image: url(solipsisIcons.png);
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 3px;
+                left: 495px;
+            }
+            .solipsisCloseInactive { background-position: -24px -24px; }
+            .solipsisCloseActive { background-position: -24px -0px; }
+            .solipsisCloseActive:hover { background-position: -24px -72px; }
+        </style>
+	</head>
+	<body onload="pageLoaded()">
+        <div id="container">
+            <!--
+            Here you will use 1 reentrant hidden form in order to validate the message by pressing ENTER,
+            by returning false the page won t be reloaded
+             -->
+            <div id="chatTextArea">
+                <form name="form"> <textarea disabled="disabled" id="textChat" rows="6"  cols="61"></textarea></form>
+            </div>
+            <form id="chatForm" action="javascript:void(0)" visible="false" onsubmit="sendMessage(document.getElementById('inputChat').value);return false;">
+                <div id="chatInput">
+                    <input id="inputChat" class="inputText" name="inputChat" value="" type="text" size="77" />
+                </div>
+            </form>
+            <span id="mTbIconClose" class="solipsisIcons solipsisCloseActive" onclick="pageClosed()"></span>
+        </div>
+    </body>
+</html>

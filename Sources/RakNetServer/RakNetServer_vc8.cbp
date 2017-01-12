@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="RakNetServer" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="RakNetServer_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\RakNetServer\Debug Win32" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add option="-DNLOGRAKNET" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+					<Add directory="..\..\Dependencies\RakNetObjects\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+					<Add directory="..\..\Dependencies\RakNetObjects\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="pthreadVC_d" />
+					<Add library="tinyxmld" />
+					<Add library="OgreMain_d" />
+					<Add library="CommonTools" />
+					<Add library="XmlDatas" />
+					<Add library="RakNetDLLDebug" />
+					<Add library="RakNetObjects" />
+					<Add directory="..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\Dependencies\tinyxml\lib" />
+					<Add directory="$(OGRE_HOME)\lib" />
+					<Add directory="$(OGRE_HOME)\Dependencies\lib\Debug Win32" />
+					<Add directory="..\..\Dependencies\CommonTools\lib\Debug Win32" />
+					<Add directory="..\..\Dependencies\protocols\XmlDatas\lib\Debug Win32DLL" />
+					<Add directory="$(RAKNET_PATH)\lib" />
+					<Add directory="..\..\Dependencies\RakNetObjects\lib\Debug Win32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="postBuildDebug.bat" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="RakNetServer_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\RakNetServer\Release Win32" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add option="-DNLOGRAKNET" />
+					<Add option="-W" />
+					<Add directory="..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+					<Add directory="..\..\Dependencies\RakNetObjects\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+					<Add directory="..\..\Dependencies\RakNetObjects\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="pthreadVC" />
+					<Add library="tinyxml" />
+					<Add library="OgreMain" />
+					<Add library="CommonTools" />
+					<Add library="XmlDatas" />
+					<Add library="RakNetDLL" />
+					<Add library="RakNetObjects" />
+					<Add directory="..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\Dependencies\tinyxml\lib" />
+					<Add directory="$(OGRE_HOME)\lib" />
+					<Add directory="$(OGRE_HOME)\Dependencies\lib\Release Win32" />
+					<Add directory="..\..\Dependencies\CommonTools\lib\Release Win32" />
+					<Add directory="..\..\Dependencies\protocols\XmlDatas\lib\Release Win32DLL" />
+					<Add directory="$(RAKNET_PATH)\lib" />
+					<Add directory="..\..\Dependencies\RakNetObjects\lib\Release Win32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="postBuildRelease.bat" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="Entity.cpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="RakNetServer.cpp" />
+		<Unit filename="RMConnection.cpp" />
+		<Unit filename="SiteNode.cpp" />
+		<Unit filename="Entity.h" />
+		<Unit filename="RakNetServer.h" />
+		<Unit filename="RMConnection.h" />
+		<Unit filename="SiteNode.h" />
+		<Unit filename="RakNetServer.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="readme.txt" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

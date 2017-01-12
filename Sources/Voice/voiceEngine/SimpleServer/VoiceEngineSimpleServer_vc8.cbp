@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="VoiceEngineSimpleServer" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\SimpleServer\Debug Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-DENABLE_ECHO" />
+					<Add option="-DNTEST_PLAY_SOUND" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="if not exist ..\..\..\..\Dependencies\VoiceEngineSimpleServer\include mkdir ..\..\..\..\Dependencies\VoiceEngineSimpleServer\include&#x0D;&#x0A;xcopy *.h ..\..\..\..\Dependencies\VoiceEngineSimpleServer\include /y&#x0D;&#x0A;if not exist ..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Debug Win32 mkdir ..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Debug Win32&#x0D;&#x0A;copy  ..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Debug Win32&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\SimpleServer\Release Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-DNENABLE_ECHO" />
+					<Add option="-W" />
+					<Add option="-O2" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="if not exist ..\..\..\..\Dependencies\VoiceEngineSimpleServer\include mkdir ..\..\..\..\Dependencies\VoiceEngineSimpleServer\include&#x0D;&#x0A;xcopy *.h ..\..\..\..\Dependencies\VoiceEngineSimpleServer\include /y&#x0D;&#x0A;if not exist ..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Release Win32 mkdir ..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Release Win32&#x0D;&#x0A;copy  ..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Release Win32&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="Avatar.cpp" />
+		<Unit filename="VoiceServer.cpp" />
+		<Unit filename="VoiceServerConnection.cpp" />
+		<Unit filename="VoiceServerDispatch.cpp" />
+		<Unit filename="VoiceServerSocket.cpp" />
+		<Unit filename="VoiceServerSource.cpp" />
+		<Unit filename="VoiceServerUtil.cpp" />
+		<Unit filename="Avatar.h" />
+		<Unit filename="VoiceServer.h" />
+		<Unit filename="VoiceServerConnection.h" />
+		<Unit filename="VoiceServerDispatch.h" />
+		<Unit filename="VoiceServerException.h" />
+		<Unit filename="VoiceServerSocket.h" />
+		<Unit filename="VoiceServerSource.h" />
+		<Unit filename="VoiceServerUtil.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="voiceEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="voiceEngine_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\Debug Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DBUILDING_VOICEENGINE" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="." />
+					<Add directory="..\..\..\Dependencies\Phonetizer\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="." />
+					<Add directory="..\..\..\Dependencies\Phonetizer\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="Phonetizer" />
+					<Add directory="..\..\..\Dependencies\Phonetizer\lib\debug" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="if not exist C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\include mkdir C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\include&#x0D;&#x0A;xcopy C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\*.h C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\include\. /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Debug Win32 mkdir C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Debug Win32&#x0D;&#x0A;copy $(TargetDir) C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Debug Win32\. /y&#x0D;&#x0A;copy $(TargetDir)$(TargetName).lib C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Debug Win32\. /y&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="voiceEngine_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\Release Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DBUILDING_VOICEENGINE" />
+					<Add option="-W" />
+					<Add directory="." />
+					<Add directory="..\..\..\Dependencies\Phonetizer\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="." />
+					<Add directory="..\..\..\Dependencies\Phonetizer\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="Phonetizer" />
+					<Add directory="..\..\..\Dependencies\Phonetizer\lib\release" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="if not exist C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\include mkdir C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\include&#x0D;&#x0A;xcopy C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\*.h C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\include\. /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Release Win32 mkdir C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Release Win32&#x0D;&#x0A;copy $(TargetDir) C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Release Win32\. /y&#x0D;&#x0A;copy $(TargetDir)$(TargetName).lib C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\..\..\..\Dependencies\VoiceEngine\lib\Release Win32\. /y&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="VoiceEngineManager.cpp" />
+		<Unit filename="VoicePacket.cpp" />
+		<Unit filename="DllExport.h" />
+		<Unit filename="IVoiceEngine.h" />
+		<Unit filename="IVoicePacketListener.h" />
+		<Unit filename="VoiceEngineManager.h" />
+		<Unit filename="VoicePacket.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

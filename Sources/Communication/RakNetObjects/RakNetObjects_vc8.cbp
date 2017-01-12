@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="RakNetObjects" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\Debug Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-DNLOGRAKNET" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add before="C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\..\..\..\Dependencies\lua\bin\debug\lua.exe C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\..\..\..\Common\checkStrDefinedVersion.lua RAKNET_VERSION $(RAKNET_PATH)\Source\RakNetVersion.h 3 4 01 C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\DependentRakNetVersion.h" />
+					<Add after="if not exist ..\..\..\Dependencies\RakNetObjects\include mkdir ..\..\..\Dependencies\RakNetObjects\include&#x0D;&#x0A;copy *.h ..\..\..\Dependencies\RakNetObjects\include&#x0D;&#x0A;if not exist ..\..\..\Dependencies\RakNetObjects\lib\Debug Win32 mkdir ..\..\..\Dependencies\RakNetObjects\lib\Debug Win32&#x0D;&#x0A;copy  ..\..\..\Dependencies\RakNetObjects\lib\Debug Win32&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\Release Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-DNLOGRAKNET" />
+					<Add option="-W" />
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="$(RAKNET_PATH)\Source" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add before="C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\..\..\..\Dependencies\lua\bin\release\lua.exe C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\..\..\..\Common\checkStrDefinedVersion.lua RAKNET_VERSION $(RAKNET_PATH)\Source\RakNetVersion.h 3 4 01 C:\ROOT\solipsis\trunk\Sources\Communication\RakNetObjects\DependentRakNetVersion.h" />
+					<Add after="if not exist ..\..\..\Dependencies\RakNetObjects\include mkdir ..\..\..\Dependencies\RakNetObjects\include&#x0D;&#x0A;copy *.h ..\..\..\Dependencies\RakNetObjects\include&#x0D;&#x0A;if not exist ..\..\..\Dependencies\RakNetObjects\lib\Release Win32 mkdir ..\..\..\Dependencies\RakNetObjects\lib\Release Win32&#x0D;&#x0A;copy  ..\..\..\Dependencies\RakNetObjects\lib\Release Win32&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="CacheManager.cpp" />
+		<Unit filename="Node.cpp" />
+		<Unit filename="RakNetConnection.cpp" />
+		<Unit filename="RakNetEntity.cpp" />
+		<Unit filename="ReplicationManager.cpp" />
+		<Unit filename="CacheManager.h" />
+		<Unit filename="Node.h" />
+		<Unit filename="RakNetConnection.h" />
+		<Unit filename="RakNetEntity.h" />
+		<Unit filename="ReplicationManager.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

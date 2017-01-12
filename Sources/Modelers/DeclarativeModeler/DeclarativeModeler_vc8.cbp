@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="DeclarativeModeler" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Modelers\DeclarativeModeler\Debug Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-DAFXDL" />
+					<Add option="-DNO_STATIC_CONSTS" />
+					<Add option="-D_MBC" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="." />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="..\..\..\Dependencies\gecode-2.2.0\include" />
+					<Add directory="..\..\..\Dependencies\antlr2.7.6\include" />
+					<Add directory="..\..\..\Dependencies\postagger\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="." />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="..\..\..\Dependencies\gecode-2.2.0\include" />
+					<Add directory="..\..\..\Dependencies\antlr2.7.6\include" />
+					<Add directory="..\..\..\Dependencies\postagger\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="postBuildDebug.bat" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Modelers\DeclarativeModeler\Release Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-DAFXDL" />
+					<Add option="-DNO_STATIC_CONSTS" />
+					<Add option="-D_MBC" />
+					<Add option="-W" />
+					<Add option="-O2" />
+					<Add directory="." />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="..\..\..\Dependencies\gecode-2.2.0\include" />
+					<Add directory="..\..\..\Dependencies\antlr2.7.6\include" />
+					<Add directory="..\..\..\Dependencies\postagger\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="." />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="..\..\..\Dependencies\gecode-2.2.0\include" />
+					<Add directory="..\..\..\Dependencies\antlr2.7.6\include" />
+					<Add directory="..\..\..\Dependencies\postagger\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="postBuildRelease.bat" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="Actor.cpp" />
+		<Unit filename="AttributeComputer.cpp" />
+		<Unit filename="ConstraintWriter.cpp" />
+		<Unit filename="DeclarativeModeler.cpp" />
+		<Unit filename="Link.cpp" />
+		<Unit filename="Matrix.cpp" />
+		<Unit filename="Solver.cpp" />
+		<Unit filename="tags.g" />
+		<Unit filename="TagsLexer.cpp" />
+		<Unit filename="TagsParser.cpp" />
+		<Unit filename="Vec3.cpp" />
+		<Unit filename="Vec4.cpp" />
+		<Unit filename="Actor.h" />
+		<Unit filename="AttributeComputer.h" />
+		<Unit filename="Constraints.h" />
+		<Unit filename="ConstraintWriter.h" />
+		<Unit filename="DeclarativeModeler.h" />
+		<Unit filename="Link.h" />
+		<Unit filename="Matrix.h" />
+		<Unit filename="resource.h" />
+		<Unit filename="Solver.h" />
+		<Unit filename="TagsLexer.hpp" />
+		<Unit filename="TagsLexerTokenTypes.hpp" />
+		<Unit filename="TagsParser.hpp" />
+		<Unit filename="TagsTokenTypes.hpp" />
+		<Unit filename="Vec3.h" />
+		<Unit filename="Vec4.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="vncviewer" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VNCPlugin\vncviewer\Debug Win32\vncviewer_d" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VNCPlugin\vncviewer\Debug Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-D_DEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D__NT__" />
+					<Add option="-D_WINSTATIC" />
+					<Add option="-D__WIN32__" />
+					<Add option="-DXMD_H" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_CRT_NONSTDC_NO_DEPRECATE" />
+					<Add option="-DTIGHTVNC_EXPORTS" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="." />
+					<Add directory=".\omnithread" />
+					<Add directory="..\..\..\..\..\Dependencies\zlib123\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="." />
+					<Add directory=".\omnithread" />
+					<Add directory="..\..\..\..\..\Dependencies\zlib123\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="winmm" />
+					<Add library="wsock32" />
+					<Add library="comctl32" />
+					<Add library="htmlhelp" />
+					<Add library="libjpeg" />
+					<Add library="zlibd" />
+					<Add library="omnithread" />
+					<Add directory=".\libjpeg\Debug Win32" />
+					<Add directory="..\..\..\..\..\Dependencies\zlib123\lib" />
+					<Add directory=".\omnithread\Debug Win32" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VNCPlugin\vncviewer\Release Win32\vncviewer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VNCPlugin\vncviewer\Release Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DNDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D__NT__" />
+					<Add option="-D_WINSTATIC" />
+					<Add option="-D__WIN32__" />
+					<Add option="-DXMD_H" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_CRT_NONSTDC_NO_DEPRECATE" />
+					<Add option="-DTIGHTVNC_EXPORTS" />
+					<Add option="-W" />
+					<Add option="-O2" />
+					<Add directory="." />
+					<Add directory=".\omnithread" />
+					<Add directory="..\..\..\..\..\Dependencies\zlib123\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="." />
+					<Add directory=".\omnithread" />
+					<Add directory="..\..\..\..\..\Dependencies\zlib123\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="winmm" />
+					<Add library="wsock32" />
+					<Add library="comctl32" />
+					<Add library="htmlhelp" />
+					<Add library="libjpeg" />
+					<Add library="zlib" />
+					<Add library="omnithread" />
+					<Add directory=".\libjpeg\Release Win32" />
+					<Add directory="..\..\..\..\..\Dependencies\zlib123\lib" />
+					<Add directory=".\omnithread\Release Win32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="AboutBox.cpp" />
+		<Unit filename="AboutBox.h" />
+		<Unit filename="BuildTime.cpp" />
+		<Unit filename="CapsContainer.cpp" />
+		<Unit filename="CapsContainer.h" />
+		<Unit filename="ClientConnection.cpp" />
+		<Unit filename="ClientConnection.h" />
+		<Unit filename="ClientConnectionClipboard.cpp" />
+		<Unit filename="ClientConnectionCopyRect.cpp" />
+		<Unit filename="ClientConnectionCoRRE.cpp" />
+		<Unit filename="ClientConnectionCursor.cpp" />
+		<Unit filename="ClientConnectionFile.cpp" />
+		<Unit filename="ClientConnectionFullScreen.cpp" />
+		<Unit filename="ClientConnectionHextile.cpp" />
+		<Unit filename="ClientConnectionRaw.cpp" />
+		<Unit filename="ClientConnectionRRE.cpp" />
+		<Unit filename="ClientConnectionTight.cpp" />
+		<Unit filename="ClientConnectionZlib.cpp" />
+		<Unit filename="ClientConnectionZlibHex.cpp" />
+		<Unit filename="ConnectingDialog.cpp" />
+		<Unit filename="ConnectingDialog.h" />
+		<Unit filename="d3des.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="d3des.h" />
+		<Unit filename="Daemon.cpp" />
+		<Unit filename="Daemon.h" />
+		<Unit filename="Exception.cpp" />
+		<Unit filename="Exception.h" />
+		<Unit filename="FileTransfer.cpp" />
+		<Unit filename="FileTransfer.h" />
+		<Unit filename="FileTransferItemInfo.cpp" />
+		<Unit filename="FileTransferItemInfo.h" />
+		<Unit filename="HotKeys.cpp" />
+		<Unit filename="HotKeys.h" />
+		<Unit filename="HtmlHelp.h" />
+		<Unit filename="KeyMap.cpp" />
+		<Unit filename="KeyMap.h" />
+		<Unit filename="keysymdef.h" />
+		<Unit filename="Log.cpp" />
+		<Unit filename="Log.h" />
+		<Unit filename="LoginAuthDialog.cpp" />
+		<Unit filename="LoginAuthDialog.h" />
+		<Unit filename="Prerequisites.h" />
+		<Unit filename="rfb.h" />
+		<Unit filename="SessionDialog.cpp" />
+		<Unit filename="SessionDialog.h" />
+		<Unit filename="stdhdrs.cpp" />
+		<Unit filename="stdhdrs.h" />
+		<Unit filename="vncauth.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vncauth.h" />
+		<Unit filename="VNCHelp.cpp" />
+		<Unit filename="VNCHelp.h" />
+		<Unit filename="VNCOptions.cpp" />
+		<Unit filename="VNCOptions.h" />
+		<Unit filename="VNCScreenUpdateListener.h" />
+		<Unit filename="vncviewer.cpp" />
+		<Unit filename="vncviewer.h" />
+		<Unit filename="VNCviewerApp.cpp" />
+		<Unit filename="VNCviewerApp.h" />
+		<Unit filename="VNCviewerApp32.cpp" />
+		<Unit filename="VNCviewerApp32.h" />
+		<Unit filename="res\cursor1.cur" />
+		<Unit filename="res\filereload.ico" />
+		<Unit filename="res\fileup.ico" />
+		<Unit filename="res\idr_tray.ico" />
+		<Unit filename="res\nocursor.cur" />
+		<Unit filename="res\resource.h" />
+		<Unit filename="res\smalldot.cur" />
+		<Unit filename="res\tightvnc.bmp" />
+		<Unit filename="res\tightvnc48.bmp" />
+		<Unit filename="res\toolbar.bmp" />
+		<Unit filename="res\toolbar1.bmp" />
+		<Unit filename="res\vncviewer.aps" />
+		<Unit filename="res\vncviewer.ico" />
+		<Unit filename="res\vncviewer.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

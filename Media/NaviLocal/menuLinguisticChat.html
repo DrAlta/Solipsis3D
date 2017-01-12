@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+		<link rel="stylesheet" href="color/color.css" type="text/css">
+		<script type="text/javascript" src="color/color.js"></script>
+		<script type="text/javascript">
+			function menuClosed()
+            {
+				Client.menuClosed();
+            }
+		
+			function getColors()
+			{
+				var docXml = loadXMLDoc("lingchatpref.xml");
+				
+				//var segcs = docXml.getElementsByTagName('SegC');
+				path = "//linguisticChatPreferences/textColor/color"
+				 
+				if (document.implementation && document.implementation.createDocument)
+				{
+					var nodes=docXml.evaluate(path, docXml, null, XPathResult.ANY_TYPE, null);
+					var result=nodes.iterateNext();
+					
+					while (result)
+					{
+						document.getElementById(result.getAttribute("id")).value= result.childNodes[0].nodeValue;
+						document.getElementById(result.getAttribute("id")).style.background = "#"+result.childNodes[0].nodeValue;
+						result=nodes.iterateNext();
+					}
+				}
+			}
+			
+			function updateParameters()
+			{
+				var docXml = loadXMLDoc("lingchatpref.xml");
+				
+				x=docXml.getElementsByTagName("option")[0].childNodes[0];
+				if(x.nodeValue == "true") document.getElementById(docXml.getElementsByTagName("option")[0].getAttribute("id")).checked = true;
+				
+				x=docXml.getElementsByTagName("option")[1].childNodes[0];
+				if(x.nodeValue == "true")  document.getElementById(docXml.getElementsByTagName("option")[1].getAttribute("id")).checked = true;
+				
+				x=docXml.getElementsByTagName("option")[2].childNodes[0];
+				if(x.nodeValue == "true") document.getElementById(docXml.getElementsByTagName("option")[2].getAttribute("id")).checked = true;
+				
+				x=docXml.getElementsByTagName("option")[3].childNodes[0];
+				if(x.nodeValue == "true")  document.getElementById(docXml.getElementsByTagName("option")[3].getAttribute("id")).checked = true;
+				
+				x=docXml.getElementsByTagName("option")[4].childNodes[0];
+				document.getElementById(docXml.getElementsByTagName("option")[4].getAttribute("id")).value = x.nodeValue;
+				
+				x=docXml.getElementsByTagName("option")[5].childNodes[0];
+				 if(x.nodeValue == "true") document.getElementById(docXml.getElementsByTagName("option")[5].getAttribute("id")).checked = true;
+				 
+				x=docXml.getElementsByTagName("option")[6].childNodes[0];
+				 if(x.nodeValue == "true") document.getElementById(docXml.getElementsByTagName("option")[6].getAttribute("id")).checked = true;
+				 
+				x=docXml.getElementsByTagName("option")[7].childNodes[0];
+				 if(x.nodeValue == "true") document.getElementById(docXml.getElementsByTagName("option")[7].getAttribute("id")).checked = true;
+
+				x=docXml.getElementsByTagName("option")[9].childNodes[0];
+				document.getElementById(docXml.getElementsByTagName("option")[9].getAttribute("id")).value = x.nodeValue;
+
+				x=docXml.getElementsByTagName("option")[10].childNodes[0];
+				if(x.nodeValue == "true") 
+					document.getElementById(docXml.getElementsByTagName("option")[10].getAttribute("id")).checked = true;
+
+				x=docXml.getElementsByTagName("option")[11].childNodes[0];
+				document.getElementById(docXml.getElementsByTagName("option")[11].getAttribute("id")).value = x.nodeValue;
+			}
+			
+			function updateMenuData()
+			{	
+				/* COLOR */
+				/*loadSV();
+				$S('plugin').display='none';
+				$S('SVslide').top=(80/100*170-7)+'px';*/
+				
+				updateParameters();
+				getColors();
+			}
+			
+			function changeElement()
+			{
+				var docXml = loadXMLDoc("lingchatpref.xml");
+				
+				var xmlString;
+		
+				x=docXml.getElementsByTagName("color")[0].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[0].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[1].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[1].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[2].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[2].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[3].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[3].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[4].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[4].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[5].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[5].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[6].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[6].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[7].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[7].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[8].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[8].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[9].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[9].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[10].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[10].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("color")[11].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("color")[11].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("option")[0].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[0].getAttribute("id")).checked;
+				
+				x=docXml.getElementsByTagName("option")[1].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[1].getAttribute("id")).checked;
+				
+				x=docXml.getElementsByTagName("option")[2].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[2].getAttribute("id")).checked;
+				
+				x=docXml.getElementsByTagName("option")[3].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[3].getAttribute("id")).checked;
+				
+				x=docXml.getElementsByTagName("option")[4].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[4].getAttribute("id")).value;
+				
+				x=docXml.getElementsByTagName("option")[5].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[5].getAttribute("id")).checked;
+				
+				x=docXml.getElementsByTagName("option")[6].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[6].getAttribute("id")).checked;
+				
+				// Option objects
+				x=docXml.getElementsByTagName("option")[7].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[7].getAttribute("id")).checked;
+
+				// Option server Linguistique
+				x=docXml.getElementsByTagName("option")[9].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[9].getAttribute("id")).value;
+
+				xmlString = (new XMLSerializer()).serializeToString(docXml);
+
+				//alert(xmlString);
+				Client.editXmlFile(xmlString);
+			}
+			
+			function changeElementEmotion(){
+				alert("changeElementEmotion()");
+				var docXml = loadXMLDoc("lingchatpref.xml");
+				
+				// Option objects
+				x=docXml.getElementsByTagName("option")[10].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[10].getAttribute("id")).checked;
+
+				// Option server Emotions
+				x=docXml.getElementsByTagName("option")[11].childNodes[0];
+				x.nodeValue = document.getElementById(docXml.getElementsByTagName("option")[11].getAttribute("id")).value;
+			
+				xmlString = (new XMLSerializer()).serializeToString(docXml);
+				
+				alert(xmlString);
+				Client.editXmlFile(xmlString);
+			}
+
+			
+			function loadXMLString(txt)
+			{
+				try //Internet Explorer
+				  {
+				  xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+				  xmlDoc.async="false";
+				  xmlDoc.loadXML(txt);
+				  return xmlDoc;
+				  }
+				catch(e)
+				  {
+				  try //Firefox, Mozilla, Opera, etc.
+					{
+					parser=new DOMParser();
+					xmlDoc=parser.parseFromString(txt,"text/xml");
+					xmlDoc;
+					return xmlDoc;
+					}
+				  catch(e) {alert(e.message)}
+				  }
+				return null;
+			}
+			
+			function loadXMLDoc(fname)
+			{
+				var xmlDoc;
+				xmlDoc=new window.XMLHttpRequest();
+				xmlDoc.open("GET",fname,false);
+				xmlDoc.send("");
+				return xmlDoc.responseXML;
+			}
+		</script>
+		<style type="text/css">
+			body
+			{
+				color:#000000;
+				overflow: hidden;
+				font-family: "Arial Narrow", Arial, sans-serif;
+				font-size: small;
+			}
+			#container
+			{
+				background-color:#FFFFFF;
+				position: absolute;
+				left: 5px;
+				top: 0px;
+				width: 330px;
+				height: 500px;
+			}
+			h3
+			{
+				text-align:left;
+				color:#000000;
+				line-height: 0;
+			}
+			input.color
+			{
+				width:50px;
+				height:20px;
+				border:1px;
+			}
+			img#line
+			{
+				text-algn:right;
+			}
+			.closeIconEscape
+			{
+				background-image: url(solipsisIcons.png);
+				background-repeat: no-repeat;
+				position: absolute;
+				top: 2px;
+				left: 305px;
+				float: left;
+				width: 24px;
+				height: 24px;
+				background-position: 0px 0px;
+			}
+			.closeIconEscapeInactive { background-position: -24px -24px; }
+			.closeIconEscape:hover { background-position: -24px -72px; }
+		</style>
+	</head>
+	<body onload="updateMenuData()">
+	<div id="container">
+	<h3>Parts of speech colors</h3>
+	<form id="colorForm" action="" >
+		<table>
+			<tr>
+				<td>
+					<input id="det" class="color" onclick="panel='det'; initColor(40,60);">
+					<br>Det.
+				</td>
+				<td>
+					<input id="verb" class="color" onclick="panel='verb'; initColor(40,60);">
+					<br>Verb
+				</td>
+				<td>
+					<input id="adv" class="color" onclick="panel='adv'; initColor(40,60);">
+					<br>Adv.
+				</td>
+				<td>
+					<input id="prep" class="color" onclick="panel='prep'; initColor(40,60);">
+					<br>Prep.
+				</td>
+				<td>
+					<input id="adj" class="color" onclick="panel='adj'; initColor(40,60);">
+					<br>Adj.
+				</td>
+				<td>
+					<input id="noun" class="color" onclick="panel='noun'; initColor(40,60);">
+					<br>Noun
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="punct" class="color" onclick="panel='punct'; initColor(40,60);">
+					<br>Punct.
+				</td>
+				<td>
+					<input id="neg" class="color" onclick="panel='neg'; initColor(40,60);">
+					<br>Neg.
+				</td>
+				<td>
+					<input id="num" class="color" onclick="panel='num'; initColor(40,60);">
+					<br>Num.
+				</td>
+				<td>
+					<input id="conj" class="color" onclick="panel='conj'; initColor(40,60);">
+					<br>Conj.
+				</td>
+				<td>
+					<input id="excl" class="color" onclick="panel='excl'; initColor(40,60);">
+					<br>Excl.
+				</td>
+				<td>
+					<input id="pronoun" class="color" onclick="panel='pronoun'; initColor(40,60);">
+					<br>pronoun
+				</td>
+			</tr>
+		</table>
+		<p><h3>Preferences</h3>
+		<img align="right" src="line.png"><br>
+			<input id="activate" type="checkbox"> Activate linguistic chat
+			<br><br>
+			Linguistic server URL : <input id="linguisticServer" class="inputText" name="linguisticServer" value="no server" type="text" size="20"><br> 
+			Language: <select id="language">
+				<option name="french" value="fr">Francais</option>
+				<option name="english" value="en">English</option>
+				<option name="spanish" value="es">Espanol</option>
+				<option name="german" value="de">Deutsch</option>
+			</select>
+			<br><br><input id="save" type="checkbox"> Save
+			<br><input id="definitions" type="checkbox"> Get definitions
+			<br><input id="translations" type="checkbox" > Get translations
+			<br><input id="synonyms" type="checkbox"> Get synonyms
+			<br><br><table style="width:100%"><tr><td>Who: </td><td style="text-align:left;"><input id="me" type="checkbox"> Me</td><td>&nbsp;</td></tr>
+			<tr><td>&nbsp;</td><td style="text-align:left;"><input id="others" type="checkbox"> The others</td><td style="text-align:right;"><input type="button" value="Save" onclick="changeElement();return false;"></td></tr>
+			</table>
+		</p>
+		</form>
+		<form id="ParametersForm" action="" visible="false">
+			<input id="activateEmotion" type="checkbox"> Activate emotional chat </input><br><br>
+			 Emotion server URL : <input id="emotionsServer" class="inputText" name="emotionsServer" value="no server" type="text" size="20"><br> 
+			<input type="button" value="Save" onclick="changeElementEmotion();return false;" style="float:right;" />
+		</form>
+	</p>
+	</body>
+</html>

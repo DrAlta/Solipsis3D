@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="VLCPlugin" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\Debug Win32\Plugin_VLC_d" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\Debug Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DVLCPLUGIN_EXPORTS" />
+					<Add option="-DOGRE_VLCPLUGIN_EXPORTS" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\vlc\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\vlc\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add library="pthreadVC_d" />
+					<Add library="libvlc" />
+					<Add directory="$(OGRE_HOME)\lib" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\..\..\Dependencies\vlc\lib" />
+				</Linker>
+				<ExtraCommands>
+					<Add before="if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\include mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\include&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\lib mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\lib&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins&#x0D;&#x0A;xcopy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\include\*.* C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\include /s /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\lib\libvlc.lib C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\lib /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\runtime\libvlc.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins\libvmem_plugin.dll xcopy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\runtime\plugins\*.* C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins /s /y&#x0D;&#x0A;" />
+					<Add after="copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\libvlc.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32 /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32\VLCplugins mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32\VLCplugins&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32\VLCplugins\libvmem_plugin.dll xcopy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins\*.* C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32\VLCplugins /s /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\Debug Win32\Plugin_VLC_d.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32 /y&#x0D;&#x0A;C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\addIntoCfg.bat Plugin=Plugin_VLC_d.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Debug Win32\plugins.cfg&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\Release Win32\Plugin_VLC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\Release Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DVLCPLUGIN_EXPORTS" />
+					<Add option="-DOGRE_VLCPLUGIN_EXPORTS" />
+					<Add option="-W" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\vlc\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\vlc\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="OgreMain" />
+					<Add library="pthreadVC" />
+					<Add library="libvlc" />
+					<Add directory="$(OGRE_HOME)\lib" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\..\..\Dependencies\vlc\lib" />
+				</Linker>
+				<ExtraCommands>
+					<Add before="if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\include mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\include&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\lib mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\lib&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins&#x0D;&#x0A;xcopy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\include\*.* C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\include /s /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\lib\libvlc.lib C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\lib /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\runtime\libvlc.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins\libvmem_plugin.dll xcopy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\DevTools\vlc\libraries\i686-win32\runtime\plugins\*.* C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins /s /y&#x0D;&#x0A;" />
+					<Add after="copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\libvlc.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32 /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32\VLCplugins mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32\VLCplugins&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32\VLCplugins\libvmem_plugin.dll xcopy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Dependencies\vlc\runtime\plugins\*.* C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32\VLCplugins /s /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\Release Win32\Plugin_VLC.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32 /y&#x0D;&#x0A;C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\addIntoCfg.bat Plugin=Plugin_VLC.dll C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\VLCPlugin\..\..\..\..\Common\bin\navigator\Release Win32\plugins.cfg&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="VLCInstance.cpp" />
+		<Unit filename="VLCPlugin.cpp" />
+		<Unit filename="VLCPluginDll.cpp" />
+		<Unit filename="VLCTextureSource.cpp" />
+		<Unit filename="VLCInstance.h" />
+		<Unit filename="VLCPlugin.h" />
+		<Unit filename="VLCPluginPrerequisites.h" />
+		<Unit filename="VLCTextureSource.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

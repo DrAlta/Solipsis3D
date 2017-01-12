@@ -1,0 +1,33 @@
+<linguisticChatPreferences>
+	<textColor>
+		<color id="det">FF00F0</color>
+		<color id="verb">FF0389</color>
+		<color id="adv">00FF00</color>
+		<color id="prep">0000FF</color>
+		<color id="adj">F000F0</color>
+		<color id="noun">00F00F</color>
+		<color id="punct">0F00F0</color>
+		<color id="neg">F0000F</color>
+		<color id="num">0FF000</color>
+		<color id="conj">000FF0</color>
+		<color id="excl">020205</color>
+		<color id="pronoun">005050</color>
+		<color id="Err">FF0000</color>
+	</textColor>
+	<preference>
+		<option id="save">false</option>
+		<option id="synonyms">true</option>
+		<option id="translations">true</option>
+		<option id="definitions">true</option>
+		<option id="language">en</option>
+		<option id="activate">true</option>
+		<option id="me">true</option>
+		<option id="others">false</option>
+		<option id="objects">false</option>
+		<option id="linguisticServer">http://talc.loria.fr/~metaverse/web_test/</option>
+	</preference>
+	<emotion>
+		<option id="activateEmotion">true</option>
+		<option id="emotionsServer">http://talc.loria.fr/~metaverse/web/emotions/filterDetection/detectionWS.php</option>
+	</emotion>
+</linguisticChatPreferences>

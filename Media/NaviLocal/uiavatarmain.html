@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>uiavatarmain</title>
+		<script type="text/javascript" src="Navi-yui.js"></script>
+		<!-- SELECTOR BEGIN -->
+        <link rel="stylesheet" href="selector/selector.css" type="text/css">
+        <script type="text/javascript" src="selector/selector.js"></script>
+        <!-- SELECTOR END -->
+		<script type="text/javascript">
+            function pageLoaded()
+            {
+                Client.pageLoaded('uiavatarmain');
+            }
+            function select(value)
+            {
+                Client.AvatarSelected(value);
+            }
+		</script>
+		<style type="text/css"> 
+			body { 
+				padding-left: 11em; 
+				background-color: #000000; 
+				overflow: hidden; 
+				font-family: Verdana; 
+				font-size: small; 
+				color: #FFFFFF; 
+			}
+			#container { 
+				background-image: url('uiavatarmain.png'); 
+				position: absolute; 
+				left: 0px; top: 0px; 
+				width: 256px; 
+				height: 512px; 
+			}
+			#containerMenu { 
+				position: absolute; 
+				left: 8px; 
+				top: 20px; 
+				width: 240px; 
+				height: 472px; 
+			}
+			p {
+				color:#000000;
+			}
+			input { 
+				width: 100px; 
+			}
+			#avatarSelect 
+			{
+				position:absolute;
+				left: 38px;
+				top: 220px;
+			}
+            .solipsisIcons
+            {
+                display: block;
+                width: 24px;
+                height: 24px;
+                background-image: url(solipsisIcons.png);
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 8px;
+                left: 233px;
+            }
+            .solipsisCloseInactive { background-position: -24px -24px; }
+            .solipsisCloseActive { background-position: -24px -0px; }
+            .solipsisCloseActive:hover { background-position: -24px -72px; }
+		</style>
+	</head>
+	<body onload="pageLoaded()">
+		<div id="container">
+            <div id="containerMenu">
+
+            <!--<div class="conteneurMenu">-->
+<!--                <div class="menu" id="avatarSelect" onmouseout="fout(this)" onmouseover="fover(this)">
+                    <div class="titreMenu itemOut" id="avatarSelectTitre">???</div>
+                    <div class="contenuMenu menuOverflow" id="avatarSelectItem">-->
+                        <!--
+                        <div class='itemOut' onmouseout=this.className='itemOut' onmouseover=this.className='itemOver'><a href='#' class='lienMenu' onclick="select('item 30 selected')">Sous menu 30</a></div>
+                        <div class='itemOut' onmouseout=this.className='itemOut' onmouseover=this.className='itemOver'><a href='#' class='lienMenu'>Sous menu 31</a></div>
+                        <div class='itemOut' onmouseout=this.className='itemOut' onmouseover=this.className='itemOver'><a href='#' class='lienMenu'>Sous menu 32</a></div>
+                        -->
+<!--                    </div>-->
+<!--                </div>-->
+            <!--</div>-->
+            
+			<table align="center" width="240">
+				<tr>
+					<td align="center">
+						<br>
+						<div id="AvatarName">
+						    <p>Name : <b>???</b></p>
+						</div>
+						<br>
+					</td>
+				</tr>
+
+				<tr>
+				    <td align="center">
+				        <div style='height: 128px; width: 128px; overflow: auto; border-style: dotted' id="AvatarThumbnail"></div>
+				    </td>
+				</tr>
+				<tr><td><br /><br /></td></tr>
+				
+				<tr>
+				    <td align="center">
+				        <br><br>
+                        <div id="avatarSelect">
+                            <select id="selectAvatar" name="selectAvatar" size="5" style="width:180px" onchange="select(document.getElementById('selectAvatar').value)">
+                            </select>
+                        </div>
+				</tr>
+
+				<tr>
+				    <td align="center">
+				        <br><br>
+						<input type="button" value="Open" size="10" onclick="Client.FileOpen()"><br>
+						<input type="button" value="Edit" size="10" onclick="Client.AvatarEdit()"><br>
+						<input type="button" value="Save" size="10" onclick="Client.FileSave()"><br>
+						<input type="button" value="Save as" size="10" onclick="Client.FileSaveAs()"><br>
+						<input type="button" value="Exit" size="10" onclick="Client.FileExit()"><br>
+					</td>
+				</tr>
+				
+			</table>
+            </div>
+            <span id="mTbIconClose" class="solipsisIcons solipsisCloseActive" onclick="Client.FileExit()"></span>
+        </div>
+	</body>
+</html>

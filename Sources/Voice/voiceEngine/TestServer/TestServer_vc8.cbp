@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="voiceEngineTestServer" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="TestServer_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\TestServer\Debug Win32" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineClient\include" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineClient\include" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="pthreadVC_d" />
+					<Add library="CommonTools" />
+					<Add library="wsock32" />
+					<Add library="SimpleVoiceEngineProtocol" />
+					<Add library="VoiceEngineSimpleServer" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\lib\Debug Win32" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Debug Win32" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Debug Win32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="postBuildDebug.bat" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="TestServer_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\TestServer\Release Win32" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-W" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineClient\include" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\include" />
+					<Add directory="$(BOOST_ROOT)" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineClient\include" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="pthreadVC" />
+					<Add library="CommonTools" />
+					<Add library="wsock32" />
+					<Add library="SimpleVoiceEngineProtocol" />
+					<Add library="VoiceEngineSimpleServer" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\..\..\Dependencies\CommonTools\lib\Release Win32" />
+					<Add directory="..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Release Win32" />
+					<Add directory="..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\Release Win32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="postBuildRelease.bat" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="TestServer.cpp" />
+		<Unit filename="readme.txt" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

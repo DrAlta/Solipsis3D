@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="navigatorConfigDialog" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="navigatorConfigDialog_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\Debug Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNAVCONFDLG_SELF_BUILD" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory=".\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory=".\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add directory="$(OGRE_HOME)\lib" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\WIN32 mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\WIN32&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\include\*.h C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\. /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\include\WIN32\*.h C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\WIN32\. /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Debug Win32 mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Debug Win32&#x0D;&#x0A;copy $(TargetDir)$(TargetName).dll C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Debug Win32\. /y&#x0D;&#x0A;copy $(TargetDir)$(TargetName).lib C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Debug Win32\. /y&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="navigatorConfigDialog_vc8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\Release Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNAVCONFDLG_SELF_BUILD" />
+					<Add option="-W" />
+					<Add directory=".\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory=".\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="OgreMain" />
+					<Add directory="$(OGRE_HOME)\lib" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\WIN32 mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\WIN32&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\include\*.h C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\. /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\include\WIN32\*.h C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\include\WIN32\. /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Release Win32 mkdir C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Release Win32&#x0D;&#x0A;copy $(TargetDir)$(TargetName).dll C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Release Win32\. /y&#x0D;&#x0A;copy $(TargetDir)$(TargetName).lib C:\ROOT\solipsis\trunk\Sources\Navigator\navigatorConfigDialog\..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Release Win32\. /y&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="src\WIN32\NavigatorConfigDialog.cpp" />
+		<Unit filename="include\NavigatorConfigDialog.h" />
+		<Unit filename="include\WIN32\NavigatorConfigDialogImp.h" />
+		<Unit filename="include\NavigatorConfigDialogPrerequisites.h" />
+		<Unit filename="src\WIN32\resource.h" />
+		<Unit filename="src\WIN32\winres.h" />
+		<Unit filename="src\WIN32\NavigatorConfigDialog.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="src\WIN32\Solipsis.ico" />
+		<Unit filename="src\WIN32\SolipsisLogo.bmp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

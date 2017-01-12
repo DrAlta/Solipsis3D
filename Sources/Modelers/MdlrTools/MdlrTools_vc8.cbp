@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="MdlrTools" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="obj\Debug Win32\libMdlrTools_vc8_d" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj\Debug Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-W" />
+					<Add option="-O0" />
+					<Add directory="include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies" />
+					<Add directory="..\..\..\Dependencies\zlib123\include" />
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies" />
+					<Add directory="..\..\..\Dependencies\zlib123\include" />
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="if not exist C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\include mkdir C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\include&#x0D;&#x0A;xcopy C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\include\*.h C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\include\. /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\lib\debug mkdir C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\lib\debug&#x0D;&#x0A;copy $(TargetDir)libMdlrTools_vc8_d.a C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\lib\debug\. /y&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="obj\Release Win32\libMdlrTools_vc8" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj\Release Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-W" />
+					<Add directory="include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies" />
+					<Add directory="..\..\..\Dependencies\zlib123\include" />
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="include" />
+					<Add directory="$(OGRE_HOME)\Dependencies\include" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\Dependencies" />
+					<Add directory="..\..\..\Dependencies\zlib123\include" />
+					<Add directory="..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\Dependencies\tinyxml\include" />
+					<Add directory="..\..\..\Dependencies\protocols\XmlDatas\include" />
+					<Add directory="..\..\..\Dependencies\CommonTools\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="if not exist C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\include mkdir C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\include&#x0D;&#x0A;xcopy C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\include\*.h C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\include\. /y&#x0D;&#x0A;if not exist C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\lib\release mkdir C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\lib\release&#x0D;&#x0A;copy $(TargetDir)libMdlrTools_vc8.a C:\ROOT\solipsis\trunk\Sources\Modelers\MdlrTools\..\..\..\Dependencies\MdlrTools\lib\release\. /y&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="README" />
+		<Unit filename="TODO" />
+		<Unit filename="src\FileBrowser.cpp" />
+		<Unit filename="src\FileBuffer.cpp" />
+		<Unit filename="src\ModifiedMaterial.cpp" />
+		<Unit filename="src\ModifiedMaterialManager.cpp" />
+		<Unit filename="src\MyZipArchive.cpp" />
+		<Unit filename="src\Object3D.cpp" />
+		<Unit filename="src\Selection.cpp" />
+		<Unit filename="src\SolidBoolOp.cpp" />
+		<Unit filename="src\SolipsisErrorHandler.cpp" />
+		<Unit filename="src\Transformations.cpp" />
+		<Unit filename="src\minizip\ioapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\minizip\iowin32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\minizip\unzip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\minizip\zip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include\FileBrowser.h" />
+		<Unit filename="include\FileBuffer.h" />
+		<Unit filename="include\MeshModifier.h" />
+		<Unit filename="include\ModifiedMaterial.h" />
+		<Unit filename="include\ModifiedMaterialManager.h" />
+		<Unit filename="include\MyZipArchive.h" />
+		<Unit filename="include\Object3D.h" />
+		<Unit filename="include\Path.h" />
+		<Unit filename="include\Selection.h" />
+		<Unit filename="include\SolidBoolOp.h" />
+		<Unit filename="include\SolipsisErrorHandler.h" />
+		<Unit filename="include\Transformations.h" />
+		<Unit filename="include\VectorModifier.h" />
+		<Unit filename="src\minizip\crypt.h" />
+		<Unit filename="src\minizip\ioapi.h" />
+		<Unit filename="src\minizip\iowin32.h" />
+		<Unit filename="src\minizip\unzip.h" />
+		<Unit filename="src\minizip\zip.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

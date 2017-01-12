@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SimpleVoiceEngineProtocol" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\SimpleVoiceEngineProtocol\Debug Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_LIB" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="if not exist ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include mkdir ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include&#x0D;&#x0A;xcopy *.h ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include /y&#x0D;&#x0A;if not exist ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Debug Win32 mkdir ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Debug Win32&#x0D;&#x0A;copy  ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Debug Win32&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Voice\voiceEngine\SimpleVoiceEngineProtocol\Release Win32" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_LIB" />
+					<Add option="-W" />
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\..\..\Dependencies\protocols\XmlDatas\include" />
+				</ResourceCompiler>
+				<ExtraCommands>
+					<Add after="if not exist ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include mkdir ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include&#x0D;&#x0A;xcopy *.h ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include /y&#x0D;&#x0A;if not exist ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Release Win32 mkdir ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Release Win32&#x0D;&#x0A;copy  ..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\Release Win32&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="SimpleVoiceEngineProtocol.cpp" />
+		<Unit filename="Socket.cpp" />
+		<Unit filename="SimpleVoiceEngineProtocol.h" />
+		<Unit filename="Socket.h" />
+		<Unit filename="voiceheader.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

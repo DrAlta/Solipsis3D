@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SWFPlugin" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\plugin_swf\Debug Win32\Plugin_SWF_d" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\plugin_swf\Debug Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DSWFPLUGIN_EXPORTS" />
+					<Add option="-DOGRE_SWFPLUGIN_EXPORTS" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\hikari\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\hikari\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add library="pthreadVC_d" />
+					<Add library="hikari_d" />
+					<Add directory="$(OGRE_HOME)\lib" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\..\..\Dependencies\hikari\lib" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="copy ..\..\..\..\Dependencies\hikari\lib\*.ocx ..\..\..\..\Common\bin\navigator\Debug Win32 /y&#x0D;&#x0A;copy ..\..\..\..\Dependencies\hikari\lib\hikari_d.dll ..\..\..\..\Common\bin\navigator\Debug Win32 /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\plugin_swf\Debug Win32\Plugin_SWF_d.dll ..\..\..\..\Common\bin\navigator\Debug Win32 /y&#x0D;&#x0A;..\..\..\..\Common\addIntoCfg.bat Plugin=Plugin_SWF_d.dll ..\..\..\..\Common\bin\navigator\Debug Win32\plugins.cfg&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\plugin_swf\Release Win32\Plugin_SWF" prefix_auto="1" extension_auto="1" />
+				<Option object_output="C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\plugin_swf\Release Win32" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DSWFPLUGIN_EXPORTS" />
+					<Add option="-DOGRE_SWFPLUGIN_EXPORTS" />
+					<Add option="-W" />
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\hikari\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(OGRE_HOME)\OgreMain\include" />
+					<Add directory="$(OGRE_HOME)\include" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\include" />
+					<Add directory="..\..\..\..\Dependencies\hikari\include" />
+					<Add directory="..\..\..\..\Dependencies\navigatorModule\include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="OgreMain" />
+					<Add library="pthreadVC" />
+					<Add library="hikari" />
+					<Add directory="$(OGRE_HOME)\lib" />
+					<Add directory="..\..\..\..\Dependencies\pthreads\lib" />
+					<Add directory="..\..\..\..\Dependencies\hikari\lib" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="copy ..\..\..\..\Dependencies\hikari\lib\*.ocx ..\..\..\..\Common\bin\navigator\Release Win32 /y&#x0D;&#x0A;copy ..\..\..\..\Dependencies\hikari\lib\Hikari.dll ..\..\..\..\Common\bin\navigator\Release Win32 /y&#x0D;&#x0A;copy C:\ROOT\solipsis\trunk\Sources\Navigator\NavigatorPlugins\plugin_swf\Release Win32\Plugin_SWF.dll ..\..\..\..\Common\bin\navigator\Release Win32 /y&#x0D;&#x0A;..\..\..\..\Common\addIntoCfg.bat Plugin=Plugin_SWF.dll ..\..\..\..\Common\bin\navigator\Release Win32\plugins.cfg&#x0D;&#x0A;" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="src\SWFInstance.cpp" />
+		<Unit filename="src\SWFPlugin.cpp" />
+		<Unit filename="src\SWFPluginDll.cpp" />
+		<Unit filename="src\SWFTextureSource.cpp" />
+		<Unit filename="src\SWFInstance.h" />
+		<Unit filename="src\SWFPlugin.h" />
+		<Unit filename="src\SWFPluginPrerequisites.h" />
+		<Unit filename="src\SWFTextureSource.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
