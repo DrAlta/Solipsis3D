@@ -105,8 +105,8 @@ public:
     @remarks An implementation must be supplied for this method.
     */
     virtual bool initSoundSystem(FMOD::System* system,
-        float silenceLevel = 5.0f, unsigned int silenceLatencySec = 5,
-		size_t networkChunkSizePCM = 6000, unsigned int bufferFrameCount = 4, unsigned int frequency = 16000) = 0;
+        size_t networkChunkSizePCM = 6000, unsigned int bufferFrameCount = 4, unsigned int frequency = 16000,
+        float silenceLevel = 5.0f, unsigned int silenceLatencySec = 5) = 0;
 
     /** Perform the finalization with the sound system. 
     @return TRUE if successfully connected, FALSE otherwise

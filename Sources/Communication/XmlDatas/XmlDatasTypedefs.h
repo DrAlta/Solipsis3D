@@ -99,8 +99,7 @@ static const AnimationState ASAvatarWalk = (AnimationState)2;      /// Avatar is
 static const AnimationState ASAvatarRun = (AnimationState)3;       /// Avatar is running
 static const AnimationState ASAvatarFly = (AnimationState)4;       /// Avatar is flying
 static const AnimationState ASAvatarSwim = (AnimationState)5;      /// Avatar is swimming
-static const AnimationState ASAvatarXDE = (AnimationState)6;      /// Avatar is XDE controlled
-static const AnimationState ASAvatarAnimCount = (ASAvatarXDE - ASAvatarNone + 1); /// Number of animations for avatar
+static const AnimationState ASAvatarAnimCount = (ASAvatarSwim - ASAvatarNone + 1); /// Number of animations for avatar
 
 typedef struct {
     bool mGravity;

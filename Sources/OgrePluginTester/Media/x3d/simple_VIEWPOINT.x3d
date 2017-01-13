@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Immersive' version='3.2' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.2.xsd'>
+  <head>
+    <meta content='HelloWorld.x3d' name='title'/>
+  </head>
+  <Scene>
+    <!-- Example scene to illustrate X3D nodes and fields (XML elements and attributes) -->
+    <Group>
+      <Viewpoint DEF='VIEW_1' centerOfRotation='0 -1 0' description='Hello world!' position='0 -1 7'/>
+      <Transform DEF='T_0' rotation='0 1 0 3'>
+        <Shape DEF='S_0'>
+          <Sphere/>
+          <Appearance>
+            <Material diffuseColor='0 0.5 1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Group>
+  </Scene>
+</X3D>

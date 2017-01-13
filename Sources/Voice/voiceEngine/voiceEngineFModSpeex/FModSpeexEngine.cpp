@@ -52,8 +52,8 @@ bool FModSpeexEngine::shutdown()
 
 //-------------------------------------------------------------------------------------
 bool FModSpeexEngine::initSoundSystem(FMOD::System* system,
-									  float silenceLevel, unsigned int silenceLatencySec,
-                                      size_t networkChunkSizePCM, unsigned int bufferFrameCount, unsigned int frequency)
+                                      size_t networkChunkSizePCM, unsigned int bufferFrameCount, unsigned int frequency,
+                                      float silenceLevel, unsigned int silenceLatencySec)
 {
     if (mVoiceEngine != 0)
     {

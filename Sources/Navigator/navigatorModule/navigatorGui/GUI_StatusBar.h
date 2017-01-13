@@ -49,7 +49,6 @@ namespace Solipsis
 
     protected:
         GUI_StatusBar();
-		~GUI_StatusBar();
         static GUI_StatusBar * stGUI_StatusBar;
 
         unsigned long mStatusBarDisplayDate;

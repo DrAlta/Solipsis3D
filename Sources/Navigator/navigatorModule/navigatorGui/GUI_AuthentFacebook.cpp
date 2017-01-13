@@ -42,23 +42,18 @@ GUI_AuthentFacebook * GUI_AuthentFacebook::stGUI_AuthentFacebook = NULL;
 //-------------------------------------------------------------------------------------
 GUI_AuthentFacebook::GUI_AuthentFacebook() : GUI_FromServer("uiauthentfb")
 {
+    stGUI_AuthentFacebook = this;
     mFacebook = 0;
-	m_curState = NSNotCreated;
 }
-
-GUI_AuthentFacebook::~GUI_AuthentFacebook()
-{
-	stGUI_AuthentFacebook = NULL;
-}
-
 
 //-------------------------------------------------------------------------------------
 bool GUI_AuthentFacebook::createAndShowPanel()
 {
     if (!stGUI_AuthentFacebook)
     {
-        stGUI_AuthentFacebook = new GUI_AuthentFacebook();
+        new GUI_AuthentFacebook();
     }
+
     return stGUI_AuthentFacebook->show();
 }
 

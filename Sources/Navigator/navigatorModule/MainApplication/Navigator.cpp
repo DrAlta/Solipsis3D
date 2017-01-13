@@ -81,8 +81,8 @@ mFixedNodeId(""),
 mNodeId(""),
 mVoIPServerAddress("localhost:30000"),
 mVoIPSilenceLevel(5.0),
-mVoIPSilenceLatency(5),
 mCastShadows(false),
+mVoIPSilenceLatency(5),
 mNavigationInterface(NIMouseKeyboard),
 mXmlRpcClient(0),
 mOgrePeerManager(0),
@@ -211,6 +211,7 @@ void Navigator::setPeerAddress(const String& address)
 {
     mPeerAddress = address;
     mConfiguration.findParam("PeerAddress")->setValueString(mPeerAddress);
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -722,109 +723,6 @@ void Navigator::demoVoice(const String params)
 }
 #endif
 
-//-------------------------------------------------------------------------------------
-void Navigator::applyNewEmotion(const std::string& uid, const std::string& emotionName)
-{
-    // tester si une emotion est déjà en cours de rendu sur l'avatar concerné
-    // auquel cas on force à terminer cette emotion (pose) et on empile la nouvelle
-    if (mEmotionTodoLst.find(uid) != mEmotionTodoLst.end())
-    {
-        // one or many emotions are already applied on this entity UId, then force them to finish
-        // and apply the new one
-        std::list<Emotion*>::iterator iter = mEmotionTodoLst[uid].begin();
-        for (; iter!=mEmotionTodoLst[uid].end(); ++iter)
-        {
-            (*iter)->forceToFinish();
-        }
-    }
-
-
-    // add this new emotion and apply it
-    OgrePeer* peer = getOgrePeerManager()->getOgrePeer( uid );
-    if (peer)
-    {
-        Avatar* avatar = dynamic_cast<Avatar*>(peer);
-        if (avatar)
-        {
-
-			//CharacterInstance* ci = avatar->getCharacterInstance();
-            Entity* entity = avatar->getEntity();
-            if (entity)
-            {
-                Ogre::MeshPtr mesh = entity->getMesh();
-                if (! mesh.isNull())
-                {
-                    Ogre::PoseList poseList = mesh->getPoseList();
-                    if (! poseList.empty())
-                    {
-						// Get the character SAF Name : Mesh Name is XXX_edition.mesh
-						std::string avatarSAFName = mesh->getName().substr(0,mesh->getName().length() - 13);
-
-                        std::string animName = "";
-                        if (emotionName == "")
-							animName = avatarSAFName + "_Emo_Neutral";
-                        else if (emotionName == "joy" || emotionName == "happy")
-                            animName = avatarSAFName + "_Emo_Hapiness";
-                        else if (emotionName == "sadness")
-                            animName = avatarSAFName + "_Emo_Sadness";
-                        else if (emotionName == "anger")
-                            animName = avatarSAFName + "_Emo_Anger";
-                        else if (emotionName == "fear")
-                            animName = avatarSAFName + "_Emo_Fear";
-                        else if (emotionName == "surprise")
-                            animName = avatarSAFName + "_Emo_Surprise";
-                        else if (emotionName == "disgust")
-                            animName = avatarSAFName + "_Emo_Disgust";
-
-                        Ogre::AnimationStateSet* animations = entity->getAllAnimationStates();
-                        if (animations && animations->hasAnimationState( animName ))
-                        {
-                            Ogre::AnimationState* animation = entity->getAnimationState( animName );
-
-                            unsigned long elapsedTime = Root::getSingleton().getTimer()->getMilliseconds();
-                            Emotion* emotion = new Emotion( emotionName, animation, elapsedTime, 5000., 500., 500. );
-                            mEmotionTodoLst[uid].push_back( emotion );
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-//-------------------------------------------------------------------------------------
-void Navigator::updateEmotions()
-{
-    unsigned long elapsedTime = Root::getSingleton().getTimer()->getMilliseconds();
-
-    std::map<std::string, std::list<Emotion*> >::iterator iter = mEmotionTodoLst.begin();
-    for (; iter != mEmotionTodoLst.end(); )
-    {
-        std::list<Emotion*>::iterator iterEmotion = (*iter).second.begin();
-        for (; iterEmotion != (*iter).second.end(); )
-        {
-            Emotion* emotion = (*iterEmotion);
-            if (emotion->isFinish())
-            {
-				delete emotion;
-				emotion = NULL;
-                iterEmotion = (*iter).second.erase( iterEmotion );
-            }
-            else
-            {
-                emotion->update( elapsedTime );
-                ++iterEmotion;
-            }
-        }
-
-        if ((*iter).second.empty())
-		{
-			iter = mEmotionTodoLst.erase( iter );
-		}
-        else
-            ++iter;
-    }
-}
 
 //-------------------------------------------------------------------------------------
 String Navigator::getEntityNaviName(const Entity& entity)
@@ -1025,6 +923,7 @@ bool Navigator::computeMousePicking(Ray& mouseRay)
     return false;
 }
 
+#if 1 // GILLES MDLR
 //-------------------------------------------------------------------------------------
 bool Navigator::computeGizmo()
 {
@@ -1078,7 +977,7 @@ bool Navigator::computeGizmo()
     }
     return false;
 }
-
+#endif
 //-------------------------------------------------------------------------------------
 bool Navigator::is1NaviHitByMouse(String& naviName, int& naviX, int& naviY)
 {
@@ -1327,7 +1226,7 @@ bool Navigator::initPostOgreCore()
 
     // Initialize sound system
     mNavigatorSound = new NavigatorSound();
-    if (!mNavigatorSound->initialize(mVoIPSilenceLevel, mVoIPSilenceLatency))
+    if (!mNavigatorSound->initialize())
     {
         LOGHANDLER_LOGF(LogHandler::VL_ERROR, "Navigator::initPostOgreCore() Unable to initialize sound");
         return false;
@@ -1520,23 +1419,8 @@ void Navigator::disconnect(bool force)
         }
     }
 
-    //if (mXmlRpcClient == 0)
-    //    return;
-
-	// Cleanup emotions list if any
-    std::map<std::string, std::list<Emotion*> >::iterator iter = mEmotionTodoLst.begin();
-    for (; iter != mEmotionTodoLst.end(); )
-    {
-        std::list<Emotion*>::iterator iterEmotion = (*iter).second.begin();
-        for (; iterEmotion != (*iter).second.end(); )
-        {
-            Emotion* emotion = (*iterEmotion);
-			delete emotion;
-			emotion = NULL;
-            iterEmotion = (*iter).second.erase( iterEmotion );
-        }
-		iter = mEmotionTodoLst.erase( iter );
-    }
+    if (mXmlRpcClient == 0)
+        return;
 
     // voice engine : stop speaking
     IVoiceEngine* voiceEngine = VoiceEngineManager::getSingleton().getSelectedEngine();
@@ -1563,12 +1447,9 @@ void Navigator::disconnect(bool force)
     NodeEventListener::stop();
     NodeEventListener::finalize();
 
-    if (mXmlRpcClient)
-	{
-		// Destroy XMLRPC client
-		delete mXmlRpcClient;
-		mXmlRpcClient = 0;
-	}
+    // Destroy XMLRPC client
+    delete mXmlRpcClient;
+    mXmlRpcClient = 0;
 
     // reset the camera mode
     setCameraMode(CMDetached);
@@ -1592,11 +1473,8 @@ void Navigator::disconnect(bool force)
         mSceneMgr->setSkyBox(false, "");
     }
 
-    if (!force)
-    {
-        mState = SLogin;
-        GUI_Login::createAndShowPanel();
-    }
+    mState = SLogin;
+    GUI_Login::createAndShowPanel();
 }
 
 //-------------------------------------------------------------------------------------
@@ -1638,8 +1516,7 @@ bool Navigator::sendMessage(const String& message)
         throw Exception(Exception::ERR_INTERNAL_ERROR, "Attempt to send message without XMLRPC client", "Navigator::sendMessage");
 
     // decode URI encoded string into a wide-char string
-    std::wstring messageWStr = NaviUtilities::toWide(message);
-    //std::wstring messageWStr = NaviUtilities::decodeURIComponent(message);
+    std::wstring messageWStr = NaviUtilities::decodeURIComponent(message);
     // log with locale string
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "Navigator::sendMessage(%s)", StringHelpers::convertWStringToString(messageWStr).c_str());
 
@@ -2046,8 +1923,10 @@ void Navigator::MdlrModifGizmo(Vector3 dep)
     SceneNode* node = mSceneMgr->getSceneNode("NodeSelection");
     Vector3 vec;
 
+#if 1 // GILLES MDLR
     if(mModeler->getSelected() == NULL)
         return;
+#endif
 
     switch (mModeler->getSelection()->mTransformation->getMode())
     {

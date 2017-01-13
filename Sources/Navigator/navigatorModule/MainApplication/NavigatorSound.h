@@ -54,12 +54,6 @@ protected:
     /// Last update time (in ms)
     unsigned long mLastUpdateTimeMs;
 
-	/// silenceLevel 
-	float mSilenceLevel;		
-	/// silenceLatency
-	unsigned int mSilenceLatencySec;
-
-
     typedef std::vector<SoundBuffer*> SoundBufferVector;
     /// Vector of sound buffers
     SoundBufferVector mSoundBufferVector;
@@ -80,7 +74,7 @@ public:
     ~NavigatorSound();
 
     /// initialize sound system
-    bool initialize(float silenceLevel = 5.0, unsigned int silenceLatencySec = 5, unsigned int updateRateMs = 100);
+    bool initialize(unsigned int updateRateMs = 100);
 
     /// shutdown sound system
     void shutdown();

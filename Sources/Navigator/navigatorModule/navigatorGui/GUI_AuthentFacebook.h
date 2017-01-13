@@ -50,7 +50,6 @@ namespace Solipsis
 
     protected:
         GUI_AuthentFacebook();
-		~GUI_AuthentFacebook();
 
         static GUI_AuthentFacebook * stGUI_AuthentFacebook;
         Facebook *mFacebook;

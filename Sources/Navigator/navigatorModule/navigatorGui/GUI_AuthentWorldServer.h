@@ -47,7 +47,6 @@ namespace Solipsis
 
     protected:
         GUI_AuthentWorldServer();
-		~GUI_AuthentWorldServer();
 
         static GUI_AuthentWorldServer * stGUI_AuthentWorldServer;
 

@@ -51,7 +51,6 @@ namespace Solipsis
 
     protected:
         GUI_ModelerSceneFromText();
-		~GUI_ModelerSceneFromText();
         static GUI_ModelerSceneFromText * stGUI_ModelerSceneFromText;
     };
 } // namespace Solipsis

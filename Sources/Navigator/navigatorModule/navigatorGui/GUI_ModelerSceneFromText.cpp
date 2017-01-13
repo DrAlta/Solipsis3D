@@ -40,19 +40,15 @@ GUI_ModelerSceneFromText * GUI_ModelerSceneFromText::stGUI_ModelerSceneFromText 
 //-------------------------------------------------------------------------------------
 GUI_ModelerSceneFromText::GUI_ModelerSceneFromText() : GUI_Panel("uimdlrscenefromtext")
 {
-	m_curState = NSNotCreated;
+    stGUI_ModelerSceneFromText = this;
 }
 
-GUI_ModelerSceneFromText::~GUI_ModelerSceneFromText()
-{
-	stGUI_ModelerSceneFromText = NULL;
-}
 //-------------------------------------------------------------------------------------
 void GUI_ModelerSceneFromText::showPanel()
 {
     if (!stGUI_ModelerSceneFromText)
     {
-      stGUI_ModelerSceneFromText =  new GUI_ModelerSceneFromText();
+        new GUI_ModelerSceneFromText();
     }
 
     stGUI_ModelerSceneFromText->show();

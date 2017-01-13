@@ -98,10 +98,6 @@ bool NavigatorFrameListener::frameStarted(const FrameEvent& evt)
     if (mNavigator->getNavigatorSound() != 0)
         mNavigator->getNavigatorSound()->update();
 
-    // Updating emotions on the characters
-    if (mNavigator)
-        mNavigator->updateEmotions();
-
     return OgreFrameListener::frameStarted(evt);
 }
 
@@ -112,8 +108,9 @@ bool NavigatorFrameListener::keyPressed(const KeyboardEvt& evt)
     Modeler* modeler = mNavigator->getModeler();
     AvatarEditor* avatarEditor = mNavigator->getAvatarEditor();
 
-	// Force update of modeler tools
+#if 1 // GILLES MDLR
     mNavigator->computeGizmo();
+#endif
 
     // Escape hits count to cancel focus Navi/VNC/...
     if (evt.mKey == KC_ESCAPE)
@@ -410,24 +407,6 @@ bool NavigatorFrameListener::keyPressed(const KeyboardEvt& evt)
         }
         break;
 
-
-	/* Sample XDE Engine -- Remove when approved */
-	case KC_F1:
-        if (navigatorGUI != 0)
-            if(mNavigator->getState() == Navigator::SInWorld)
-            {
-				/*if (mNavigator->getUserAvatar()->getState() != ASAvatarXDE)
-				{
-					mNavigator->getUserAvatar()->setState(ASAvatarXDE);
-				}
-				else
-				{
-					mNavigator->getUserAvatar()->setState(ASAvatarFly);
-				}*/
-				mNavigator->getUserAvatar()->getCharacterInstance()->setToLowLevel(!mNavigator->getUserAvatar()->getCharacterInstance()->isLowLevel());
-            }
-            break;
-
     case KC_F8:
         if (navigatorGUI != 0)
             if(mNavigator->getState() == Navigator::SInWorld)
@@ -591,8 +570,9 @@ bool NavigatorFrameListener::keyReleased(const KeyboardEvt& evt)
 { 
     NavigatorGUI* navigatorGUI = mNavigator->getNavigatorGUI();
 
-	// Force update of modeler tools.
+#if 1 // GILLES MDLR
     mNavigator->computeGizmo();
+#endif
 
     // In modeler ?
     if (mNavigator->getState() == Navigator::SModeling)
@@ -701,9 +681,11 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
     // 3D picking of Navi panels if any NaviMaterial focused
     if (mNavigator->isNaviSupported())
     {
+#if 1 // GILLES MDLR
         mNavigator->computeGizmo();
+#endif
 
-		if ((mNavigator->getState() == Navigator::SInWorld) &&
+        if ((mNavigator->getState() == Navigator::SInWorld) &&
             NaviManager::Get().isAnyNaviFocused() 
             && NaviManager::Get().getFocusedNavi()->isMaterialOnly()
             && (Panel2DMgr::getSingleton().getFocusedPanel() == 0)
@@ -947,8 +929,8 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
         {
             //Calculate drag and drop :
 			Ray mouseRay = mCamera->getCameraToViewportRay((Real)evt.mState.mX/(Real)mCamera->getViewport()->getActualWidth(), (Real)evt.mState.mY/(Real)mCamera->getViewport()->getActualHeight());
-
-			SceneNode *gizmoNode = mNavigator->getSceneMgrPtr()->getSceneNode("NodeSelection");
+#if 1 // GILLES MDLR
+            SceneNode *gizmoNode = mNavigator->getSceneMgrPtr()->getSceneNode("NodeSelection");
             Quaternion lYawGizmo(gizmoNode->getOrientation().getYaw(),Vector3::UNIT_Y);
             Quaternion lYawGizmoInverse(-gizmoNode->getOrientation().getYaw(),Vector3::UNIT_Y);
             //gizmoNode->setOrientation(Quaternion::IDENTITY);
@@ -964,7 +946,9 @@ bool NavigatorFrameListener::mouseMoved(const MouseEvt& evt)
             }
             else
                 dragNdrop = selection->mTransformation->drapNdrop( lYawGizmoInverse * selection->mTransformation->getMousePosOnDummyPlane(mouseRay) );
-
+#else
+			dragNdrop = selection->mTransformation->drapNdrop( selection->mTransformation->getMousePosOnDummyPlane(mouseRay) );			
+#endif
             if( dragNdrop != Vector3::ZERO )
             {
                 //Apply the transformation
@@ -1083,9 +1067,10 @@ bool NavigatorFrameListener::mousePressed(const MouseEvt& evt)
         // 3D picking if no 2D panel focused
         MovableObject* previousPickedObj = mNavigator->getPickedMovable();
         mNavigator->resetMousePicking();
+#if 1 // GILLES MDLR
         mNavigator->computeGizmo();
-
-		if (!NaviManager::Get().isAnyNaviFocused() &&
+#endif
+        if (!NaviManager::Get().isAnyNaviFocused() &&
             (Panel2DMgr::getSingleton().getFocusedPanel() == 0) &&
             (mNavigator->getState() == Navigator::SInWorld))
         {
@@ -1216,7 +1201,10 @@ bool NavigatorFrameListener::mouseReleased(const MouseEvt& evt)
     {
         int buttonsId = (evt.mState.mButtons & MBLeft) ? LeftMouseButton : ((evt.mState.mButtons & MBRight) ? RightMouseButton : MiddleMouseButton);
 
+#if 1 // GILLES MDLR
         mNavigator->computeGizmo();
+#endif
+
         // Navi panels
         NaviManager::Get().injectMouseUp(buttonsId);
 

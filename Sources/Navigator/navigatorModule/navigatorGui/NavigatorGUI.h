@@ -60,7 +60,7 @@ public:
     // Start up GUI
     bool startup();
     // Update
-    static void update();
+    void update();
 
     /** See Ogre::WindowEventListener. */
     virtual void windowResized(RenderWindow* rw);
@@ -104,8 +104,13 @@ public:
 ////////////////////////// nouvelle implémentation ////////////////////
     // a a panel to the list
     static void registerGuiPanel(GUI_Panel *pPanel);
+    static void unregisterGuiPanel(GUI_Panel *pPanel);
     static void destroyAllRegisteredPanels();
-    static void setCurrentPanel(GUI_Panel * pCurrentPanel);
+
+    static void setCurrentPanel(GUI_Panel * pCurrentPanel)
+    {
+        mNaviGui->m_pCurrentPanel = pCurrentPanel;
+    }
 
     static void destroyCurrentPanel();
 

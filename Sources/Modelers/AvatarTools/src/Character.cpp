@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "Character.h"
 #include <FaceControlSystemManager.h>
 #include <IFaceControlSystem.h>
-#include "ManualPoseV2.h"
 //#define ACTIVATE_FACE_CONTROLLER
 #ifdef ACTIVATE_FACE_CONTROLLER
 	#include "MouthFlapperCreator.h"
@@ -94,12 +93,9 @@ Character::Character(String pName, SceneManager* pSceneMgr) :
 	ResourceGroupManager::getSingleton().addResourceLocation(mPath->getUniversalPath(), "Zip", mResourceGroup);
 	ResourceGroupManager::getSingleton().initialiseResourceGroup(mResourceGroup);
 
-	// Init Manual pose
-    ManualPoseV2::initialiseManualPoseFor( getEditionMeshFilename(mName), mResourceGroup );
+	MeshPtr mesh = MeshManager::getSingleton().load(getEditionMeshFilename(mName), mResourceGroup);
+	mMesh = mesh;
 
-	// Load the 2 3D Meshes from the ressource
-	mMesh = MeshManager::getSingleton().load(getEditionMeshFilename(mName), mResourceGroup);
-	
 	mCustomizationAnimation = mMesh->createAnimation(mName + "_CustomizationAnimation",0);
 	if (mCustomizationAnimation->hasVertexTrack(1))
 		mAnimationTrack = mCustomizationAnimation->getVertexTrack(1);
@@ -165,42 +161,22 @@ Character::Character(String pName, SceneManager* pSceneMgr) :
 	}
 
 	// skeleton filename
-	Ogre::String skeletonName = mMesh->getSkeletonName();
-	if (!mZipArchive->isFilePresent(mMesh->getSkeletonName()))
+	Ogre::String skeletonName = mesh->getSkeletonName();
+	if (!mZipArchive->isFilePresent(mesh->getSkeletonName()))
 	{
 		mLoadingErrorMessage = "Skeleton file\nnot found in the character archive !"; 
 		return;
 	}
-	mSkeletonName = mMesh->getSkeletonName();
+	mSkeletonName = mesh->getSkeletonName();
 
 	//Creating entity
 	mEntity = mSceneMgr->createEntity(mName, getEditionMeshFilename(mName));
 #if (OGRE_VERSION_MAJOR <= 1 && OGRE_VERSION_MINOR < 6)
 	mEntity->setNormaliseNormals(true);
 #endif
-
-
-	// Loading the low level entity, if any
-	String lEditionFileName = getEditionLowMeshFilename(mName);
-	if (ResourceGroupManager::getSingleton().resourceExists(mResourceGroup,lEditionFileName))
-	{
-		mMeshLow = MeshManager::getSingleton().load(lEditionFileName, mResourceGroup);
-		// Add Low Level Mesh to the entity
-		mEntityLow = mSceneMgr->createEntity(mName+"_low", lEditionFileName);
-#if (OGRE_VERSION_MAJOR <= 1 && OGRE_VERSION_MINOR < 6)
-		mEntityLow->setNormaliseNormals(true);
-#endif
-	}
-	else
-	{
-		mMeshLow.setNull();
-		mEntityLow = NULL;
-	}
-
-	mIsLowLevel = false;
-	//Set High Level definition.
-	updateDefinitionLevel(mIsLowLevel);
-
+	//All the subentities are insvisible, only the subentities parts of a BodyPart will be set visibles after.
+	for(unsigned int idxSubEntity = 0 ; idxSubEntity < mEntity->getNumSubEntities() ; idxSubEntity++)
+		mEntity->getSubEntity(idxSubEntity)->setVisible(false);
 
 	///Parsing xml nature file in order to perhaps load other additionnal meshs in order to add them to our mesh.
 	FileBuffer xmlNatureFile = mZipArchive->readFile(Character::getEditionNatureFilename(mName));
@@ -601,6 +577,7 @@ Character::Character(String pName, SceneManager* pSceneMgr) :
 		}
 	}
 
+//GILLES	ScreenshotManager::getSingleton().addCharacterToRenderToTexture(this,characterCameraCylindricCoordinates);
 	std::list<CoupleOfPosesToAdd>::iterator iterator;
 	for(iterator = couplesOfPosesToAdd.begin() ; iterator != couplesOfPosesToAdd.end() ; iterator++)
 	{
@@ -653,8 +630,6 @@ Character::~Character()
 
     // Destroy entity
     mSceneMgr->destroyEntity(mEntity);
-	if (mEntityLow) // Safe Destroy
-		mSceneMgr->destroyEntity(mEntityLow);
 
     mMesh->removeAnimation(mName + "_CustomizationAnimation");
 
@@ -698,12 +673,6 @@ String Character::getEditionConfFilename(const String& prefix)
 String Character::getEditionMeshFilename(const String& prefix)
 {
     return prefix + "_edition.mesh";
-}
-
-//---------------------------------------------------------------------------------
-String Character::getEditionLowMeshFilename(const String& prefix)
-{
-    return prefix + "_Plaque.mesh";
 }
 
 //---------------------------------------------------------------------------------
@@ -865,19 +834,3 @@ void Character::addGoody(String name,
 }
 
 //---------------------------------------------------------------------------------
-
-void Character::updateDefinitionLevel(bool setToLow)
-{
-	if (!mEntityLow) 
-		return; // The function is inactive if now low mesh is loaded
-	mEntity->setVisible(!setToLow);
-	mEntityLow->setVisible(setToLow);
-	//All the subentities are insvisible, only the subentities parts of a BodyPart will be set visibles after.
-	for(unsigned int idxSubEntity = 0 ; idxSubEntity < mEntity->getNumSubEntities() ; idxSubEntity++)
-		mEntity->getSubEntity(idxSubEntity)->setVisible(!setToLow);
-	for(unsigned int idxSubLowEntity = 0 ; idxSubLowEntity < mEntityLow->getNumSubEntities() ; idxSubLowEntity++)
-		mEntityLow->getSubEntity(idxSubLowEntity)->setVisible(setToLow);	
-}
-
-//---------------------------------------------------------------------------------
-

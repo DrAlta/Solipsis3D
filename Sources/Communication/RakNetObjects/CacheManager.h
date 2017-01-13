@@ -36,8 +36,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <XmlSceneContent.h>
 #include <CTTimer.h>
 
-#include "RakNetConnection.h"
-
 namespace Solipsis {
 
 class RakNetConnection;
@@ -140,15 +138,9 @@ public:
     /** See FileListTransferCBInterface. */
     virtual bool OnFile(OnFileStruct *onFileStruct);
     /** See FileListTransferCBInterface. */
-	virtual void OnFileProgress(OnFileStruct *onFileStruct,unsigned int partCount,unsigned int partTotal,unsigned int partLength, char *firstDataChunk);
- 
-#if ((RAKNET_VERSION_MAJOR > 3) || \
-     (RAKNET_VERSION_MAJOR == 3 && RAKNET_VERSION_MINOR >= 7))
-	/** See FileListTransferCBInterface. */
-    virtual void OnReferencePush(OnFileStruct *onFileStruct,unsigned int partCount,unsigned int partTotal,unsigned int dataChunkLength, char *firstDataChunk);
-#endif	
-	
-	/** See IncrementalReadInterface. */
+    virtual void OnFileProgress(OnFileStruct *onFileStruct,unsigned int partCount,unsigned int partTotal,unsigned int partLength, char *firstDataChunk);
+
+    /** See IncrementalReadInterface. */
 	virtual unsigned int GetFilePart(char *filename, unsigned int startReadBytes, unsigned int numBytesToRead, void *preallocatedDestination, FileListNodeContext context);
 
     /** Add 1 file in cache.

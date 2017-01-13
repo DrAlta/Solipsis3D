@@ -63,8 +63,8 @@ public:
 
 		/// @copydoc IVoiceEngine::initSoundSystem
 		virtual bool initSoundSystem(FMOD::System* system,
-			float silenceLevel = 5.0f, unsigned int silenceLatencySec = 5,
-            size_t networkChunkSizePCM = 6000, unsigned int bufferFrameCount = 4, unsigned int frequency = 16000);
+            size_t networkChunkSizePCM = 6000, unsigned int bufferFrameCount = 4, unsigned int frequency = 16000,
+            float silenceLevel = 5.0f, unsigned int silenceLatencySec = 5);
 
 		/// @copydoc IVoiceEngine::shutdownSoundSystem
 		virtual bool shutdownSoundSystem();

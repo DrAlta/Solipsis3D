@@ -50,7 +50,6 @@ namespace Solipsis
 
     protected:
         GUI_ModelerProperties();
-		~GUI_ModelerProperties();
 
         // callback
         void modelerActionUndo(Navi* caller, const Awesomium::JSArguments& args);

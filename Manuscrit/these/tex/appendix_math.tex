@@ -1,0 +1,150 @@
+\chapter{Démonstrations et détails mathématiques}
+
+\section{Somme à 1 dans un
+modèle de langage avec \textit{backoff}}
+\label{sec:somme}
+\index{modèle de langue!ngramme@\ngramme{}}
+\index{repli}
+
+\subsection{Somme des probabilités conditionnelles}
+
+Soit la définition du coefficient de repli pour un historique $h$~:
+\begin{eqnarray}
+\beta(h) &=& \frac{1 - \sum_{hw \in E} P^*[w|h]}{1 - \sum_{hw \in
+E}P^*[w|h^-]}~.
+\end{eqnarray}
+
+L'historique $h$ étant fixé, on peut exprimer $\sum_{hw \in E}P^*[w|h^-]$ comme
+$\sum_{w \in E_h}P^*[w|h^-]$.
+
+Or, par définition,
+\begin{equation}
+\sum_{w \in E_h}P^*[w|h^-] + \sum_{w \notin
+E_h}P^*[w|h^-] = 1~.
+\end{equation}
+
+D'où, par analogie, 
+\begin{eqnarray}
+\beta(h) &=& \frac{1 - \sum_{hw \in E} P^*[w|h]}{\sum_{hw \notin E}P^*[w|h^-]}~.
+\end{eqnarray}
+
+On en déduit facilement que
+\begin{eqnarray}
+\sum_{hw \in E} P^*[w|h] + \beta(h)\times\sum_{hw \notin E}P^*[w|h^-] &=& 1\\
+\sum_{w \in V} P[w|h] &=& 1~._\Box\label{eq:proof_h_1}
+\end{eqnarray}
+
+\subsection{Somme des probabilités jointes}
+
+
+Par définition, on a $\sum_{w \in V} P[w] = 1$.
+
+Supposons que, pour tout historique $h$ de longueur $n-1$, on a $\sum_{h \in
+V^{n-1}} P[h] = 1.$
+
+À l'ordre $n$, on a :
+\begin{eqnarray}
+\sum_{hw \in V^n} P[hw]  &=& \sum_{hw \in V^n}
+P[w|h] \times P[h]\\
+ & = & \sum_{w \in V} P[w|h] ~\times \sum_{h \in V^{n-1}} P[h]~.
+\end{eqnarray}
+
+D'après~(\ref{eq:proof_h_1}), nous simplifions par
+\begin{eqnarray}
+\sum_{hw \in V^n} P[hw] & = & \sum_{h \in V^{n-1}} P[h] = 1~.
+\end{eqnarray}
+
+Par récurrence, on a donc finalement~:
+\begin{eqnarray}
+\sum_{hw \in V^n} P[hw] & = & 1, \forall n \in \mathbb{N}^*~._\Box
+\end{eqnarray}
+
+\section{La perplexité comme une fonction de l'entropie croisée}
+\label{sec:ppl_ent}
+\index{perplexité|textbf}
+\index{entropie croisée}
+\index{théorie de l'information}
+
+La perplexité peut s'exprimer dans le cadre de la théorie de
+l'information comme une fonction de l'entropie croisée~\cite{Cover1991}.
+
+Si l'on considère $X$ une variable aléatoire, symbolisant la source
+d'information, et une distribution de probabilité $P$ sur l'ensemble
+$\mathcal{X}$ des valeurs possibles de $X$, l'entropie de $X$ se calcule par~:
+\begin{equation}
+ H(X) = - \sum_{x \in \mathcal{X}} P[x] \times \log_2 P[x]~.
+\end{equation}
+
+Dans ce cadre, supposant la distribution $P$ sur l'ensemble $\mathcal{L}$
+des séquences de mots $W$ dans la langue, la qualité d'un modèle de distribution
+$P_M$ pour prédire les séquences de $\mathcal{L}$ peut se poser comme l'entropie
+croisée entre $P$ et $P_M$~:
+\begin{equation}
+ H(P,P_M) = - \sum_{W \in \mathcal{L}} P[W] \times \log_2 P_M[W]~.
+\label{eq:cross_ent}
+\end{equation}
+Comme $\mathcal{L}$ est infini et $P$ est inconnue, cette formule
+ne peut être directement appliquée. Comme le langage
+naturel décrit un processus stochastique stationnaire et
+ergodique~\cite{Cover1991}, $\mathcal{L}$ peut toutefois être remplacé
+par un texte $T=w_1...w_n$ censé être représentatif de
+$\mathcal{L}$. La formule~(\ref{eq:cross_ent}) se simplifie alors en~:
+\begin{eqnarray}
+H(P,P_M) \xrightarrow{n\rightarrow+\infty} H(P_T,P_M) &=& - \log_2
+P_M[T]\notag\\
+            &=& - \log_2 \prod_{w_i \in T} P_M[w_i|h_i]\notag\\
+            &=& - \sum_{w_i \in T} \log_2 P_M[w_i|h_i]~.
+\label{eq:cross_ent_pt}
+\end{eqnarray}
+
+On définit alors le taux d'entropie croisée par mot d'un texte $T$ par rapport
+au modèle s'écrit comme~:
+\begin{equation}
+\widetilde{H}(P_T,P_M) = - \frac{1}{n} \times \sum_{w_i \in T} \log_2
+P_M[w_i|h_i]~,
+\end{equation}
+Notons que la base $2$ du logarithme permet d'interpréter $L(T|M)$ comme le
+nombre moyen de bits utilisés par $M$ pour encoder chaque mot de $T$.
+
+Par analogie avec les formules basées sur la log-vraissemblance, la perplexité
+de $T$ sachant $M$ peut alors s'écrire~:
+\begin{equation}
+ \mbox{PPL}_M(T) = 2^{\widetilde{H}(P_T,P_M)}~.
+\end{equation}
+
+\section{Facteur de mise à l'échelle des \ngrammes{} non contraints}
+\label{sec:scale_factor_1}
+\index{facteur de mise à l'échelle}
+
+L'expression générale du facteur de mise à l'échelle d'un \ngramme{} $hw$ est~:
+\begin{eqnarray}
+ \alpha(hw) = \prod_{i=1}^{K}
+		\alpha_i(hw)^{\frac{1}{\chi_{hw}}},\\
+\mbox{avec } \alpha_i(hw) = \left(
+                              \frac{K_i}{\langle{}f_i,P_B\rangle{}}
+		            \right)^{f_i(hw)}~,
+\label{eq:mdi_demo_a_1}
+\end{eqnarray}
+où $\chi_{hw}$ est le nombre de caractéristiques,
+\cad de contraintes, auxquelles appartient $hw$ et les $f_i$ sont des
+fonctions indicatrices propres à chaque caractéristique.\\
+
+Si le \ngramme{} $hw$ n'appartient à aucune contrainte, on peut poser que~:
+\begin{equation}
+ f_i(hw) = 0, \forall i~.
+\end{equation}
+
+Donc,
+\begin{equation}
+ \alpha_i(hw) = 1, \forall i~.
+\end{equation}
+
+Or, comme $\displaystyle\lim_{x\to0} 1^{\frac{1}{x}} = 1$, on a
+\begin{equation}
+ \lim_{\chi_{hw}\to0} \alpha(hw) = \lim_{\chi_{hw}\to0} \prod_{i=1}^{K}
+	\alpha_i(hw)^{\frac{1}{\chi_{hw}}} = 1~._\Box
+\end{equation}
+
+
+
+

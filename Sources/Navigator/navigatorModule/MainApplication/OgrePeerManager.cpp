@@ -187,13 +187,13 @@ bool OgrePeerManager::action(RefCntPoolPtr<XmlAction>& xmlAction)
 {
     if (xmlAction->getType() == ATChat)
     {
-        //String from = "???";
-        //OgrePeersMap::iterator it = mOgrePeersMap.find(xmlAction->getSourceEntityUid());
-        //if (it != mOgrePeersMap.end())
-        //    from = it->second->getXmlEntity()->getName();
-		// We send the UUID to the chat
-		GUI_Chat::addText(xmlAction->getSourceEntityUid(), xmlAction->getDesc());
-   }
+        String from = "???";
+        OgrePeersMap::iterator it = mOgrePeersMap.find(xmlAction->getSourceEntityUid());
+        if (it != mOgrePeersMap.end())
+            from = it->second->getXmlEntity()->getName();
+
+        GUI_Chat::addText(StringHelpers::convertStringToWString(from) + L" " + xmlAction->getDesc());
+    }
 
     OgrePeersMap::iterator it = mOgrePeersMap.find(xmlAction->getTargetEntityUid());
     if ((it == mOgrePeersMap.end()) || (it->second == 0))
@@ -469,10 +469,11 @@ OgrePeer* OgrePeerManager::createAvatarNode(RefCntPoolPtr<XmlEntity>& xmlEntity)
     peerAvatar->setStateAnimName(ASAvatarRun, "Run");
     peerAvatar->setStateAnimName(ASAvatarFly, "Fly");
     peerAvatar->setStateAnimName(ASAvatarSwim, "Swim");
-	peerAvatar->setStateAnimName(ASAvatarXDE, "XDE");
-
-	// init to Fly by default
-	peerAvatar->setState(ASAvatarFly);
+#if 1 // GILLES FLY
+    peerAvatar->setState(ASAvatarFly);
+#else
+    peerAvatar->setState(ASAvatarIdle);
+#endif
 
     if (isLocal)
     {
@@ -484,6 +485,10 @@ OgrePeer* OgrePeerManager::createAvatarNode(RefCntPoolPtr<XmlEntity>& xmlEntity)
 
     if (mCallbacks != 0)
         mCallbacks->onAvatarNodeCreate(peerAvatar);
+
+#if 0 // GILLES FLY
+    peerAvatar->onSceneNodeChanged();
+#endif
 
     return peerAvatar;
 }

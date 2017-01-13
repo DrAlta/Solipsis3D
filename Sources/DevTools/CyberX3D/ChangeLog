@@ -1,0 +1,8 @@
+v1.0.1 (03/18/04)
+ Fixed a VRML output bugs using getType+() instead of getTypeName().
+ Changed the VRML parser to run under more minimum memory.
+ Fixed a memory leak in Node::outputContext().
+ Fixed SFBool::setValue() to set the value using lower strings, "true" and "false".
+ Changed Node::getChildNodeByType() to check the reference node type if the child node is the instance node.
+ Fixed a memory leak in ~Vector().
+

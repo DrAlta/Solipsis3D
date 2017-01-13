@@ -47,7 +47,6 @@ namespace Solipsis
 
     protected:
         GUI_WorldsServerInfo();
-		~GUI_WorldsServerInfo();
 
         static GUI_WorldsServerInfo * stGUI_WorldsServerInfo;
 

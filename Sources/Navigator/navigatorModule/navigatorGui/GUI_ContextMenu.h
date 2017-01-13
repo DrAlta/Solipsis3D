@@ -57,8 +57,6 @@ namespace Solipsis
 
     protected:
         GUI_ContextMenu();
-		~GUI_ContextMenu();
-
         virtual bool show(int x, int y, NaviContext ctxtPanel, const String& params);
         //virtual void hide();
         virtual void destroy();

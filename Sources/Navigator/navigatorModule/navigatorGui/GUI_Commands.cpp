@@ -36,12 +36,7 @@ GUI_Commands * GUI_Commands::stGUI_Commands = NULL;
 //-------------------------------------------------------------------------------------
 GUI_Commands::GUI_Commands() : GUI_Panel("uicommands")
 {
-	m_curState = NSNotCreated;
-}
-
-GUI_Commands::~GUI_Commands() 
-{
-	stGUI_Commands = NULL;
+    stGUI_Commands = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -49,7 +44,7 @@ void GUI_Commands::showHide()
 {
     if (!stGUI_Commands)
     {
-       stGUI_Commands = new GUI_Commands();
+        new GUI_Commands();
     }
 
     if (stGUI_Commands->isVisible())

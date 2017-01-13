@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Interactive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <meta content='ModelOrientation.x3d' name='title'/>
+    <meta content='Jeffrey Weekley' name='creator'/>
+    <meta content='15 July 2003' name='created'/>
+    <meta content='25 October 2004' name='modified'/>
+    <meta content='X Y Z axis arrows and labels of X3D coordinate system to illustrate default entity center of gravity at 0 0 0, with default nose orientation pointing along the +X-axis. Ground vehicles have their position raised to allow bottom to touch the ground.' name='description'/>
+    <meta content='ModelOrientation.jpg' name='image'/>
+    <meta content='../X3dSceneAuthoringHints.html#CoordinateSystems' name='reference'/>
+    <meta content='http://www.web3d.org/x3d/content/examples/Basic/course/ModelOrientation.x3d' name='identifier'/>
+    <meta content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='../license.html' name='license'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Default model orientation: nose +X axis, up +Y axis, right-hand side +Z axis'/>
+    <!-- Each arrow goes from +1m to -1m to allow linear scaling to fit a scene -->
+    <!-- Note each label rotates about the scene's vertical Y axis for consistency, enabling local orientation by user -->
+    <Transform scale='2 2 2'>
+      <Inline DEF='CoordinateAxes' url='"../../X3dForWebAuthors/Chapter03-Grouping/CoordinateAxes.x3d" "../../X3dForWebAuthors/Chapter03-Grouping/CoordinateAxes.wrl" "../../../Savage/Tools/Authoring/CoordinateAxes.x3d" "../../../Savage/Tools/Authoring/CoordinateAxes.wrl" "http://X3dGraphics.com/examples/X3dForWebAuthors/Chapter03-Grouping/CoordinateAxes.x3d" "http://X3dGraphics.com/examples/X3dForWebAuthors/Chapter03-Grouping/CoordinateAxes.wrl" "https://savage.nps.edu/Savage/Tools/Authoring/CoordinateAxes.x3d" "https://savage.nps.edu/Savage/Tools/Authoring/CoordinateAxes.wrl"'/>
+    </Transform>
+    <Transform scale='1.2 1.6 1.6'>
+      <Transform rotation='0 0 -1 1.57' scale='0.25 0.25 0.25'>
+        <Shape>
+          <Cylinder bottom='true' height='8' radius='0.4425' top='false'/>
+          <Appearance DEF='Cammi'>
+            <Material diffuseColor='0.45 0.55 0.55'/>
+          </Appearance>
+        </Shape>
+        <Transform translation='0 4.9 0'>
+          <Shape>
+            <Cone bottomRadius='0.4425' height='1.8'/>
+            <Appearance USE='Cammi'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 -4.1 0'>
+          <Shape>
+            <Cone bottom='true' bottomRadius='0.2' height='0.66'/>
+            <Appearance>
+              <Material diffuseColor='0.15 0.15 0.15' shininess='0.66' specularColor='0.22 0.22 0.22'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform DEF='TailFin' translation='0.175 -4.5 0'>
+          <Shape>
+            <IndexedFaceSet coordIndex='0 1 2 3 4 5 -1' solid='false'>
+              <Coordinate point='0 0.4 0 0.25 0 0 0.75 0 0 0.75 1 0 0 1.65 0 0 0.4 0'/>
+            </IndexedFaceSet>
+            <Appearance USE='Cammi'/>
+          </Shape>
+        </Transform>
+        <Transform rotation='0 1 0 1.57'>
+          <Transform USE='TailFin'/>
+        </Transform>
+        <Transform rotation='0 1 0 3.14'>
+          <Transform USE='TailFin'/>
+        </Transform>
+        <Transform rotation='0 1 0 -1.57'>
+          <Transform USE='TailFin'/>
+        </Transform>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>

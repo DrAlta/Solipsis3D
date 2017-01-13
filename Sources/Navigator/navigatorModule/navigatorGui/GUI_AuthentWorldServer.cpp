@@ -36,12 +36,7 @@ GUI_AuthentWorldServer * GUI_AuthentWorldServer::stGUI_AuthentWorldServer = NULL
 //-------------------------------------------------------------------------------------
 GUI_AuthentWorldServer::GUI_AuthentWorldServer() : GUI_FromServer("uiauthentws")
 {
-	m_curState = NSNotCreated;
-}
-
-GUI_AuthentWorldServer::~GUI_AuthentWorldServer()
-{
-	stGUI_AuthentWorldServer = NULL;
+    stGUI_AuthentWorldServer = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -49,8 +44,9 @@ bool GUI_AuthentWorldServer::createAndShowPanel(const std::string& pwd)
 {
     if (!stGUI_AuthentWorldServer)
     {
-		stGUI_AuthentWorldServer = new GUI_AuthentWorldServer();
+        new GUI_AuthentWorldServer();
     }
+
     return stGUI_AuthentWorldServer->show(pwd);
 }
 
@@ -95,7 +91,6 @@ bool GUI_AuthentWorldServer::show(const std::string& pwd)
 void GUI_AuthentWorldServer::onOkPressed(Navi* caller, const Awesomium::JSArguments& args)
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "NavigatorGUI::authentWorldsServerOk()");
-	mNavi->removeEventListener(this);
 
     std::string result = args.at(0).toString();
     NodeId nodeId = args.at(1).toString();

@@ -41,25 +41,20 @@ GUI_Options * GUI_Options::stGUI_Options = NULL;
 //-------------------------------------------------------------------------------------
 GUI_Options::GUI_Options() : GUI_Panel("uioptions")
 {
-	m_curState = NSNotCreated;
+    stGUI_Options = this;
     mNavigator = Navigator::getSingletonPtr();
     mNaviMgr = NavigatorGUI::getNaviMgr();
 }
 
-GUI_Options::~GUI_Options()
-{
-	stGUI_Options = NULL;
-}
-
 //-------------------------------------------------------------------------------------
-bool GUI_Options::createAndShowPanel()
+/*static*/ bool GUI_Options::createAndShowPanel()
 {
-	// Hide previous Navi UI
-	NavigatorGUI::destroyAllRegisteredPanels();
-	// stGUI_Options is now invalid because destroyAllRegisteredPanels() has destroyed this panel 
-	// => we start with a new one
-	stGUI_Options = new GUI_Options();
-	return stGUI_Options->show();
+    if (!stGUI_Options)
+    {
+        new GUI_Options();
+    }
+
+    return stGUI_Options->show();
 }
 
 //-------------------------------------------------------------------------------------
@@ -67,6 +62,8 @@ bool GUI_Options::show()
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_Options::show()");
 
+    // Hide previous Navi UI
+    NavigatorGUI::destroyAllRegisteredPanels();
 
     if (m_curState == NSNotCreated)
     {

@@ -189,6 +189,7 @@ Object3D::~Object3D()
 	delete mModifiedMaterialManager;
 }
 
+#if 1 // GILLES
 //-------------------------------------------------------------------------------------
 void    Object3D::setupCreationDate()
 {
@@ -199,7 +200,7 @@ void    Object3D::setupCreationDate()
     mCreationDate += " - ";
     mCreationDate += buffTmp;
 }
-
+#endif
 //-------------------------------------------------------------------------------------
 int		Object3D::loadFromFile(TiXmlDocument &doc, String group)
 {
@@ -212,16 +213,16 @@ int		Object3D::loadFromFile(TiXmlDocument &doc, String group)
 	mDesc = e->FirstChildElement("objdesc")->Attribute("Name");
 	mOwnerName = e->FirstChildElement("objowner")->Attribute("Name");
 	mCreatorName = e->FirstChildElement("objcreator")->Attribute("Name");
-
-    if ( e->FirstChildElement("objcreationdate") ) 
-		mCreationDate = e->FirstChildElement("objcreationdate")->Attribute("Name");
-
+#if 1 // GILLES
+    if ( e->FirstChildElement("objcreationdate") ) mCreationDate = e->FirstChildElement("objcreationdate")->Attribute("Name");
+#endif
 	mGroupName = e->FirstChildElement("objgroup")->Attribute("Name");
 	from_string(e->FirstChildElement("objrigths")->Attribute("mod"),mCanBeModified);
 	from_string(e->FirstChildElement("objrigths")->Attribute("cop"),mCanBeCopied);
 
 	e = doc.RootElement()->FirstChildElement("model");
 
+#if 1 // GILLES
 	std::string typeStr = std::string( e->FirstChildElement("primitive")->Attribute("Name") );
 	for(int i = 0; i<15; i++)
 		if (SOLTYPESTRING[i] == typeStr)
@@ -232,6 +233,7 @@ int		Object3D::loadFromFile(TiXmlDocument &doc, String group)
 		std::string meshName = std::string( e->FirstChildElement("primitive")->Attribute("Mesh") );
 		mMeshImport = meshName;
     }
+#endif
 
 	TiXmlElement *trans = e->FirstChildElement("transformation")->FirstChildElement("transfo");
 	TCommand toAdd;
@@ -355,9 +357,10 @@ int		Object3D::loadFromFile(TiXmlDocument &doc, String group)
 	trans = e->FirstChildElement("texturelist")->FirstChildElement("texture");
 	TexturePtr texture ;
 	string currenttexture ;
+#if 1 // GILLES
     TexturePtr textureUsed;
     textureUsed.setNull();
-
+#endif
 	//add texture to the current list :
 	while (trans != NULL)
 	{
@@ -419,7 +422,11 @@ int		Object3D::loadFromFile(TiXmlDocument &doc, String group)
 		currenttexture = trans->Attribute("currenttexture");
 		if( currenttexture == "true" )
 		{
+#if 1 // GILLES
             textureUsed = texture;
+#else
+			//setCurrentTexture( texture );
+#endif
         }
         else
         {
@@ -443,11 +450,13 @@ int		Object3D::loadFromFile(TiXmlDocument &doc, String group)
         }
 		trans = trans->NextSiblingElement("texture");
 	}
+#if 1 // GILLES
     if( textureUsed.isNull() )
         textureUsed = TextureManager::getSingleton().getByName( "default_texture.jpg" );
     setCurrentTexture( textureUsed );
+#endif
 
-	//texture scroll, scale and rotate :
+    //texture scroll, scale and rotate :
 	Ogre::Vector2 tmpVec;
 	from_string(e->FirstChildElement("texturescroll")->Attribute("u"),tmpVec.x);
 	from_string(e->FirstChildElement("texturescroll")->Attribute("v"),tmpVec.y);
@@ -538,8 +547,9 @@ int		Object3D::saveToFile(const char* fileName)
 
 	toSave << "\t\t<objowner Name=\"" << mOwnerName << "\" />" << endl;
 	toSave << "\t\t<objcreator Name=\"" << mCreatorName << "\" />" << endl;
+#if 1 // GILLES
     toSave << "\t\t<objcreationdate Name=\"" << mCreationDate << "\" />" << endl;
-
+#endif
 	toSave << "\t\t<objgroup Name=\"" << mGroupName << "\" />" << endl;
 	toSave << "\t\t<objrigths mod=\"" << mCanBeModified << "\" cop=\"" << mCanBeCopied<< "\" />" << endl;
 	EntityUID parentUid = "NULL" ;
@@ -2403,7 +2413,8 @@ int		Object3D::saveTextures(Ogre::String &pathToSave,MyZipArchive* zz)
             String str = ResourceGroupManager::getSingleton().findGroupContainingResource(texturePath);
             std::string newFile( "solTmpTexture\\" + fileName );
 
-	        if(!zz->isFilePresent(fileName))
+#if 1 // GILLES
+            if(!zz->isFilePresent(fileName))
             {
                 Ogre::Image image;
                 image.load( texturePath, str);
@@ -2412,6 +2423,14 @@ int		Object3D::saveTextures(Ogre::String &pathToSave,MyZipArchive* zz)
                 SOLdeleteFile( newFile.c_str() );
                 image.~Image();
             }
+#else
+            Ogre::Image image;
+            image.load( texturePath, str);
+            image.save( newFile );
+            if ( ! zz->isFilePresent( texturePath ) )
+                zz->writeFile( newFile );
+            SOLdeleteFile( newFile.c_str() );
+#endif
             texturesFilesToRemove.erase(fileName);
         }
 
@@ -2434,6 +2453,9 @@ int		Object3D::saveTextures(Ogre::String &pathToSave,MyZipArchive* zz)
                         {
                             SOLcopyFile((*param).second.c_str(), newFile.c_str());
                             zz->writeFile( newFile );
+                            // GILLES begin
+                            //SOLdeleteFile( newFile.c_str() );
+                            // GILLES end
                         }
                         (*param).second = url.getLastFileName();
                         texturesFilesToRemove.erase(url.getLastFileName());
@@ -2453,10 +2475,18 @@ int		Object3D::saveTextures(Ogre::String &pathToSave,MyZipArchive* zz)
                         if (remoteMrl.empty() && (mrl.find("://") == String::npos))
                         {
                             Path mrlPath(mrl);
+                            //std::string newFile( "solTmpTexture\\" + mrlPath.getLastFileName() );
+
                             if ( ! zz->isFilePresent( mrlPath.getLastFileName() ) )
                             {
+                               // SOLcopyFile((*param).second.c_str(), newFile.c_str());
                                 zz->writeFile( param->second );
+                                // GILLES begin
+                                //SOLdeleteFile( newFile.c_str() );
+                                // GILLES end
+                                //(*param).second = newFile;
                             }
+                            //(*param).second = mrlPath.getLastFileName();
                             texturesFilesToRemove.erase(mrlPath.getLastFileName());
                         }
                     }
@@ -2464,6 +2494,22 @@ int		Object3D::saveTextures(Ogre::String &pathToSave,MyZipArchive* zz)
             }
         }
     }
+
+    /*
+    // MESH
+    if (getTypeAsInt() == Object3D::OTHER && !getMeshImportName().empty())
+    {           
+        Path meshPath(getMeshImportName());
+        std::string newFile( "solTmpTexture\\" + meshPath.getLastFileName() );
+
+        if ( ! zz->isFilePresent( meshPath.getLastFileName() ) )
+        {
+            SOLcopyFile(getMeshImportName().c_str(), newFile.c_str());
+            zz->writeFile( newFile );
+            SOLdeleteFile( newFile.c_str() );
+        }
+    }
+    */
 
     // Delete no more used textures files
     for (std::set<Ogre::String>::const_iterator itf = texturesFilesToRemove.begin(); itf != texturesFilesToRemove.end(); ++itf)
@@ -2489,7 +2535,9 @@ int		Object3D::saveMeshRef(Ogre::String &pathToSave,MyZipArchive* zz)
         // copy the source file to the temp directory
         if (!zz->isFilePresent( source.getLastFileName() ))
         {
+            //SOLcopyFile(source.getFormatedPath().c_str(), tmpDir.c_str());
             zz->writeFile( source.getFormatedPath() );
+
             // copy the skeleton if it exsists
             std::string skeleton( source.getLastFileName(false) );
             skeleton += ".skeleton";

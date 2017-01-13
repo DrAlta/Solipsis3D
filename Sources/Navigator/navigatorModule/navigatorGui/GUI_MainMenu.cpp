@@ -46,21 +46,18 @@ GUI_MainMenu * GUI_MainMenu::stGUI_MainMenu = NULL;
 //-------------------------------------------------------------------------------------
 GUI_MainMenu::GUI_MainMenu() : GUI_Panel("uimainmenu")
 {
-	m_curState = NSNotCreated;
+    stGUI_MainMenu = this;
     mNavigator = Navigator::getSingletonPtr();
-}
-
-GUI_MainMenu::~GUI_MainMenu()
-{
-	stGUI_MainMenu = NULL;
 }
 
 //-------------------------------------------------------------------------------------
 bool GUI_MainMenu::createAndShowPanel()
 {
-	// This function is called after destroyAllRegisteredPanels() 
-	// This function has destroyed all panels
-    stGUI_MainMenu = new GUI_MainMenu();
+    if (!stGUI_MainMenu)
+    {
+        new GUI_MainMenu();
+    }
+
     return stGUI_MainMenu->show();
 }
 

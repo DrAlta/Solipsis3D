@@ -72,13 +72,9 @@ namespace Solipsis {
         
         GUI_MessageBox() : GUI_Panel("uimsgbox")
         {
-			m_curState = GUI_Panel::NSNotCreated;
-		}
+            st_GUI_MessageBox = this;
+        }
 
-		~GUI_MessageBox()
-		{
-			st_GUI_MessageBox = NULL;
-		}
 
 
         //virtual ~GUI_MessageBox();

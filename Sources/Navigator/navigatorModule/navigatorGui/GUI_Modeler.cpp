@@ -53,21 +53,17 @@ GUI_Modeler * GUI_Modeler::stGUI_Modeler = NULL;
 //-------------------------------------------------------------------------------------
 GUI_Modeler::GUI_Modeler() : GUI_Panel("uimdlrmain")
 {
-	m_curState = NSNotCreated;
+    stGUI_Modeler = this;
     mNavigator = Navigator::getSingletonPtr();
-}
 
-GUI_Modeler::~GUI_Modeler()
-{
-	stGUI_Modeler = NULL;
 }
 
 //-------------------------------------------------------------------------------------
-bool GUI_Modeler::createAndShowPanel()
+/*static*/ bool GUI_Modeler::createAndShowPanel()
 {
     if (!stGUI_Modeler)
     {
-        stGUI_Modeler = new GUI_Modeler();
+        new GUI_Modeler();
     }
 
     return stGUI_Modeler->show();

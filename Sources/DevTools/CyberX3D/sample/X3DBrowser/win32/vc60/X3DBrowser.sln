@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CyberX3D", "..\..\..\..\lib\win32\vc60\CyberX3D.vcproj", "{1138F041-9ADD-482A-BF89-85D591AFCBC7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X3DBrowser", "X3DBrowser.vcproj", "{EAF074D0-E98A-4F20-8B19-1DC4D74DFE79}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1138F041-9ADD-482A-BF89-85D591AFCBC7} = {1138F041-9ADD-482A-BF89-85D591AFCBC7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X3DBrowserGLUT", "..\..\glut\win32\vc60\X3DBrowserGLUT.vcproj", "{EA97CFE6-8C42-4BAF-9EA1-E864B5DF88DB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x3d2vrml", "..\..\..\x3d2vrml\win32\vc60\x3d2vrml.vcproj", "{9BCB465D-FDE3-475E-9FAF-008E3F25EF8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1138F041-9ADD-482A-BF89-85D591AFCBC7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1138F041-9ADD-482A-BF89-85D591AFCBC7}.Debug|Win32.Build.0 = Debug|Win32
+		{1138F041-9ADD-482A-BF89-85D591AFCBC7}.Release|Win32.ActiveCfg = Release|Win32
+		{1138F041-9ADD-482A-BF89-85D591AFCBC7}.Release|Win32.Build.0 = Release|Win32
+		{EAF074D0-E98A-4F20-8B19-1DC4D74DFE79}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EAF074D0-E98A-4F20-8B19-1DC4D74DFE79}.Debug|Win32.Build.0 = Debug|Win32
+		{EAF074D0-E98A-4F20-8B19-1DC4D74DFE79}.Release|Win32.ActiveCfg = Release|Win32
+		{EAF074D0-E98A-4F20-8B19-1DC4D74DFE79}.Release|Win32.Build.0 = Release|Win32
+		{EA97CFE6-8C42-4BAF-9EA1-E864B5DF88DB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EA97CFE6-8C42-4BAF-9EA1-E864B5DF88DB}.Debug|Win32.Build.0 = Debug|Win32
+		{EA97CFE6-8C42-4BAF-9EA1-E864B5DF88DB}.Release|Win32.ActiveCfg = Release|Win32
+		{EA97CFE6-8C42-4BAF-9EA1-E864B5DF88DB}.Release|Win32.Build.0 = Release|Win32
+		{9BCB465D-FDE3-475E-9FAF-008E3F25EF8A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9BCB465D-FDE3-475E-9FAF-008E3F25EF8A}.Debug|Win32.Build.0 = Debug|Win32
+		{9BCB465D-FDE3-475E-9FAF-008E3F25EF8A}.Release|Win32.ActiveCfg = Release|Win32
+		{9BCB465D-FDE3-475E-9FAF-008E3F25EF8A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -44,7 +44,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "AvatarEditor.h"
 #include "Cameras/CameraSupportManager.h"
 #include "Configuration\NavigatorConfiguration.h"
-#include <Emotion.h>
 
 
 namespace Solipsis {
@@ -94,11 +93,11 @@ public:
         NIWiimoteNunchuk,
         NIWiimoteNunchukIR
     };
-
-    void saveConfiguration()
-    {
+   
+     void saveConfiguration()
+     {
         mConfiguration.saveConfig();
-    }
+     }
 
 private:
     static Navigator* ms_singletonPtr;
@@ -122,9 +121,8 @@ protected:
     String mMediaCachePath;
     String mVoIPServerAddress;
     float mVoIPSilenceLevel;
-	unsigned int mVoIPSilenceLatency;
     bool mCastShadows;
-
+    unsigned int mVoIPSilenceLatency;
 
     Configuration mConfiguration;
 
@@ -163,12 +161,11 @@ protected:
 
     Avatar* mUserAvatar;
 
+//    bool mFakeTerrain;
+
     NavigatorSound* mNavigatorSound;
 
     std::map<String, String> mNaviURLUpdatePending;
-
-    // the emotion todo list (map)
-    std::map<std::string, std::list<Emotion*> > mEmotionTodoLst;
 
 public:
     Navigator(const String name, IApplication* application);
@@ -269,9 +266,10 @@ public:
     // Mouse ray picking
     void resetMousePicking();
     bool computeMousePicking(Ray& mouseRay);
+#if 1 // GILLES MDLR
     bool computeGizmo();
-
-	MovableObject* getPickedMovable() { return mPickedMovable; }
+#endif
+    MovableObject* getPickedMovable() { return mPickedMovable; }
     bool is1NaviHitByMouse(String& naviName, int& naviX, int& naviY);
     void computeNaviHit(const String& naviName,
                         Vector2& closestUV,
@@ -288,11 +286,6 @@ public:
                        Vector2& vncXY);
     bool is1AvatarHitByMouse(Avatar*& avatar);
     bool is1ObjectHitByMouse(Object*& object);
-
-    // update the emotions rendering
-    void updateEmotions();
-    // Add a new emotion to the emotion todo list (to render)
-    void applyNewEmotion(const std::string& uid, const std::string& emotionName);
 
     bool quit();
     bool connect();

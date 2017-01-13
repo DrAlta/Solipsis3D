@@ -1,0 +1,463 @@
+\part{\'Etat de l'art}
+%\label{part:1}
+%------------------------------%
+%------------------------------%
+\chapter{Les environnements virtuels 3D} \label{chap:chapitre1}
+%\markboth{chapitre1}{chapitre1}
+\entetenormale{}
+%------------------------------%
+%------------------------------%
+
+%\begin{itemize}
+%    \item classification
+%	\item historique
+%	\item la représentation des contenus 3D: les formats (tableau avec fonctionnalités / formats)
+%	\item les composants d'un environnements virtuels: les moteurs ( tableau avec fonctionnalités / moteurs )
+%\end{itemize}
+%
+%\ding{224} noyau commun: le graphe de scène
+%
+%$\simeq$ 10 pages
+\lettrine{D}{e} la Sensorama Machine de Morton L. Heilig \cite{heilig_sensorama_1962} en 1956 aux CAVE actuels en passant par les environnements virtuels textuels tels que MUD \cite{mud_welcome} ou par les métavers tels que Second Life, les environnements virtuels ont évolués au gré des innovations techniques et trouver au fil des années de multiples applications. Ils sont aujourd'hui utilisés quotidiennement par de nombreuses personnes aussi bien pour des applications professionnels, artistiques ou de divertissements.
+
+% Dans cette partie, nous présenterons les différents éléments qui permettent de réaliser un \ev\: les contenus 3D et les composants de rendu. Nous verrons ce qui les distingue et leurs similitudes.
+
+\section{ Présentation des environnements virtuels 3D }
+
+Les environnements virtuels 3D sont aussi divers par leurs natures, leurs dénominations et leurs domaines d'applications. Dans cette partie, nous allons parcourir les différents termes utilisés pour les désigner. Ensuite, nous tenterons de donner un aperçu des différents types d'\ev\ 3D existant actuellement et de leurs divers domaines d'application.
+
+\subsection{ Terminologie des environnements virtuels 3D }
+
+La terminologie usitée pour la notion d'environnement virtuel est vaste dans la littérature. On parle couramment d'environnement virtuel, de monde virtuel, d'espace virtuel, d'univers virtuel ou encore de réalité virtuelle. Tous ces termes englobent des notions similaires mais cependant nuancées. Le terme le plus ancien est "réalité virtuelle" dont l'usage actuelle remonte à 1985. Initialement utilisé par Jaron Lanier il désigne un environnement immersif 3D simulé par ordinateur. Néanmoins, la définition qui fait référence et à laquelle nous nous référons dans ces travaux est celle proposée dans "Le Traité de la Réalité Virtuelle" \cite{fuchs2006traite}:
+
+\begin{definition}\label{def:rv}
+La \textbf{réalité virtuelle} est un domaine scientifique et technique exploitant l'informatique et des interfaces comportementales en vue de simuler dans un monde virtuel le comportement d'entités 3D, qui sont en interaction en temps réel entre elles et avec un ou des utilisateurs en immersion pseudo-naturelle par l'intermédiaire de canaux sensori-moteurs. 
+\end{definition}
+
+Les termes de monde virtuel, espace virtuel et univers virtuel sont similaires et désignent le monde simulé dans une application de réalité virtuelle. On peut néanmoins constater quelques nuances en fonction du contexte d'utilisation. En effet, selon l'étendu et le réalisme du monde simulé, l'un ou l'autre de ces termes peut être préféré.
+
+% Au début des années 90, les chercheurs du MIT lui on préféré le terme d'environnement virtuel afin d'écarter le mot "réalité", trop sujet à polémique. De nos jours, il semble cependant que la distinction entre les différents termes utilisés pour désigner des environnements 3D immersifs se fasse en fonction de l'étendue et
+%du réalisme de l'environnement en question. Dans la figure \ref{fig:terminologie} nous avons tenté de représenter ces 4 notions suivant le réalisme et l'étendue.
+
+%Dans le contexte de la thèse, nous avons choisi d'utiliser le terme d'environnement virtuel 3D car sa signification est suffisamment vaste pour englober l'ensemble des applications 3D auxquelles les travaux présenter ici s'appliquent. Nous utiliserons la définition \ref{def:ev3d} comme référence dans la suite de ce document.
+
+Dans le contexte de la thèse, nous avons choisi d'utiliser la définition suivante du terme d'environnement virtuel 3D:
+
+\begin{definition}\label{def:ev3d}
+Un \textbf{\ev\ 3D} est la description informatique d'un monde virtuel synthétisé par une application de réalité virtuelle.
+Un \ev\ 3D peut également posséder les caractéristiques suivantes:
+
+\begin{itemize}
+   \item[-] l'utilisateur peut y avoir une représentation sous forme d'avatar,
+	\item[-] l'utilisateur peut y créer de nouveaux objets,
+	\item[-] l'utilisateur peut interagir avec d'autres utilisateurs,
+	\item[-] le monde peut simuler d'autres sens humains (l'ouïe et le toucher notamment),
+	\item[-] le monde simulé peut être partagé,
+	\item[-] le monde simulé peut être persistent. 
+\end{itemize} 
+\end{definition}
+
+
+ Nous utiliserons la définition \ref{def:ev3d} comme référence dans la suite de ce document. 
+
+%\begin{definition}\label{def:ev3d}
+%Un \textbf{\ev\ 3D} est un programme informatique qui synthétise un environnement 3D simulant la vision humaine à l'intérieur duquel un ou plusieurs utilisateurs peuvent agir en temps réel. 
+%\end{definition}
+
+
+
+
+
+%\begin{figure}[h!]
+%\centering
+%\includegraphics[width=.95\linewidth]{chapitre1/fig/terminologie.png}
+%\caption{Représentation de la terminologie des mondes virtuels en fonction du réalisme et de l'étendue}
+%\label{fig:terminologie}
+%\end{figure}
+
+\subsection{ Classification des environnements virtuels 3D }
+
+%Présentation des principaux types et de leurs domaines applications. Pour chacun, discussion sur l'intérêt porté à l'interopérabilité.
+Dans cette partie, nous avons répertorié les principaux types d'\ev\ 3D que nous présentons ici classés par domaines d'applications.
+
+\subsubsection{Les jeux vidéos}
+
+Le divertissement est historiquement l'une des premières applications des environnements virtuels. Il est donc logique que le domaine des jeux vidéos soit le principal créateur de \ev\s. Depuis leurs fondations autour des années 80, les principaux éditeurs de jeux vidéos (Electronic Arts, Nintendo, Ubisoft, ...) sont devenus des multinationales côtées en bourses. En 2011, le marché mondial du jeu vidéo a généré 52,1 milliards d'euros et sa croissance, qui se vérifie chaque années, n'est pas prête de s'arrêter car on prévoit qu'il génère plus de 75 milliards d'euros en 2015 \cite{michaud_world_2011}.\\
+
+On distingue plusieurs types de jeux vidéo:
+
+\begin{itemize}
+    \item[-] \textbf{les jeux de tirs subjectifs ou FPS (First-Person Shooters )} : dans ces jeux, le point de vue  est celui de l'utilisateur qui est, en générale, un personnage armé. (Exemple : \textit{Quake},  \textit{Unreal Tournament}, \textit{Half-Life}, ...). 
+	\item[-] \textbf{les jeux de plateforme} : ce sont les jeux dont l'action est basée sur un personnage tierce (Exemple : \textit{Space panic},  \textit{Donkey Kong}, \textit{Super-Mario Brothers}, ...). 
+	\item[-] \textbf{les jeux de combat} : ces jeux sont en général jouables à deux et les deux personnages doivent s'affronter au cours d'un combat (Exemple : \textit{Soul Calibur},  \textit{Tekken}, \textit{Mortal kombat}, ...).  
+	\item[-] \textbf{les jeux de course} : ces jeux se déroulent sur un circuit et le joueur doit concourir pour une courses de voiture ou tout autre type de véhicules (Exemple : \textit{Grand Turismo},  \textit{Need For Speed},...).  
+	\item[-] \textbf{les jeux de stratégies ou RTS (Real Time Strategy)} : dans ce type de jeux, le joueur doit conquérir un monde en commandant son unité de combat (Exemple : \textit{Age Of Empires},  \textit{Warcraft}, \textit{Command  Conquer}, ...).  
+	\item[-] \textbf{les jeux massivement multijoueurs ou MMOG (Massively Multiplayer Online Games)} : ce sont des jeux en ligne où des utilisateurs du monde entier s'affrontent dans un monde virtuel (Exemple : \textit{World Of Warcraft}, \textit{EverQuest}, \textit{Star Wars Galaxies}, ...).
+	\item[-] \textbf{les jeux de simulation de vie} : ce type de jeux n'a pas de but précis, il s'agit de gérer la vie d'un personnage ou d'une famille. (Exemple : \textit{Les Sims}, \textit{SimCity}) 
+	\item[-] \textbf{les jeux de rôle ou RPG (Role-Playing Games)} : dans ces jeux, le joueur incarne un ou plusieurs personnages et doit mener à bien une quête. Ils peuvent être massivement multijoueurs auquel cas on peut les désigner par le terme MMORPG (Massively Multiplayer Online Role-Playing Games) (Exemple : \textit{Dragon Quest}) 
+	\item[-] \textbf{les jeux de sport} : jeux de simulation du sport (Exemple : \textit{FIFA}, \textit{NBA} ) 
+\end{itemize}
+
+
+\begin{figure}[!htb]
+\centering
+\subfloat[][Quake]{\label{fig:quake}\includegraphics[height=3.5cm]{chapitre1/fig/quake.png}}
+\hspace{0.3cm}
+\subfloat[][Super Mario]{\label{fig:mario}\includegraphics[height=3.5cm]{chapitre1/fig/mario.png}}
+\hspace{0.3cm}
+\subfloat[][Tekken]{\label{fig:tekken}\includegraphics[height=3.5cm]{chapitre1/fig/tekken.png}}
+\hspace{0.3cm}
+\subfloat[][Gran Turismo]{\label{fig:turismo}\includegraphics[height=3.5cm]{chapitre1/fig/gran_turismo.png}}
+\hspace{0.3cm}
+\subfloat[][Age Of Empire]{\label{fig:empire}\includegraphics[height=3.5cm]{chapitre1/fig/age_of_empire.png}}
+\hspace{0.3cm}
+\subfloat[][World Of Warcraft]{\label{fig:wow}\includegraphics[height=3.5cm]{chapitre1/fig/wow.png}}
+\hspace{0.3cm}
+\subfloat[][Les Sims]{\label{fig:sims}\includegraphics[height=3.5cm]{chapitre1/fig/simsi.jpg}}
+\hspace{0.3cm}
+\subfloat[][Dragon Quest]{\label{fig:dg}\includegraphics[height=3.5cm]{chapitre1/fig/dragon-quest-8.jpg}}
+\hspace{0.3cm}
+\subfloat[][FIFA]{\label{fig:fifa}\includegraphics[height=3.5cm]{chapitre1/fig/fifa.jpg}}
+
+\caption{Les différents types de jeux: un jeu de tir subjectif (\ref{fig:quake}), un jeu de plateforme (\ref{fig:mario}), un jeu de combat (\ref{fig:tekken}), un jeu de course (\ref{fig:turismo}), un jeu de stratégie (\ref{fig:empire}), un jeu massivement multijoueur (\ref{fig:wow}), un jeu de simulation de vie (\ref{fig:sims}), un jeu de rôle (\ref{fig:dg}) et un jeu de sport (\ref{fig:fifa}).}
+\label{fig:games_examples}
+\end{figure}
+
+
+% Parmi ces jeux, les MMOG (Massively Multiplayer Online Games) sont ceux qui nous intéressent ici. En effet, ils se basent sur un environnement virtuel qui correspond à notre définition; ils possèdent des règles intrinsèques, les joueurs sont des personnages du monde dont les actions se font en temps réel, ils sont persistants et ils sont partagés. Chaque année de nouveaux MMOGs voient le jour et la pérennité de certains tels que \textit{World Of Warcraft} \footnote{\url{http://eu.blizzard.com/fr-fr/}} lancé en 1994 ou \textit{EVE Online} \footnote{\url{http://www.eveonline.com/}} crée en 2003 démontre leur popularité. On compte aujourd'hui 98,2 millions de joueurs en ligne dans le monde \cite{michaud_world_2009} et les prévisions données par le cabinet IDATE \footnote{\url{http://www.idate.org/fr/Accueil/}} en prévoient plus de 160 millions en 2013. C'est à ce jour le secteur le plus dynamique du jeu vidéo et celui qui génère la plus grosse valeur ajoutée. En 2009, les recettes comptabilisées dans ce secteur s'élevaient à 7 743,9 millions d'euros et pourraient atteindre 14 419,7 millions d'euros en 2013.
+
+\subsubsection{Les métavers}
+
+Les métavers sont des espaces virtuels complètement immersifs. Ils se présentent sous la forme d'un monde virtuel 3D dans lequel ses utilisateurs évoluent sous forme d'avatars personnalisables. Le terme \textit{métavers} provient du roman de science-fiction "Le samouraï virtuel"\footnote{Titre original "Snow Crash"} de Neal Stephenson \cite{stephenson_2000} écrit en 1992. Ils divergent des MMOGs car ils sont continus et persistents \cite{kumar_second_2008}. Si certains MMOGs le sont également c'est à une échelle et une compléxité moindre. En effet, ils sont moins étendus que les métavers. De plus, le contenu des métavers est crée par les utilisateurs eux-mêmes. Ceci implique un nombre considérable de contenus qui ne cesse d'évoluer au gré des créations et des modifications des utilisateurs.\\
+La fonction principale d'un métavers est de mettre en relation des utilisateurs réels du monde entier par l'intermédiaire de leurs avatars. Les utilisateurs forment une communauté au sein de laquelle ils nouent les même relations que dans le monde réel. Les métavers les plus importants sont devenus des micro-sociétés, ainsi, les plus dévellopées ont mis en place un commerce virtuel ou v-commerce associé à une monnaie virtuelle.
+
+Le premier métavers,\textit{CitySpace} \footnote{\url{http://en.wikipedia.org/wiki/Cityspace}}, fût lancé en 1993 lors du Siggraph. Depuis, nombre d'entre eux ont été mis en ligne dont \textit{Le Deuxième Monde}  \footnote{\url{http://www.web3d-fr.com/articles/Portraits/2002-LEDIBERDER/2m.php}} en 1994, \textit{ActiveWorld} \footnote{\url{http://www.activeworlds.com/}} en 1995 ou encore\textit{There} \footnote{\url{http://www.there.com/}} en 2004. Ils étaient au nombre de 500 en 2011 et on devrait en dénombrer plus de 800 à la fin de l'année 2012 d'après l'institut KZero\footnote{\url{http://www.kzero.co.uk}}. D'après ce même organisme, les revenus engendrés par ce secteur économique est à l'image de leur croissance en nombre; d'un total de 4 billiards de \$ en 2011, ils devraient atteindre 9 billiards de \$ en 2013.\\
+ Le plus populaire à ce jour est \textit{Second Life}\footnote{\url{http://secondlife.com/?v=1.1}} qui a été lancé en 2003. Celui-ci totalisait 2 millions de résidents en décembre 2006 \cite{hendaoui_3d_2008} et en comptais en 2009 15 millions \cite{bonneau_web_2009}. Selon Linden Lab, l'éditeur de Second Life, les échanges entre résidents seraient équivalent à 160M \textdollar au premier semestre 2010 avec une croissance de 30\%  par rapport à l'année précédente. Il semblerait cependant que son succès tende à s'estomper depuis une période très faste en 2005 et 2006 faisant dire à certain que "second life is dead\cite{Livingstone_2011}". Cependant, ce monde continu à attirer de nouveaux utilisateurs (en moyenne 24 000 nouveaux utilisateurs par jour à la fin de l'année 2011) et reste rentable pour son éditeur avec 100 millions de dollars de revenus pour 2011.
+
+\subsubsection{L'apprentissage en ligne (e-learning) et jeux sérieux (serious games)}
+
+Les environnements virtuels ne sont pas utilisés que dans le domaine du divertissement, ils servent de plus en plus à des fins d'apprentissage par la simulation. C'est ce qui est désigné depuis peu sous le terme d'"e-learning". Cependant, l'idée d'utiliser un environnement virtuel dans le domaine de l'éducation n'est pas nouvelle. Dès 1973, les jeux éducatifs \textit{The Oregon Trail}\footnote{\url{http://en.wikipedia.org/wiki/The_Oregon_Trail}} et \textit{Lemonade Stand}\footnote{\url{http://en.wikipedia.org/wiki/Lemonade_Stand}} ont été développés dans ce but. Le premier proposait aux jeunes américains et canadiens de suivre la vie de pionniers en route vers l'Oregon en incarnant un chef de convoi. Le second initiait les élèves à la gestion d'un commerce en tenant un stand de limonade.\\
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/oregonrail.png}
+\caption{The Oregon Trail}
+\label{fig:oregon_trail}
+\end{figure}
+
+Actuellement ce type d'applications connaît un nouvel essor grâce à l'engouement pour les jeux sérieux (serious games). La définition d'un jeu sérieux varie selon les auteurs, certains considèrent que celui-ci implique obligatoirement la mise en place de règle du jeu ainsi que d'indications sur la façon d'y jouer à destination de l'utilisateur (ce que l'on résume souvent par l'utilisation de l'anglicisme "gameplay"), d'autres l'emploient pour tous types de simulation. Ce qui est certain, c'est que les jeux sérieux intéressent de plus en plus de domaines depuis le succès de \textit{America's Army}\footnote{\url{www.americasarmy.com}}, un jeu de simulation d'entraînements militaires et de missions de combat basé sur le moteur de jeu \textit{Unreal Tournament}\footnote{\url{www.americasarmy.com}}. Il a été développé pour le compte de l'armée américaine afin d'inciter les joueurs à s'engager dans l'armée américaine. Celui-ci a été lancé en 2002 et totalisait 17 millions de téléchargements à l'issue de l'année 2004.\\
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/americasarmy.PNG}
+\caption{America's Army}
+\label{fig:americas_army}
+\end{figure}
+
+Les domaines qui utilisent les environnements virtuels pour de la formation sont:
+
+\begin{enumerate}
+\item[-] \textbf{la sécurité}: sécurité civile et situations dangereuses ( exemple: \textit{Virtual Scylla}\cite{stone_virtual_2009} )
+\item[-] \textbf{la santé}: santé publique, formation thérapeutique (exemple: \textit{Pulse!!}\footnote{\url{http://www.breakawaygames.com/serious-games/solutions/healthcare/}}) 
+\item[-] \textbf{l'industrie}: production, maintenance et prévention des risques ( exemple: \textit{3D Réseaux}\footnote{\url{http://www.b2b-games.com/3dreseaux/}} )
+\item[-] \textbf{le management}: entretiens RH, relation commercial et gestion de projet ( 
+exemple: \textit{Hair-Be12}\footnote{\url{http://www.hair-be12.com/accueil_v2.aspx}}, 
+\textit{Entre2} \footnote{\url{http://www.opcalia-idf.com/pages/entre2/index.php}})
+\item[-] \textbf{la défense}: entraînement tactique, simulation et aide à la décision.( exemple:  \textit{Marine Doom}\footnote{\url{http://en.wikipedia.org/wiki/Marine_Doom}} )
+
+\end{enumerate}
+
+\begin{figure}[htb]
+\centering
+\subfloat[][Pulse!!]{\label{fig:pulse!}\includegraphics[width=5cm]{chapitre1/fig/pulse.PNG}}
+\hspace{1cm}
+\subfloat[][Entre2]{\label{fig:Entre2}\includegraphics[width=5cm]{chapitre1/fig/entre2.PNG}}
+\caption{Exemples de jeux sérieux: \textit{Pulse!!}, un jeu de simulation pour la formation des médecins et \textit{Entre2}, jeu d'entraînement aux entretiens professionnels.}
+\label{fig:serious games}
+\end{figure}
+
+\subsubsection{La géovisualisation et les visites virtuelles}
+
+Les environnements virtuels 3D sont également représentés dans ce qu'on peut appeler le web géospatial. Cette dénomination regroupe tous les services de cartographie 3D disponibles sur le web. On peut classer dans cette catégorie Google Earth\footnote{\url{http://www.google.com/earth/index.html}}, le service de géolocalisation de Google ainsi que son concurent Microsoft, Bing Maps 3D\footnote{\url{http://www.bing.com/maps/}} mais aussi l'initiative française de l'IGN, le Géoportail \footnote{\url{http://www.geoportail.fr/}} .
+
+\begin{figure}[!htb]
+\centering
+\subfloat[][Bing Maps 3D]{\label{fig:virtualearth}\includegraphics[width=5cm]{chapitre1/fig/virtualearth.PNG}}
+\hspace{1cm}
+\subfloat[][Google Earth]{\label{fig:googleearth}\includegraphics[width=5cm]{chapitre1/fig/googleearth.PNG}}
+\caption{Vues de New York dans Bing MAps 3D et Google Earth }
+\label{fig:geoviz}
+\end{figure}
+
+Ces services rencontrent un fort succès, Google Earth a été téléchargé plus de 500 millions de fois depuis son lancement en 2005 selon Google.
+
+\subsubsection{La Conception Assistée par Ordinateur}
+
+La CAO (Conception Assistée par Ordinateur) est un autre domaine où les environnements virtuels 3D sont également utilisés. Il s'agit de logiciels utilisés pour modéliser des objets avant leurs fabrications. Le monde virtuel permet de simuler l'objet dans son environnement afin de le tester. La simulation est parfois très complexe, notamment dans le domaine de la mécanique. En effet, tous types de contraintes peuvent être exprimés et modélisés ( fonctionnalités, matériaux, capacité d'assemblage, fabrication, ...). Cette application des mondes virtuels existe depuis les années 60 avec AutoCAD et on trouve aujourd'hui de nombreux logiciels très évolués comme \textit{CATIA}\footnote{\url{http://www.3ds.com/products/catia/welcome/}}de Dassault Systèmes, \textit{SOLIDWorks}\footnote{\url{http://www.solidworks.fr/default.htm}} ou encore \textit{Inventor}\footnote{\url{http://usa.autodesk.com/adsk/servlet/pc}} de AutoDesk. 
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/Gearbox_Inventor_1.png}
+\caption{Copie d'écran de AutoDesk Inventor}
+\label{fig:inventor}
+\end{figure}
+
+La CAO est utilisée dans bien d'autres domaines tels que l'électronique (Altium Designer \footnote{\url{http://www.altium-eda.fr/}}), l'architecture (AutoCAD\footnote{\url{http://usa.autodesk.com/adsk/servlet/pc}}, Domus\footnote{\url{http://www.interstudio.net/DomusCadE.html}}), les travaux publics, la modélisation moléculaire (Rasmol \footnote{\url{http://rasmol.org/}} ), l'ameublement (Spazio3D \footnote{\url{http://www.spazio3d.com/}} ), la confection (Modaris\footnote{\url{http://www.lectra.com/en/fashion_apparel/products/modaris_fashion.html}})  mais aussi l'orthopédie.
+
+\begin{figure}[!htb]
+\centering
+\subfloat[][Modélisation d'architecture avec Domus]{\label{fig:domus}\includegraphics[width=5cm]{chapitre1/fig/cad_1.png}}
+\hspace{1cm}
+\subfloat[][Modélisation moléculaire avec Rasmol]{\label{fig:rasmol}\includegraphics[width=5cm]{chapitre1/fig/rasmol.png}}
+\caption{Exemples de logiciels de CAO.}
+\label{fig:cao}
+\end{figure}
+
+\section{ La représentation des contenus 3D }
+
+
+
+%Les différentes façon de représenter des modèles 3D ( maillage surfacique, paramétrique, procédurale, basée primitive ou autres ) et l'apparence des modèles ( texturation, coloration, shaders/nuanceurs ?, ...).
+
+\subsection{La représentation des modèles 3D}
+
+Il existe différentes façons de représenter un modèle 3D, chacune basée sur une approche différente. Nous les présentons ici de la plus intuitive vers la plus complexe.
+
+\subsubsection{Représentation paramétrique et procédurale}
+
+Pour représenter un objet avec la technique paramétrique, l'utilisateur dispose de plusieurs éléments qu'il peut associer ensemble selon des règles prédéfinies. C'est l'approche proposée par \textit{Mii}, l'outil de la \textit{Wii} qui permet de créer son avatar. L'utilisateur peut choisir entre différentes formes de visages, d'yeux, de bouches qu'il peut combiner à sa guise mais chacun des éléments possèdent un emplacement prédéfini. Il ne peut pas par exemple mettre la bouche à la place du nez.\\
+La représentation procédurale est une autres technique plus générique qui se base sur des grammaires afin de construire des modèles 3D. Les travaux de Pascal Müller\cite{mueller_image_2007} s'inscrivent dans cette démarche; il utilise la modélisation procédurale afin de réaliser des modèles 3D réalistes de villes. Ces travaux sont issus des approches plus anciennes comme les L-System introduits par Aristid Lindenmayer\cite{prusinkiewicz_development_1988} où celle-ci est utilisée afin de représenter la croissance des plantes de manière naturelle.
+
+\begin{figure}[h!]
+\centering
+\subfloat[][Interface de Mii]{
+	\includegraphics[width=5cm]{chapitre1/fig/mii.png}
+}
+\hspace{1cm}
+\subfloat[][Modélisation d'une plante au moyen d'un l-system]{
+	\includegraphics[width=5cm]{chapitre1/fig/l-system.png}
+}
+\caption{Exemple de représentation paramétrique et procédurale}
+\label{fig:cave}
+\end{figure}
+
+
+\subsubsection{Représentation basée primitives}
+
+
+Dans cette représentation, un modèle 3D est un assemblage de formes géométriques de bases ( cube, sphère, cone, ...). La représentation basée primitive reste assez intuitive et il n'y a pas de contraintes de mise en forme comme pour la représentation procédurale. Cette façon de procéder augmente la créativité et permet de modéliser un grand nombre d'objets parfois assez complexes. La majorité des formats 3D offrent cette possibilité de modélisation car ils proposent ces formes géométriques de base. Cela a lontemps été l'approche utilisée par les outils mis à la disposition des utilisateurs de \textit{Second Life} mais depuis juillet 2011, ces derniers ont la possiblité d'importer des modèles en maillage surfacique au format Collada. 
+
+
+\subsubsection{Le maillage surfacique}
+
+C'est une des représentations les plus courantes. Un objet y est représenté par un ensemble de polygones, généralement connexes, qui représente la surface du modèle. Les polygones sont généralement des formes géométriques simples telles que des quadrilatères ou des triangles. De ce dernier cas on parlera de maillage triangulaire. C'est le cas le plus fréquent car c'est le seul géré en natif par les cartes graphiques et les bibliothèques 3D \textit{OpenGL} et \textit{DirectX} en raison de sa simplicité et de sa généralité: sommets coplanaires, interpolation linéaire, assemblage aisé, etc .\\
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=10cm]{chapitre1/fig/Mesh_overview.png}
+\caption{Les éléments d'un maillage}
+\label{fig:}
+\end{figure}
+
+La représentation d'un maillage surfacique dans les formats 3D est dans la majorité des cas l'\textit{IndexedFaceSet}. On encode d'un côté la liste des points en spécifiant leurs coordonnées cartésiennes. On ajoute la liste des polygones composant la structure géométrique. Selon le type de polygones utilisés, ceux-ci sont décrits par \textit{n} sommets (3 pour un triangle) de la liste précédente (exemple: 2,3,6 pour un triangle composé des 2ème, 3ème et 6ème sommets de la liste. La première liste représente la géométrie et la seconde la connectivité. Un \textit{IndexedFaceSet} peut également être constitué d'autres listes qui ne concernent pas la géométrie de l'objet (liste des normales aux sommets, coordonnées de texture, ...).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=7cm]{chapitre1/fig/Dolphin_triangle_mesh.png}
+\caption{Représentation d'un dauphin sous forme d'un maillage triangulaire}
+\label{fig:}
+\end{figure}
+
+Cette représentation permet de modéliser tous les objets voulus. Elle offre une liberté de création et un niveau de détail sans comparaison avec les autres méthodes. Les modeleurs 3D (3DS Max, Maya,...) sont des logiciels qui permettent de modéliser un objet 3D complexe et de l'exporter sous forme de maillage. Même si l'interface graphique de ces outils facilitent la conception de ce type de modèle, leur réalisation nécessite une réelle expertise.
+
+\subsubsection{Autres types de représentation} 
+
+Il existe d'autres types de représentation moins courantes et souvent liées à un domaine ou à un besoin particulier. On peut citer par exemple le maillage volumique qui permet de modéliser à la fois la surface et l'intérieur d'un objet. La forme la plus courante de maillage volumique est le voxel \footnote{\url{http://en.wikipedia.org/wiki/Voxel}}, le voxel étant l'équivalent 3D du pixel, c'est à dire un cube.  C'est cette méthode qui est utilisée lors d'une IRM par exemple.\\
+On peut également citer la représentation basée points qui consiste à reconstituer une surface en 3D à partir d'un nuage de points acquis sur un objet réel comme par exemple une statue. En dehors de leurs positions, les points possèdent parfois d'autres attributs tels que leur couleur ou leur normale. Deux projets travaillent sur cette technique: Qspalt\cite{rusinkiewicz_qsplat_2000} et Surfels\cite{pfister_surfels_2000}.
+
+\begin{figure}[h!]
+\centering
+\subfloat[][Rendu issu du projet Qsplat]{
+	\includegraphics[width=4cm]{chapitre1/fig/qsplat.png}
+}
+\hspace{1cm}
+\subfloat[][Rendu issu du projet Surfels]{
+	\includegraphics[width=4cm]{chapitre1/fig/surfels.png}
+}
+\caption{Exemple de représentation par nuages de points}
+\label{fig:cave}
+\end{figure}
+
+Une autre méthode relativement courante est la technique des NURBS (Non-Uniform Rational B-Spline). Elle permet de modéliser des surfaces aux courbes complexes et a été mise au point dans les années 50 pour l'industrie automobile. La majorité des outils de modélisation permette l'utilisation des NURBS mais sont utilisation reste cantonnée aux outils de CAO essentiellement.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=7cm]{chapitre1/fig/nurbs.png}
+\caption{Représentation d'une surface complexe avec les NURBS } 
+\label{fig:nurbs}
+\end{figure}
+
+\subsection{La représentation des apparences}
+
+
+L'apparence est la représentation du rendu graphique des surfaces de l'objet. Nous avons vu dans les paragraphes précédents comment est modélisée la forme de l'objet, il s'agit dans cette partie d'"habiller" les faces de cette forme. Il existe deux paramètres sur lesquels on peut jouer pour modifier l'apparence d'un objet: le matériau et la texture.\\
+
+\subsubsection{Les matériaux}
+
+ Le premier est le matériau, ce paramètre définit l'aspect de la surface c'est à dire sa couleur, sa brillance, sa transparence et sa réaction par rapport à l'éclairage de la scène. Ce dernier aspect est très  \cite{Phong_1975, Gouraud_1971}.\\
+
+\subsubsection{Les textures}
+ Le second est la texture, il s'agit de plaquer une image 2D sur certaines ou toutes les faces de l'objet. Pour cela on peut utiliser une image quelconque mais certains formats permettent également de plaquer une vidéo.\\
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=12cm]{chapitre1/fig/graphics_pipeline.png}
+\caption{Les étapes du processus de rendu graphique\cite{bailey_introduction_2008}}
+\label{fig:graphicpipeline}
+\end{figure}
+
+\subsubsection{Les shaders}
+
+ Il existe une autre technique qui permet de modifier l'aspect de la surface d'un objet, il s'agit des shaders. Ce procédé permet d'ajouter des effets sur une face sans alourdir la représentation de l'objet ce qui accélère le rendu de l'objet. C'est un programme exécuté au moment du rendu de la scène qui ajoute des détails à l'objet \ref{fig:graphicpipeline}. Il existe plusieurs langages de programmation des shaders: HLSL (DirectX), GLSL (OpenGL), Cg (NVidia) et Assembly. Il y a trois catégories de shaders:
+
+\begin{itemize}
+
+	\item[-] \textbf{les vertex shaders}: ce type de shader permet de modifier chaque sommet envoyé au processeur graphique. On peut modifier leur position, leur couleur et leurs coordonnées de texture mais on ne peut pas créer de nouveau sommet. La sortie de ce shader est ensuite modifiée par un geometry shader s'il y en a un ou alors par le rasterizer. L'utilisation d'un vertex shader remplace l'exécution de plusieurs opérations du processus de rendu: le transformations de sommets, le transformation de normales, la normalisation de normales, le traitement de l'éclairage par sommet (per-vertex lighting) et le traitement des coordonnées de texture.
+
+	\item[-] \textbf{les geometry shaders}: ils permettent d'ajouter ou de supprimer des sommets du maillage. Ils peuvent être utilisés pour générer une géométrie de manière procédurale ou pour ajouter des détails volumétriques à un maillage existant comme par exemple un effet de pvage (tesselation). La sortie de ce type de shader est ensuite directement transmise au rasterizer.
+
+	\item[-] \textbf{les pixel shaders} ou \textbf{fragment shader}: ils permettent de calculer la couleur de chaque pixel individuellement. L'entrée d'un tel shader provient du rasterizer. Il sont essentiellement utilisés pour l'éclairage de la scène et les effets associés. Ils sont appelés "pixel shader" pour Direct3D et "fragment shader" en openGL. L'utilisation de ce type de shader remplace l'exécution de plusieurs opérations du processus de rendu: le calcul de couleur, la texturation, l'arithmétique des couleurs,  le traitement de l'éclairage par sommet (per-vertex lighting), les effets de brouillard, les effets de mélange (blending), l'annulation de fragments (discarding fragments).
+
+\end{itemize}
+
+
+Voici quelques exemples de shaders couramment utilisés:
+
+\begin{itemize}
+    \item[-]  \textsl{le texture mapping} \cite{blinn_texture_1976}: une texture est placée sur un maillage et donne une illusion de relief ou des détails supplémentaire à l'objet modélisé sans modifier sa géométrie. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/texture_mapping_2.png}
+\caption{Le texture mapping}
+\label{fig:texturemapping}
+\end{figure}
+
+	\item[-] \textsl{le bump mapping ou normal mapping}: initialement proposé par Blinn \cite{blinn_simulation_1978} en 1978 puis par Cook \cite{cook_shade_1984} en 1984 qui proposa une implémentation avec une carte de normal. Celle-ci se superpose avec une texture afin d'obtenir un effet de relief grâce à un éclairage approprié sur une surface plate. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/normal_mapping_2.png}
+\caption{Le normal mapping}
+\label{fig:normalmapping}
+\end{figure}
+%
+%\begin{figure}[h!]
+%\centering
+%\subfloat[][Une sphère sans effet]{
+%	\includegraphics[width=3cm]{images/1/4/bump_mapping_1.png}
+%}
+%\hspace{1cm}
+%\subfloat[][La carte de relief]{
+%	\includegraphics[width=3cm]{images/1/4/bump_mapping_2.png}
+%}
+%\hspace{1cm}
+%\subfloat[][La même sphère avec l'effet du placage de relief ]{
+%	\includegraphics[width=3cm]{images/1/4/bump_mapping_3.png}
+%}
+%\caption{Le normal mapping}
+%\label{fig:bumpmapping}
+%\end{figure}
+
+	\item[-]\textsl{le parallax mapping} \cite{kaneko_detailed_2001}: un autre shader qui permet de donner l'illusion de relief a un maillage qui n'en a pas. Le parallax mapping permet d'ajouter de l'occlusion des objets qui se masquent eux-mêmes et des effets de parallaxe ce qui donne un effet plus réaliste que le normal mapping. Il est aussi efficace que le texture mapping en terme d'utilisation du GPU et utilise en plus d'une carte de normale, une carte d'élévation. Les deux sont d'ailleurs parfois combinées dans la même texture.  
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/parallax_mapping_2.png}
+\caption{Le parallax mapping}
+\label{fig:parallaxmapping}
+\end{figure}
+
+	\item[-] \textsl{le displacement mapping}: utilise une carte d'élévation qui modifie les positions des sommets du maillage de la surface au rendu. C'est une technique qui donne beaucoup de précision mais qui requière également beaucoup de ressources. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=5cm]{chapitre1/fig/Displacement.png}
+\caption{Le displacement mapping}
+\label{fig:displacementmapping}
+\end{figure}
+
+\end{itemize}
+
+\subsection{ La structuration des représentations }
+
+Il existe plusieurs façons de structurer la représentation d'un objet 3D mais celle adoptée par la quasi-totalité des formats de fichier 3D est le graphe de scène. La scène est formalisée sous forme d'un graphe dont les noeuds sont soit les objets à dessiner soit des groupes ou des transformations. Le noeud le plus haut dans la hiérarchie est le noeud racine et chaque noeud n'a qu'un seul parent. Dans un graphe de scène, la transformation courante d'une feuille donnée s'obtient par composition des transformations sur le chemin menant de la racine au noeud courant. En conséquence, les coordonnées d'un objet sont relatives à la transformation courante. \\
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=10cm]{chapitre1/fig/SceneGraph_1.png}
+\caption{La représentation en graphe de scène}
+\label{fig:scenegraph}
+\end{figure}
+
+Cette structuration permet de garder les relations de dépendances entre les différents objets de la scène (alignement, superposition, composition, attachement). En effet, les objets modélisés existent rarement de manière isolée, ils forment avec d'autres objets un élément graphique plus complexe.\\
+Il existe d'autres structurations mais il s'agit de formats historiques comme le format OBJ définit par la société \textit{Wavefront Technologies} en 1980. Dans ce format, les éléments de la scène sont organisés par types. On a tout d'abord la liste des sommets, la liste des coordonnées de texture puis la liste des normales, il n'y a pas de hiérarchie dans cette représentation. Tous les formats sortis après 1996 utilisent la représentation sous forme de graphe de scène.
+
+\subsection{ Les formats de fichiers 3D}
+%
+%Nombres, variétés, fonctionnalités, explication de leur diversité.
+
+Il existent de nombreux formats 3D que l'on peut classer dans 4 groupes: 
+\begin{itemize}
+\item[-] les formats issus de normes produites par un consortium (VRML, X3D, BIFS, U3D)
+\item[-] les formats des modeleurs 3D (max, maya, 3ds, obj, blender)
+\item[-] les formats de sortie des moteurs de rendus et de jeux (mesh, Unity)
+\item[-] les formats d'échanges (FBX, Collada, DXF)
+\end{itemize}
+
+La figure suivante montre les dates de créations des principaux formats. On voit que certains ont plus de 3O ans d'existence mais sont toujours utilisés alors que de nouveaux continuent d'être crées. 
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.95\linewidth]{chapitre1/fig/3D_formats_timeline_1.png}
+\caption{Ligne de temps des formats 3D}
+\label{fig:timeline}
+\end{figure}
+
+Les formats les plus anciens (OBJ, DXF, Blender, 3DS) sont des formats qui ont été crées pour les besoin d'un outil en particulier. Ce sont tous des formats propriétaires sauf OBJ qui d'ailleurs servira de formats d'échanges. DXF a lui été conçu comme un format d'échange propriétaires par AutoDesk pour pouvoir échanger des fichiers entre les différents outils d'AutoDesk. 
+VRML a lui été crée pour permettre l'affichage de contenus 3D sur le web. Son successeur, X3D, propose une extension de VRML dans un format basé XML. Collada est un format crée par Sony pour stocker ses modèles 3D. C'est donc à l'origine un format d'échange mais il est maintenant utilisé tel quel. Universal 3D (U3D) est un format mis en place par un consortium d'industriels et destiné à faciliter l'échange de données industrielles. 3D Markup Language for Web (3DMLW) est un langage ouvert pour crée des contenus 2D et 3D sur le web. Crée en 2009, il fonctionne sur la plupart des navigateurs web via un plugin. XML3D est encore un autre format sorti en 2010 pour intégrer de la 3D dans une page web à condition d'utiliser un navigateur modifié pour fonctionner avec ce format.\\
+
+Citation à ajouter: \cite{McHenry_Bajcsy_2008}, plus de 140 formats 3D recensés.
+
+Le tableau suivant compare les fonctionnalités offertes par différents formats 3D selon les caractéristiques de \cite{polys_future_2008} :
+
+\pagebreak
+
+\begin{landscape}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=25cm]{chapitre1/fig/3DFormatsComparaison.png}
+\caption{Comparaison des fonctionnalités des formats 3D}
+\label{fig:}
+\end{figure}
+
+\end{landscape}
+
+%	\ding{212} figure \ref{fig:timeline}
+%
+%
+%	\ding{212} tableau avec les principaux formats avec pour chacun les fonctionnalités offertes
+
+
+\section{Squelette d'un environnement virtuel 3D }
+
+Les différents composants ( les moteurs ), la création d'un environnement virtuel 3D (utilisation de composants tiers ).
+
+\ding{212} tableau avec les principaux moteurs, leur domaine d'utilisation et les fonctionnalités proposées.
+
+
+Trouver des exemples de moteurs qui ne sont pas basés sur un graphe de scène et montrer leurs limitations
+
+\ding{224} noyau commun des moteurs et des formats de fichiers: le graphe de scène
+

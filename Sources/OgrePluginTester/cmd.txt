@@ -1,0 +1,70 @@
+# ------------------------------
+#	 X3D
+# ------------------------------
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\ClickToAnimate.x3d" 					#rev 2055 OK
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple.x3d"							#rev 2054 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_IFS_TXTCOORD.x3d"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_INLINE.x3d"					#rev 2045 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_INTERPOLATOR.x3d" 			#rev 2074 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_SWITCH.x3d"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_TEXTURE.x3d"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_DEF_USE.x3d"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_TRANSFORM.x3d"				#rev 2054 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\RedSphereBlueBox.x3d"
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\teapot.x3d"							#rev 2042 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\Switch.x3d"
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\x3d\simple_INLINE_PHYSICS_TEST.x3d"
+
+
+# ------------------------------
+#	Collada
+# ------------------------------
+
+#	-------- CUBE ----------------
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\collada\Cube\cube.dae"						#rev 2065 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\collada\Cube\cube_triangulate.dae"
+
+#	-------- DUCK ----------------
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\collada\Duck\duck.dae"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\collada\Duck\duck_triangulate.dae"
+
+#	-------- DICE ----------------
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\collada\Dice\dice.dae"                       #rev 2065 OK
+
+#	-------- COLLADA LOGO ----------------
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\collada\Collada Logo\collada.dae"
+
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll  "..\Media\collada\Seymour_Plane\seymourplane_triangulate.dae"					#rev 2074 OK
+
+#	-------- PHYSICS ----------------
+
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\physics\jenga.dae"						#rev 2073 OK
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\physics\dice_physic.dae"					#rev 2073 OK
+
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\Multiple_Material\multimtl.dae"
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\Multiple_Material\multimtl_triangulate.dae"
+
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\Transparency_Tag_Test\transparency_tag_test.dae"
+
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\Transform_Test\Transform_Test.dae"
+
+-r OgreWrapper_d.dll -p BulletWrapper_d.dll "..\Media\Collada\physics\seymourplane_triangulate_physic.dae"
+
+# ------------------------------
+# 	3DC Container
+# ------------------------------
+
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\3dc\first.3dc"                       #rev 2058 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\3dc\simple_R.3dc"					#rev 2074 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\3dc\simple_RPM.3dc"					#rev 2074 OK
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\3dc\simple_RP.3dc"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\3dc\demo.3dc"
+-r OgreWrapper_d.dll  -p BulletWrapper_d.dll "..\Media\3dc\demo_physics.3dc"

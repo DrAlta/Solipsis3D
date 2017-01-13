@@ -92,6 +92,17 @@ protected:
     bool mGhost;
 
 private:
+    /// Animation name for Idle
+    String mIdleAnimName;
+    /// Animation name for Walk
+    String mWalkAnimName;
+    /// Animation name for Run
+    String mRunAnimName;
+    /// Animation name for Fly
+    String mFlyAnimName;
+    /// Animation name for Swim
+    String mSwimAnimName;
+
     /// Motion for Up key
     KeyMotion mUpKeyMotion;
     /// Motion for Down key
@@ -233,38 +244,6 @@ public:
 protected:
     /** Update the avatar properties into the voice engine. */
     void updateVoiceEngine(bool updatePosDirVel, bool updateDist);
-
-public : 
-
-	/** One bone information. */
-	struct BoneInfo
-	{
-		BoneInfo():mBoneName(),mLocalPosition(Ogre::Vector3::ZERO),mLocalOrientation(Ogre::Quaternion::IDENTITY){}
-		/// Bone position
-		Ogre::Vector3 mLocalPosition;
-		/// Bone orientation - parent based
-		Ogre::Quaternion mLocalOrientation;
-		/// Bone name.
-		std::string mBoneName;
-	};
-
-	/** One skeleton informations. */
-	struct SkeletonInfo
-	{
-		SkeletonInfo():mLocalPosition(Ogre::Vector3::ZERO),mLocalOrientation(Ogre::Quaternion::IDENTITY),mBones(){}
-		/// Position of the entity.
-		Ogre::Vector3 mLocalPosition;
-		/// Orientation of the entity
-		Ogre::Quaternion mLocalOrientation;
-		/// The bones list.
-		std::vector<BoneInfo> mBones;
-	};
-	
-	// Conditions  : 
-	//		=> Entity must have a skeleton
-	//		=> Entity must be attached to a SceneNode that is not the RootSceneNode
-	//		=> pSkeletonInfo's Quaternions has to be normalised.
-	void manualUpdate(SkeletonInfo &pSkeletonInfo, Ogre::Entity& pEntity);
 };
 
 } // namespace Solipsis

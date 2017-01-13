@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SGA_3DContainer>
+
+	<Group DEF="Mygroupnode"> 
+
+		<Content DEF="FILE_1" type="x3d" decoder_url="" wrapper_url="" url="../x3d/simple_INTERPOLATOR.x3d" />
+
+		<!--<Transform DEF='TRANS_Box' translation='-10 20 0' rotation='0.0 1 0 0' scale='3 1 1'>-->
+		<Transform DEF='TRANS_Box' translation='10 10 10' rotation='0.0 0.707 0.707 0.9' scale='1 1 1'>
+			<!--<Content DEF="FILE_2" type="x3d" decoder_url="" wrapper_url="" url="../x3d/simple_TRANSFORM_box.x3d" />	-->
+			<!--<Content DEF="FILE_2" type="collada" decoder_url="" wrapper_url="" url="../collada/dice/dice.dae" />-->
+			<Content DEF="FILE_2" type="collada" decoder_url="" wrapper_url="" url="../collada/uri/uri.dae" />
+		</Transform>
+		
+		<!--<ROUTE  fromField="FILE_1.TRANS_1.scale"  toField="FILE_2.T1.scale" />--> 
+		<!--<ROUTE  fromField="FILE_1.TRANS_1.translation"  toField="FILE_2.pCube1.translate" />-->
+		<!--<ROUTE  fromField="FILE_2.pCube1.translate"  toField="FILE_1.TRANS_1.translation" />-->
+		<!--<ROUTE  fromField="FILE_2.pCube1.rotate"  toField="FILE_1.TRANS_1.rotation" />-->
+		<!--<ROUTE  fromField="FILE_1.TRANS_1.rotation"  toField="FILE_2.pCube1.rotate" />-->
+		<!--<ROUTE  fromField="FILE_1.TRANS_1.translation"  toField="FILE_2.pCube1.translate" />-->
+		<ROUTE  fromField="FILE_1.PI.value_changed"  toField="FILE_2.pCube1.translate" />
+		<!--<ROUTE  fromField="FILE_1.TRANS_2.translation"  toField="FILE_2.pCube1.translate" />-->
+		
+	</Group>
+
+</SGA_3DContainer>

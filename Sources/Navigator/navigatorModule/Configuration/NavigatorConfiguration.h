@@ -70,7 +70,7 @@ public:
     bool getValueBool() const  {  return StringConverter::parseBool(mValue);   }
     void setValueBool(bool bValue)   {  mValue = StringConverter::toString(bValue);valueChanged();}
 
-	float getValueFloat() const  {  return StringConverter::parseReal(mValue);   }
+    float getValueFloat() const  {  return StringConverter::parseBool(mValue);   }
     void  setValueFloat(float fValue)   {  mValue = StringConverter::toString(fValue);valueChanged();}
 
     int getValueInt() const  {  return StringConverter::parseInt(mValue);   }

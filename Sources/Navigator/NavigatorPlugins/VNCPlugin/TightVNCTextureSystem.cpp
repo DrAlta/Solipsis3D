@@ -42,7 +42,12 @@ Ogre::String TightVNCTextureSystem::ms_TmpTextureName = "VNCPlugin_TmpTexture";
 TightVNCTextureSystem::TightVNCTextureSystem(VNCPlugin *plugin)
     : mPlugin(plugin)
 {
-    mDictionaryName = "vnc";
+	mDictionaryName = "vnc";
+#if (OGRE_VERSION_MAJOR <= 1 && OGRE_VERSION_MINOR < 6 && OGRE_VERSION_PATCH <4)
+	mParamDictName = "vnc";
+#else
+	createParamDictionary("vnc");
+#endif
 // GREG BEGIN
     mPlugInName = "VNC texture source plugin";
 // END BEGIN

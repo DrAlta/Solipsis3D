@@ -52,7 +52,6 @@ namespace Solipsis
 
     protected:
         GUI_Debug();
-		~GUI_Debug();
 
         // Debug callbacks
         void debugCommand(Navi* caller, const Awesomium::JSArguments& args);

@@ -194,7 +194,6 @@ void Entity::createPhysics(IPhysicsScene* physicsScene)
 
         // Load .osm or .scene
         TiXmlDocument osmFileDoc;
-		std::string lMainFileName = xmlSceneLodContent0->getMainFilename();
         DataStreamPtr pStream = ResourceGroupManager::getSingleton().openResource(xmlSceneLodContent0->getMainFilename());
         if (!pStream->size())
             return;
@@ -367,13 +366,14 @@ bool Entity::update(Real timeSinceLastFrame)
 
         if ((newPosition - mXmlEntity->getPosition()).squaredLength() > 0.0001f)
             mDirty = true;
-
+#if 1 // GILLES FLY
 		bool collision = true;
 		mPhysicsCharacter->getCollision(collision);
 		if (collision)
 			setGravity(true);
+#endif
 
-		mXmlEntity->setPosition(newPosition);
+        mXmlEntity->setPosition(newPosition);
     }
 
     return true;

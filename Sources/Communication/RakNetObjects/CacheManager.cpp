@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include "CacheManager.h"
-
+#include "RakNetConnection.h"
 #include <BitStream.h>
 #include <FileList.h>
 #include <FileOperations.h>
@@ -189,37 +189,7 @@ void CacheManager::OnFileProgress(OnFileStruct *onFileStruct,unsigned int partCo
             entry.mCallback->onDownloadProgress(entryIt->first, entry.mDownload.mState);
     }
 }
-
-//-------------------------------------------------------------------------------------
-#if ((RAKNET_VERSION_MAJOR > 3) || \
-     (RAKNET_VERSION_MAJOR == 3 && RAKNET_VERSION_MINOR >= 7))
-void CacheManager::OnReferencePush(OnFileStruct *onFileStruct,unsigned int partCount,unsigned int partTotal,unsigned int dataChunkLength, char *firstDataChunk)
-{
-	std::string filename = onFileStruct->fileName;
-    CacheMap::iterator entryIt = mCache.find(filename);
-    if (entryIt == mCache.end())
-    {
-        LOGHANDLER_LOGF(LogHandler::VL_ERROR, "CacheManager::OnReferencePush() File %s not found in cache table !", filename.c_str());
-        return;
-    }
-
-    Timer::Time now = mTimer.getMilliseconds();
-    CacheManagerFileEntry &entry = entryIt->second;
-//    LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "CacheManager::OnReferencePush() File %s %d, %d, %d", onFileStruct->fileName, partCount, partTotal, partLength);
-    float progress = (float)partCount/(float)partTotal;
-    if ((progress == 1.0f) || (now >= entry.mDownload.mLastProgressStepCallbackMs + ms_ProgressStepCallbackMs))
-    {
-        entry.mDownload.mState = progress;
-        entry.mDownload.mLastProgressStepCallbackMs = now;
-        LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "CacheManager::OnReferencePush() File %s %.2f %% received from %s", onFileStruct->fileName, entry.mDownload.mState*100, entry.mDownload.mSystem.ToString());
-        // Callback ?
-        if ((entry.mCallback != 0) && (entry.mDownload.mState < ESTransferComplete))
-            entry.mCallback->onDownloadProgress(entryIt->first, entry.mDownload.mState);
-    }
-
-}
-#endif
-
+ 
 //-------------------------------------------------------------------------------------
 unsigned int CacheManager::GetFilePart(char *filename, 
                                        unsigned int startReadBytes, unsigned int numBytesToRead, 

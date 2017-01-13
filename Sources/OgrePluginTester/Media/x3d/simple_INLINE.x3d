@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+
+		<!-- <Transform DEF='TRANS_Box' translation='0 0 0' rotation='0.0 0.707 0.707 0.9'>
+			<Shape>
+				<Box DEF='BLUE_BOX' size='5 5 5'/>
+				<Appearance>
+					<Material diffuseColor='0.0 0.0 1.0'/>
+					<ImageTexture url='..\textures\clouds.jpg'/>
+				</Appearance>
+			</Shape>
+		</Transform> -->
+		<Transform DEF='TRANS_Inline'  translation='0 20 1.0'>
+			<!-- <Inline url='..\collada\Sphere\sphere.dae' /> -->
+			<!-- <Inline url='dice.x3d' />  -->
+			<Inline url='teapot.x3d' />
+		</Transform>
+		<!-- <Transform DEF='TRANS_Inline_2'  translation='-15 -5 1.0' rotation='0.0 0.707 0.707 0.9' scale='0.1 0.1 0.1'>
+			<Inline url='..\collada\Sphere\sphere.dae' />
+			<Inline url='..\collada\Duck\duck.dae' />
+
+			 <Inline url='dice.x3d' /> 
+			<Inline url='simple.x3d' />
+		</Transform>-->
+		<Transform DEF='TRANS_Sphere'  translation='-30 6 1.0' scale='0.1 0.1 0.1'>
+			<TouchSensor DEF='Clicker'/>
+			<!--<Inline url='..\collada\Sphere\sphere.dae' />-->
+			<Inline url='..\collada\Duck\duck.dae' /> 
+			<Shape>
+						<Sphere DEF='RED_SPHERE' radius='5'/>
+						<Appearance>
+							<Material diffuseColor='1.0 0.0 0.0'/>
+						</Appearance>
+					</Shape>
+		</Transform> 
+
+		<TimeSensor DEF='TimeSource' cycleInterval='4.0' startTime="5"/>
+		<OrientationInterpolator DEF='Animation' key='0.0 0.33 0.66 1.0' keyValue='0.0 0.0 1.0 0.0 0.0 0.0 1.0 2.1 0.0 0.0 1.0 4.2 0.0 0.0 1.0 0.0'/> -->
+
+	<ROUTE fromField='touchTime' fromNode='Clicker' toField='startTime' toNode='TimeSource'/>
+	<ROUTE fromField='fraction_changed' fromNode='TimeSource' toField='set_fraction' toNode='Animation'/>
+	<ROUTE fromField='value_changed' fromNode='Animation' toField='rotation' toNode='TRANS_Inline_2'/> -->
+</Scene>
+</X3D> 

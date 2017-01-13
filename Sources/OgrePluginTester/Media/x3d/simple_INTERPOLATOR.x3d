@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<Viewpoint DEF='VIEW' description='Pyramid' orientation='0 1 0 .2' position='4 -10 25' fieldOfView='0.7854'/>
+
+		<!--<ROUTE fromNode='SHAP1' fromField='fraction_changed' toNode='PI' toField='set_fraction' /> -->
+		<Transform DEF='TRANS_1' rotation='0.0 0.707 0.707 0.9' translation='3 3 3' scale='5 5 5'>
+
+			<Shape DEF='SHAP_1'>
+				<Sphere DEF='SPHERE_1' radius='1'/>
+				<Appearance>
+					<Material diffuseColor='1.0 0.0 1.0'/>
+				</Appearance>
+			</Shape>
+
+			<Transform DEF='TRANS_2' rotation='0.0 0.707 0.707 0.9' translation='0 1 0' scale='1 1 1'>
+
+				<Shape DEF='SHAP_2'>
+					<!-- <Box/> -->
+					<Sphere/>
+					<Appearance>
+						<Material diffuseColor='0.0 0.0 1.0'/>
+					</Appearance>
+				</Shape>
+			</Transform>
+		</Transform>
+
+
+		<TimeSensor DEF='TIMER' loop='true' cycleInterval='5' />
+
+
+
+		<PositionInterpolator DEF='PI' 
+			key='0 0.60 0.72 0.90 1' 
+			keyValue='0 0 0 2 2 0 4 2 0 2 2 0 0 0 0' />
+			
+		<ROUTE fromNode='TIMER' fromField='fraction_changed' toNode='PI' toField='set_fraction' /> 
+		<ROUTE fromNode='PI' fromField='value_changed' toNode='TRANS_2' toField='translation' /> 
+		<!--<ROUTE fromNode='PI' fromField='value_changed' toNode='TRANS_1' toField='translation' /> -->
+		<!--<ROUTE fromNode='TRANS_1' fromField='translation' toNode='TRANS_2' toField='translation' />-->
+
+
+	</Scene>
+
+</X3D> 
+

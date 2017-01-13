@@ -44,22 +44,17 @@ GUI_Avatar * GUI_Avatar::stGUI_Avatar = NULL;
 //-------------------------------------------------------------------------------------
 GUI_Avatar::GUI_Avatar() : GUI_Panel("uiavatarmain")
 {
+    stGUI_Avatar = this;
     mNavigator = Navigator::getSingletonPtr();
-	m_curState = NSNotCreated;
-}
 
-GUI_Avatar::~GUI_Avatar()
-{
-	stGUI_Avatar = NULL;
 }
-
 
 //-------------------------------------------------------------------------------------
 /*static*/ bool GUI_Avatar::createAndShowPanel()
 {
     if (!stGUI_Avatar)
     {
-        stGUI_Avatar = new GUI_Avatar();
+        new GUI_Avatar();
     }
 
     return stGUI_Avatar->show();
@@ -251,6 +246,34 @@ void GUI_Avatar::avatarMainFileExit(Navi* caller, const Awesomium::JSArguments& 
     unload();
     mNavigator->setCameraMode(mNavigator->getLastCameraMode());
 }
+//-------------------------------------------------------------------------------------
+/*void GUI_Avatar::avatarMainSelectPrev(Navi* caller, const Awesomium::JSArguments& args)
+{
+LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_Avatar::avatarMainSelectPrev()");
+Avatar* userAvatar = mNavigator->getUserAvatar();
+userAvatar->detachFromSceneNode();
+AvatarEditor::getSingletonPtr()->setPrevAsCurrent();
+userAvatar->setCharacterInstance(AvatarEditor::getSingletonPtr()->getManager()->getCurrentInstance());
+
+NaviLibrary::Navi* mNavi = mNaviMgr->getNavi(ms_NavisNames[NAVI_AVATARMAIN]);
+std::string text( AvatarEditor::getSingletonPtr()->getName() );
+mNavi->evaluateJS("$('AvatarName').innerHTML = '<p>Name : <b>" + text + "</b></p>'");
+mNavi->evaluateJS("$('avatarSelectTitre').innerHTML = '" + text + "'");
+}*/
+//-------------------------------------------------------------------------------------
+/*void GUI_Avatar::avatarMainSelectNext(Navi* caller, const Awesomium::JSArguments& args)
+{
+LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_Avatar::avatarMainSelectNext()");
+Avatar* userAvatar = mNavigator->getUserAvatar();
+userAvatar->detachFromSceneNode();
+AvatarEditor::getSingletonPtr()->setNextAsCurrent();
+userAvatar->setCharacterInstance(AvatarEditor::getSingletonPtr()->getManager()->getCurrentInstance());
+
+NaviLibrary::Navi* mNavi = mNaviMgr->getNavi(ms_NavisNames[NAVI_AVATARMAIN]);
+std::string text( AvatarEditor::getSingletonPtr()->getName() );
+mNavi->evaluateJS("$('AvatarName').innerHTML = '<p>Name : <b>" + text + "</b></p>'");
+mNavi->evaluateJS("$('avatarSelectTitre').innerHTML = '" + text + "'");
+}*/
 //-------------------------------------------------------------------------------------
 void GUI_Avatar::avatarMainSelected(Navi* caller, const Awesomium::JSArguments& args)
 {

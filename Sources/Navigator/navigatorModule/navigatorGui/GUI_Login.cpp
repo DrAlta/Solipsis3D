@@ -42,24 +42,19 @@ GUI_Login * GUI_Login::stGUI_Login = NULL;
 
 //-------------------------------------------------------------------------------------
 GUI_Login::GUI_Login() : GUI_Panel("uilogin")
-{    
-    mNavigator = Navigator::getSingletonPtr();
-	m_curState = NSNotCreated;
-}
-
-//-------------------------------------------------------------------------------------
-GUI_Login::~GUI_Login()
-{    
-    stGUI_Login = NULL;
-}
-
-//-------------------------------------------------------------------------------------
-bool GUI_Login::createAndShowPanel()
 {
-	NavigatorGUI::destroyAllRegisteredPanels();
-	// stGUI_Login is now invalid because destroyAllRegisteredPanels() has destroyed this panel 
-	// => we start with a new one
-	stGUI_Login = new GUI_Login();
+    stGUI_Login = this;
+    mNavigator = Navigator::getSingletonPtr();
+}
+
+//-------------------------------------------------------------------------------------
+/*static*/ bool GUI_Login::createAndShowPanel()
+{
+    if (!stGUI_Login)
+    {
+        new GUI_Login();
+    }
+
     return stGUI_Login->show();
 }
 
@@ -68,6 +63,8 @@ bool GUI_Login::createAndShowPanel()
 bool GUI_Login::show()
 {
     LOGHANDLER_LOGF(LogHandler::VL_DEBUG, "GUI_Login::show()");
+    NavigatorGUI::destroyAllRegisteredPanels();
+
     if (m_curState == NSNotCreated)
     {
         // Create Navi UI login

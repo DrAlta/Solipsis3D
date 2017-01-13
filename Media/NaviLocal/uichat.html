@@ -4,92 +4,6 @@
         <title>uichat</title>
         <script type="text/javascript" src="Navi-yui.js"></script>
         <script type="text/javascript">
-		
-			function getTagsTab()
-			{
-				var map_cat_pos = new Array();
-				map_cat_pos["AT"] = "det";
-				map_cat_pos["WDT"] = "det";
-				map_cat_pos["DT"] = "det";
-				map_cat_pos["DTI"] = "det";
-				map_cat_pos["DTS"] = "det";
-				map_cat_pos["DTX"] = "det";
-				map_cat_pos["BEZ"] = "verb";
-				map_cat_pos["VBZ-HL"] = "verb";
-				map_cat_pos["VBZ"] = "verb";
-				map_cat_pos["VB"] = "verb";
-				map_cat_pos["BER"] = "verb";
-				map_cat_pos["BE"] = "verb";
-				map_cat_pos["BED"] = "verb";
-				map_cat_pos["BEZ"] = "verb";
-				map_cat_pos["BEDZ"] = "verb";
-				map_cat_pos["BEM"] = "verb";
-				map_cat_pos["BEG"] = "verb";
-				map_cat_pos["BEN"] = "verb";
-				map_cat_pos["VBG"] = "verb";
-				map_cat_pos["VBG-HL"] = "verb";
-				map_cat_pos["VBN"] = "verb";
-				map_cat_pos["MD"] = "verb";
-				map_cat_pos["MD*"] = "verb";
-				map_cat_pos["VBD"] = "verb";
-				map_cat_pos["HV"] = "verb";
-				map_cat_pos["HVD"] = "verb";
-				map_cat_pos["HVG"] = "verb";
-				map_cat_pos["HVN"] = "verb";
-				map_cat_pos["DO"] = "verb";
-				map_cat_pos["DO*"] = "verb";
-				map_cat_pos["ABL"] = "adv";
-				map_cat_pos["RB"] = "adv";
-				map_cat_pos["QL"] = "adv";
-				map_cat_pos["WRB"] = "adv";
-				map_cat_pos["IN"] = "prep";
-				map_cat_pos["TO"] = "prep";
-				map_cat_pos["ABN"] = "adj";
-				map_cat_pos["JJ"] = "adj";
-				map_cat_pos["JJ-TL"] = "adj";
-				map_cat_pos["NN"] = "noun";
-				map_cat_pos["NNS"] = "noun";
-				map_cat_pos["NN-TL"] = "noun";
-				map_cat_pos["NP"] = "noun";
-				map_cat_pos["NN-NC"] = "noun";
-				map_cat_pos["NN$"] = "noun";
-				map_cat_pos["NP$"] = "noun";
-				map_cat_pos["."] = "punct";
-				map_cat_pos["("] = "punct";
-				map_cat_pos[")"] = "punct";
-				map_cat_pos["--"] = "punct";
-				map_cat_pos[","] = "punct";
-				map_cat_pos[";"] = "punct";
-				map_cat_pos[":"] = "punct";
-				map_cat_pos["*"] = "neg";
-				map_cat_pos["OD"] = "num";
-				map_cat_pos["CD"] = "num";
-				map_cat_pos["CS"] = "conj";
-				map_cat_pos["CC"] = "conj";
-				map_cat_pos["UH"] = "excl";
-				map_cat_pos["WPS"] = "pronoun";
-				map_cat_pos["PPS+BEZ"] = "pronoun";
-				map_cat_pos["PPS+HVD"] = "pronoun";
-				map_cat_pos["PPS"] = "pronoun";
-				map_cat_pos["PPSS"] = "pronoun";
-				map_cat_pos["PP$"] = "pronoun";
-				map_cat_pos["Err"] = "Err";
-				map_cat_pos["null"] = "Err";
-				map_cat_pos["det"] = "det";
-				map_cat_pos["verb"] = "verb";
-				map_cat_pos["adv"] = "adv";
-				map_cat_pos["prep"] = "prep";
-				map_cat_pos["adj"] = "adj";
-				map_cat_pos["noun"] = "noun";
-				map_cat_pos["punct"] = "punct";
-				map_cat_pos["neg"] = "neg";
-				map_cat_pos["num"] = "num";
-				map_cat_pos["conj"] = "conj";
-				map_cat_pos["excl"] = "excl";
-				map_cat_pos["pronoun"] = "pronoun";
-				return map_cat_pos;
-			}
-			
             function pageLoaded()
             {
 				Client.pageLoaded();
@@ -98,225 +12,10 @@
             {
 				Client.pageClosed();
             }
-			function switchMode()
-			{
-				mmSwitch( $('mTbIconMode') );
-				Client.switchMode();
-			}
-			function loadWordUrl(url)
-			{
-				Client.loadWordUrl(url);
-			}
-			function loadMenu()
-			{
-				Client.loadMenu();
-			}
-			//send message to navigator to build mlif file
             function sendMessage(message)
             {
-				////////message = encodeURIComponent(message);
 				Client.sendMessage(message);
             }
-			//convert mlif response from navigator to send to the div
-			function addTaggedText(message, from)
-            {
-				//var newMessage = "<i>" + convertMlifToText(message) + "</i>";
-				var newMessage = convertMlifToText(message);
-				
-				addText(newMessage, from)
-            }
-			// send a simple message
-			function addText(message, from)
-            {
-				myResult = 	message;
-				document.getElementById("chatTextArea").innerHTML += from+": "+message+"<br>";
-				document.forms.chatForm.inputChat.value="";
-				
-				document.getElementById("chatTextArea").scrollTop= document.getElementById("chatTextArea").scrollHeight;
-            }
-			function convertMlifToText(message)
-			{
-				
-				/*var str = '<?xml version="1.0" encoding="utf-8"?>';				
-				str += '<MLDC xmlns:mlif="http://www.iso.org/ns/MLIF" xmlns:xlink="http://www.w3.org/1999/xlink">';
-				str +=  '<GroupC>';
-				str += 	'<GI>';
-				str += 	  '<copyrightInformation>This data embeds elements of WordNet (see http://wordnet.princeton.edu) and of the Brown Corpus. Only use the provided information for academic and non-commercial purposes.</copyrightInformation>';
-				str += 	'</GI>';
-				str += 	'<MultiC class="translation">';
-				str += 	  '<MonoC xml:lang="fr" xlink:label="clicked_sentence">';
-				str += 		'<translationRole>sourceLanguage</translationRole>';
-				str += 		'<date>2011-03-17T18:48:30+01:00</date>';
-				str += 		'<author></author>';
-				str += 		'<SegC class="sentence"/>';
-				str += 		'<SegC class="sentence">';
-				str += 		  '<SegC class="word" pos="pro" xlink:href="http://talc.loria.fr/~metaverse/web/getWordInfo.php?action=getWordInfo&amp;lang=fr&amp;word=Je&amp;lemma=je&amp;sentence=Je suis content&amp;wordPosition=0&amp;getSynonyms=on&amp;getTranslations=on&amp;getDefinitions=on&amp;user=&amp;langFrom=fr&amp;langTo=fr&amp;getOriginalSentence=true&amp;pos=pro">Je</SegC>';
-				str += 		  '<SegC class="word" pos="verb" xlink:href="http://talc.loria.fr/~metaverse/web/getWordInfo.php?action=getWordInfo&amp;lang=fr&amp;word=suis&amp;lemma=suivre|être&amp;sentence=Je suis content&amp;wordPosition=1&amp;getSynonyms=on&amp;getTranslations=on&amp;getDefinitions=on&amp;user=&amp;langFrom=fr&amp;langTo=fr&amp;getOriginalSentence=true&amp;pos=verb">suis</SegC>';
-				str += 		  '<SegC class="word" pos="adj" xlink:href="http://talc.loria.fr/~metaverse/web/getWordInfo.php?action=getWordInfo&amp;lang=fr&amp;word=content&amp;lemma=content&amp;sentence=Je suis content&amp;wordPosition=2&amp;getSynonyms=on&amp;getTranslations=on&amp;getDefinitions=on&amp;user=&amp;langFrom=fr&amp;langTo=fr&amp;getOriginalSentence=true&amp;pos=adj">content</SegC>';
-				str += 		'</SegC>';
-				str += 	  '</MonoC>';
-				str += 	'</MultiC>';
-				str +=   '</GroupC>';
-				str += '</MLDC>';
-				*/
-				//var docXml = loadXMLString(str);
-				var docXml = loadXMLString(message);
-				var tags = getTagsTab();
-				
-				
-				//var docXml = loadXMLDoc("test.xml");
-				
-				//var segcs = docXml.getElementsByTagName('SegC');
-				path="//MultiC[@class='translation']/MonoC[1]/SegC[@class='sentence']/SegC"
-				  
-				if (document.implementation && document.implementation.createDocument)
-				{
-					var nodes=docXml.evaluate(path, docXml, null, XPathResult.ANY_TYPE, null);
-					//alert(nodes);
-					var result=nodes.iterateNext();
-					var sentence = "";
-					var i = 0;
-					
-					while (result)
-					{
-						if(result.getAttribute("class") == "word" && i != 0)
-						{
-							sentence += " ";
-						}
-						//alert(result.getAttribute("pos"));
-						tag = tags[result.getAttribute("pos")];
-						link = result.getAttribute("xlink:href");
-						word = result.childNodes[0].nodeValue;
-						sentence += colorTags(word, tag, link);
-						result=nodes.iterateNext();
-						//alert(sentence);
-						i++;
-					}
-				}
-				
-				//var segcs = xmlDoc.evaluate(xpath, docXml, null, XPathResult.ANY_TYPE,null);
-				
-				return sentence;
-			}
-			
-			function colorTags(word, tag, link)
-			{
-				var docXml = loadXMLDoc("lingchatpref.xml");
-				var posColor = new Array();
-				
-				//var segcs = docXml.getElementsByTagName('SegC');
-				path = "//linguisticChatPreferences/textColor/color"
-				 
-				if (document.implementation && document.implementation.createDocument)
-				{
-					var nodes=docXml.evaluate(path, docXml, null, XPathResult.ANY_TYPE, null);
-					var result=nodes.iterateNext();
-					
-					while (result)
-					{
-						posColor[result.getAttribute("id")] = "#"+result.childNodes[0].nodeValue;
-						result=nodes.iterateNext();
-					}
-				}
-				
-				/*var str = '';
-				if (link != null)
-				{
-					str += '<a onclick="loadWordUrl(\'';
-					str += link;
-					str += '\')" style= "text-decoration: none; color:';
-					
-					if(tag == "det") str += posColor['det'];
-					else if(tag == "verb") str += posColor['verb'];
-					else if(tag == "adv") str += posColor['adv'];
-					else if(tag == "prep") str += posColor['prep'];
-					else if(tag == "adj") str += posColor['adj'];
-					else if(tag == "noun") str += posColor['noun'];
-					else if(tag == "punct") str += posColor['punct'];
-					else if(tag == "neg") str += posColor['neg'];
-					else if(tag == "num") str += posColor['num'];
-					else if(tag == "conj") str += posColor['conj'];
-					else if(tag == "excl") str += posColor['excl'];
-					else if(tag == "pronoun") str += posColor['pronoun'];
-					else if(tag == "Err") str += posColor['Err'];
-					
-					str += ';"';
-					//str += 'target="_blank"';
-					str += '>';
-					str += word+'</a>';
-				}*/
-				var str = '';
-				if (link != null)
-				{
-					str += '<a onclick="loadWordUrl(\'';
-					str += link;
-					str += '\')" style= "text-decoration: none; color:';
-											
-					if(tag == "det") str += posColor['det'];
-					else if(tag == "verb") str += posColor['verb'];
-					else if(tag == "adv") str += posColor['adv'];
-					else if(tag == "prep") str += posColor['prep'];
-					else if(tag == "adj") str += posColor['adj'];
-					else if(tag == "noun") str += posColor['noun'];
-					else if(tag == "punct") str += posColor['punct'];
-					else if(tag == "neg") str += posColor['neg'];
-					else if(tag == "num") str += posColor['num'];
-					else if(tag == "conj") str += posColor['conj'];
-					else if(tag == "excl") str += posColor['excl'];
-					else if(tag == "pronoun") str += posColor['pronoun'];
-					else if(tag == "Err") str += posColor['Err'];
-					else str += posColor['Err'];
-					
-					str += ';"';
-					//str += 'target="_blank"';
-					str += '>';
-					str += word+'</a>';
-				}
-				else str = word;
-				return str;
-			}
-			
-			function loadXMLString(txt)
-			{
-				try //Internet Explorer
-				  {
-				  xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-				  xmlDoc.async="false";
-				  xmlDoc.loadXML(txt);
-				  return xmlDoc;
-				  }
-				catch(e)
-				  {
-				  try //Firefox, Mozilla, Opera, etc.
-					{
-					parser=new DOMParser();
-					xmlDoc=parser.parseFromString(txt,"text/xml");
-					xmlDoc;
-					return xmlDoc;
-					}
-				  catch(e) {alert(e.message)}
-				  }
-				return null;
-			}
-			
-			function loadXMLDoc(fname)
-			{
-				var xmlDoc;
-				xmlDoc=new window.XMLHttpRequest();
-				xmlDoc.open("GET",fname,false);
-				xmlDoc.send("");
-				return xmlDoc.responseXML;
-			}
-			
-			function mmSwitch(icon)
-            {
-                if (icon.getAttribute('class') == '_inactive')
-                    icon.setAttribute("class", "_active");
-                else
-                    icon.setAttribute("class", "_inactive");
-            }
-
-
         </script>
         <style type="text/css">
             body
@@ -326,6 +25,7 @@
 	            overflow: hidden;
 	            font-family: Verdana;
 	            font-size: small;
+	            color: #FFFFFF;
             }
             #container
             {
@@ -351,48 +51,21 @@
 	            position: absolute;
 	            left: 0px;
 	            top: 24px;
-				width: 513px;
-				height: 100px;
-				overflow: auto;
             }
             .solipsisIcons
             {
                 display: block;
                 width: 24px;
                 height: 24px;
-                background-image: url(solipsisChatIcons.png);
+                background-image: url(solipsisIcons.png);
                 background-repeat: no-repeat;
                 position: absolute;
                 top: 3px;
                 left: 495px;
             }
-			a.menu
-			{
-				text-decoration:none;
-				color:#0088aa;
-			}
-			a.menu:hover
-			{
-				color:red;
-			}
             .solipsisCloseInactive { background-position: -24px -24px; }
             .solipsisCloseActive { background-position: -24px -0px; }
             .solipsisCloseActive:hover { background-position: -24px -72px; }
-			
-			#mTbIconMode
-            {
-                display: block;
-                width: 24px;
-                height: 24px;
-                background-image: url(solipsisChatIcons.png);
-                background-repeat: no-repeat;
-                position: absolute;
-                top: 0px;
-                left: 472px;
-            }
-			#mTbIconMode._inactive { background-position: -0px -24px; }
-            #mTbIconMode._active { background-position: -0px -0px; }
-            #mTbIconMode:hover { background-position: -0px -72px; }
         </style>
     </head>
 
@@ -403,18 +76,14 @@
             by returning false the page won t be reloaded
              -->
             <div id="chatTextArea">
-                
+                <textarea disabled="disabled" id="textChat" rows="6"  cols="61"></textarea>
             </div>
             <form id="chatForm" action="" visible="false" onsubmit="sendMessage(document.getElementById('inputChat').value);return false;">
                 <div id="chatInput">
-                    <input id="inputChat" class="inputText" name="inputChat" value="" type="text" size="55" />
-					<a class="menu" href="#" onclick="loadMenu()">menu</a>
-					 | 
-					<a class="menu" href="#" onclick="loadWordUrl('default')">browser</a>
+                    <input id="inputChat" class="inputText" name="inputChat" value="" type="text" size="77" />
                 </div>
             </form>
             <span id="mTbIconClose" class="solipsisIcons solipsisCloseActive" onclick="pageClosed()"></span>
-			<span id="mTbIconMode" class="_inactive" onclick="switchMode()"></span>
         </div>
     </body>
 </html>

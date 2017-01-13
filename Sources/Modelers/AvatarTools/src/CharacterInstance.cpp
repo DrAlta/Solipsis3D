@@ -43,7 +43,6 @@ CharacterInstance::CharacterInstance(const String& pFileName, const String& pUid
     mUidPath(NULL),
     mUidZipArchive(NULL),
 	mEntity(NULL),
-	mEntityLow(NULL),
 	mSceneNode(NULL),
 	mFaceController(NULL),
 	mGhost(false),
@@ -107,18 +106,11 @@ CharacterInstance::CharacterInstance(const String& pFileName, const String& pUid
 	mSceneNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(mUid);
 
     mEntity = mCharacter->getEntity()->clone(mUid);
-	if (mCharacter->getEntityLow())
-	{
-		mEntityLow = mCharacter->getEntityLow()->clone(mUid+"_low");
-		mSceneNode->attachObject(mEntityLow);
-		mEntityLow->setVisible(false);
-	}
-	else
-		mEntityLow = NULL;
 
 	mSceneNode->attachObject(mEntity);
-	
-	//Creating the body parts instances
+	//mSceneNode->scale(SCALE_CHARACTER,SCALE_CHARACTER,SCALE_CHARACTER);
+
+    //Creating the body parts instances
 	BodyPartsIterator bodyPartsIterator = mCharacter->getBodyPartsIterator();
 	while(bodyPartsIterator.hasMoreElements())
 	{
@@ -197,15 +189,9 @@ CharacterInstance::~CharacterInstance()
 
     // Destroy entity and scene node
 	mSceneNode->detachObject(mEntity);
-	if (mEntityLow)
-	{
-		mSceneNode->detachObject(mEntityLow);
-		mSceneMgr->destroyEntity(mEntityLow);
-	}
-
     mSceneMgr->destroyEntity(mEntity);
     mSceneMgr->destroySceneNode(mUid);
-	
+
     // Destroy instance zip file as resource location
 	ResourceGroupManager::getSingleton().removeResourceLocation(mUidPath->getUniversalPath(), mResourceGroup);
 	ResourceGroupManager::getSingleton().destroyResourceGroup(mResourceGroup);
@@ -244,7 +230,7 @@ void CharacterInstance::loadModified()
 	if (characterElement == NULL) 
 		return;
 
-
+#if 1 // GILLES
     //Parsing avatar's height
     int value;
     characterElement->Attribute("height", &value);
@@ -253,8 +239,9 @@ void CharacterInstance::loadModified()
         float scale = value * .01;
         SceneNode* node = getSceneNode();
 	    node->setScale( scale, scale, scale );
+        //mNavigator->getUserAvatar()->onSceneNodeChanged();
     }
-
+#endif
 
 	//Parsing every Bone Element
 	Skeleton* skeleton = getEntity()->getSkeleton();
@@ -334,6 +321,8 @@ void CharacterInstance::loadModified()
 			{
 				//Checking bodyPartModel Colour
 				attribute = bodyPartElement->Attribute("colour");
+#if 1 // GILLES
+                //if (bodyPartModelInst->getColour() == ColourValue(.5,.5,.5,1.))
                 {
                     MaterialPtr material = bodyPartModelInst->getBodyPartModel()->getSubEntity()->getMaterial();
                     Pass* pass = material->getTechnique(0)->getPass(0);
@@ -355,6 +344,10 @@ void CharacterInstance::loadModified()
                         }
                     }
                 }
+#else
+                if (attribute != NULL)
+					bodyPartModelInst->setColour(StringConverter::parseColourValue(String(attribute)));
+#endif
 
 				//Checking bodyPartModel ColourAmbient
 				attribute = bodyPartElement->Attribute("ambient");
@@ -519,9 +512,10 @@ void CharacterInstance::saveModified()
 	//Creating xml configuration file
 	TiXmlElement characterElement("Character");
     characterElement.SetAttribute("name", mCharacter->getName().c_str());
-
+#if 1 // GILLES
     int height = getSceneNode()->getScale().y * 100;
     characterElement.SetAttribute("height", height);
+#endif
 
 	//Creating Bones
 	Skeleton* skeleton = getEntity()->getSkeleton();
@@ -576,6 +570,20 @@ void CharacterInstance::saveModified()
 			if (bodyPartModel->isTextureModifiable()) 
 				bodyPartElement.SetAttribute("texture",bodyPartModelInst->getCurrentTexture()->getName().c_str());
 		}
+
+#if 0 //GREG
+		//Creating couples of poses for the BodyPart
+		CouplesOfPosesMapIterator couplesOfPosesMapIterator = bodyPart->getCouplesOfPosesMapIterator();
+		while(couplesOfPosesMapIterator.hasMoreElements())
+		{
+			CoupleOfPoses* coupleOfPoses = couplesOfPosesMapIterator.getNext();
+			
+			TiXmlElement coupleOfPosesElement("CoupleOfPoses");
+			coupleOfPosesElement.SetAttribute("name",coupleOfPoses->getName().c_str());
+			coupleOfPosesElement.SetAttribute("position",StringConverter::toString(coupleOfPoses->getPosition()).c_str());
+			bodyPartElement.InsertEndChild(coupleOfPosesElement);
+		}
+#endif //GREG
 
 		characterElement.InsertEndChild(bodyPartElement);
 	}
@@ -637,6 +645,162 @@ void CharacterInstance::saveModified()
 
 	SOLdeleteFile(Character::getEditionConfFilename(mUid).c_str());
 
+#if 0
+    //Creating a mesh very easily usable for others applications (Sollipsis).
+	String modifiedMeshName(mUid + "Modified.mesh");
+
+	//Creating new .mesh and .material
+	MeshPtr mesh = getMesh()->clone(modifiedMeshName, mResourceGroup);
+	for(unsigned short idxSubMesh = 0 ; idxSubMesh < mesh->getNumSubMeshes() ;idxSubMesh++)
+	{
+		SubMesh* smesh = mesh->getSubMesh(idxSubMesh);
+		smesh->setMaterialName(mEntity->getSubEntity(idxSubMesh)->getMaterialName());
+		if (!mEntity->getSubEntity(idxSubMesh)->isVisible())
+		{
+			//dirty way to disable a SubMesh from an Ogre Mesh beause there is no clean way to remove a submesh from a mesh.
+			smesh->vertexData->vertexCount = 0;
+			smesh->indexData->indexCount = 0;
+		}
+	}
+
+	//Adding every Goody
+	goodiesIterator = getGoodiesIterator();
+	while(goodiesIterator.hasMoreElements())
+	{
+		Goody* goody = goodiesIterator.getNext();
+		if (goody->getCurrentGoodyModelName() != "None")
+		{
+			for(unsigned int idxSubEntity=0 ; idxSubEntity < goody->getCurrentGoodyModel()->getEntity()->getNumSubEntities() ; idxSubEntity++)
+			{
+				addSubMesh(
+					mesh,
+					goody->getBoneName(),
+					goody->getCurrentGoodyModel()->getEntity()->getSubEntity(idxSubEntity)->getSubMesh(),
+					goody->getName()+StringConverter::toString(idxSubEntity),
+					goody->getCurrentPosition(),
+					goody->getCurrentOrientation());
+			}
+		}
+	}
+
+	//Modifing vertex data according to couples of poses.
+	BodyPartsIterator bodyPartIterator = getBodyPartsIterator();
+	while(bodyPartIterator.hasMoreElements())
+	{
+		BodyPart* bodyPart = bodyPartIterator.getNext();
+		CouplesOfPosesMapIterator couplesOfPosesMapIterator = bodyPart->getCouplesOfPosesMapIterator();
+		while(couplesOfPosesMapIterator.hasMoreElements())
+		{
+			CoupleOfPoses* coupleOfPoses = couplesOfPosesMapIterator.getNext();
+
+			//Modifying SubMesh according to left pose
+			Pose* leftPose = mesh->getPose(coupleOfPoses->getLeftPoseIndex());
+			Pose::VertexOffsetIterator leftPoseVertexOffsetIterator = leftPose->getVertexOffsetIterator();
+			SubMesh* smesh = mesh->getSubMesh(leftPose->getTarget()-1);
+			const VertexElement* positionElement = smesh->vertexData->vertexDeclaration->findElementBySemantic(VES_POSITION);
+			HardwareVertexBufferSharedPtr vertexBuffer = smesh->vertexData->vertexBufferBinding->getBuffer(positionElement->getSource());
+			size_t vertexBufferSize = vertexBuffer->getSizeInBytes();
+			size_t nbVertices = vertexBuffer->getNumVertices();
+			size_t offset = positionElement->getOffset();
+			size_t vertexSize = vertexBuffer->getVertexSize();
+			void* vertexBufferData = new unsigned char[vertexBufferSize];
+			vertexBuffer->readData(0,vertexBufferSize,vertexBufferData);
+
+
+			while(leftPoseVertexOffsetIterator.hasMoreElements())
+			{
+				size_t idxVertex = leftPoseVertexOffsetIterator.peekNextKey();
+				const Vector3& vertexOffset = leftPoseVertexOffsetIterator.getNext();
+
+				float* point = ((float*)(((unsigned char*)vertexBufferData) + offset + vertexSize*idxVertex));
+				point[0] += vertexOffset.x*(1.0f - coupleOfPoses->getPosition());
+				point[1] += vertexOffset.y*(1.0f - coupleOfPoses->getPosition());
+				point[2] += vertexOffset.z*(1.0f - coupleOfPoses->getPosition());					
+			}
+
+			vertexBuffer->lock(HardwareBuffer::LockOptions::HBL_NORMAL);
+			vertexBuffer->writeData(0,vertexBufferSize,vertexBufferData);
+			delete[] vertexBufferData;
+
+
+			//Modifying SubMesh according to right pose
+			Pose* rightPose = mesh->getPose(coupleOfPoses->getRightPoseIndex());
+			Pose::VertexOffsetIterator rightPoseVertexOffsetIterator = rightPose->getVertexOffsetIterator();
+			smesh = mesh->getSubMesh(rightPose->getTarget()-1);
+			positionElement = smesh->vertexData->vertexDeclaration->findElementBySemantic(VES_POSITION);
+			vertexBuffer = smesh->vertexData->vertexBufferBinding->getBuffer(positionElement->getSource());
+			vertexBufferSize = vertexBuffer->getSizeInBytes();
+			nbVertices = vertexBuffer->getNumVertices();
+			offset = positionElement->getOffset();
+			vertexSize = vertexBuffer->getVertexSize();
+			vertexBufferData = new unsigned char[vertexBufferSize];
+			vertexBuffer->readData(0,vertexBufferSize,vertexBufferData);
+
+
+			while(rightPoseVertexOffsetIterator.hasMoreElements())
+			{
+				size_t idxVertex = rightPoseVertexOffsetIterator.peekNextKey();
+				const Vector3& vertexOffset = rightPoseVertexOffsetIterator.getNext();
+
+				float* point = ((float*)(((unsigned char*)vertexBufferData) + offset + vertexSize*idxVertex));
+				point[0] += vertexOffset.x*coupleOfPoses->getPosition();
+				point[1] += vertexOffset.y*coupleOfPoses->getPosition();
+				point[2] += vertexOffset.z*coupleOfPoses->getPosition();					
+			}
+
+			vertexBuffer->lock(HardwareBuffer::LockOptions::HBL_NORMAL);
+			vertexBuffer->writeData(0,vertexBufferSize,vertexBufferData);
+			delete[] vertexBufferData;
+		}
+	}
+	
+	//Saving mesh and materials to the zip archive.
+	MeshSerializer meshSerializer;
+	meshSerializer.exportMesh(mesh.get(),mUid + ".mesh");
+	
+	FILE* meshFile = fopen((mUid + ".mesh").c_str(), "rb");
+
+	fseek(meshFile,0,SEEK_END);
+	size_t meshFileSize = ftell(meshFile);
+	fseek(meshFile,0,SEEK_SET);
+	void* meshFileData = new unsigned char[meshFileSize];
+	fread(meshFileData,meshFileSize,sizeof(unsigned char),meshFile);
+	mUidZipArchive->writeFile((mUid + ".mesh").c_str(), FileBuffer(meshFileData, meshFileSize));
+
+
+	fclose(meshFile);
+
+	SOLdeleteFile(Ogre::String(mUid + ".mesh").c_str());
+
+
+
+	//material now
+	MaterialSerializer materialSerializer;
+	bool emptyQueue = true;
+	for(unsigned short idxSubMesh = 0 ; idxSubMesh < mesh->getNumSubMeshes() ; idxSubMesh++)
+	{
+		emptyQueue = false;
+		materialSerializer.queueForExport(MaterialManager::getSingleton().getByName(mesh->getSubMesh(idxSubMesh)->getMaterialName()));
+	}
+	if (!emptyQueue) materialSerializer.exportQueued(mUid + ".material");
+
+	FILE* materialFile = fopen((mUid + ".material").c_str(), "rb");
+
+	fseek(materialFile,0,SEEK_END);
+	size_t materialFileSize = ftell(materialFile);
+	fseek(materialFile,0,SEEK_SET);
+	void* materialFileData = new unsigned char[materialFileSize];
+	fread(materialFileData,materialFileSize,sizeof(unsigned char),materialFile);
+	mUidZipArchive->writeFile((mUid + ".material").c_str(), FileBuffer(materialFileData, materialFileSize));
+
+	fclose(materialFile);
+
+	SOLdeleteFile(Ogre::String(mUid + ".material").c_str());
+
+	//Unloading created mesh and removing it from the resource manager
+	mesh->unload();
+	MeshManager::getSingleton().remove(mesh->getName());
+#endif
 }
 
 //---------------------------------------------------------------------------------
@@ -938,18 +1102,3 @@ void CharacterInstance::setGhost(bool ghost)
 }
 
 //---------------------------------------------------------------------------------
-void CharacterInstance::setToLowLevel (bool pLowLevel)
-{
-	if (!mEntityLow) return;
-	
-	mEntity->setVisible(!pLowLevel);
-	mEntityLow->setVisible(pLowLevel);
-	mCharacter->updateDefinitionLevel(pLowLevel);
-}
-
-bool CharacterInstance::isLowLevel ()
-{
-	if (!mEntityLow) 
-		return false;
-	return mEntityLow->isVisible();
-}

@@ -42,8 +42,7 @@ String Avatar::mDefaultStateAnimName[ASAvatarAnimCount] = {
     "Walk",
     "Run",
     "Fly",
-    "Swim",
-	"XDE"
+    "Swim"
 };
 
 #define EPSILON_SPEED 0.1f
@@ -243,10 +242,13 @@ void Avatar::onSceneNodeChanged()
 
     getSceneNode()->setPosition(mXmlEntity->getPosition());
     getSceneNode()->setOrientation(mXmlEntity->getOrientation());
+#if 1 // GILLES FLY
+    setState(ASAvatarFly);
+#else
+    setState(ASAvatarIdle);
+#endif
 
-	setState(ASAvatarFly);
-
-	// Attach all camera supports to the new user avatar 
+    // Attach all camera supports to the new user avatar 
     if (isLocal())
         Navigator::getSingletonPtr()->getMainCameraSupportManager()->attachAllCameraSupportsToNode(getSceneNode());
 }
@@ -546,13 +548,7 @@ bool Avatar::action(RefCntPoolPtr<XmlAction>& xmlAction)
 void Avatar::startAnimation(const String &name, bool loop)
 {
     if (name.length() == 0) return;
-
-	// XDE Animation state is a fake one 
-	if (name == "XDE") 
-		// Do nothing because the animationState does not exist into Ogre engine.	
-		return;
-
-	mAnimationState = getEntity()->getAnimationState(name);
+    mAnimationState = getEntity()->getAnimationState(name);
     mAnimationState->setLoop(loop);
     mAnimationState->setEnabled(true);
 }
@@ -561,22 +557,6 @@ void Avatar::startAnimation(const String &name, bool loop)
 void Avatar::stopAnimation()
 {
     if (mStateAnimName[mState].length() == 0) return;
-	
-	// XDE Animation state is a fake one ==> Bones were controlled by an external engine
-	if (mStateAnimName[mState] == "XDE") 
-	{
-		Ogre::SkeletonInstance* lSkeleton = getEntity()->getSkeleton();
-		Ogre::Skeleton::BoneIterator itSkel = lSkeleton->getBoneIterator();
-		// For each bone
-		while (itSkel.hasMoreElements())
-		{
-			Ogre::Bone *lBone = itSkel.getNext();
-			// Reset bone state => It will be controlled by skeleton animation
-			lBone->setManuallyControlled(false); 
-		}
-		return;
-	}
-
     Ogre::AnimationState* animationStateToStop = getEntity()->getAnimationState(mStateAnimName[mState]);
     animationStateToStop->setLoop(false);
     animationStateToStop->setEnabled(false);
@@ -592,9 +572,15 @@ void Avatar::animate(Real timeSinceLastFrame)
     Real animOffset = 0;
     Real animLength = 0;
 
+#if 1 // GILLES FLY
 	//Height between -4 and 100
-	Real nodeHeight = (20+getSceneNode()->getPosition().y)/10.0;
+Real nodeHeight = (20+getSceneNode()->getPosition().y)/10.0;
+//Real factFly = std::max( (float)1.0 , std::min( (float)20.0 , (float)(nodeHeight*nodeHeight/2.0 ) ) ) ;
+
+//Real nodeHeight = (30+getSceneNode()->getPosition().y)/10.0;
+//Real factFly = std::max( (float)1.0 , std::min( (float)30.0 , (float)(nodeHeight*nodeHeight/2.0 ) ) ) ;
     Real factFly = 2.0;
+#endif
 
     if (isLocal())
     {
@@ -612,6 +598,9 @@ void Avatar::animate(Real timeSinceLastFrame)
         mDownKeyMotion.update(timeSinceLastFrame);
         frontBackMvt = mUpKeyMotion.getMotion() - mDownKeyMotion.getMotion();
 
+#if 0 // GILLES FLY
+        mvt += vpn*frontBackMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
+#endif
         if ((Math::Abs(frontBackMvt) > EPSILON_SPEED) && (Math::Abs(frontBackMvt) < MAX_SPEED*0.9) && (mState != ASAvatarWalk))
             nextState = ASAvatarWalk;
         if ((Math::Abs(frontBackMvt) > MAX_SPEED*0.9) && (mState != ASAvatarRun))
@@ -623,6 +612,10 @@ void Avatar::animate(Real timeSinceLastFrame)
         if (mMvtType == MT1stPerson)
         {
             // First person straff
+ 
+#if 0 // GILLES FLY
+            mvt += -vri*leftRightMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
+#endif
             if ((Math::Abs(leftRightMvt) > EPSILON_SPEED) && (mState == ASAvatarIdle))
                 nextState = ASAvatarWalk;
         }
@@ -644,7 +637,10 @@ void Avatar::animate(Real timeSinceLastFrame)
         mPgupKeyMotion.update(timeSinceLastFrame);
         mPgdownKeyMotion.update(timeSinceLastFrame);
         upDownMvt = mPgupKeyMotion.getMotion() - mPgdownKeyMotion.getMotion();
+    //    if ((Math::Abs(upDownMvt) > MAX_SPEED*0.9) && (mState != ASAvatarFly))
+    //        nextState = ASAvatarFly;
 
+#if 1 // GILLES FLY
 		//Translation speed variation in fly mode
 		if(!isGravityEnabled())
 		{
@@ -662,17 +658,17 @@ void Avatar::animate(Real timeSinceLastFrame)
             mvt += vpn*frontBackMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
             mvt += vup*upDownMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame;
         }
+#endif
 
         animLength = mAnimationState->getLength();
         if ((mState == ASAvatarWalk) || (mState == ASAvatarRun))
-		{
-			if (Math::Abs(frontBackMvt) > EPSILON_SPEED)    // Avatar is walking or running
+            if (Math::Abs(frontBackMvt) > EPSILON_SPEED)    // Avatar is walking or running
                 animOffset = frontBackMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame*(animLength/TRANSLATION_ANIM_LOOP);
             else if (Math::Abs(leftRightMvt) > EPSILON_SPEED)   // Avatar is rotating : mState = ASAvatarWalk
                 animOffset = leftRightMvt*ROTATION_SPEED_RPS.valueRadians()*timeSinceLastFrame*(animLength/ROTATION_ANIM_LOOP.valueRadians());
             else
                 nextState = ASAvatarIdle;
-		}
+#if 1 // GILLES FLY
 		//Animation speed  variation in fly mode
 		else if(mState == ASAvatarFly)
 		{
@@ -692,49 +688,8 @@ void Avatar::animate(Real timeSinceLastFrame)
 			else
 				nextState = ASAvatarIdle;
 		}
-		else if (mState == ASAvatarXDE)
-		{	// Avatar is controlled by XDE Platform
-			animOffset = 0.0;
-
-			/* Sample framework for the control of an avatar by an external engine (could be mocap or physic)*/
-
-			// We will rotate the sample bone from sRotation degrees
-			static float sRotation = 0.0f;
-			sRotation += 1.0f;
-			if( sRotation > 90.0 * 3 )
-			{
-				sRotation = 0.0;
-			}
-
-			// The Skeleton update informations. 
-			SkeletonInfo lSkeletonInfo;
-			lSkeletonInfo.mLocalPosition = getXmlEntity()->getPosition();
-			{
-				BoneInfo lBoneInfo;
-				//This sample applies to the 6th bone of the skeleton
-				lBoneInfo.mBoneName = getEntity()->getSkeleton()->getBone(6)->getName();
-
-				Ogre::Vector3 lAxe = Ogre::Vector3::UNIT_Y;
-				if( sRotation > 90.0)
-				{
-					lAxe = Ogre::Vector3::UNIT_X;
-				}
-				if( sRotation > 180.0)
-				{
-					lAxe = Ogre::Vector3::UNIT_Z;
-				}
-				lBoneInfo.mLocalOrientation.FromAngleAxis( Ogre::Degree( fmod( sRotation, 90) ),  lAxe);
-				lBoneInfo.mLocalOrientation.normalise();
-				lSkeletonInfo.mBones.push_back( lBoneInfo );
-			}
-
-			// Force the update. 
-			manualUpdate(lSkeletonInfo,  *(getEntity()));
-
-			return; // Orientation and position have already been set by physic.
-		}
-		else
-		// mState = ASAvatarIdle / ASAvatarFly / ASAvatarSwim
+#endif
+        else // mState = ASAvatarIdle / ASAvatarFly / ASAvatarSwim
             animOffset = timeSinceLastFrame;
         if (mAnimationState != 0)
             mAnimationState->addTime(animOffset);
@@ -743,7 +698,12 @@ void Avatar::animate(Real timeSinceLastFrame)
             setState(nextState);
 
         // Move physics character
+#if 1 // GILLES FLY
         Vector3 displacement = mvt;
+        //Vector3 displacement = mvt + (vup*upDownMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame * factFly);
+#else
+        Vector3 displacement = mvt + (vup*upDownMvt*TRANSLATION_SPEED_MPS*timeSinceLastFrame);
+#endif
 
 		// update facial animation
 		IFaceController* pFaceController = getCharacterInstance()->getFaceController();
@@ -752,7 +712,7 @@ void Avatar::animate(Real timeSinceLastFrame)
 
         // Update XML entity
         Vector3 d = displacement/timeSinceLastFrame;
-        if ((d.squaredLength() - mUpdatedXmlEntity->getDisplacement()).squaredLength() > XMLUPDATE_DISPLACEMENT_THRESHOLD)
+        if ((d - mUpdatedXmlEntity->getDisplacement()).length() > XMLUPDATE_DISPLACEMENT_THRESHOLD)
         {
             mUpdatedXmlEntity->setDisplacement(d);
 #ifdef LOGSNDRCV
@@ -896,22 +856,3 @@ void Avatar::updateVoiceEngine(bool updatePosDirVel, bool updateDist)
 }
 
 //-------------------------------------------------------------------------------------
-void Avatar::manualUpdate(SkeletonInfo &pSkeletonInfo, Ogre::Entity& pEntity)
-{
-	Ogre::SceneNode* lSceneNode = pEntity.getParentSceneNode();
-	lSceneNode->setPosition( pSkeletonInfo.mLocalPosition );
-	lSceneNode->setOrientation( pSkeletonInfo.mLocalOrientation);
-	Ogre::SkeletonInstance* lSkeleton = pEntity.getSkeleton();
-	// For each bone
-	std::vector<BoneInfo>::iterator lBoneInfoIter = pSkeletonInfo.mBones.begin();
-	std::vector<BoneInfo>::iterator lBoneInfoIterEnd = pSkeletonInfo.mBones.end();
-	for(; lBoneInfoIterEnd != lBoneInfoIter; ++lBoneInfoIter)
-	{
-		Ogre::Bone * lBone = lSkeleton->getBone( lBoneInfoIter->mBoneName );
-		lBone->setManuallyControlled(true); 
-		// Set Bone position 
-		lBone->setPosition(lBoneInfoIter->mLocalPosition);
-		// Set Bone orientation 
-		lBone->setOrientation( lBoneInfoIter->mLocalOrientation );
-	}
-}

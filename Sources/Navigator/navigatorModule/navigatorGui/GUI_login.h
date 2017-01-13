@@ -50,7 +50,6 @@ namespace Solipsis
        
     protected:
         GUI_Login();
-		~GUI_Login();
 
         void applyLoginDatas(); 
 

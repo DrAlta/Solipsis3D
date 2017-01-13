@@ -1,0 +1,468 @@
+\chapter{Affinement des terminologies de~termes~simples}
+\label{app:rel_par}
+\index{termes simples}
+Lors de nos premiers sur l'extraction de termes simples, nous
+avons directement
+repris la technique de calcul des scores \tfidf que nous avions déjà utilisées
+pour la création automatique de corpora thématiques. Il apparait toutefois
+qu'un certain bruit persiste dans les terminologies en accordant une importance
+trop importante à certains mots détâchés du thème et en sous-estimant parfois
+au contraire d'autres termes vraiment spécifiques. Cette annexe a pour but de
+montrer que ces problèmes peuvent être traités en restant dans le même cadre
+que celui proposé durant nos expériences sur l'adaptation d'un modèle de langue.
+
+\index{lemme}
+Lors d'études ultérieures, nous avons cherché à corriger ce problème en
+modifiant le score $S'$ de chaque lemme de manière) prendre en compte des
+relations paradigmatiques. L'objectif cette prise en compte est de
+favoriser les mots qui partagent habituellement un contexte d'apparation
+similaire. Étant donné
+deux lemmes $\ell_1$ et $\ell_2$ supposés partager une relation paradigmatique,
+nous faisons en sorte que l'apparition de $\ell_1$ soit partiellement contribue
+à augmenter la fréquence d'apparition de $\ell_2$. Pour cela, nous
+calculons la fréquence d'un lemme par la formule~:
+\begin{eqnarray}
+\textit{freq}(\ell,d) = \frac{N(\ell,d)}{\sum_{x \in d} N(x,d)}\\
+\mbox{avec } N(\ell,d) = |\ell|_d + \sum_{\ell\,\mathcal{R}\,m} \nu
+\times r(\ell,m),
+\end{eqnarray}
+où $|\ell|_d$ est le nombre d'occurrences du lemme $\ell$ dans le document $d$,
+$\ell\,\mathcal{R}\,m$ signifie que $\ell$ partage une relation paradigmatique
+avec $m$ et que $r(\ell,m)$ est le score compris entre~0 et~1 de cette
+relation. Le paramètre $\nu$ permet quant à lui de pondérer l'importance des
+relations paradigmatiques. La table~\ref{tab:liste_termes_simples_parad} montre
+l'impact de ces relations pour $\nu = 0,2$ sur le corpus que celui utilisés pour
+générer les termes simples de la table~\ref{tab:liste_termes_simples}. On note
+ainsi que des mots comme \mot{France}, \mot{pays} ou \mot{homme}
+ont disparu de la liste des 100~premiers termes sous l'effet des relations
+paradigmatiques.
+
+\index{relations paradigmatiques}
+Par ailleurs, nous avons voulu expérimenter le calcul d'un autre score pour la
+fonction \textit{idf} d'un lemme afin de favoriser d'avantage le caractère rare
+des mots dans un contexte général par rapport à leur fréquence dans un corpus
+thématique. Cette volonté vise à faire ressortir des mots qui, de part leur
+rareté en général, sont censés être les plus mal estimés par un modèle de
+langue généraliste.
+Ainsi, la table~\ref{tab:liste_termes_simples_parad_msm} présente les résultats
+obtenus lorsque la valeur de la fonction \textit{idf} est mise au carré lors du
+calcul du score $S'$ avec prise en compte des relations paradigmatiques. On
+remarque parmi ces resultats que la modification a bien l'effet escompté en
+faisant ressortir des termes quel que \mot{équité} ou \mot{ostentatoire}.
+
+
+\begin{table}[h]
+\vspace{0.2cm}
+	\begin{center}
+\sffamily
+\fontsize{9}{10}
+\selectfont{}
+	\begin{tabular}{|l|}
+
+\hline
+laïcités\\
+laïcité\\
+musulmans\\
+musulman\\
+musulmanes\\
+musulmane\\
+voile\\
+voiles\\
+islam\\
+islams\\
+religieuses\\
+religieuse\\
+religieux\\
+religion\\
+religions\\
+laïques\\
+laïque\\
+foulards\\
+foulard\\
+femmes\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+femme\\
+loi\\
+lois\\
+non-discrimination\\
+non-discriminations\\
+école\\
+écoles\\
+liberté\\
+libertés\\
+internationale\\
+ostensible\\
+ostensibles\\
+chrétiennes\\
+chrétien\\
+chrétiens\\
+chrétienne\\
+croyant\\
+croyants\\
+ports\\
+port\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+islamiques\\
+islamique\\
+maternelle\\
+culte\\
+cultes\\
+communautarismes\\
+communautarisme\\
+égalité\\
+égalités\\
+confessionnelles\\
+confessionnels\\
+confessionnel\\
+confessionnelle\\
+confessions\\
+confession\\
+principes\\
+principe\\
+juive\\
+juives\\
+juifs\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+juif\\
+fondamentale\\
+fondamentaux\\
+fondamental\\
+fondamentales\\
+signe\\
+signes\\
+séparation\\
+séparations\\
+christianisme\\
+christianismes\\
+tolérance\\
+tolérances\\
+voilés\\
+voilé\\
+voilée\\
+voilées\\
+neutralité\\
+neutralités\\
+croyances\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+croyance\\
+républiques\\
+république\\
+sarkozy\\
+universalité\\
+universalités\\
+chrétien\\
+chrétiens\\
+débat\\
+débats\\
+tchadors\\
+tchador\\
+droits\\
+droit\\
+judéo-chrétienne\\
+judéo-chrétiennes\\
+judéo-chrétiens\\
+judéo-chrétien\\
+respect\\
+respects\\
+\hline
+	\end{tabular}
+	\end{center}
+\vspace{-0.2cm}
+\caption{Liste des 100 mots ayant les meilleures scores après intégration
+des relation paradigmatiques pour un corpus de 200
+pages construits à partir d'un segment traitant de la laïcité et du port du
+voile.}
+\label{tab:liste_termes_simples_parad}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\sffamily
+\fontsize{9}{10}
+\selectfont{}
+\begin{tabular}{|l|}
+\hline
+laïcités\\
+laïcité\\
+non-discrimination\\
+non-discriminations\\
+voile\\
+voiles\\
+musulmans\\
+musulman\\
+musulmanes\\
+musulmane\\
+maternelle\\
+islam\\
+islams\\
+laïques\\
+laïque\\
+religion\\
+religions\\
+judéo-chrétienne\\
+judéo-chrétiennes\\
+judéo-chrétiens\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+judéo-chrétien\\
+religieuses\\
+religieuse\\
+religieux\\
+foulards\\
+foulard\\
+ostensible\\
+ostensibles\\
+rendu\\
+islamiste\\
+islamistes\\
+communautarismes\\
+communautarisme\\
+croyant\\
+croyants\\
+confessionnelles\\
+confessionnels\\
+confessionnel\\
+confessionnelle\\
+égales\footnotemark[1]\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+égale\footnotemark[1]\\
+monothéisme\\
+monothéismes\\
+immigrés\\
+immigré\\
+tchadors\\
+tchador\\
+confessions\\
+confession\\
+culte\\
+cultes\\
+animiste\\
+animistes\\
+coreligionnaires\\
+coreligionnaire\\
+chrétiennes\\
+chrétien\\
+chrétiens\\
+chrétienne\\
+christianisme\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+christianismes\\
+chrétientés\\
+chrétienté\\
+universalité\\
+universalités\\
+croyances\\
+croyance\\
+intangible\\
+intangibles\\
+égalité\\
+égalités\\
+indivisibles\\
+indivisible\\
+neutralité\\
+neutralités\\
+judaïsme\\
+judaïsmes\\
+états-unis\\
+unicité\\
+ostentatoire\\
+\hline
+	\end{tabular}
+	\begin{tabular}{|l|}
+\hline
+ostentatoires\\
+tolérance\\
+tolérances\\
+ports\\
+port\\
+laïcs\\
+laïc\\
+islamiques\\
+islamique\\
+israélites\\
+israélite\\
+équité\\
+équités\\
+séparation\\
+séparations\\
+etat-providence\\
+subsidiarité\\
+subsidiarités\\
+école\\
+écoles\\
+\hline
+\end{tabular}
+
+% \begin{table}[p]
+% \begin{center}
+% \sffamily
+% \footnotesize
+% \begin{tabular}{|l|}
+% \hline
+% $\blacktriangledown$~laïcités\\
+% $\vartriangle$~laïcité\\
+% $-$~non-discrimination\\
+% non-discriminations\\
+% voile\\
+% voiles\\
+% $\blacktriangledown$~musulmans\\
+% $\blacktriangledown$~musulman\\
+% $\blacktriangledown$~musulmanes\\
+% $\blacktriangledown$~musulmane\\
+% maternelle\\
+% $\blacktriangledown$~islam\\
+% $\blacktriangledown$~islams\\
+% laïques\\
+% laïque\\
+% religion\\
+% religions\\
+% judéo-chrétienne\\
+% judéo-chrétiennes\\
+% judéo-chrétiens\\
+% \hline
+% 	\end{tabular}
+% 	\begin{tabular}{|l|}
+% \hline
+% judéo-chrétien\\
+% $\blacktriangledown$~religieuses\\
+% $\blacktriangledown$~religieuse\\
+% $\blacktriangledown$~religieux\\
+% foulards\\
+% foulard\\
+% ostensible\\
+% ostensibles\\
+% rendu\\
+% islamiste\\
+% islamistes\\
+% communautarismes\\
+% communautarisme\\
+% croyant\\
+% croyants\\
+% confessionnelles\\
+% confessionnels\\
+% confessionnel\\
+% confessionnelle\\
+% égales\footnotemark[1]\\
+% \hline
+% 	\end{tabular}
+% 	\begin{tabular}{|l|}
+% \hline
+% égale\footnotemark[1]\\
+% monothéisme\\
+% monothéismes\\
+% immigrés\\
+% immigré\\
+% tchadors\\
+% tchador\\
+% confessions\\
+% confession\\
+% culte\\
+% cultes\\
+% animiste\\
+% animistes\\
+% coreligionnaires\\
+% coreligionnaire\\
+% $\blacktriangledown$~chrétiennes\\
+% $\blacktriangledown$~chrétien\\
+% $\blacktriangledown$~chrétiens\\
+% $\blacktriangledown$~chrétienne\\
+% christianisme\\
+% \hline
+% 	\end{tabular}
+% 	\begin{tabular}{|l|}
+% \hline
+% christianismes\\
+% chrétientés\\
+% chrétienté\\
+% universalité\\
+% universalités\\
+% croyances\\
+% croyance\\
+% intangible\\
+% intangibles\\
+% $\blacktriangledown$~égalité\\
+% $\blacktriangledown$~égalités\\
+% indivisibles\\
+% indivisible\\
+% neutralité\\
+% neutralités\\
+% judaïsme\\
+% judaïsmes\\
+% états-unis\\
+% unicité\\
+% ostentatoire\\
+% \hline
+% 	\end{tabular}
+% 	\begin{tabular}{|l|}
+% \hline
+% ostentatoires\\
+% tolérance\\
+% tolérances\\
+% $\blacktriangledown$~ports\\
+% $\blacktriangledown$~port\\
+% laïcs\\
+% laïc\\
+% $\blacktriangledown$~islamiques\\
+% $\blacktriangledown$~islamique\\
+% israélites\\
+% israélite\\
+% équité\\
+% équités\\
+% séparation\\
+% séparations\\
+% etat-providence\\
+% subsidiarité\\
+% subsidiarités\\
+% $\blacktriangledown$~école\\
+% $\blacktriangledown$~écoles\\
+% \hline
+% \hline
+% $\blacktriangledown$~femme\\
+% $\blacktriangledown$~femmes\\
+% $\blacktriangledown$~loi\\
+% $\blacktriangledown$~lois\\
+% $\blacktriangledown$~liberté\\
+% $\blacktriangledown$~libertés\\
+% $\blacktriangledown$~internationnale\\
+% $\blacktriangledown$~principe\\
+% $\blacktriangledown$~principes\\
+% $\blacktriangledown$~juive\\
+% $\blacktriangledown$~juives\\
+% $\blacktriangledown$~juifs\\
+% $\blacktriangledown$~juif\\
+% $\blacktriangledown$~fondamentale\\
+% $\blacktriangledown$~fondamentaux\\
+% $\blacktriangledown$~fondamental\\
+% $\blacktriangledown$~fondamentales\\
+% $\blacktriangledown$~signe\\
+% $\blacktriangledown$~signes\\
+% \hline
+% \end{tabular}
+	\end{center}
+\vspace{-0.2cm}
+\caption{Liste des 100 mots ayant les meilleures scores après intégration
+des relation paradigmatiques et accentuation du poids de la fonction
+\textit{idf}.}
+\label{tab:liste_termes_simples_parad_msm}
+\end{table}
+\footnotetext[1]{Il s'agit du nom commun \mot{égale} et non de l'adjectif.}

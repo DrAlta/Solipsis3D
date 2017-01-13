@@ -48,6 +48,11 @@ SWFTextureSource::SWFTextureSource(SWFPlugin *plugin)
     : mPlugin(plugin)
 {
     mDictionaryName = "swf";
+#if (OGRE_VERSION_MAJOR <= 1 && OGRE_VERSION_MINOR < 6 && OGRE_VERSION_PATCH <4)
+	mParamDictName = "swf";
+#else
+	createParamDictionary("swf");
+#endif
     mPlugInName = "SWF texture source plugin";
     mUrl = "";
     mWidth = DEFAULT_WIDTH;

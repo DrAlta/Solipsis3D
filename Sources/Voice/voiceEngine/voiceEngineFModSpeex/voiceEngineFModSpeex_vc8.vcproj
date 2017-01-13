@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="9,00"
 	Name="voiceEngineFModSpeex"
 	ProjectGUID="{148CA9AA-F955-48C0-A1A6-765AE0C6F21B}"
 	RootNamespace="voiceEngineFModSpeex"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -63,6 +64,8 @@
 				OutputFile="$(OutDir)\Plugin_FModSpeex_d.dll"
 				AdditionalLibraryDirectories="..\..\..\..\Dependencies\pthreads\lib;&quot;..\..\..\..\Dependencies\CommonTools\lib\$(ConfigurationName)&quot;;&quot;$(FMOD_PATH)\lib&quot;;&quot;..\..\..\..\Dependencies\speex\lib\$(ConfigurationName)&quot;;&quot;..\..\..\..\Dependencies\VoiceEngineClient\lib\$(ConfigurationName)&quot;;&quot;$(OGRE_HOME)\lib&quot;;&quot;..\..\..\..\Dependencies\navigatorModule\lib\$(ConfigurationName)&quot;;&quot;..\..\..\..\Dependencies\VoiceEngine\lib\$(ConfigurationName)&quot;;&quot;..\..\..\..\Dependencies\Phonetizer\lib\$(ConfigurationName)&quot;;&quot;..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\lib\$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -82,9 +85,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -143,6 +143,8 @@
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -162,9 +164,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

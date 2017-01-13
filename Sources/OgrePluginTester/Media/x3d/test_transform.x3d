@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<Viewpoint description='Pyramid' orientation='0 1 0 .2' position='4 0 25' fieldOfView='0.7854'/>
+		<Transform DEF='T0' translation='0 0 0'>
+			<Shape DEF='RED_BOX'>
+				<Box size="10.0 10.0 10.0"/>	
+				<Appearance DEF='MAT_RED_BOX'>
+					<Material diffuseColor='1 0 0 ' specularColor='1 0 0' shininess='1'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		<Transform DEF='T1' translation='-15 0 0' scale="2 2 2">
+			<Shape DEF='BLUE_SPHERE'>
+				<Sphere radius='5'/>	
+				<Appearance DEF='MAT_BLUE_SPHERE'>
+					<Material diffuseColor='0 0 1 ' specularColor='0 0 1 ' shininess='1'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		<Transform translation='20 0 0 ' rotation="1 0 0 15" >
+		<Transform DEF='T2' translation='10 10 0' scale="2 2 2">
+				<Shape DEF='GREEN_BOX'>
+					<Box size="10.0 10.0 10.0"/>
+					<Appearance DEF='MAT_GREEN_BOX'>
+						<Material diffuseColor='0 1 0 ' specularColor='0 1 0 ' shininess='1'/>
+					</Appearance>
+				</Shape>
+			</Transform>
+			<Transform USE='T0' >
+				<!--<Shape DEF='GREEN_BOX'>
+					<Box size="10.0 10.0 10.0"/>	
+					<Appearance DEF='MAT_GREEN_BOX'>
+						<Material diffuseColor='0 1 0' specularColor='0 1 0' shininess='1'/>
+						<ImageTexture url='..\textures\clouds.jpg'/> 
+					</Appearance>
+				</Shape>-->
+			</Transform>
+			
+		</Transform>
+	</Scene>
+</X3D> 

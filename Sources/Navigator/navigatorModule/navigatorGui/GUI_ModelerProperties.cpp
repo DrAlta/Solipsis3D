@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 #include <CTLog.h>
-#include <CTIO.h>
 #include <CTSystem.h>
 #include <CTStringHelpers.h>
 #include <Navi.h>
@@ -49,22 +48,16 @@ GUI_ModelerProperties * GUI_ModelerProperties::stGUI_ModelerProperties = NULL;
 GUI_ModelerProperties::GUI_ModelerProperties() : GUI_Panel("uimdlrprop") ,
     mLockAmbientDiffuse(false)
 {
-	m_curState = NSNotCreated;
+    stGUI_ModelerProperties = this;
     mNavigator = Navigator::getSingletonPtr();
 }
-
-GUI_ModelerProperties::~GUI_ModelerProperties()
-{
-	stGUI_ModelerProperties = NULL;
-}
-
 
 //-------------------------------------------------------------------------------------
 /*static*/ bool GUI_ModelerProperties::createAndShowPanel()
 {
     if (!stGUI_ModelerProperties)
     {
-       stGUI_ModelerProperties = new GUI_ModelerProperties();
+        new GUI_ModelerProperties();
     }
 
     return stGUI_ModelerProperties->show();
@@ -649,7 +642,7 @@ void GUI_ModelerProperties::modelerColorSpecular(Navi* caller, const Awesomium::
 void GUI_ModelerProperties::modelerColorLockAmbientDiffuse(Navi* caller, const Awesomium::JSArguments& args)
 { 
     std::string value = mNavi->evaluateJSWithResult("$('lockAmbientdiffuse').checked").get().toString();
-    mLockAmbientDiffuse = (value == "1")?true:false;
+    mLockAmbientDiffuse = (value == "true")?true:false;
 }
 //-------------------------------------------------------------------------------------
 void GUI_ModelerProperties::modelerDoubleSide(Navi* caller, const Awesomium::JSArguments& args)
@@ -939,7 +932,7 @@ void GUI_ModelerProperties::modelerPropSWFTextureApply(Navi* caller, const Aweso
         int width = atoi(widthStr.c_str());
         int height = atoi(heightStr.c_str());
         int fps = atoi(fpsStr.c_str());
-        bool sound3d = (sp3dStr == "1")?true:false;
+        bool sound3d = (sp3dStr == "true")?true:false;
         float sound3dMin = atof(spMinStr.c_str());
         float sound3dMax = atof(spMaxStr.c_str());
 
@@ -1009,7 +1002,7 @@ void GUI_ModelerProperties::modelerPropVLCTextureApply(Navi* caller, const Aweso
         int width = atoi(widthStr.c_str());
         int height = atoi(heightStr.c_str());
         int fps = atoi(fpsStr.c_str());
-        bool sound3d = (sp3dStr == "1")?true:false;
+        bool sound3d = (sp3dStr == "true")?true:false;
         float sound3dMin = atof(spMinStr.c_str());
         float sound3dMax = atof(spMaxStr.c_str());
 
@@ -1017,14 +1010,6 @@ void GUI_ModelerProperties::modelerPropVLCTextureApply(Navi* caller, const Aweso
         if (remoteMrlStr.empty() && (mrlStr.find("://") == String::npos))
         {
             Path p(mrlStr);
-         
-            // Create Temporary directory to save textures
-            if (!IO::FolderExist("solTmpTexture\\"))
-                if (!IO::createDirectory("solTmpTexture\\"))
-                    GUI_MessageBox::getMsgBox()->show("Modeler error", "Unable to create temporary directory", 
-                        GUI_MessageBox::MBB_OK, 
-                        GUI_MessageBox::MBB_INFO);  
-        
             finalMrl = std::string("solTmpTexture\\") + p.getLastFileName();
             if (mrlStr.find(finalMrl) == -1) // File is not already in solTmpTexture
             {
@@ -1071,6 +1056,7 @@ void GUI_ModelerProperties::modelerPropVLCMrlBrowse(Navi* caller, const Awesomiu
     std::string mrl;
     if (System::showDlgOpenFilename(mrl, "Media File,(*.*)\0*.*\0", ""))
     {
+        
         std::string mrlStr(mrl);
         StringHelpers::replaceSubStr(mrlStr, "\\", "\\\\");
         mNavi->evaluateJS("$('MaterialVLCMrl').innerHTML='" + mrlStr + "'");
@@ -1725,9 +1711,7 @@ void GUI_ModelerProperties::modelerUpdateTextures()
         }
         else if (plugin == "vlc")
         {
-            // std::string mrl = NaviUtilities::encodeURIComponent(StringHelpers::convertStringToWString((*textureExtParamsMap)["mrl"])); 
-            std::string mrl = (*textureExtParamsMap)["mrl"];
-            StringHelpers::replaceSubStr(mrl, "\\", "\\\\");
+            std::string mrl = NaviUtilities::encodeURIComponent(StringHelpers::convertStringToWString((*textureExtParamsMap)["mrl"]));
             mNavi->evaluateJS("$('MaterialVLCMrl').value = '" + mrl + "'");
             mNavi->evaluateJS("$('MaterialVLCWidth').value = '" + (*textureExtParamsMap)["width"] + "'");
             mNavi->evaluateJS("$('MaterialVLCHeight').value = '" + (*textureExtParamsMap)["height"] + "'");
@@ -1736,22 +1720,6 @@ void GUI_ModelerProperties::modelerUpdateTextures()
             mrl = (*textureExtParamsMap)["remote_mrl"];
             StringHelpers::replaceSubStr(mrl, "\\", "\\\\");
             mNavi->evaluateJS("$('MaterialVLCRemoteMrl').value = '" + mrl + "'");
-
-            string sp3dStr = (*textureExtParamsMap)["sound_params"];
-            if (sp3dStr.find("3d")==0)
-            {
-                mNavi->evaluateJS("$('MaterialVLCSP3d').checked = true");
-                std::string spminStr = sp3dStr;
-                size_t spacePos = spminStr.find_first_of(' ');
-                spminStr.erase(0,spacePos+1);
-                std::string spmaxStr=spminStr;
-                spacePos = spminStr.find_first_of(' ');
-                spminStr.erase(spacePos);
-                spmaxStr.erase(0,spacePos+1);
-                
-                mNavi->evaluateJS("$('MaterialVLCSPMin').value = '" + spminStr + "'");
-                mNavi->evaluateJS("$('MaterialVLCSPMax').value = '" + spmaxStr + "'");
-            }
         }
         else if (plugin == "swf")
         {

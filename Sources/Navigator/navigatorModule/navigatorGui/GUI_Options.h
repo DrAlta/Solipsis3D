@@ -49,7 +49,6 @@ namespace Solipsis
        
     protected:
         GUI_Options();
-		~GUI_Options();
 
         void applyLoginDatas(); 
 

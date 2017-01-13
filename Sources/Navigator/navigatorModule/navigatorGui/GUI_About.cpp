@@ -36,27 +36,21 @@ GUI_About * GUI_About::stGUI_About = NULL;
 //-------------------------------------------------------------------------------------
 GUI_About::GUI_About() : GUI_Panel("uiabout")
 {
-	m_curState = NSNotCreated;
+    stGUI_About = this;
 }
-
-GUI_About::~GUI_About()
-{
-	stGUI_About = NULL;
-}
-
 
 //-------------------------------------------------------------------------------------
 void GUI_About::showHide()
 {
-	if (!stGUI_About)
-	{
-		stGUI_About = new GUI_About();
-	}
+    if (!stGUI_About)
+    {
+        new GUI_About();
+    }
 
-	if (stGUI_About->isVisible())
-		stGUI_About->hide();
-	else
-		stGUI_About->show();
+    if (stGUI_About->isVisible())
+        stGUI_About->hide();
+   else
+       stGUI_About->show();
 }
 
 //-------------------------------------------------------------------------------------

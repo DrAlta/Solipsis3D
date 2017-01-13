@@ -66,8 +66,11 @@ public:
 protected:
     void destroy();
     void convertToStaticGeometry(SceneNode* sceneNode);
+
+#if 1 // GILLES
     void scanSceneNode(SceneNode* pSceneNode);
     std::vector<Ogre::AnimationState*> mVertexAnimationStates;
+#endif
 };
 
 } // namespace Solipsis

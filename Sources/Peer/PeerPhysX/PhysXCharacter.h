@@ -47,9 +47,10 @@ protected:
     Desc mDesc;
     /// Capsule controller
     NxCapsuleController* mNxCapsuleController;
+#if 1 // GILLES FLY
     /// Collision?
     NxU32 mCollisionFlags;
-
+#endif
 public:
     PhysXCharacter(PhysXScene* scene);
     virtual ~PhysXCharacter();
@@ -60,8 +61,10 @@ public:
     virtual void move(Vector3& displacement);
     /// @copydoc IPhysicsCharacter::getPosition
     virtual void getPosition(Vector3& position);
+#if 1 // GILLES YES
 	/// @copydoc IPhysicsCharacter::getCollision
 	void getCollision(bool &collision){collision = (0 != mCollisionFlags);}
+#endif
 };
 
 } // namespace Solipsis

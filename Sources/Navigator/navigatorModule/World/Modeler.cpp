@@ -43,10 +43,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <CTIO.h>
 #include <Plugin_3ds.h>
 #include <Plugin_skp.h>
+#include <plugin_x3d.h>
 #ifdef TERRAIN_MODELER
 #include "TerrainGenerator.h"
 #endif
+#if 1 // GILLES
 #include "CommDlg.h"
+#endif
 
 namespace Solipsis {
 
@@ -386,8 +389,13 @@ bool Modeler::createTerrain(const EntityUID& entityUID, const String& name, Vect
 #endif
 
 /// Create a mesh. 
+#if 1 // GILLES
 bool Modeler::createMesh(const EntityUID& entityUID, const String& name, Vector3 &player_pos, Quaternion &orientation, std::string pMeshName)
+#else
+bool Modeler::createMesh(const EntityUID& entityUID, const String& name, Vector3 &player_pos, Quaternion &orientation)
+#endif
 {
+#if 1 // GILLES
     Entity* entity;
     Path path(pMeshName);
     std::string meshName(path.getLastFileName());
@@ -404,10 +412,20 @@ bool Modeler::createMesh(const EntityUID& entityUID, const String& name, Vector3
     {
         entity = Plugin_skp::createEntityFromskp( entityUID, pMeshName, mSceneManager );
     }
+	else if((ext == "x3d") || (ext == "X3D"))
+	{
+	 
+	}
 
     //entity = entity->clone(entityUID);
 	SceneNode* node = mSceneManager->getRootSceneNode()->createChildSceneNode( String(entityUID) + ".node" );
+#else
+	MeshPtr mptr = mGenericBox->getMesh()->clone( String(entityUID) + ".mesh" );
+	//Entity* entity = mSceneManager->createEntity( String(entityUID), String(entityUID) + ".mesh" );
+	Entity* entity = mSceneManager->createEntity( String(entityUID), pMeshName );
 
+	SceneNode* node = mSceneManager->getRootSceneNode()->createChildSceneNode( String(entityUID) + ".node" );
+#endif
 	entity->setCastShadows(Navigator::getSingletonPtr()->getCastShadows());
 
     entity->setQueryFlags(Navigator::QFObject);
@@ -416,8 +434,8 @@ bool Modeler::createMesh(const EntityUID& entityUID, const String& name, Vector3
 	Object3DOther* obj = new Object3DOther(entityUID, String(name), node );
 	mSelection->add3DObject(obj);
 	obj->mCentreSelection = player_pos;
-
-	if(obj->getCreator().empty()) 
+#if 1 // GILLES
+    if(obj->getCreator().empty()) 
         obj->setCreator( Navigator::getSingletonPtr()->getLogin().c_str() );
     if(obj->getOwner().empty()) 
         obj->setOwner( Navigator::getSingletonPtr()->getLogin().c_str() );
@@ -426,6 +444,7 @@ bool Modeler::createMesh(const EntityUID& entityUID, const String& name, Vector3
     if(obj->getMeshImportName().empty())
         //obj->setMeshImportName( pMeshName.c_str() );
         obj->setMeshImportName( meshName.c_str() );
+#endif
 
 	node->setPosition(player_pos);
 	node->setOrientation(orientation);
@@ -583,6 +602,7 @@ Selection* Modeler::getSelection()
 	return 0;
 }
 
+#if 1 // GILLES
 /// Extract all datas (files and sub-folders) from an archive and his sub-archives
 void Modeler::extractFromArchive(std::string pArchive)
 {
@@ -643,6 +663,7 @@ void Modeler::extractFromArchive(std::string pArchive)
         }
     }
 }
+#endif
 
 /// Load from a XML SOLIPSIS file (.sof)
 bool Modeler::XMLLoad(const String& filename, const String& group, Object3DPtrList& loadedObjects, Vector3 pos, Quaternion orientation)
@@ -677,7 +698,7 @@ bool Modeler::XMLLoad(const String& filename, const String& group, Object3DPtrLi
 
 	if(zz.isArchivePresent() )
 	{
-        for( int i=0 ; i<zz.getNbFile() ; i++)	//search all SWF, Video or MESH files
+        for( int i=0 ; i<zz.getNbFile() ; i++)	//search all SWF or MESH files
         {
             Path currentFileName ( zz.getName(i) ) ;
 			string ext =  currentFileName.getExtension() ;
@@ -695,12 +716,6 @@ bool Modeler::XMLLoad(const String& filename, const String& group, Object3DPtrLi
                 (currentFileName.getExtension() == "mpeg") ||
                 (currentFileName.getExtension() == "mp3") ||
                 (currentFileName.getExtension() == "wma") ||
-				(currentFileName.getExtension() == "wmv") ||
-				(currentFileName.getExtension() == "mkv") ||
-				(currentFileName.getExtension() == "ogg") ||
-				(currentFileName.getExtension() == "ogm") ||
-				(currentFileName.getExtension() == "vob") ||
-				(currentFileName.getExtension() == "mov") ||
                 (currentFileName.getExtension() == "flv"))
 			{
                 //create the temp directory if doesn't yet exsits
@@ -816,11 +831,12 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
     String filenameToLoad = filename;
     if (filenameToLoad.empty())
     {
+#if 1 // GILLES
 		std::string loadDir = mExecPath + "\\MyCreations\\";
 		if (GetFileAttributes(loadDir.c_str()) == (DWORD)-1) // Create 'MesCreations' directory if it's not exist
 			CreateDirectory(loadDir.c_str(), NULL);
 
-		ResourceGroupManager::getSingleton().addResourceLocation(loadDir, "FileSystem");
+ResourceGroupManager::getSingleton().addResourceLocation(loadDir, "FileSystem");
 
 		// Open a browser file to load a 3D mesh file (.MESH, .3DS, or .SKP)
 		CommonTools::System::setMouseCursorVisibility(true);
@@ -846,6 +862,13 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
 		}
 
 		CommonTools::System::setMouseCursorVisibility(false);
+#else
+		char *fileToLoad = FileBrowser::displayWindowForLoading( 
+//             "All supported files\0*.mesh;*.3ds;*.skp\0 3D Studio File,(*.3ds)\0*.3ds\0 Google SketchUp File,(*.skp)\0*.skp\0", string("") ); 
+        "All supported files\0*.mesh;*.3ds;*.skp\0Ogre Mesh File,(*.mesh)\0*.mesh\0 3D Studio File,(*.3ds)\0*.3ds\0 Google SketchUp File,(*.skp)\0*.skp\0", string("") ); 
+        if (fileToLoad != 0)
+            filenameToLoad = fileToLoad;
+#endif
     }
 
     // Go back to the main directory
@@ -857,7 +880,14 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
 		Ogre::String ext = FilePath.getExtension() ;
 		String entityName = FilePath.getLastFileName(false);
 
-        // Import '.sof' file
+        //try {
+        //    ResourceGroupManager::getSingleton().addResourceLocation(FilePath.getFormatedRootPath(), "FileSystem");//, name + "Resources");
+        //}
+        //catch (Ogre::Exception e)
+        //{}
+
+#if 1 // GILLES
+		// Import '.sof' file
 		if((ext == "sof") ||(ext == "SOF"))
 		{
 			Ogre::String sofFileName = FilePath.getFormatedPath();
@@ -915,6 +945,7 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
 
 			return true; // we stop here
 		}
+#endif
 
         Entity* entity = 0;
 		if (!mSceneManager->hasEntity(entityName))
@@ -934,12 +965,12 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
 			}
 		}
         entity = mSceneManager->getEntity(entityName)->clone(entityUID);
-
+        // GILLES BEGIN
 #if (OGRE_VERSION_MAJOR <= 1 && OGRE_VERSION_MINOR < 6) 
         entity->setNormaliseNormals(true);
 #endif
-
-		SceneNode* node = mSceneManager->getRootSceneNode()->createChildSceneNode( String(entityUID) + ".node" );
+        // GILLES END
+        SceneNode* node = mSceneManager->getRootSceneNode()->createChildSceneNode( String(entityUID) + ".node" );
 
         entity->setCastShadows(Navigator::getSingletonPtr()->getCastShadows());
 
@@ -951,11 +982,15 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
         //    Ogre::Real mNormalise = (size.x>=size.y ? size.x : size.y)>=size.z ? (size.x>=size.y?size.x:size.y) : size.z;
         //    node->scale(4.0/mNormalise,4.0/mNormalise,4.0/mNormalise);//standardize the models loaded.
         //}
+#if 1 // GILLES
         Object3DOther* obj = new Object3DOther(entityUID, String(entityName), node );
+#else
+        Object3DOther* obj = new Object3DOther(entityUID, String(name), node );
+#endif
         mSelection->add3DObject(obj);
         obj->mCentreSelection = pos;
-		
-		if(obj->getCreator().empty()) 
+#if 1 // GILLES
+if(obj->getCreator().empty()) 
             obj->setCreator( Navigator::getSingletonPtr()->getLogin().c_str() );
         if(obj->getOwner().empty()) 
             obj->setOwner( Navigator::getSingletonPtr()->getLogin().c_str() );
@@ -963,6 +998,7 @@ bool Modeler::XMLImport(const EntityUID& entityUID, const String& name, const St
             obj->setupCreationDate();
         if(obj->getMeshImportName().empty())
             obj->setMeshImportName( FilePath.getFormatedPath().c_str() );
+#endif
 
         node->setPosition(pos);
 	    node->setOrientation(orientation);
@@ -1027,8 +1063,10 @@ bool Modeler::XMLSave(bool all)
             // Update command list with the last called 
             updateCommand(Object3D::NONE, obj, true);
 
+#if 1 // GILLES 
             //Save the imported mesh if it is one
             obj->saveMeshRef(Ogre::String("solTmpTexture"),zz);
+#endif // GILLES
 
             // Save object in XML
             Ogre::String fileToSave = mPath + Ogre::String("\\") + obj->getEntityUID() + Ogre::String(".xml");
@@ -1077,6 +1115,7 @@ bool Modeler::XMLSave(bool all)
 	return true;
 }
 
+#if 1 // GILLES
 /// Save to a XML SOLIPSIS file (.sof)
 bool Modeler::XMLSaveAs(const String& pDestination)
 {
@@ -1148,6 +1187,14 @@ bool Modeler::XMLSaveAs(const String& pDestination)
             obj->saveTextures(Ogre::String("solTmpTexture"),zz);
 
             SOLdeleteFile(fileToSave.c_str());
+
+            /* 
+            // GILLES begin
+            if (mModelerCallbacks != 0)
+                mModelerCallbacks->onObject3DSave(fileZipToSave, obj);
+            // GILLES end
+            */
+
             delete zz;
 
             mSelection->remove3DObjectFromListSinceLastSave(obj);
@@ -1157,8 +1204,16 @@ bool Modeler::XMLSaveAs(const String& pDestination)
 
 	_chdir(mExecPath.c_str());
 
+//#ifdef WIN32
+//	CommonTools::System::setMouseCursorVisibility(true);
+//	CommonTools::System::showMessageBox("Handle File SAVE", "Information", true, false, true, false, false);
+//	CommonTools::System::setMouseCursorVisibility(false);
+//#else
+//	std::cerr << " Handle File SAVE " << std::endl;
+//#endif
 	return true;
 }
+#endif
 
 /// Create a new Object3D with a file XML
 Object3D * Modeler::createObjectWithXML(TiXmlDocument doc, String group, Vector3 pos, Quaternion orientation)
@@ -1169,6 +1224,7 @@ Object3D * Modeler::createObjectWithXML(TiXmlDocument doc, String group, Vector3
     EntityUID entityUID = XMLfile->FirstChildElement("objuid")->Attribute("Uid");
 	String name = XMLfile->FirstChildElement("objname")->Attribute("Name");
 
+#if 1 // GILLES
     // go to the root directory
     _chdir(mExecPath.c_str());
 
@@ -1179,12 +1235,12 @@ Object3D * Modeler::createObjectWithXML(TiXmlDocument doc, String group, Vector3
          createMesh(entityUID, name, pos, orientation, meshName);
     }
     else
-	{
-		if (!createPrimitive(type, entityUID, name, pos, orientation, false, meshName))
-		{
-			return NULL;
-		}
-	}
+#endif
+
+    if (!createPrimitive(type, entityUID, name, pos, orientation, false, meshName))
+    {
+        return NULL;
+    }
 
     Object3D * newObject = mSelection->geLastAddedObject();
     if (!newObject)

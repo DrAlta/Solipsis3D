@@ -50,12 +50,7 @@ GUI_ContextMenu * GUI_ContextMenu::stGUI_ContextMenu = NULL;
 GUI_ContextMenu::GUI_ContextMenu() : GUI_Panel("contextMenu")
 {
     m_curContext = NAVI_CTXTCOUNT;
-	m_curState = NSNotCreated;
-}
-
-GUI_ContextMenu::~GUI_ContextMenu()
-{
-	stGUI_ContextMenu = NULL;
+    stGUI_ContextMenu = this;
 }
 
 //-------------------------------------------------------------------------------------
@@ -63,7 +58,7 @@ bool GUI_ContextMenu::createAndShowPanel(int x, int y, NaviContext ctxtPanel, co
 {
     if (!stGUI_ContextMenu)
     {
-        stGUI_ContextMenu = new GUI_ContextMenu();
+        new GUI_ContextMenu();
     }
 
     return stGUI_ContextMenu->show(x, y, ctxtPanel, params);
