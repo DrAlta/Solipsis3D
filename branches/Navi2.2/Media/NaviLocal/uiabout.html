@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>uiabout</title>
+        <script type="text/javascript" src="Navi.js"></script>
+        <script type="text/javascript">
+            function pageClosed()
+            {
+				Client.pageClosed();
+            }
+        </script>
+        <style type="text/css">
+            html, body
+            {
+	            background-color: #ffffff;
+				height: 100%;
+				margin: 0;
+				padding: 10;
+				
+            }
+            .solipsisIcons
+            {
+                display: block;
+                width: 24px;
+                height: 24px;
+                background-image: url(solipsisIcons.png);
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 3px;
+            }
+            .solipsisCloseInactive { background-position: -24px -24px; }
+            .solipsisCloseActive { background-position: -24px -0px; }
+            .solipsisCloseActive:hover { background-position: -24px -72px; }
+        </style>
+    </head>
+    <body onload="pageLoaded()">
+           <span id="mTbIconClose" class="solipsisIcons solipsisCloseActive" onclick="pageClosed()"></span>
+	
+<iframe src ="http://www.solipsis.org" width="100%" height="99.5%" frameborder=0>
+  <p>Your browser does not support iframes.</p>
+</iframe>				
+ 
+    </body>
+</html>

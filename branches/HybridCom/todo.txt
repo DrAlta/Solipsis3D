@@ -1,0 +1,98 @@
+[All]
+ 
+
+
+
+[MdlrTools]
+- scale updates on avatar texture not saved/seen by other avatar (+other avatar loose its connection)
+- Manage a full undo function
+- Rebuild correctly primitive's normals and UV maps coords when applying a transformation	
+
+[Navigator]
+- migrate XML datas from .sof, .sif into the Xml entity descriptor, updates will be simpler,
+  only binary datas files are zipped into .s*f like textures, mesh, skeleton, shaders, ...
+- entity datas panel (object panel attributes moved into this new panel)
+
+- sometimes crash on resize window on login panel
+
+- if Peer cannot connect to RakNetServer, the login XMLRPC method returned OK but no evt are sent ...,
+so no error is displayed -> Nav-Peer cnx should be asynchronous with 1 CNX_ACCEPTED message
+
+- add 1 version test when connecting to RakNetServer to detect compatibility problems requiring updates
+
+- VLCPlugin : add support of 24bpp render, add libamem_plugin to play audio with FMod in 3D
+
+- To fix : pref.js causes crash at first loading after a full clean
+
+- llmozlib crash when 1 ogre exception (eg. filenotfound on texture loading in NavigatorGUI::modelerPropTextureAdd) is caught
+  with 1 scene with 1 Navi object
+
+- strange behaviour with the HTML tag <select/>, Navi author suggests to use the ComboBox class of Navi.js
+  + get last Navi SVN commit
+
+- in Mozilla plugin config
+ - without NPPVpluginKeepLibraryInMemory, then Ogre Root is destroyed on each
+   instance release but RenderSystem_Direct3D9_d cannot be re-loaded on next instance run
+=> to debug
+ - NavigatorModule Ogre MT-safe to manage by mutex when several instances are used by plugins (Ax or Moz)
+
+- create 1 Navigator Displayer ActiveX/Plugin to interact with Navigator from 1 simple Win Mozilla browser
++ implement object-oriented interfaces NavigatorModule which would be the generic Navigator interface
+  shared by different Navigator implementations : Binary application with 1 main(), Mozilla plugin, ActiveX IE, ...
+   events (application, keyboard, mouse, ...) class (OIS, ...)
+   all datas Navigator is waiting for (Window class, ...)
+=> pb in VC7 & VC8 when loading Mozilla DLLs from Navigator DLL plugin loaded by Mozilla binary !!!
+   mozilla/widget/src/windows/nstoolkit.cpp void 
+nsToolkit::Startup(HMODULE hModule)
+ function return error
+   it is due to WNDCLASSW registration (wc.lpszClassName    = L"nsToolkitClass";) which was already registered
+   by the Mozilla running instance
+=> soluce should be to rename this className to avoid conflict
+=> after 1 workaround about className pb, still problems on 1st Navi Web Browser creation
+   in VC7 & VC8 configs (Debug & Release config)
+=> ?
+
+=> ActiveX assert on Navi update() grabWindow() in Debug config
+=> ActiveX is working in Release config but fails on 2nd Navi (onPageLoaded callback not triggered)
+=> Mozilla plugin is working with Navigator.dll (NavigatorModule) in Release config but fails on 1st Navi (onPageLoaded callback not triggered)
+
+- integration of ODE and OgreOde : add 1 space for user avatar's geoms to avoid internal collisions mgt
+- integration of ODE and OgreOde : sampling of mvt instead of frameTime is OK but some pb on gravity/feet/floor
+
+- salamandra export pb with lexiExporter on root bone position offset (OK on oFusion),
+  but oFusion has sometimes pbs with bounding box computation
+
+- add methods to get position around avatar according to TOP, BOTTOM, LEFT, RIGHT, CENTER
+  with bbox + scale taken into account
+- add parameter (0..1)*MAX_SPEED for transition between Walk and Run anims
+- add blending between previous and next animations
+- 1 Run Key ? or Always run ?
+
+- debug of DirectX device restore -> Ogre violation exception on restore
+
+- Add 1 plugin PeersSceneManager to manage Solipsis Node datas (mesh, materials, anims)
+  + description per LOD
+
+- Add 1 dedicated thread to load contents to avoid user movements locks
+
+- Alpha component on Navi windows in OpenGL config
+
+- Linux: compilation of Mozilla/XULrunner from release 1.8.1
+(CVS repository from co_FIREFOX_2_0_RELEASE.bat)
+(branch FIREFOX_2_0_RELEASE)
+=> pb patch not compatible with 1.8.1 but with 1.5.0.12 => try with 1.5.0.12
+- Linux: compilation of LLMozLib
+- Linux: compilation of Navi/NaviDemo
+=> compilation OK but black screen ! (maybe opengl)
+
+- add progress bar for scene download (Tof)
+- add progress bar for object download (Tof)
+- add progress bar for avatar download (Tof)
+- add progress bar for object upload (Tof)
+
+-Replace NAVI with awesomium
+
+- add scriptin feature for objects (Olivier)
+
+
+

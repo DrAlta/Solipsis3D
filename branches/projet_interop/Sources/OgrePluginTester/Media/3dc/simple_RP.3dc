@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SGA_3DContainer>
+
+
+	<Group DEF="Mygroupnode"> 
+
+
+		<Content Name="X3DFile_1" type="x3d" decoder_url="" wrapper_url="" url="../file_1.x3d" />
+
+		<Content Name="X3DFile_2" type="x3d" decoder_url="" wrapper_url="" url="../x3d/file_2.x3d" />
+
+
+		<ROUTE  fromNode="X3DFile_1 :PositionInterpolator.value_changed"  toNode="X3DFile_2 :cube.translation" />
+
+		<Patch  DEF="patch_1" node="X3DFile_2 :cube" properties="clickable" />
+
+		<ROUTE  fromNode="patch_1.clickTime"  toNode="X3DFile_1 :Timer.startTime" /> 
+
+	</Group>
+
+</SGA_3DContainer>

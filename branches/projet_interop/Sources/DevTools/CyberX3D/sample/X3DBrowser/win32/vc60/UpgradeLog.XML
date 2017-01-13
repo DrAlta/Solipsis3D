@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="X3DBrowser">
+</Property><Property Name="Solution File" Value="C:\Dev\solipsis\mytrunk\Sources\DevTools\CyberX3D\sample\X3DBrowser\win32\vc60\X3DBrowser.sln">
+</Property><Property Name="User Options File" Value="C:\Dev\solipsis\mytrunk\Sources\DevTools\CyberX3D\sample\X3DBrowser\win32\vc60\X3DBrowser.suo">
+</Property><Property Name="Date" Value="mardi 10 août 2010">
+</Property><Property Name="Time" Value="17:50">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="X3DBrowser.sln" Description="File successfully backed up as C:\Dev\solipsis\mytrunk\Sources\DevTools\CyberX3D\sample\X3DBrowser\win32\vc60\X3DBrowser.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="X3DBrowser.suo" Description="File successfully backed up as C:\Dev\solipsis\mytrunk\Sources\DevTools\CyberX3D\sample\X3DBrowser\win32\vc60\X3DBrowser.suo.old">
+</Event><Event ErrorLevel="1" Project="CyberX3D" Source="..\..\..\..\lib\win32\vc60\CyberX3D.vcproj" Description="This application has been updated to include settings related to the User Account Control (UAC) feature of Windows Vista. By default, when run on Windows Vista with UAC enabled, this application is marked to run with the same privileges as the process that launched it. This marking also disables the application from running with virtualization. You can change UAC related settings from the Property Pages of the project.">
+</Event><Event ErrorLevel="0" Project="CyberX3D" Source="..\..\..\..\lib\win32\vc60\CyberX3D.vcproj" Description="Project file successfully backed up as 'C:\Dev\solipsis\mytrunk\Sources\DevTools\CyberX3D\lib\win32\vc60\CyberX3D.vcproj.8.00.old'.">
+</Event><Event ErrorLevel="0" Project="CyberX3D" Source="..\..\..\..\lib\win32\vc60\CyberX3D.vcproj" Description="Project upgraded successfully.">
+</Event><Event ErrorLevel="3" Project="CyberX3D" Source="..\..\..\..\lib\win32\vc60\CyberX3D.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="X3DBrowser" Source="X3DBrowser.vcproj" Description="Project upgraded successfully.">
+</Event><Event ErrorLevel="3" Project="X3DBrowser" Source="X3DBrowser.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="X3DBrowserGLUT" Source="..\..\glut\win32\vc60\X3DBrowserGLUT.vcproj" Description="Project upgraded successfully.">
+</Event><Event ErrorLevel="3" Project="X3DBrowserGLUT" Source="..\..\glut\win32\vc60\X3DBrowserGLUT.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="x3d2vrml" Source="..\..\..\x3d2vrml\win32\vc60\x3d2vrml.vcproj" Description="Project upgraded successfully.">
+</Event><Event ErrorLevel="3" Project="x3d2vrml" Source="..\..\..\x3d2vrml\win32\vc60\x3d2vrml.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="X3DBrowser.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="X3DBrowser.sln" Description="No Conversion Required">
+</Event></UpgradeLog>

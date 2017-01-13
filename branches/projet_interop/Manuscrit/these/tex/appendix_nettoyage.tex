@@ -1,0 +1,120 @@
+\chapter{Nettoyage des pages Web}
+\label{app:nettoyage}
+L'étude des premiers corpora récupérés a révélé le caractère bruité et peu
+utilisable de certaines pages qui contiennent pourtant des textes thématiquement
+très proches de ce qui est recherché. En effet, dans la majorité des cas, une
+page regroupe un bandeau de titre, un menu, des mentions légales, des résumés
+d'articles récents, des publicités, des commentaires et, finalement, un article
+central. Cependant, comme les données récupérées se présentent sous la forme de
+code HTML, aucune image, ou autre entité physiquement séparée de la page, n'est
+rapatriée. Cette annexe présente ainsi la technique que nous avons développé
+pour nettoyer la source d'une page Web de manière à en extraire les
+articles centraux et les commentaires qui leur sont parfois
+attachés. Cette méthode s'appuie sur deux passes~: l'une servant à éliminier
+les éléments clairement identifier comme n'étant pas un texte bien construit,
+l'autre visant ne conserver la zone de texte la plus dense dans la page
+en excluant certaines passages ayant passé le premier filtre mais ne relevant
+pas du contenu central de la page (par exemple, des résumés de brèves
+d'actualités d'une même journée). Nous exposons brièvement le principe de ces
+deux passes et présentons un exemple de page nettoyée.
+
+La structure d'un code HTML est celle d'un arbre dont les feuilles sont du texte
+ou des balises vides. Ses noeuds sont simplement des balises. Le but de notre
+première passe est
+alors de faire remonter les feuilles qui contiennent des bouts de textes que
+nous jugeons bien construits. En procédant par un parcours horizontal de l'arbre
+en partant des feuilles, nous remplaçons chaque noeud par la concaténation du
+texte qui a été conservé dans chacune de ses branches. Au final, lorsque nous
+arrivons à la racine, il nous reste un texte utilisable pour l'apprentissage
+d'un modèle de langue et d'où toutes les balises HTML sont supprimées.
+% 
+Le principal critère qui nous sert à conserver ou écarter une feuille se base
+sur la fréquence de la ponctuation qu'elle contient. Par l'observation de
+quelques pages prises au hasard, nous avons constaté que, dans un texte
+construit, il y a en moyenne un signe de ponctuation pour dix mots. \`A une
+marge de tolérance près, nous éliminons alors les feuilles dont le texte est
+trop peu ponctué. De même, si des signes de ponctuation sont rencontrés trop
+fréquemment, la feuille n'est pas conservée. De plus, nous ne gardons pas les
+textes trop courts car ceux-ci sont généralement des références vers des
+actualités récentes. Nous avons également déterminé des intervalles de confiance
+pour la fréquence des caractères spéciaux rencontrés (par exemple \texttt{|},
+\texttt{+}, \texttt{*}\dots{}) et pour la longueur moyenne des phrases que nous
+manipulons. Enfin, il a été fait en sorte, dans notre algorithme, que la
+décision d'éliminer une feuille se prenne à partir des résultats sur l'ensemble
+de nos critères. Ainsi, une feuille n'est pas directement éliminée dès lors
+qu'elle ne répond pas à l'un de nos critères d'exigence. Ce choix est dû au fait
+que la diversité des structures des pages Web est telle qu'aucune généralité ne
+peut en être faite avec certitude.
+
+À l'isue de cette première passe, nous récupérons une séquence de paragraphes
+séparés par des sauts de ligne plus ou moins nombreux. Le nombre de ces sauts de
+lignes révèle à quel point deux portions consécutives de textes étaient
+éloignées dans la page Web. Nous définissons alors la position d'un paragraphe
+dans cette séquence comme une variable aléatoire. Nous calculons la
+valeur moyenne et la variance de cette variable en pondérant chaque position par
+le nombre de mots présents à celle-ci. Ces deux valeurs nous permettent de
+définir d'une loi normale centrée et d'exclure les portions de texte présentes
+à des positions trop peu probables. De cette manière, nous ne gardons que la
+zone la plus dense de la page et supprimons tout texte trop éloigné de cette
+zone.
+
+La figure \ref{fig:exemple-page} présente une page récupérée lors de l'une de
+nos adaptations. Au sein de
+celle-ci, nous avons encadré en rouge la partie que nous voudrions conserver.
+Nous notons que, en dehors de l'article principal, beaucoup de mots isolés sont
+présents sur la page. Si nous éliminions simplement toutes les balises HTML et
+que nous concaténions tous les mots de la page, nous obtiendrions un texte dont
+certains passages seraient syntaxiquement incorrects. Un modèle de langue appris
+sur cette base serait alors d'une qualité mitigée. Comme le montre la
+table~\ref{tab:app_extrait}, notre technique permet d'extraire exactement le
+texte qui nous intéresse. Notons toutefois que, dans certains cas, notre méthode
+tend à éliminer trop de texte. C'est notamment le cas lorsque la page ne
+contient pas beaucoup de texte et que la seconde passe de notre méthode ne
+parvient pas clairement à déterminer la zone centrale du contenu. Toutefois,
+cette inconvénient est à pondérer par le fait que, de toute manière, ce type de
+page ne nous intéresse que peu pour estimer des probabilités \ngrammes{}.
+
+
+\begin{table}
+\centering
+\begin{minipage}{0.80\linewidth}
+\begin{small}
+\sffamily{}
+Ian Huntley, un ancien gardien d'école comparaît à Londres pour les meurtres de
+Holly Wells et Jessica Chapman, deux fillettes de dix ans dont la mort en août
+2002 avait suscité une vive émotion en Grande-Bretagne. Inculpé de double
+meurtre, cet individu de 29 ans, qui a toujours clamé son innocence, affronte
+ainsi la justice plus d'un an après les faits. Le 4 août 2002, les deux
+écolières du lycée de Soham, petite bourgade sans histoire de l'est de
+l'Angleterre, avaient disparu, déclenchant la plus importante chasse à l'homme
+jamais organisée en Grande-Bretagne, avec la mobilisation de près de 400
+policiers. Leurs corps sans vie avaient été retrouvés 13 jours plus tard dans un
+bois des environs. Les jeunes amies partageaient la même passion pour le
+football et le club de Manchester United. En hommage, une minute de silence est
+d'ailleurs toujours observée au début de tous les matches de football de
+Grande-Bretagne. Dans le box des accusés, se tiendra également l'ancienne petite
+amie de I. Huntley, Maxine Carr, assistante scolaire dans l'école de Holly et
+Jessica. La jeune femme de 26 ans, est, quant à elle, inculpée de complicité de
+meurtre et de tentative d'entrave à la justice pour avoir menti aux enquêteurs
+de la police. Elle a également toujours nié les faits. Le procès, qui durera au
+moins deux mois, promet d'être l'un des plus médiatiques de ces dernières
+années. S'il est reconnu coupable des deux meurtres, Ian Huntley encourt une
+peine de 50 ans de prison.
+\end{small}
+\end{minipage}
+\caption{Texte extrait à partir de la page présentée en
+figure~\ref{fig:exemple-page}.}
+\label{tab:app_extrait}
+\end{table}
+
+
+\begin{figure}[p!]
+   \centering
+   \includegraphics[scale=0.50]{./figures/exemple_page.eps}
+	 \caption{Exemple de page Web à nettoyer.}
+   \label{fig:exemple-page}
+\end{figure}
+
+
+
+

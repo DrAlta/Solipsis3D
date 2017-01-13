@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Interactive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <meta content='ClickToAnimate.x3d' name='title'/>
+    <meta content='X3D specification example: click to animate a Box.' name='description'/>
+    <meta content='Don Brutzman and Joe Williams' name='editors'/>
+    <meta content='1 June 2002' name='created'/>
+    <meta content='28 July 2008' name='modified'/>
+    <meta content='http://www.web3d.org/x3d/specifications/ISO-IEC-19776-X3DEncodings-XML-ClassicVRML/Part01/examples.html#TimeSensorClickToAnimate' name='reference'/>
+    <meta content='http://www.web3d.org/x3d/content/examples/Basic/X3dSpecification/ClickToAnimate.x3d' name='identifier'/>
+    <meta content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='../license.html' name='license'/>
+  </head>
+  <Scene>
+	<Background groundAngle='1.309 1.571' skyAngle='1.309 1.571' skyColor='0 0.2 0.7 0 0.5 1 1 1 1' bottomUrl="..\textures\dirt01.jpg"/>
+    <Transform DEF='XForm' translation='0 70 0'>
+      <Shape>
+        <Box DEF="red_box" size='10 10 10'/>
+		<!-- <Sphere DEF="red_box" radius='2.3'/> -->
+        <Appearance>
+          <Material diffuseColor='1.0 0.0 0.0'/>
+        </Appearance>
+      </Shape>
+      <TouchSensor DEF='Clicker' description='click to animate'/>
+      <TimeSensor DEF='TimeSource' cycleInterval='4.0' loop='false'/>
+      <OrientationInterpolator DEF='AnimationOI' key='0.0 0.33 0.66 1.0' keyValue='1.0 0.0 0.0 0 1.0 0.0 0.0 2.1 1.0 0.0 0.0 4.2 1.0 0.0 0.0 6.28'/>
+    </Transform>
+    <ROUTE fromField='touchTime' fromNode='Clicker' toField='startTime' toNode='TimeSource'/>
+    <ROUTE fromField='fraction_changed' fromNode='TimeSource' toField='set_fraction' toNode='AnimationOI'/>
+    <ROUTE fromField='value_changed' fromNode='AnimationOI' toField='rotation' toNode='XForm'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,118 @@
+%------------------------------%
+%------------------------------%
+\entetespeciale{Introduction}
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+\addtocounter{page}{1}
+\pagenumbering{arabic}
+%------------------------------%
+%------------------------------%
+%\markboth{Introduction}{Introduction}
+
+
+%\begin{itemize}
+%   \item Définition de l'interopérabilité
+% 	\item Les enjeux pour les environnements virtuels 3D, le Web 3D
+%	 \item Bref historique
+%	 \item Exemple de problème pour l'industrie des mondes virtuels, pour la collaboration (ex: A360) , ...
+%	 \item Définition du cadre de la thèse
+%	 \item Plan de la thèse
+%
+%\end{itemize}
+%
+%$\simeq$ 4 - 6 pages
+
+\lettrine{C}{ette} thèse se propose d'analyser et de contribuer à résoudre le problème de l'interopérabilité pour les environnements virtuels 3D. 
+
+\section{Qu'est ce que l'interopérabilité ?}
+
+\subsection{Définition}
+
+L'interopérabilité est la capacité que possède un système informatique à fonctionner avec d'autres produits ou systèmes informatiques, existants ou futurs, sans restriction d'accès ou de mise en oeuvre.
+Le terme "\textit{interoperability}" est apparu en 1977 et vient de la contraction de deux mots; "\textit{inter}" mot latin signifiant "entre" et "\textit{operability}" qui pourrait être traduit par "utilisable". 
+Le terme anglais "interoperability" a été traduit par interopérabilité mais une traduction plus proche de sa signification originale serait interutilisabilité. C'est une notion que l'on retrouve aujourd'hui dans plusieurs branches de l'informatique.
+
+
+
+\subsection{Les apports de l'interopérabilité}
+
+L'interopérabilité dans le monde de l'informatique est une notion cruciale. Elle est souvent déterminante pour l'adoption d'une nouvelle technologie et est également un gage de pérennité dans un domaine qui évolue extrêmement vite. Le succès du modèle du Web en est un bon exemple car celui-ci est en grande partie lié à son interopérabilité. En effet, la capacité du Web à pouvoir être accessible de n'importe quel navigateur, sur n'importe quelle machine a permis une adoption massive et rapide de cette technologie.
+La notion d'interopérabilité est souvent liée à la mise en place de normes qui vont contraindre les développements futurs. Les règles définies dans la norme vont permettre d'assurer l'interopérabilité entre deux entités développées dans des contextes différents. L'adoption dès sa création du format HTML et du protocole HTTP sont les normes qui ont structuré le développement du Web.\\
+De ce fait, il est parfois reproché à l'interopérabilité de limiter les innovations techniques car les contraintes imposées brident les nouveaux développements. Cependant, à l'inverse, le manque d'interopérabilité peut mener à une situation de monopole elle aussi néfaste à l'innovation. En effet si un produit non interopérable est adopté massivement cela peut bloquer les innovations concurrentes. L'interopérabilité est ainsi une situation souhaitable dans la majorité des cas mais celle-ci ne doit pas se faire au prix d'un blocage des évolutions possibles d'un système.
+
+On peut considérer plusieurs niveaux d'opérabilités: la compatibilité et l'interopérabilité. La compatibilité est la possibilité pour deux systèmes de types différents de communiquer ensemble tandis que l'interopérabilité est la possibilité pour deux systèmes différents de communiquer entre eux. 
+
+%Afin d'ouvrir les mondes virtuels, on peut considérer plusieurs niveaux d'opérabilités: la compatibilité et l'intéropérabilité.
+%La compatibilité est la possibilité pour deux systèmes de types différents de communiquer ensemble. Ce concept, ramené aux environnements virtuels, est la capacité d'entrer dans plusieurs mondes virtuelles au sein d'un unique navigateur.
+%L'intéropérabilité est la possibilité pour deux systèmes différents de communiquer entre eux. Si l'on rapporte cette notion aux environnements virtuels, celle-ci se traduit par la possibilité de connecter des mondes virtuels afin de permettre à une entité d'interagir avec un monde différent de celui pour lequel elle a été conçue. \linebreak
+
+\section{L'interopérabilité pour les environnements virtuels 3D}
+
+\subsection{Les enjeux de l'interopérabilité pour les mondes virtuels}
+
+Le fait de permettre un certain degrés d'opérabilité entre les univers virtuels apporte de nombreux bénéfices\cite{Spagnuolo_Falcidieno_2009,Pittarello_Faveri_2006,Silva_Rahman_Saddik_2008} :
+
+\begin{itemize}
+\item[-] \textbf{réutilisabilité}: cela permet de réutiliser des contenus d'un monde à l'autre. En effet, il existe une large offre d'outils permettant de produire des contenus pour les mondes 3D mais ceux-ci sont plus ou moins intuitifs à manipuler. Il est donc très intéressant de pouvoir réutiliser des modèles 3D ayant demandés un temps de développement conséquent.
+\item[-] \textbf{portabilité}: cela permet également d'améliorer la portabilité de ces environnements sur différents terminaux (ordinateurs, téléphones mobiles, tablette, ...) mais aussi entre différents clients et systèmes. 
+\item[-]  \textbf{diffusion}: ensuite cela permet d'étendre la portée des environnements virtuels à un public plus large car ils seront rendus de cette façon plus accessibles par un client unique par exemple. 
+\item[-] \textbf{préservation de l'identité}: cela pourrait permettre à un utilisateur de posséder un avatar unique pour chacun des mondes virtuels auxquels il est inscrits. En effet, le fait de créer son avatar est une tâche longue et difficile. Celui-ci représente l'utilisateur dans le monde virtuel aussi la majorité des gens accordent beaucoup d'importance à l'apparence de leur avatar. Plusieurs travaux \cite{bailenson_equilibrium_2001,garau_impact_2003} ont montrer l'importance de l'apparence des avatars dans les interactions entre personnes aussi, il paraît vraiment fondamentale de permettre la préservation de l'avatar d'un environnement virtuel à un autre. 
+\end{itemize}
+ 
+Cette démarche s'inscrit également dans la mise en place du Web 3D. Les environnements virtuels 3D déjà existants pourraient par la mise en place de solution d'interopérabilité s'intégrer dans un Web unique permettant l'accès à un ensemble d'environnements 3D. Cela rendrait possible la navigation et l'interaction avec une multitude d'environnements virtuels en utilisant un client de visualisation unique. 
+
+\subsection{Les raisons d'une solution d'interopérabilité tardive}
+
+Au vu de tous les avantages qu'apportent l'interopérabilité, on peut légitimement se poser la question de savoir pourquoi des solutions n'ont pas été proposées ou imposés plus tôt. Pour répondre à cette question, il faut comprendre le contexte historique dans lequel ont émergé les premiers mondes virtuels ainsi que les évolutions qu'ils ont subis depuis.\\
+
+La plupart des grands éditeurs de jeux vidéo actuels ont été crée au cours des années 1980 ( Electronic Arts en 1982, Maxis en 1987, Lucasart en 1982, Ubisoft en 1986 ) et au cours des années 90, ces studios ont mis au point une chaîne de production entièrement propriétaires. Chaque studio avait développé de son côté un modeleur 3D, un moteur de jeu ainsi que tous les éléments nécessaires à la création de nouveau jeu vidéo.
+De même dans l'industrie du cinéma où depuis le film \textit{TRON} de Steven Lisberger sortie en 1982, les environnements virtuels et l'animation 3D ont fait leur apparition.
+Dans les années 90, les univers 3D étaient des applications autonomes tels que des jeux mono-utilisateurs ou des films d'animation. Pour ces deux secteurs, il n'y avait aucun intérêt à favoriser l'ouverture de la création de contenus 3D. Cependant l'industrie et plus particulièrement les industries automobile, aéronautique et aérospatiale, était favorable à la mise en place de standards notamment pour les grands projets internationaux. En effet, ce type de projet fait intervenir de nombreux acteurs et la mise en commun des travaux de chacun se trouvait énormément complexifiée par l'absence de standard, entraînant des surcoûts et des délais supplémentaires.\\
+
+
+On peut néanmoins recenser une tentative de standardisation des mondes virtuels avec VRML (Virtual Reality Modeling Language). L'intention des personnes impliquées dans la création de VRML en 1994 était de créer un langage de réalité virtuelle ouvert et multiplateforme pour le Web. Il fut standardisé en 1996 mais son adoption par les acteurs de l'industrie de la 3D n'a pas été à la hauteur du concept derrière VRML.
+On reproche à ce langage de générer des fichiers trop grands, de ne pas proposer de compression ni de streaming ceci entraînant une vitesse de téléchargement et d'affichage trop lente \cite{Fuh_Li_2005}. \\
+De plus, les exports VRML proposés par les modeleurs 3D étaient de mauvaise qualité.
+On peut également avancé le fait que VRML manquait d'extensibilité et qu'il était trop précurseur par rapport aux capacités graphiques des machines disponibles et aux débits des réseaux de l'époque. En effet, il faut se rappeler que la première carte graphique grand public date de 1996 et les débits réseaux en 1996 ****.  Autre argument, la gestion de l'activité à travers des scripts compilés à la volée serait un peu lourde et aurait été un autre frein à l'adoption de VRML.\\
+Malgré tout, l'argument selon lequel VRML serait un format volumineux est contredis par le succès actuel de Collada qui génère des fichiers aussi grands voir plus que VRML. Quant à la mauvaise qualité des exports, la raison en est plus économique que technique. En effet, le secteur le plus prolifique en mondes virtuels est bien sûr le secteur du jeu vidéo. Les studios de jeux vidéo ne se sont absolument pas intéressés à VRML car cela ne s'intégrait pas du tout à leur modèle économique. Aussi les éditeurs de modeleurs 3D  dont les éditeurs de jeux vidéo étaient les principaux clients n'ont pas cherchés à améliorer leurs exports.\\
+Le manque d'extensibilité a par ailleurs été comblé par la création de X3D en 2005, successeur de VRML, mais ceci n'a pas suffit à faire adopter massivement ce nouveau format 3D. \\
+
+On peut voir à travers la tentative d'harmonisation de VRML qu'une solution d'interopérabilité doit à la fois proposer un excellent compromis technique mais également représenter un intérêt pour les acteurs du secteur visé. Tous les secteurs créateurs d'environnements 3D ne portent pas le même intérêt aux bénéfices que peut apporter l'interopérabilité. Dans le schéma de la figure \ref{fig:secteur_besoin}, nous avons représenté les bénéfices de l'interopérabilité pour chaque secteur.
+
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=10cm]{introduction/fig/Secteur_besoin_interop.png}
+\caption{Comparaison des besoins en interopérabilité suivant les secteurs}
+\label{fig:secteur_besoin}
+\end{figure}
+
+\subsection{Cadre fixé pour notre étude}
+
+Définition du cadre que l'on s'est fixé pour la solution que l'on propose. On veut une solution:
+
+	\begin{itemize}
+   	\item indépendante des moteurs qui composent l'environnement virtuel 3D
+		\item indépendante des formats 3D
+		\item possibilité des faire interagir entre eux les modèles 3D qui composent la scène finale quelque soit leur format de description d'origine
+		\item une solution extensible
+		\item une solution évolutive
+		\item une solution qui n'est pas recours au transcodage pour garder l'intégrité des formats ( fonctionnalités spécifiques ) 
+		\item une solution pratique et simple à mettre en oeuvre
+		\item une solution efficace, performante en terme de ressources matérielles
+\end{itemize}
+
+\ding{212} à mettre en perspective des solutions précédentes proposées et des raisons de leur manque d'adoption ?
+%--------------------------------------------------------------------------------
+\section{Description par chapitre}
+
+
+%ou \chapter*{Description par chapitre}
+%\addcontentsline{toc}{chapter}{Description par chapitre}
+%\markboth{Description par chapitre}{Description par chapitre}
+%--------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------------
+%\paragraph*{Chapitre \ref{chap:chapitre1}}~
+%--------------------------------------------------------------------------------

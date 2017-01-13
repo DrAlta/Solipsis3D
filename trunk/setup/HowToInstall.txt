@@ -1,0 +1,53 @@
+ 1- Install DirectX Redistributable from \Redist directory (Nov2007 or March2008)
+    or from Internet (http://www.microsoft.com/downloads search "DirectX Redist")
+
+ 2- Install Visual 2005 SP1 Redistributable from \VCRedistx86\vs2005SP1
+    or from Internet (http://www.microsoft.com/downloads search "Visual C++ 2005 SP1 Redistributable")
+
+ 3- On PC hosting the Peer, Install PhysX drivers from PhysX\PhysX_7.11.13_SystemSoftware.exe
+    or from Internet (http://www.ageia.com/drivers/drivers.html search "WindowsXP Version 7.11.13")
+
+ 4- Install Solipsis from Solipsis\Setup.exe
+
+ 5- Launch the RakNet server with 1 dedicated Media/cache directory
+    "Program Files"\Solipsis\Common\bin\RakNetServer\Release\RakNetServer.exe" -m <MediaCacheDirectory>
+    See readme.txt for additional arguments
+
+ 6- Launch the Peer with cmd.exe
+    "Program Files"\Solipsis\Common\bin\peerRakNet\Release\Peer.exe -h <IP@> -p 8880 -v 0
+    OR
+    In NCS config, the Peer is embedded into the Navigator so run the Navigator with previous arguments
+    See readme.txt for additional arguments
+
+ 7- For convenience, edit the file "Program Files"\Solipsis\Common\bin\navigator\Release\lua\boot.lua
+    and setup parameters into navigator:setNameValueVariable("PeerAddress", "<IP@>:8880")
+    and navigator:setNameValueVariable("Login", "me")
+
+ 8- Launch Navigator from the Solipsis programs group
+    See readme.txt for additional arguments
+
+ 9- Select graphics device parameters, Direct3D, Windowed/Fullscreen, ...
+
+10- Normally on login panel, you should see the world button on your local world (localhost:8660),
+    if you have several worlds the declare them into WorldsServer module and run it, then click on World button
+
+11- For Navi Web panels into the 3D world, if you are behind a firewall, go into Options/Proxy
+    to setup the proxy parameters
+
+12- Press connect and you should see your avatar dropped into the scene
+
+
+Notes about Flash Player plugin:
+ In Web pages using Flash, maybe your plugin will not be found, so check your local version
+ of Firefox is well displaying the same page and copy the Flash plugin DLL into your navigator\plugins directory,
+ you can find this DLL:
+  either into C:\Program Files\Mozilla Firefox\plugins\NPSWF32.dll
+  either into C:\WINDOWS\system32\Macromed\Flash\NPSWF32.dll
+
+Demo Notes:
+ You can move the Web navi panel, look into uichat.html
+ To set 1 url open the Debug panel with key [Pause] then enter url into the Demo tab and hit [Enter]
+ If web page loading seems frozen after you got focus on 1 Navi panel, hit [Escape]
+ To share 1 whiteboard, use www.skrbl.com, click on "start skrbl now" on the host, then use the url displayed above
+ on other navigators to share the created whiteboard (eg. www.skrbl.com/70966862)
+ You can use modeler to add objects with WWW navi, VNC or VLC textures

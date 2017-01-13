@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<Viewpoint description='Pyramid' orientation='0 1 0 .2' position='4 0 25' fieldOfView='0.7854'/>
+		<Transform translation='0 0 0' >
+				<Shape DEF='TEXTURED_BOX'>
+					<Box size="10.0 10.0 10.0"/>	
+					<Appearance >
+						<Material diffuseColor='0 1 0' specularColor='1 1 1' shininess='1'/>
+						<ImageTexture url='..\textures\clouds.jpg'/> 
+					</Appearance>
+				</Shape>
+		</Transform>
+	</Scene>
+</X3D> 

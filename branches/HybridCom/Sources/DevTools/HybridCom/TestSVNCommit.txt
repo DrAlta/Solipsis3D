@@ -1,0 +1,1 @@
+text file to test admin right for commit on SVN server.

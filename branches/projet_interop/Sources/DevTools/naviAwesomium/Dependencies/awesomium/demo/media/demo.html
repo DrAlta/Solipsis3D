@@ -1,0 +1,115 @@
+<html>
+<head>
+<style type="text/css">
+body {
+	color: #063c80;
+	font-family: Lucida Sans, Verdana, Arial, sans-serif;
+	margin: 0;
+	background-color: white;
+	font-size: 11pt;
+}
+
+#content {
+	margin: 0 auto;
+	width: 770px;
+	background: url("awesomium_trans_logo.png") no-repeat top;
+	padding-top: 190px;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+dl {
+	margin-left: 15px;
+}
+
+dt {
+	font-weight: bold;
+	color: #022b5d;
+}
+
+h2, h3 {
+	color: #011a38;
+}
+
+ul {
+	list-style-type: none;
+}
+</style>
+
+<script type="text/javascript">
+function updateFPS()
+{
+	document.getElementById('currentFPS').innerHTML = Client.fps;
+}
+</script>
+</head>
+
+<body>
+
+<div id="content">
+
+<h2>Welcome!</h2>
+
+<p>
+	<script type="text/javascript">
+		document.write(Client.welcomeMsg);
+	</script>
+</p>
+
+<h3>What Am I Looking At?</h3>
+<p>This is a WebView (the analog would be a standalone 'tab' in Firefox or Chrome) that is actively rendering to a texture and being
+projected onto a full-screen overlay.</p>
+<p>Naturally, we're not limited to just overlays-- <b>hit F1 to see</b>!</p>
+
+<div style="width: 60%; float:left; border-right: 1px solid #8cb6ea;">
+<h3>Controls</h3>
+<ul>
+	<li><b>Esc</b> - Quit</li>
+	<li><b>F1</b> - Toggle 3D Mode</li>
+	<li><b>F2</b> - Toggle Transparency</li>
+	<li><b>F3</b> - Return to this page</li>
+	<li><b>F4</b> - Increase Page Zoom by 20%</li>
+	<li><b>F5</b> - Decrease Page Zoom by 20%</li>
+	<li><b>F6</b> - Print FPS to Console</li>
+	<li><b>F7</b> - Toggle Shadows (default disabled)</li>
+</ul>
+<h4>Extra Controls for 3D Mode</h4>
+<ul>
+	<li>Hold <b>right-mouse-button</b> and drag to rotate camera around</li>
+	<li>Use <b>W A S D</b> keys to move around the terrain (while the WebView isn't focused)</li>
+</ul>
+
+<h3>System Info</h3>
+	<dl>
+		<dt>Render System</dt>
+		<dd><script type="text/javascript">document.write(Client.renderSystem);</script></dd>
+		<dt>Current FPS</dt>
+		<dd><span id="currentFPS">00</span></dd>
+	</dl>
+</div>
+
+<div style="width: 35%; padding-left: 10px; float:right;">
+	<h3>Recommended Links</h3>
+	<ul>
+		<li><a href="http://google.com">Google</a></li>
+		<li><a href="http://news.google.com">Google News</a></li>
+		<li><a href="http://vimeo.com">Vimeo</a></li>
+		<li><a href="http://youtube.com">YouTube</a></li>
+		<li><a href="http://glimr.rubyforge.org/cake/redesign.html">CakeJS Stress Demo</a></li>
+		<li><a href="http://artpad.art.com/artpad/painter/">ArtPad Painter</a></li>
+		<li><a href="http://princeofcode.com/">Prince of Code Site</a></li>
+		<li><a href="http://www.ogre3d.org/">Ogre3D Site</a></li>
+		<li><a href="http://myzerogear.com/">ZeroGear Site</a></li>
+		<li><a href="http://wolfire.com/">Wolfire Games</a></li>
+		<li>
+	</ul>
+</div>
+
+<script type="text/javascript">
+if(window.Client)
+	setInterval("Client.requestFPS()", 650);
+</script>
+
+</body>
+</html>

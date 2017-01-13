@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SGA_3DContainer>
+
+	<Group DEF="Mygroupnode"> 
+
+		<Content type="x3d" decoder_url="" wrapper_url="" url="../x3d/RedSphereBlueBox.x3d" />
+
+		<Transform DEF='TRANS_Box' translation='0 60 0' rotation='0.0 0.707 0.707 0.9' scale='0.5 0.5 0.5'>
+			<Content type="dae" decoder_url="" wrapper_url="" url="../collada/Cube/cube.dae" />	
+		</Transform>
+
+	</Group>
+
+</SGA_3DContainer>

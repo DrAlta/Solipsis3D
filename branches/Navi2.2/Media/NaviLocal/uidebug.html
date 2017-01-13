@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>uidebug</title>
+        <script type="text/javascript" src="Navi.js"></script>
+        <script type="text/javascript" src="mootabs1.2.js"></script>
+        <script type="text/javascript" src="mootree.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		    window.addEvent('domready', init);
+            var allTree;
+		    function init() {
+		        dbgTabs = new mootabs('dbgTabs', {width:'256px', height:'236px', changeTransition:Fx.Transitions.Linear, duration:0});
+	            allTree = new MooTreeControl({div:'allTree', mode:'files', grid:true}, {text:'Root', open:true});
+		    }
+		</script>
+        <script type="text/javascript">
+            function pageLoaded()
+            {
+				Client.pageLoaded('uidebug');  
+            }
+            function pageClosed()
+            {
+				Client.pageClosed();  
+            }
+            function debugCommand(command, parameters)
+            {
+				Client.debugCommand(command, parameters);  
+            }
+            function navCommand(command)
+            {
+				Client.navCommand(command);  
+            }
+        </script>
+        <style type="text/css">
+            .mootabs_title {
+	            list-style-image: none;
+	            list-style-type: none;
+	            margin: 0px;
+	            padding: 0px;
+            }
+            .mootabs_title li {
+	            float: left;
+	            background-color: transparent;
+	            padding: 2px 8px 2px 8px;
+	            margin-right: 2px;
+	            cursor: pointer;
+	            color: #FFFFFF;
+	            font-family: Verdana;
+	            font-size: 12px;
+	            line-height: 14px;
+            }
+            .mootabs_title li.active {
+	            border-top: 3px solid #B0E84D;
+            }
+            .mootabs_panel {
+	            display: none;
+	            position: relative;
+	            width: 256px;
+	            top: -1px;
+	            font-family: Verdana;
+	            clear: both;
+	            text-align: left;
+	            padding: 3px;
+	            overflow: auto;
+            }
+            .mootabs_panel.active {
+                background-color: transparent;
+	            display: block;
+            }
+        </style>
+        <link rel="stylesheet" href="mootree.css" type="text/css" media="screen" />
+        <style type="text/css">
+            body
+            {
+                padding-left: 11em;
+	            background-color: #000000;
+	            overflow: hidden;
+	            font-family: Verdana;
+	            font-size: small;
+	            color: #FFFFFF;
+            }
+            #container
+            {
+	            background-image: url('uidebug.png');
+	            position: absolute;
+	            left: 0px;
+	            top: 0px;
+	            width: 300px;
+	            height: 256px;
+            }
+            #tabs
+            {
+                position: absolute;
+                left: 22px;
+                top: 3px;
+            }
+            .buttonRow1
+            {
+	            position: absolute;
+	            left: 0px;
+                height: 24px;
+            }
+            .inputText
+            {
+                background-color: #FFFFFF;
+                color: #000000;
+            }
+            .buttonNavLine
+            {
+	            position: absolute;
+	            left: 0px;
+                top: 64px;
+            }
+            .buttonNav
+            {
+	            position: relative;
+                width: 56px;
+            }
+            #helpersToggleAxisButton { top: 10px; width: 100px; }
+            #helpersPosAxisInput
+            {
+	            position: absolute;
+	            left: 110px;
+	            top: 10px;
+            }
+            #helpersSclAxisInput
+            {
+	            position: absolute;
+	            left: 190px;
+	            top: 10px;
+            }
+            #rotateSunLightButton { top: 35px; width: 100px; }
+<!--            #demoPhysics1Button { left: 125px; top: 10px; } -->
+            #demoNavi1Button { top: 10px; width: 100px; }
+            #urlText { position: absolute; left: 0px; top: 40px; }
+            #urlInput { position: absolute; left: 30px; top: 40px; }
+            #urlpwdVNCText { position: absolute; left: 0px; top: 90px; }
+            #urlpwdVNCInput { position: absolute; left: 30px; top: 90px; }
+            #mrlVLCText { position: absolute; left: 0px; top: 120px; }
+            #mrlVLCInput { position: absolute; left: 30px; top: 120px; }
+            #voiceText { position: absolute; left: 0px; top: 150px; }
+            #voiceInput { position: absolute; left: 40px; top: 150px; }
+            .buttonDemoVoiceToggleTalk
+            {
+	            position: absolute;
+	            left: 190px;
+                top: 150px;
+            }
+            #voiceSilenceLvlLatText { position: absolute; left: 0px; top: 175px; }
+            #voiceSilenceLvlInput { position: absolute; left: 110px; top: 175px; }
+            #voiceSilenceLatInput { position: absolute; left: 180px; top: 175px; }
+            .solipsisIcons
+            {
+                display: block;
+                width: 24px;
+                height: 24px;
+                background-image: url(solipsisIcons.png);
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 3px;
+                left: 255px;
+            }
+            .solipsisCloseInactive { background-position: -24px -24px; }
+            .solipsisCloseActive { background-position: -24px -0px; }
+            .solipsisCloseActive:hover { background-position: -24px -72px; }
+        </style>
+    </head>
+
+    <body onload="pageLoaded()">
+        <div id="container">
+            <div id="tabs">
+			    <div id="dbgTabs">
+				    <ul class="mootabs_title">
+					    <li title="Helpers">Helpers</li>
+					    <li title="Demos">Demos</li>
+					    <li title="Tests">Tests</li>
+					    <li title="Tree" onclick="sd">Tree</li>
+				    </ul>
+				    <div id="Helpers" class="mootabs_panel">
+                        <button id="helpersToggleAxisButton" class="buttonRow1" name="buttonHelpersToggleAxis" value="buttonHelpersToggleAxis" type="button" onclick="debugCommand('toggleAxis', $('inputHelpersPosAxis').value)">toggleAxis</button>
+                        <div id="helpersPosAxisInput">
+                            <input id="inputHelpersPosAxis" class="inputText" name="inputHelpersPosAxis" value="0,0,0" type="text" size="7" onchange="debugCommand('posAxis', $('inputHelpersPosAxis').value)" />
+                        </div>
+                        <div id="helpersSclAxisInput">
+                            <input id="inputHelpersSclAxis" class="inputText" name="inputHelpersSclAxis" value="1" type="text" size="1" onchange="debugCommand('sclAxis', $('inputHelpersSclAxis').value)" />
+                        </div>
+                        <button id="rotateSunLightButton" class="buttonRow1" name="buttonRotateSunLight" value="buttonRotateSunLight" type="button" onclick="debugCommand('rotateSunLight', '')">rotateSunLight</button>
+				    </div>
+				    <div id="Demos" class="mootabs_panel">
+<!--                        <button id="demoPhysics1Button" class="buttonRow1" name="buttonDemoPhysics1" value="buttonDemoPhysics1" type="button" onclick="debugCommand('demoPhysics1', '')">demoPhysics1</button> -->
+                        <button id="demoNavi1Button" class="buttonRow1" name="buttonDemoNavi1" value="buttonDemoNavi1" type="button" onclick="debugCommand('demoNavi1', '')">demoNavi1</button>
+                        <form id="urlForm" action="" onsubmit="debugCommand('demoNavi2', $('inputUrl').value);return false;">
+                            <div id="urlText">URL</div>
+                            <div id="urlInput">
+                                <input id="inputUrl" class="inputText" name="inputUrl" value="" type="text" size="30" />
+                            </div>
+                        </form>
+                        <div id="navButtons" class="buttonNavLine">
+                            <button id="navBackButton" class="buttonNav" name="buttonNavBack" value="buttonNavBack" type="button" onclick="navCommand('back', '')">&lt;</button>
+                            <button id="navForwardButton" class="buttonNav" name="buttonNavForward" value="buttonNavForward" type="button" onclick="navCommand('forward', '')">&gt;</button>
+                            <button id="navStopButton" class="buttonNav" name="buttonNavStop" value="buttonNavStop" type="button" onclick="navCommand('stop', '')">X</button>
+                            <button id="navGoButton" class="buttonNav" name="buttonNavGo" value="buttonNavStop" type="button" onclick="navCommand('go', '')">Go</button>
+                        </div>
+                        <form id="urlpwdVNCForm" action="" onsubmit="debugCommand('demoVNC', $('inputUrlPwdVNC').value);return false;">
+                            <div id="urlpwdVNCText">VNC</div>
+                            <div id="urlpwdVNCInput">
+                                <input id="inputUrlPwdVNC" class="inputText" name="inputUrlPwdVNC" value="localhost:5900;solipsis" type="text" size="30" />
+                            </div>
+                        </form>
+                        <form id="mrlVLCForm" action="" onsubmit="debugCommand('demoVLC', $('inputMrlVLC').value);return false;">
+                            <div id="mrlVLCText">VLC</div>
+                            <div id="mrlVLCInput">
+                                <input id="inputMrlVLC" class="inputText" name="inputMrlVLC" value="" type="text" size="30" />
+                            </div>
+                        </form>
+                        <form id="voiceForm" action="" onsubmit="debugCommand('demoVoice', $('inputVoice').value);return false;">
+                            <div id="voiceText">Voice</div>
+                            <div id="voiceInput">
+                                <input id="inputVoice" class="inputText" name="inputVoice" value="localhost:30000" type="text" size="20" />
+                            </div>
+                        </form>
+                        <button id="demoVoiceToggleTalkButton" class="buttonDemoVoiceToggleTalk" name="buttonDemoVoiceToggleTalk" value="buttonDemoVoiceToggleTalk" type="button" onclick="debugCommand('demoVoice', $('inputVoice').value)">Start</button>
+                        <div id="voiceSilenceLvlLatText">Silence Lvl/Lat</div>
+                        <form id="voiceSilenceLvlForm" action="" onsubmit="debugCommand('demoVoice', 'SilenceParams ' + $('inputVoiceSilenceLvl').value + ' ' + $('inputVoiceSilenceLat').value);return false;">
+                            <div id="voiceSilenceLvlInput">
+                                <input id="inputVoiceSilenceLvl" class="inputText" name="inputVoiceSilenceLvl" value="5.0" type="text" size="4" />
+                            </div>
+                        </form>
+                        <form id="voiceSilenceLatForm" action="" onsubmit="debugCommand('demoVoice', 'SilenceParams ' + $('inputVoiceSilenceLvl').value + ' ' + $('inputVoiceSilenceLat').value);return false;">
+                            <div id="voiceSilenceLatInput">
+                                <input id="inputVoiceSilenceLat" class="inputText" name="inputVoiceSilenceLat" value="5" type="text" size="4" />
+                            </div>
+                        </form>
+                    </div>
+				    <div id="Tests" class="mootabs_panel">
+				    </div>
+				    <div id="Tree" class="mootabs_panel">
+                        <div id="allTree" />
+				    </div>
+			    </div>
+            </div>
+            <span id="mTbIconClose" class="solipsisIcons solipsisCloseActive" onclick="pageClosed()"></span>
+        </div>
+    </body>
+</html>

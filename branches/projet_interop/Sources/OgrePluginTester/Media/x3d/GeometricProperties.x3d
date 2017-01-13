@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Interchange' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <meta content='GeometricProperties.x3d' name='title'/>
+    <meta content='X3D specification example: simple demonstration of geometric-property nodes.' name='description'/>
+    <meta content='Don Brutzman and Joe Williams' name='editors'/>
+    <meta content='1 June 2002' name='created'/>
+    <meta content='28 July 2008' name='modified'/>
+    <meta content='http://www.web3d.org/x3d/specifications/ISO-IEC-19776-X3DEncodings-XML-ClassicVRML/Part01/examples.html#GeometricProperties' name='reference'/>
+    <meta content='http://www.web3d.org/x3d/content/examples/Basic/X3dSpecification/GeometricProperties.x3d' name='identifier'/>
+    <meta content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='../license.html' name='license'/>
+  </head>
+  <Scene>
+    <Shape>
+      <IndexedFaceSet coordIndex='0 1 3 -1 0 2 3 -1'>
+        <Coordinate point='0 0 0 1 0 0 1 0 -1 0.5 1 0'/>
+        <Color color='0.2 0.7 0.8 0.5 0 0 0.1 0.8 0.1 0 0 0.7'/>
+        <Normal vector='0 0 1 0 0 1 0 0 1 0 0 1'/>
+        <TextureCoordinate point='0 0 1 0 1 0.4 1 1'/>
+      </IndexedFaceSet>
+      <Appearance>
+        <Material transparency='0.5'/>
+        <PixelTexture image='2 2 1 0xFF 0x80 0x80 0xFF'/>
+      </Appearance>
+    </Shape>
+  </Scene>
+</X3D>

@@ -1,0 +1,1143 @@
+---------------------------
+12/09/07
+
+(http://www.ogre3d.org/phpBB2/viewtopic.php?p=245691)
+Following "sinbad OGRE Project Lead" remarks about bug on floats comparisons in OGRE 1.4.3, some updates into 3darrow\ogrenew\trunk\OgreMain\include\OgreRenderQueueSortingGrouping.h
+
+				    if (adepth == bdepth)
+REPLACED BY
+				    if (Math::RealEqual(adepth, bdepth))
+
+---------------------------
+17/09/07
+
+Proxy server config added into LLMozLib (getPAC, setPAC functions)
+NaviManager updated
+Uioptions.html updated
+
+Deltastation1.max added (!!! Take care to scale() on nodes, normals are scaled too !!!)
+
+---------------------------
+19/09/07
+
+Proxy server config is now 1 of tabs of the options panel
+Deltastation1 scene + salamandra avatar integrated + 1 navi 3D panel on the wall
+
+---------------------------
+20/09/07
+
+Some fixes into NaviMouse to avoid Ogre warning about manual texture reload
+Proxy config improved with now 4 proxy types
+
+---------------------------
+24/09/07
+
+Solipsis global solution added
+Full proxy config
+Some fixes on VC7 build
+Some improvements into the user's avatar motion (fluidity, straff in 1st person mode, mouse is now rotating avatar in 1st person mode)
+
+---------------------------
+25/09/07
+
+Last release of Navi (1.4) updated
+Suggested updates posted on Navi forum
+
+---------------------------
+27/09/07
+
+Exporters on salamandra
+oFusion seemed to have some aabboxes pb
+lexiExporter is OK on aabboxes but keep some position offset on mesh
+oFusion is OK on aabboxes on latest salamandra release
+
+---------------------------
+01/10/07
+
+Ode and OgreOde added
+Collisions with dedicated collision mesh of DeltaStation1 scene file
+1 ray added on user avatar to make feet following the floor
+
+---------------------------
+02/10/07
+
+DEMOPHYSICS1 added (1 cube dropped into the Deltastation1 scene)
+
+---------------------------
+03/10/07
+
+1 capsule geom added on user avatar for walk/run mvts collision
+
+---------------------------
+05/10/07
+
+1 sphere geom added on user avatar for floor and gravity
+1 sphere body added on user avatar for gravity
+Nota: spheres geom+body are activated only when feet are no more on the floor, and are deactivated when flying, they are complementary to the ray
+Key "END" added to activate gravity when flying to go down the floor
+
+---------------------------
+08/10/07
+
+VC7 projects updated for Ode + OgreOde integration
+Lua integration
+
+---------------------------
+23/10/07
+
+Some Navi updates (now focused Navi is refreshed to see/move cursor, Navi vs NaviMaterial management)
+3D ray picking added (you can now click on meshes with NaviMaterial mapped on, take care to be close to)
+1 new camera mode = First-person camera view with mouse interaction, usefull when looking 1 web page without
+the avatar in front of
+
+---------------------------
+26/10/07
+
+main modeler panel (accordion right menu like Max) added and available with F9
+
+---------------------------
+06/11/07
+
+Lua scripts boot + defaultGUI added with 
+avatar context menu
+DOCTYPE and title files added in html
+PageRefresh replaced by PageLoaded in html files
+lualib.h and lauxlib.h added into Lua include dependencies
+liblua_vc8.vcproj updated by ofda : $(ProjectDir) is DevTools\lua\scripts, paths were correct, check you are using the Solipsis solution
+OGRE_LOG helper macro added
+
+---------------------------
+08/11/07
+
+Navigator Mozilla Plugin pb about DLL loading tracked (due to WNDCLASS className conflict with FireFox)
+=> but still problems on 1st Navi Web Browser creation
+Navigator ActiveX added
+=> but still problems on 1st Navi Web Browser creation (like Navigator Mozilla Plugin)
+
+---------------------------
+15/11/07
+
+IE ActiveX & Mozilla Plugin to run Navigator from IE/Mozilla added :
+still problems with 2nd navi (eg. uioptions.html) on IE ActiveX, so 1 solution is
+to provide plugins to launch Navigator from IE/Mozilla instead of embedding it,
+
+Mozilla plugin is working with Navigator.dll (NavigatorModule) in Release config but fails on 1st Navi (onPageLoaded callback not triggered)
+
+---------------------------
+19/11/07
+
+Peer xml file added
+
+---------------------------
+20/11/07
+
+Solipsis namespace added
+
+---------------------------
+21/11/07
+
+Because VSExpress is not able to compile MFC/ATL projects, Plugins for ActiveX & Mozilla
+are commited into Common/bin/navigatorRunner
+
+---------------------------
+22/11/07
+
+integration of ODE and OgreOde : pb about cubes diving into collision mesh was SIMPLY due
+to the mesh' normals direction ! Flipping them resolved it.
+
+Integration of Ageia PhysX and Tokamak for tests
+
+---------------------------
+23/11/07
+
+URL parameter added to demoNavi2
+
+---------------------------
+27/11/07
+
+new scale (unit=1 meter) applied into media contents, temporary avatars' positions and physics engines
+doxygen added
+
+---------------------------
+28/11/07
+
+PhysX character capsule controller added, still some stuff because avatar is diving into floor
+
+---------------------------
+05/12/07
+
+NavigatorModule added
+NavigatorPlugin and NavigatorActiveX updated
+now source code is shared by 3 application types and fully contained into NavigatorModule
+in standAlone application, the AutoCreatedWindow class keep the possibility to use the native Ogre
+config management / window creation
+doxygen on NavigatorModule added
+
+---------------------------
+06/12/07
+
+Mouse management in plugin modes improved
+
+---------------------------
+07/12/07
+
+Ogre Prebuilt-SDK compilation updates
+1 bug fixed in Ogre 1.4.5 into Plane::projectVector()
+OgreApplication mutex added
+booleans replaced by 1 mutex to start render loop when window is set
+
+---------------------------
+10/12/07
+
+quotes added in paths (include/lib paths, post-build events) to avoid troubles with paths containing special characters (like space)
+pb with Ageia PhysX character controller (diving into the floor) fixed, it was due to SKIN_WIDTH < 0.1
+Instance was not terminated when closing window with ALT+F4
+
+---------------------------
+11/12/07
+
+ODE updates: feet sphere removed and full capsule+body added to compute collisions with other bodies (like PhysX)
+
+---------------------------
+20/12/07
+
+Generic interfaces created to host several physics engines through DLL/DSO,
+native Ogre plugin mechanism is used to create those plugins,
+Ogre is loading them through its plugins.cfg file,
+for instance, ODE, Ageia PhysX and Tokamak engines are implemented,
+interfaces are composed of simple methods required to manage 1 scene, 1 body (box), 1 character.
+
+---------------------------
+09/01/08
+
+3D ray picking
+ - Added 1 ManualObject's bbox smaller than avatar entity's bbox
+ - some commented source to eventually inplement the pixel color picking
+
+---------------------------
+10/01/08
+
+Added physics engine choice into UI options according to available plugins
+
+---------------------------
+14/01/08
+
+Commit of last SVN release of Navi (NaviDemo is delivered in last.zip)
+
+---------------------------
+17/01/08
+
+NaviCursor mouse display on starting problem with last Navi delivery fixed
+
+---------------------------
+21/01/08
+
+Commit of official Navi v1.5
+
+---------------------------
+30/01/08
+
+Node/Navigator beta developments, nodeSimulator added, generic interface (INodeClient) and
+Solipsis Xml messages helpers (XmlDatas) added
+
+---------------------------
+31/01/08
+
+Node/Navigator beta developments, 3rd-parties added : expat, ulxmlcpp
+Node/Navigator beta developments, most simple version of Navigator connecting to Node(Peer)
+(into navigatorModuleOnlyNav in order to keep 1 full demo-stable version into navigatorModule)
+
+---------------------------
+01/02/08
+
+Node/Navigator First test with then ULXMLRPCPP MultiThreaded lib instead of the XMLRPC++ SingleThreaded lib,
+client connection is then shared with the NodeEventListener thread in order to call blocking method HandleEvt,
+1 dedicated thread is then used on server-side, SendEvt method can be called in parallel
+For 1 navigator (client) => 1 server-thread (Login/Logout/SendEvt) + 1 server-thread (HandleEvt)
+
+---------------------------
+03/02/08
+
+Bug fix about Navi not currently supported into Web Browsers plugins since Navi 1.5 update
+
+---------------------------
+11/02/08
+
+Setup projects (vc7 + vc8) added to create installation packages of the navigator
+
+---------------------------
+12/02/08
+
+Navi comparison operator VC7 compatibility fix restored after Navi1.5 revision
+
+Navi::setAutoUpdateOnFocus() added in order to avoid consuming CPU on automatic updation of
+currently focused navi panel, now the Navi must be declared with autoUpdatedOnFocus=true to see
+the blinking cursor in input widgets
+
+---------------------------
+21/02/08
+
+setlocale() added into navigator main application to ensure NUMERIC representation compatibility
+between hosts (seen into future devpts about Peer-Navigator XML communications)
+
+DigitalOcean (virtualDive) test button added
+
+Peer/Navigator beta-developments (vc7 & vc8 configs):
+ Protocols into \protocols added with P2N (ie. Peer-to-Navigator) client/server interface classes
+  XML datas used by client or server libraries
+  client xmlrpc++
+  server xmlrpc++ (single-threaded)
+  server ulxmlrpcpp (multi-threaded)
+ Peer side
+  Peer physics plugins into \peerPhysics with only PhysX plugin for instance (ODE plugin will be developped later)
+  Peer module (Peer.dll) into \nodeSimulator is using Ogre, peerPhysics plugins + 1 of P2N server (xmlrpc++ or ulxmlrpcpp)
+  Peer application (Peer.exe) into \nodeSimulator
+ Navigator side
+  Navigator into \navigatorModuleOnlyNav + P2N client (xmlrpc++)
+Limitations:
+ nodeSimulator is only 1 Solipsis Peer simulator, only 1 client (avatarNode) is simulated
+Tests:
+ Peer & Navigator on same PC
+ Peer & Navigator on 2 differents PC 
+ servers xmlrpc++ & ulxmlrpcpp
+ Peer & Navigator plugin on IE/Mozilla on same PC
+
+---------------------------
+22/02/08
+
+nodeSimulator updated in order to manage several connected entities (position, orientation are updated only)
+
+---------------------------
+10/03/08
+
+MdlrTools updated :
+	- ADD Possibility to move/rotate/scale primitives
+	- ADD Material edition
+	- ADD Load/Save Objects (Selection or full save)
+	- UPDATE : Navi UI properties frame 
+	
+---------------------------
+12/03/08
+
+Modeler updates :
+ - report vc7->vc8
+ - reports from NavigatorModule into NavigatorModuleOnlyNav
+
+---------------------------
+14/03/08
+
+LLMozLib was originally compiled/linked on VC7.1 so msvcp71.dll, msvcp71d.dll, msvcr71.dll, msvcr71d.dll
+are necessary when Solipsis is compiled/linked on VC > 7.1, unfortunately those DLLs were not packaged in
+a redistributable, you can find them into DevTools\llmozlib\libraries\i686-win32\vc71redist
+
+---------------------------
+17/03/08
+
+XmlData inherited classes are managed through synchronized references counted pointers + pool,
+to avoid too much heap new/delete operations and to automatically "garbage" no more used instances
+like XmlEntity (eg. Avatar::XmlEntity attribute is used after Avatar instance deletion to send the lost event
+to other peers/nodes)
+
+---------------------------
+20/03/08
+
+bug fix into peerPhysX plugin on controller manager releasing crash when 2 avatars are connected then
+the first connected finally disconnect, legacy ::ControllerManager used instead of NxControllerManager
+
+---------------------------
+21/03/08
+
+some MTSafe bugs fixed into class RefCntPoolPtr
+
+New Peer vs Navigator config called NCS (Null Client Server) added in order to link Peer lib
+and Navigator lib together into the same Navigator executable application
+(for instance it is NodeSimulator which is linked but future work will permit to link with the final Peer lib)
+ - P2NNullClientServer project added into protocols
+ - New visual configs NCS added into NodeSimulator, NavigatorModuleOnlyNav and PeerPhysics
+ - some updates to let sharing Ogre between Peer and Navigator libs
+
+---------------------------
+25/03/08
+
+reports modeler updates + island scene
+1st person camera Y-mode rotation restored
+
+---------------------------
+26/03/08
+
+boot.lua is now calling setConnectionParams() to define default values, usefull on network tests
+
+avatar displacement improved by specifying new defines TRANSLATION_ANIM_LOOP and ROTATION_ANIM_LOOP giving
+distance/rotation reached during 1 animation loop
+
+avatar's selectionObject moved into Avatar class + avatar full deletion of Ogre nodes + movables
+distant avatar backward movement correctly reproduced
+
+bug when using graphics cards with TEXTURE_POW2 caps (like ATI) fixed, in this case texture is unloaded, resized then image is reloaded
+
+---------------------------
+27/03/08
+
+new vc8 & vc9 Solipsis solutions delivered to build Peer, Navigator libraries and Navigator application
+ - old Solipsis solutions renamed solipsisNavDemo_vcX.sln
+ - expat and ulxmlrpcpp libs added
+ - protocols projects added (XmlDatas, P2NClient, P2NServers, P2NNullClientServer)
+ - navigatorModule replaced by navigatorModuleOnlyNav
+ - nodeSimulator renamed peerModuleSimulator
+ - peerModuleSimulator, peer and peerPhysX added
+ - NCS visual configs added to build 1 Navigator application with Peer embedded
+
+---------------------------
+28/03/08
+
+number of attempts added into XMLRPC++ client to avoid the timeout (fault:500) received from ULXMLRPCPP server
+after more than 15sec of inactivity (workaround)
+
+---------------------------
+31/03/08
+
+argument -s added into peer application to specify demo scene loaded + demoNavi2 position tuning added into uichat.html
+
+---------------------------
+01/04/08
+
+NSIS setup added (because visual deployment projects are only available on commercial versions)
+
+---------------------------
+02/04/08
+
+user login is now used as name above the avatar
+uidebug panel updated to improve URL features, now you can navigate back, fwd, stop and go
+
+---------------------------
+03/04/08
+
+Peer simulator connections/IDs management bug fixed
+logger added into IPhysicsEngine to track 1 bug about multiple scenes into PhysX plugin
+logger into OgreHelpers is now thread safe
+
+---------------------------
+04/04/08
+
+exceptions management improved (ideally like Ogre errors should be returned through exceptions instead of bool results)
+verbosity added into server interface
+XmlRpcLogHandler and XmlRpcErrorHandler defined and messages forwarded to caller logger
+PhysXSDK NxUserOutputStream logger added to get warnings/errors from SDK
+PhysXSDK warning about first call to fetchResults() before first call to simulate() fixed
+Now login fails if avatarNode cannot be created on the Peer
+ULXMLRPCPP client implementation added
+
+---------------------------
+07/04/08
+
+NAVI_SUPPORT env. var. seems not defined when navigator is running as Mozilla plugin => assumed false if not defined
+readmePlugin.txt + testMozilla.html added into NSIS setup
+
+---------------------------
+08/04/08
+
+orientation now applied when new avatar appears
+HANDLEEVTSYNC define added to block the handle evt RPC when using ULXMLRPCPP
+
+---------------------------
+11/04/08
+
+first step of VNC viewer-textureSource OGRE plugin integration (thanks to realXtend)
+Original plugin changed to be dynamically loaded by Ogre
+Still some stuff to remove all WIN32 windows/dialogs (eg. on connection, password dialog should be replaced by navi)
+
+---------------------------
+14/04/08
+
+AvatarTools reports + some dependencies fixed
+
+---------------------------
+15/04/08
+
+2nd step of VNC viewer-textureSource OGRE plugin integration
+Client window + modal dialogs removed
+
+---------------------------
+16/04/08
+
+VNC viewer-textureSource OGRE plugin : Mouse events added, FPS param used
+No context Navi panel on 1stPersonWithMouse camera mode
+
+---------------------------
+28/04/08
+
+voiceEngine added (voice chat client/server) with FMod, Speex (thanks to realXtend)
+Ogre plugin voice client added
+simple multithreaded TCP voice server implemented
+CommonTools library added to migrate all crossplatforms helpers classes into same lib (System, BasicThread, ...)
+vc8 & vc9 configs for VNCplugin added
+AvatarTools vc8 config added
+
+---------------------------
+15/05/08
+
+VNC viewer-textureSource OGRE plugin : FPS param correctly used
+
+---------------------------
+16/05/08
+
+VLC 3rd party added (include, libs, runtime + build instructions)
+VLC-textureSource OGRE plugin added
+
+---------------------------
+19/05/08
+
+NavPlugin_FModSpeex.dll renamed Plugin_FModSpeex.dll
+
+---------------------------
+20/05/08
+
+gatePos XML elt added into the scene .xml file to set the intial gate position for avatars entry
+System mouse cursor visibility added into CommonTools
+
+---------------------------
+21/05/08
+
+ImportMesh (.mesh) added into uimdlrmain
+Material tabs for Texture/WWW/VLC/VNC added into uimdlrprop
+
+---------------------------
+23/05/08
+
+Dependencies MdlrTools on CommonTools, CommonTools on pthread added
+RTC error check on llmozlib fixed for Navi panels in Debug mode
+Params FPS for navis + FPS/params for VLC external textures added
+Navi materials now prefixed by "WWW_"
+DEMO_NAVI positions updated after moved scenes
+Physics input removed from options of navigator
+Entity clone creation into XMLImport
+
+---------------------------
+02/06/08
+
+Context panels fully managed with LUA (avatar, WWW navi, VLC)
+Events (LUA commands, mouse, keyboards) sent to VLC/VNC plugins with the extended class ExternalTextureSourceEx
+Keyboard events now supported by VNC plugin
+
+---------------------------
+03/06/08
+
+GPL2.0 licence header added into sources
+addIntoCfg.bat single instance moved into Common
+warning about vc7 added into readme.txt
+
+---------------------------
+04/06/08
+
+VirtualDive DigitalOcean scene updated with ocean water shader
+EntryGate position+gravity
+
+---------------------------
+06/06/08
+
+Keys pressed into Modeler navi have now priority upon modeler shortcuts (like suppr key to enter url / delete selected object)
+Modeler selection of objects with materials Navi/VLC/VNC is now working well with QueryFlags bitmask (like Object | VNC)
+
+---------------------------
+09/06/08
+
+Change the graphics interfaces.(the files uiavatarmain.png, ... in /Media/Navilocal)
+
+Optimize the zoom in 3rd person camera mode.
+   3rd person --zoom  in--> 1st person
+   1st person --zoom out--> 3rd person
+
+
+---------------------------
+13/06/08
+
+multiavatars management added:
+ characterInstance class added
+ .saf files contains _edition.nature
+ <uid>.sif file contains now specific character instance properties (_edition.conf)
+ xml avatarNode file removed
+ xml sceneNode file is renamed in <uid>.xml
+uilogin updated to connect on login input ENTER key pressed
+
+---------------------------
+18/06/08
+
+cleanup updated
+NSIS simplified with NCS config added
+Modeler fix for getMeshInformation() memory crash into urealvector of vertices workaround when importing Ogre mesh
+
+---------------------------
+01/07/08
+
+scenes are zipped into .ssf files
+Peer module load/save nodes (avatar node saves its avatarNode + nodes of owned entities)
+Avatar node saved file contains list of owned nodes/entities
+Site node saved file contains list of present nodes/entities
+1 object node is saved through modeler with its .sof (1st step of implementation)
+WWW/VLC/VNC textures are described into the XML of the object3D saved into the .sof
+
+---------------------------
+02/07/08
+
+arg -m added to Peer module in order to specify 1 network shared Media/cache directory
+
+---------------------------
+04/07/08
+
+chat updated with 1 input+textarea panel, messages are broadcasted to other present avatars
+
+---------------------------
+22/07/08
+
+add the plugin for the 3ds format.The source code is in ../plugin_3ds.
+
+change the correspond .bat files.
+
+standardize the models loaded.
+
+----------------------------
+23/07/08
+
+when avatar is saved, update evt is sent to peer and forwarded to other avatars
+
+---------------------------
+24/07/08
+
+modeler and avatarEditor keyboard focus pbs fixed (F8, F9, move/rot/scale keys)
+NSIS setup improved (webpage visit with icon, vista start shortcuts not deleted bug fixed, 
+media/cache files saved into the setup)
+
+---------------------------
+RELEASE 1.0.0
+
+---------------------------
+28/07/08
+
+RakNet integration : on login, owned entities list no more sent (the owner attribute is compared to the nodeId returned on login)
+
+---------------------------
+21/08/08
+
+RakNet integration
+ RakNet server + peerModuleRakNet replace the previous peerModuleSimulator
+Avatar network interpolation
+ mvt smoothing improved (20 updates/sec between P&N and P&RakNet server)
+ animation state passed on the network
+ orientation now smoothed
+
+---------------------------
+RELEASE 1.0.1
+
+---------------------------
+01/09/08
+
+add the plugin for the skp format.The source code is in ../plugin_skp.
+
+change the correspond .bat files.
+
+---------------------------
+05/09/08
+
+File transfer added between Peer & RakNet server
+Cache management of Media/cache directory
+All files are now in Media/cache
+Objects creation/update/destruction managed on network
+RemoteMrl added into VLC params to play streamed media on distant clients
+Local IP is auto set in the VLC params
+New logger class added into CommonTools
+
+---------------------------
+10/09/08
+
+Workaround for the fullscreen bug in NCS configs, bug was due to concurrent rendersystem-level calls (D3D)
+between PeerModuleRakNet (physics mesh file loading) and Navigator (rendering calls), workaround consists in
+locking (in NCS mode) rendersystem-level calls meanwhile PeerModule thread is loading the physics mesh
+Some memory leaks (D3D Debug warnings) fixed
+Movables now destroyed on shutdown:
+ Modeled objects not saved
+ Transformations gizmos
+ Avatar cameras nodes
+GoodyModels are now destroyed on Goody destruction
+BodyPartModels and CoupleOfPoses are now destroyed on BodyPart destruction
+Characters are now destroyed on CharacterManager destruction
+Character resource group is now destroyed
+Scene resource group is now destroyed
+Scene loading moved into Scene class
+OutputDebugString support added
+
+---------------------------
+RELEASE 1.0.2
+
+---------------------------
+26/09/08
+
+WorldsServer added with port 8550
+CommonTools updated with showMessageBox, runExternalWebBrowser
+Authentication added ('F'acebook, 'S'olipsis with WorldsServer or 'f'ixed), uilogin/uioptions panels updated
+curl+md5wrapper libs added
+Facebook authentication lib added
+EntityUID updated from unsigned int to string
+NodeId format with 1 authent prefix char + authent id
+EntityUID format with <NodeId:str>_<ObjId:ushort><SubObjId:ushort>
+RakNetServer -s arg now specify the loaded scene EntityUID
+PeerModuleRakNet default port updated from 8550 to 8880
+
+---------------------------
+29/09/08
+
+some fixes on last updates for Navigator plugin (Mozilla & IE)
+Navi still not supported so
+- object with Navi mtls are resetted with default_texture
+- no Navi panels so there is 1 automatic login with the fixedNodeId initialized in boot.lua
+
+---------------------------
+RELEASE 1.0.3
+
+---------------------------
+30/09/08
+
+Python slow HTTP responses were due to DNS resolving through call to gethostbyaddr()
+into SimpleHTTPRequestHandler::address_string(), now the address_string surcharge disable this lookup
+and speed up response time
+
+---------------------------
+02/10/08
+
+chat bugs fixed:
+- bad deserialization of entityUID caused Peer crash
+- special characters (ie not ASCII) are now converted from string to wstring before assigning to MovableText
+- text is now centered + Z onTop + appears during 10sec with fading
+Navi.js compressed with YUIcompressor to optimize datas size of web pages served by the WorldsServer
+main menu bar, about, commands panels added
+
+---------------------------
+07/10/08
+
+close icon added to panels
+now user return to login panel after exiting from 1 scene
+
+---------------------------
+08/10/08
+
+status bar added
+mainmenu + statusbar alpha mask added
+cleanup added into OgrePeerManager, Modeler
+WorldsServer web pages are now displayed by navigator only after bg image loaded
+remotemrl input final extra chars removed
+suppr key in modeler prop panel does not del current object (because used in HTML inputs)
+
+---------------------------
+RELEASE 1.0.4
+
+---------------------------
+10/10/08
+
+skybox now disabled on disconnect
+physics terrain now removed on disconnect
+
+---------------------------
+15/10/08
+
+new scene Rennes added
+now only entities converted into static geometry are destroyed (with their scene nodes) in order to keep lights/cameras/... of original scene
+now log files are post-fixed with pid + date + time
+
+---------------------------
+22/10/08
+
+Setup updated with automatic install of VCredist, Python, DirectX and PhysX packages
+Installation Guide v1.0 added
+readmeUser.txt added
+WorldsServer host/port added in uioptions.html
+About panel now sized according to screen
+Password added into WorldsServer users registration + uilogin.html
+
+---------------------------
+24/10/08
+
+New UI + Setup updates
+
+---------------------------
+RELEASE 1.0.5
+
+---------------------------
+24/10/08
+
+Rennes entry gate centered on place
+Now connect directly called after authentication success
+MessageBox Navi added (used on authentication errors + WorldsServer cnx error)
+Login panel datas are now saved
+Icons added (WorldsServer, RakNetServer, Peer)
+closeIcon hover added
+StringHelpers::isAValid login/pwd methods added
+AuthentFB destroy bug fixed
+WorldsServer exe generation added
+Setup 1.0.6 with DXMarch2008
+
+---------------------------
+05/11/08
+
+Middle mouse button now defocus current navi
+nodes/meshs of objects in modeler use now entityUID instead of name attribute
+EntityUID of object is now displayed into properties panel
+Test if voiceengine plugin loaded otherwise it is simply not supported
+MessageBox with Navi now used in modeler
+
+---------------------------
+06/11/08
+
+Reset viewport background color on disconnect
+Unload avatar/modeler panels on disconnect
+Full reset of camera nodes (pos+orientation) into Avatar::onSceneNodeChanged
+scene Rennes updated
+
+---------------------------
+07/11/08
+
+Camera bug when connecting, no move, disconnecting, re-connecting now fixed,
+it was due to Ogre internal updateView() call of isOutOfDate() returned false
+because new connected avatar at the same pos/orient than old disconnected one
+=> reset of camera orientation force this update before call to lookat
+
+---------------------------
+12/11/08
+
+createPlane was missing into Modeler::createObjectWithXML()
+resetMousePicking added into disconnect() to fix bug when quitting when 1 object is selected
+boot.lua updated to use our public WorldsServer + localWorldAddress/login now empty
+WorldsServer.py arguments added
+
+---------------------------
+13/11/08
+
+simple version check between Navigator and WorldsServer to ensure compatibility
+
+---------------------------
+14/11/08
+
+avatarSelect replaced by 1 input + clear of namesList bug fixed
+Dxredist unzipped to get DXsetup.exe (august2008)
+
+---------------------------
+RELEASE 1.0.6
+
+---------------------------
+17/11/08
+
+CTCrashReporter class added into CommonTools
+CrashReport added into Standalone navigator application
+Hotspot tuned of new cursor bitmaps
+Automatic save of dirty unsaved owned objects when closing modeling tool
+Modeler color picker move-drag deactivated
+Last tabber updated when selecting another object then returning on properties panel
+
+---------------------------
+19/11/08
+
+axes colors updated
+alpha on chat label improved
+
+---------------------------
+RELEASE 1.0.7
+
+---------------------------
+25/11/08
+
+Servers shortcuts removed from desktop
+New simplified RakNet library RakNetObjects added
+General option tab added to reset display configuration on restart
+Solipsis display config dialog added, default first render system + windowed mode + VSync
+WIN32 application icon of autocreated window defined on IDI_ICON1 101
+RequestExecutionLevel admin into nsis setup (Vista installation)
+
+---------------------------
+26/11/08
+
+Modeler dblSide material bug fixed
+Added extended datas associated to the world server : voice IP server, VNC server, VLC server
+Building Guide v1.0 added
+
+---------------------------
+27/11/08
+
+Mouse cursor is now exclusive only on 1st person camera mode, mouse can leave window
+
+---------------------------
+27/11/08
+
+Added a facial animation system that allows the lips of the avatars to move when the user contolling them is talking.
+Small updates into visual configs : XmlDatasBasicTypes.h replace Solipsis lib, ZLib configs removed, cleanup.bat updated, projects directories fixed, dll copy moved into postBuild batches
+
+---------------------------
+RELEASE 1.0.8
+
+---------------------------
+05/12/08
+
+libiconv added into DevTools to convert WCHAR_T (ie std::wstring) in UTF8
+chat panel is now internationalized
+ - 1 TrueTypeFont to display special wide-chars, 
+ - conversions: HTML chat panel (URI-encoded) -> defaultGUI.lua -> XmlAction::desc (wstring) -> XML (UTF8 + xmlEscaped) -> RakNet String serialization
+
+---------------------------
+08/12/08
+
+VNC and VLC plugins added into global solution
+VNC viewer (VNC plugin) is now using same zlib than Solipsis (only libjpeg and omnithread are still proprietary libs)
+
+---------------------------
+10/12/08
+
+Skybox keys shortcuts only InWorld
+ResetMousePicking on object deletion (bug fix)
+sof texture not reloaded due to lack of resourceGroup/Location in Object class
+bug fixed in "modeler add texture" => new test in 160RC1, absolute path without resource location declared are now rejected
+
+---------------------------
+11/12/08
+
+Bug fix in Instance::handleEvents() when 1 exception occurs in FrameListener, same evt was looping
+Close events from console window (RakNetServer) is now caught
+WorldsServer saves users.xml on each new authentication
+
+---------------------------
+12/12/08
+
+Antlr and gecode added into DevTools (for declarative modeling)
+
+---------------------------
+16/12/08
+
+mdlrprop panel
+ bug fix VLC param filename with \ not well displayed when object is loaded
+ file browse added into mrl input
+VNC [noimage] the "Please wait - initial screen loading" bitmap is now received meanwhile connection is established
+VLC [noimage] the screen is black on initialization
+MouseWheel do not zoom camera if 1 navi is focused
+NavigatorGUI install itself as WindowEventListener to catch window resize and update Navi panels positions
+Cleanup.bat updated (Antlr and gecode clean up)
+
+---------------------------
+17/12/08
+
+Avatar MvtType on 1stPersonCamMode bug fixed
+uictxt avatar look#talk#cancel replaced by config#create#chat#talk
+
+---------------------------
+08/01/09
+
+Spatialized sound added on VLC-textureSource mapped objects
+New VLC audio ouput plugin called amem is in charge of forwarding sound buffers to handler
+NavigatorSound implements the sound handler to take in charge buffers streaming and 3D parameters in FMod
+uimdlrprop panel updated to specify use of 3D sound and additional parameters (min, max dist)
+
+---------------------------
+12/01/09
+
+VLC plugin crash bug fix when 2 VLC instances are running simultaneously and 2nd libvlc_destroy(mLibVLCInstance) crashed
+=> fixed by adding Static functions in misc/unicode.c, misc/win32_specific.c called only once in libvlc.c + misc/messages.c msg_XXX() logs removed 
+--loop added
+
+---------------------------
+19/01/09
+
+VoiceEngine silence detection added, parameters added, talk ctxt button bind added, some bugs fixed, vc configuration cleaned
+Cameras attachment on user avatar now performed into Avatar::onSceneNodeChanged()
+
+---------------------------
+20/01/09
+
+VoiceEngine TestServer added into Common\bin and nsis setup
+
+---------------------------
+21/01/09
+
+Declarative Modeler added
+VoiceEngine is now supporting 3D sound on speaking avatars
+
+---------------------------
+28/01/09
+
+VLC plugin
+ - multi-instances support improved (now instance's args are no more retrieved from GLOBAL config but from saved instance's args var pointers)
+ - 1 workaround added about crash when launching several VLC materials in the same time (a better solution should be found)
+
+---------------------------
+05/02/09
+
+voIP server address from uiworlds.html response taken into account, client will now connect by default on world dedicated voIP server
+Statistics added
+ - C++ CTStatsManager, Python StatsManager classes
+ - RakNetServer and WorldsServer are now generating stats
+ - Statistics directory contains usefull scripts to compute stats
+Setup abort message about administrator rights added
+
+---------------------------
+06/02/09
+
+voIP server address from uiworlds.html response taken into account
+postbuild batch events optimization (gecode, antlr, libiconv)
+
+---------------------------
+10/02/09
+
+URL update on network added (1 action is sent over network when Navi location change)
+iconv long string bug fix
+truncated log strings are now postfixed by \n
+
+---------------------------
+17/02/09
+
+Artefacto updates committed
+voiceEngineSimpleServer and TestServer added into solutions
+getNaviEntityName restored into Modeler.cpp
+play call into NavigatorSound::opensb() removed
+WorldsServer.py version set to 1.0.9
+
+---------------------------
+19/02/09
+
+VLCinstance do not play auto on creation + play handleEvt added to let material user responsible of
+Modeler: mrl and remoteMrl are tested before embedding media (MRL) into SOF file (webcam, webtv, webradio, streamed media, ...)
+
+---------------------------
+RELEASE 1.0.9
+
+---------------------------
+19/02/09
+
+Talk crash fix, FModSpeexEngine VoicePacketListener calls are now thread-safe
+VoipServer bad address bug fix
+New mainmenu Action > Talk added
+
+---------------------------
+26/02/09
+
+Trunk files organization improved
+Storing not/no more used sources into 1 dedicated oldSources dir
+Some files/dirs removals/cleans applied
+
+---------------------------
+27/02/09
+
+CallsFlows doc added
+Calls flows with 2 connected avatars + avatar customization + object creation added
+Statistics readme.txt added
+Now add -S arg to specify where RakNetServer will store their statistics (usefull when having several servers on 1 host)
+
+---------------------------
+04/03/09
+
+Navigator :
+
+Added a sound icon on the top of avatars when taking 
+No more label for your own avatar
+---------------------------
+06/03/09
+
+RakNet connections lost: timeout param increased to 15s + re-connection
+RakNet connections lost: error dlg msg added + disconnect/re-connect
+RakNet connections lost: ghost avatar/character added + Kevin.saf alpha_rejection param removed
+Cache Manager: now files transfers are performed by chunks of 4Kb to avoid bandwidth saturation
+CommonTools: added path separator accessor
+
+---------------------------
+09/03/09
+
+Avatar appears now on last position if scene is the last visited one (new connection + re-connection)
+Added version control lua script (eg. RakNetVersion.h with string version)
+
+---------------------------
+04/03/09
+
+Cache Manager :
+Correction of the crash when the file is no more on the disk
+
+---------------------------
+19/03/09
+
+Added a sample TerrainModeler into the Sources/Modelers section.
+Not yet integrated in the Navigator GUI though.
+ 
+---------------------------
+25/03/09
+
+Peer logout crash fix (due to bad synchronization on TimeListeners)
+RakNet Replica scoping:
+- ReplicaManager plugin moved into RakNetObjects lib (to tune it)
+- now RakNetServer is deal with avatar-avatar scoping and construct/destruct avatars' replicas according to their distance (default 50m)
+
+---------------------------
+30/03/09
+
+Some fix about progress bar and avatar tuning
+
+---------------------------
+06/04/09
+
+selected obj saved by "quick save" after primitive creation is now re-inserted into mListNodeSinceLastSave in order to save next update
+
+---------------------------
+07/04/09
+
+RakNet ReplicaManager2 plugin replaced by 1 high-level ReplicationManager class (autoserialize, construction/destruction scope)
+Peer logout vs network loop synchro bug fix
+Release 1.1.0 set due to major network interface update
+
+---------------------------
+09/04/09
+
+skp plugin dependencies updated
+world button shift fix
+readme.txt now replaced readmeUser.htm
+Release 1.1.0 Pre-Version
+
+---------------------------
+10/04/09
+
+TestServer replaced by VoiceEngineTestServer in NSIS setup
+scene download bug fix
+quick save obj selection to save bug fix
+Release 1.1.0 new delivery
+
+---------------------------
+21/04/09
+
+Cache file writing bug fix
+RakNet 3.401 (used in release 1.1.0) FileListTransfer plugin bug fix (i not resetted before filesToPush loop)
+Release 1.1.0 new delivery
+
+---------------------------
+20/04/09
+
+ANTLR sources added into DevTools to avoid VC++ version conflicts
+Triangle library added to DevTools as it is used by the terrain generator
+Postagger library added to DevTools
+
+---------------------------
+23/04/09
+
+Cantine meeting bug: ResourceGroup is now destroyed when object3D was not loaded (eg. prim type OTHER not yet supported)
+Cantine meeting bug: Bad logs %s with getUid() std::string
+
+---------------------------
+24/04/09
+
+Cantine meeting bug: multiple athentications of same avatar bug fix (orphelin avatars on RakNetServer),
+by adding collisionReplicaUid in ReplicationManager::receiveConstruction and ConnectionRM::construct,
+RakNetEntity::deleteByAddress replaced by RakNetEntity::deleteByAddressAndType
+
+---------------------------
+29/04/09
+
+RakNet version now checked + major/minor/patch written in defines into DependentRakNetVersion.h + tests about FileListTransfer updates
+
+---------------------------
+15/05/09
+
+2D panels added (WWW, VLC, VNC)
+close icon updated
+NaviManager versus Panel2DMgr Overlays Z order improved
+New Ogre derived overlayElement for Panel2D and Panel2DButton added to use 1 template panel
+
+---------------------------

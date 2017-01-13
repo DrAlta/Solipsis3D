@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' >
+<head>
+ <meta name='Vizthumbnail' content='Thumb_textured_sphere_x3d1437751284715169.jpg'/>
+ <meta name='ExportTime' content='11:19:29'/>
+ <meta name='ExportDate' content='9/17/2010'/>
+ <meta name='FluxStudioVersion' content='659'/>
+ <meta name='FluxStudioSource' content='textured_sphere.fxw'/>
+</head>
+<Scene>
+<WorldInfo
+ title='textured_sphere'
+ info='"This Web3D Content was created with Flux Studio, a Web3D authoring tool"
+ "www.mediamachines.com"'/>
+<Transform DEF='dad_Sphere1'
+ translation='-.57198 0 .09152'
+ scale='1.75908 1.75908 1.75908'>
+ <Shape DEF='Sphere1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <ImageTexture
+    containerField='texture'
+    url='
+     "dirt01.jpg"'/>
+   <Material DEF='Red'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='1 0 0'/>
+  </Appearance>
+  <Sphere DEF='GeoSphere1'
+   containerField='geometry'
+   radius='1.000'/>
+ </Shape>
+</Transform>
+</Scene>
+</X3D>

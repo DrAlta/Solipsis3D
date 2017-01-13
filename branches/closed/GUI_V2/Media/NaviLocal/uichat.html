@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>uichat</title>
+        <script type="text/javascript" src="Navi-yui.js"></script>
+        <script type="text/javascript">
+            function pageLoaded()
+            {
+                new NaviData('pageLoaded').send();
+            }
+            function pageClosed()
+            {
+                new NaviData('pageClosed').send();
+            }
+            function sendMessage(message)
+            {
+                new NaviData('sendMessage').add({msg:message}).send();
+            }
+        </script>
+        <style type="text/css">
+            body
+            {
+                padding-left: 11em;
+	            background-color: #FFFFFF;
+	            overflow: hidden;
+	            font-family: Verdana;
+	            font-size: small;
+	            color: #FFFFFF;
+            }
+            #container
+            {
+	            position: absolute;
+	            left: 0px;
+	            top: 0px;
+	            width: 512px;
+	            height: 128px;
+            }
+            #chatInput
+            {
+	            position: absolute;
+	            left: 0px;
+	            top: 0px;
+            }
+            .inputText
+            {
+                background-color: #FFFFFF;
+                color: #000000;
+            }
+            #chatTextArea
+            {
+	            position: absolute;
+	            left: 0px;
+	            top: 20px;
+            }
+            .closeIcon
+            {
+                background-image: url(closeIcon.png);
+                background-repeat: no-repeat;
+                position: absolute;
+	            top: 2px;
+                left: 497px;
+                float: left;
+                width: 16px;
+                height: 16px;
+                background-position: 0px 0px;
+            }
+            .closeIcon:hover { background-position: 0px -16px; }
+        </style>
+    </head>
+
+    <body onload="pageLoaded()">
+        <div id="container">
+            <!--
+            Here you will use 1 reentrant hidden form in order to validate the message by pressing ENTER,
+            by returning false the page won t be reloaded
+             -->
+            <div id="chatTextArea">
+                <textarea disabled="disabled" id="textChat" rows="5"  cols="61"></textarea>
+            </div>
+            <form id="chatForm" action="" visible="false" onsubmit="sendMessage(document.getElementById('inputChat').value);return false;">
+                <div id="chatInput">
+                    <input id="inputChat" class="inputText" name="inputChat" value="" type="text" size="78" />
+                </div>
+            </form>
+            <span id="mTbIconClose" class="closeIcon" onclick="pageClosed()"></span>
+        </div>
+    </body>
+</html>

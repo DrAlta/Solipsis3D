@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Rédaction" company="" webLink="http://" view-date="2012-02-01" view-index="0" gantt-divider-location="353" resource-divider-location="351" version="2.0">
+    <description/>
+    <view zooming-state="default:9" id="gantt-chart"/>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="68" order="0"/>
+        <field id="1" name="Rôle par défaut" width="31" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <calendar id="1" name="default">
+                <default-week sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+                <only-show-weekends value="false"/>
+                <overriden-day-types/>
+                <days/>
+            </calendar>
+        </day-types>
+        <date year="" month="12" date="25"/>
+        <date year="" month="1" date="1"/>
+        <date year="" month="5" date="1"/>
+        <date year="" month="5" date="8"/>
+        <date year="" month="7" date="14"/>
+        <date year="" month="8" date="15"/>
+        <date year="" month="11" date="1"/>
+        <date year="" month="11" date="11"/>
+        <date year="2005" month="3" date="28"/>
+    </calendars>
+    <tasks color="#8cb6ce">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Redaction" color="#8cb6ce" meeting="false" start="2012-05-02" duration="91" complete="0" expand="true"/>
+        <task id="1" name="Introduction" color="#6666ff" meeting="false" start="2012-05-07" duration="9" complete="0" expand="true"/>
+        <task id="2" name="Conclusion" color="#ff3333" meeting="false" start="2012-05-07" duration="1" complete="0" expand="true"/>
+        <task id="3" name="Biblio" color="#00ff00" meeting="false" start="2012-05-07" duration="1" complete="0" expand="true"/>
+        <task id="4" name="Résumé" color="#cccc00" meeting="false" start="2012-05-07" duration="1" complete="0" expand="true"/>
+        <task id="5" name="Chapitre 1" color="#330033" meeting="false" start="2012-05-07" duration="1" complete="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Moi" function="0" contacts="" phone=""/>
+        <resource id="1" name="Jérôme" function="1" contacts="" phone=""/>
+        <resource id="2" name="Thierry" function="1" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="1" resource-id="0" function="0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="0" function="0" responsible="true" load="100.0"/>
+        <allocation task-id="3" resource-id="0" function="0" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="0" function="0" responsible="true" load="100.0"/>
+        <allocation task-id="5" resource-id="0" function="0" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations>
+        <vacation start="2012-07-21" end="2012-07-29" resourceid="0"/>
+    </vacations>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd2" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd3" order="0" width="199" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="75" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="75" visible="true"/>
+    </taskdisplaycolumns>
+    <previous>
+        <previous-tasks name="These"/>
+    </previous>
+    <roles roleset-name="Default"/>
+    <roles>
+        <role id="0" name="Ecriture"/>
+        <role id="1" name="Relecture"/>
+    </roles>
+</project>

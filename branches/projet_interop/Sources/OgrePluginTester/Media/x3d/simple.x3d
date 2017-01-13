@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<Shape name='toto' DEF='BOX'>
+			<Box size="20 20 20"/>	
+		</Shape>
+		<!-- <Shape  USE='BOX'/> -->
+	</Scene>
+</X3D> 

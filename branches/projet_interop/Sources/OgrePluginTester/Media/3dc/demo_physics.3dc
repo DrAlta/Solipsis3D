@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SGA_3DContainer>
+	<Group DEF="Mygroupnode"> 
+
+		<Content DEF="X3DFile" type="x3d" decoder_url="" wrapper_url="" url="../x3d/ClickToAnimate.x3d" />
+		<!--<Transform DEF='TRAN' translation='-30 30 0' scale="0.3 0.3 0.3" >
+			<Content DEF="BoxFile" type="dae" decoder_url="" wrapper_url="" url="../collada/Cube/cube.dae" />
+		</Transform>-->
+
+		<Transform DEF='TRANS' translation='0 0 0' scale="1 1 1" >
+			<Content DEF="DAEFile" type="dae" decoder_url="" wrapper_url="" url="../collada/physics/seymourplane_triangulate_physic.dae" /> 
+		</Transform>
+		
+		<Match fromNode="DAEFile.plane" toNode="X3DFile.red_box" fields="mass"/>
+		<!--<Match fromNode="DAEFile.plane" toNode="BoxFile.box-lib" fields="mass"/>-->
+		<!--<Match fromNode="DAEFile.plane" toNode="X3DFile.red_box" fields="dynamic"/>-->
+		<Match fromNode="DAEFile.plane" toNode="X3DFile.red_box" fields="dynamic_friction"/>
+		
+		<!-- <ROUTE  fromField="X3DFile.AnimationOI.value_changed"  toField="DAEFile.prop.rotate" conversion="VectRotToQuaternion" />
+		<Convertor DEF="convertor_1" type="VectRotToQuaternion" /> -->
+
+	</Group>
+</SGA_3DContainer> 

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>uiworlds</title>
+        <script type="text/javascript" src="Navi.js"></script>
+        <script type="text/javascript" src="SolipsisHelpers.js"></script>
+        <script type="text/javascript">
+            // preloading background image
+            img = new Image();
+            img.src = "uiworlds.png";
+            function pageLoaded()
+            {
+                var localWorld = getURLParam("localWorld");
+                var selectWorlds = document.getElementById("selectWorlds");
+                selectWorlds.innerHTML = "";
+                if (localWorld)
+                    selectWorlds.innerHTML += "<option value='" + localWorld + "'>Local World</option>";
+                selectWorlds.innerHTML += "<option value='127.0.0.1:8660?voipServer=127.0.0.1:30003'>Children Island</option>";
+                selectWorlds.innerHTML += "<option value='127.0.0.1:8559?voipServer=127.0.0.1:30002'>Delta Station</option>";
+                selectWorlds.innerHTML += "<option value='127.0.0.1:8558?voipServer=127.0.0.1:30001'>Rennes</option>";
+                selectWorlds.innerHTML += "<option value='127.0.0.1:8556'>Blank Scene by mtyas</option>";
+				
+				Client.pageLoaded('uiworlds'); 
+            }
+            function okPressed ()
+            {
+                // Eg. <option value='127.0.0.1:8660?voipServer=127.0.0.1:30000'>Children Island</option>
+
+                var worldURL = document.getElementById("selectWorlds").value;
+                var addr = getURLWoParams(worldURL);
+                var voipServer = getParamIntoURL(worldURL, "voipServer");
+                var vncServer = getParamIntoURL(worldURL, "vncServer"); 
+                var vlcServer = getParamIntoURL(worldURL, "vlcServer");
+    
+                Client.ok(addr, voipServer, vncServer, vlcServer);
+            }
+        </script>
+        <style type="text/css">
+            body
+            {
+                padding-left: 11em;
+	            background-color: #000000;
+	            overflow: hidden;
+	            font-family: Verdana;
+	            font-size: small;
+	            color: #FFFFFF;
+            }
+            li { color: Black; }
+            #container
+            {
+	            background-image: url('uiworlds.png');
+	            position: absolute;
+	            left: 0px;
+	            top: 0px;
+	            width: 256px;
+	            height: 256px;
+            }
+            #worldsSelect
+            {
+	            position: absolute;
+	            left: 30px;
+	            top: 100px;
+            }
+            .button
+            {
+	            position: absolute;
+	            top: 223px;
+	            width: 110px;
+	            height: 30px;
+            }
+            #okButton { left: 10px; z-index: 0;}
+            #cancelButton { left: 135px; z-index: 0;}
+        </style>
+    </head>
+
+    <body onload="pageLoaded()">
+        <div id="container">
+            <div id="worldsSelect">
+                <select id="selectWorlds" name="selectWorlds" size="5" style="width:200px" ondblclick="okPressed ()">
+                </select>
+            </div>
+            <div id="okButton" class="button" onclick="okPressed ()"></div>
+            <div id="cancelButton" class="button" onclick="Client.cancel();"></div>
+        </div>
+    </body>
+</html>

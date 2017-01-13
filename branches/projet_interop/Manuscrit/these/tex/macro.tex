@@ -1,0 +1,96 @@
+% --- Racourcis --- %
+
+\newcommand{\rv}{réalité virtuelle}
+\newcommand{\Rv}{Réalité virtuelle}
+\newcommand{\ev}{environnement virtuel}
+\newcommand{\evs}{environnements virtuels}
+\newcommand{\evc}{environnement virtuel collaboratif}
+\newcommand{\evcs}{environnements virtuels collaboratifs}
+\newcommand{\evd}{environnement virtuel distribué}
+\newcommand{\evds}{environnements virtuels distribués}
+\newcommand{\Ev}{Environnement virtuel}
+\newcommand{\Evs}{Environnements virtuels}
+\newcommand{\Evc}{Environnement virtuel collaboratif}
+\newcommand{\Evcs}{Environnements virtuels collaboratifs}
+\newcommand{\mv}{monde virtuel}
+\newcommand{\mr}{monde réel}
+\newcommand{\uu}{utilisateur}
+\newcommand{\uus}{utilisateurs}
+\newcommand{\ov}{objet virtuel}
+\newcommand{\ovs}{objets virtuels}
+\newcommand{\nd}{n\oe{}ud}
+\newcommand{\nds}{n\oe{}uds}
+\newcommand{\li}{\textit{\textbf{LI}}}
+\newcommand{\dc}{\textit{\textbf{DC}}}
+\newcommand{\lat}{\textit{\textbf{lat}}}
+\newcommand{\cont}{\textit{Contrôle}}
+\newcommand{\conts}{\textit{Contrôles}}
+\newcommand{\abst}{\textit{Abstraction}}
+\newcommand{\absts}{\textit{Abstractions}}
+\newcommand{\pres}{\textit{Présentation}}
+\newcommand{\press}{\textit{Présentations}}
+\newcommand{\cvii}{\textit{\og{}Cabine Virtuelle d'Interaction Immersive\fg{}}}
+\newcommand{\sta}{\textit{stage}}
+\newcommand{\conv}{\textit{conveyor}}
+\newcommand{\espi}{espace d'interaction}
+\newcommand{\espis}{espaces d'interaction}
+
+\newcommand{\ie}{c'est-à-dire}
+\newcommand{\eg}{par exemple}
+\newcommand{\cad}{c'est-à-dire}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\mindex}[1]{#1\index{#1}}
+\newcommand{\tfidf}{\mbox{\textit{tf-idf}}}
+\newcommand{\varwer}[1]{\begin{small}($#1$)\end{small}}
+\newcommand{\Ca}{\mathcal{C}_a}
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\expm}[2]{$#1\times{}10^{#2}$}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\R}{\mathcal{R}}
+
+\renewcommandx*{\hrulefill}[2][1=0.3mm,2=0pt]{\leavevmode \leaders \hbox to
+1pt{\rule[#2]{1pt}{#1}} \hfill \kern 0pt}
+
+\newcommand{\expression}[1]{\textit{\flqq~#1~\frqq}}
+\newcommand{\mot}[1]{\relscale{0.9}\textsf{#1}\relscale{1.11}}
+\newcommand{\imot}[1]{\og{}\mot{#1}\fg{}}
+\newcommand{\cmot}[1]{\og{}#1\fg{}}
+
+% macro pour le 'debuggage': permet de corriger le document avec plus de facilité
+\newcommand{\mydebuglabel}[1]{\label{#1}}
+%\newcommand{\debuglabel}[1]{\label{#1}}
+
+\newcommand{\resumefr}[1]{%
+\thispagestyle{empty}
+\section*{Résumé}
+#1 
+\vfill
+}
+
+% >> macro pour la separation d'un bout de page en deux parties, utile pour les figures et leur caption a droite ou gauche
+% l'argument specifie la taille de la partie gauche
+\newlength\jataille
+\newcommand{\figgauche}[3]%
+{\jataille=\textwidth\advance\jataille by -#1
+\parbox{#1}{#2}
+\parbox{\jataille}{#3}
+}
+
+\newcommand{\figtxt}[1]%
+{{\it {\small #1}}}
+% << fin macro
+
+% >> macro pour tracer un trai horizontal sur la largeur de la page
+\newcommand{\traithoriz}{\raisebox{0.4em}{\vrule depth 0pt height 0.4pt width \textwidth}}
+
+
+
+%%%% debut macro pour faire des lignes épaisses dans les tableaux %%%%
+\makeatletter
+\def\hlinewd#1{%
+\noalign{\ifnum0=`}\fi\hrule \@height #1 %
+\futurelet\reserved@a\@xhline}
+\makeatother
+%%%% fin macro %%%%

@@ -1,0 +1,129 @@
+- Win: compilation of Mozilla/XULrunner from release 1.8.04
+(from mozilla FTP xulrunner-1.8.0.4-source.tar.bz2)
+- Win: compilation of LLMozLib vc7 & vc8
+- Win: compilation of Navi/NaviDemo vc7 & vc8
+
+- Win: compilation of Mozilla/XULrunner from release 1.8.1
+(CVS repository from co_FIREFOX_2_0_RELEASE.bat)
+(branch FIREFOX_2_0_RELEASE)
+- Win: compilation of LLMozLib vc7 & vc8
+- Win: compilation of Navi/NaviDemo vc7 & vc8
+
+- Win: compilation of SVN Ogre on vc8
+=> Dependencies directory to replace + include and lib directories to remove
+
+- Win: install solipsis (prebuit OK + sources OK)
+
+- Win: compilation of SVN Solipsis Navigator + Tests
+
+- Win: replacement of CEGUI user interfaces by HTML/CSS under Navi library
+into Navigator project
+- Win: add pthread support (Dependencies\pthread) to implement
+the peer events listener (Win32/Linux portable)
+
+- Move dependencies LLMozLib + Navi into Solipsis/Dependencies
+
+- Add 1 option about HTTP proxy into options panel
+- Replace into options about HTTP proxy 1 panel with 1 tabs
+
+- pb on station spatiale scene : no lights impact => due to node scaling, normals are scaled too !
+
+- Move navigator/bin/Debug&Release into Common/bin/Debug&Release
+
+- get Ogre 1.4.4 + rebuild
+
+- fluidity improvements + keys/mouse management to update
+- 1 global Solipsis solution
+- add shadows
+=> hmhm ok but fps-- + shadow texture too big and shadow on avatar too small
+
+- update with Navi 1.4
+
+- integration of salamandra
+ facing X axis -> OK
+ all anims in same .max -> OK (with lexiExporter and oFusion with some BBox troubles)
+ scale pb: x40 by OGRE -> OK resolved with Nel Plugin
+
+- tune the camera according to avatar size (waiting salamandra with good local axes ...)
+- integration of ODE and OgreOde
+- integration of ODE and OgreOde : ray floor OK, capsule geom OK, sphere gravity floor OK
+- integration of ODE and OgreOde : VC7 projects
+
+- integration of LUA
+
+- add small refresh rate on focused navi in order to display blinking cursor
+- add 3D picking on Navis (refer to ogreaddons\uOgreBrowser)
+=> still 1 small problem when the ray origin is into the AABB of the navi
+
+- create 1 Navigator Displayer ActiveX/Plugin to interact with Navigator from 1 simple Win Mozilla browser
++ implement object-oriented interfaces NavigatorModule which would be the generic Navigator interface
+  shared by different Navigator implementations : Binary application with 1 main(), Mozilla plugin, ActiveX IE, ...
+   events (application, keyboard, mouse, ...) class (OIS, ...)
+   all datas Navigator is waiting for (Window class, ...)
+=> pb when loading Mozilla DLLs from Navigator DLL plugin loaded by Mozilla binary !!!
+   mozilla/widget/src/windows/nstoolkit.cpp void 
+nsToolkit::Startup(HMODULE hModule)
+ function return error
+   it is due to WNDCLASSW registration (wc.lpszClassName    = L"nsToolkitClass";) which was already registered
+   by the Mozilla running instance
+=> same pb in VC8 and VC7
+
+- integration of ODE and OgreOde : still some pbs about C/C++ callbacks
+=> use dynamic_cast instead of simple C++ cast (OgreFrameListener to CollisionListener)
+
+- main modeler panel added and available with F9
+
+- update Navi with demo on contextual menu + lua
+
+- Navigator ActiveX added
+=> it s working in Release config
+=> still problems on Navi update() grabBrowser in Debug config
+=> Mozilla Plugin is working with Navigator.dll (NavigatorModule) in Release config but fails on 1st Navi (onPageLoaded callback not triggered)
+
+- IE ActiveX & Mozilla Plugin to run Navigator from IE/Mozilla added
+
+- Solipsis namespace added
+
+- integration of ODE and OgreOde : pb about cubes diving into collision mesh was SIMPLY due
+to the mesh' normals direction ! Flip them resolved it.
+- integration of ODE and OgreOde : collisions avatar vs walls too close => due to normals pb
+
+- integration of Ageia PhysX
+- integration of Tokamak
+
+- new scale (unit=1 meter) applied into media contents, temporary avatars' positions and physics engines
+- doxygen added
+
+- NavigatorModule added and now shared by 3 application types
+- doxygen on NaviagtorModule added + 2 classes are doxygen compliants
+
+- in plugin configs, mouse capture added (first person movement)
+
+- pb with Ageia PhysX character controller (diving into the floor) fixed, it was due to SKIN_WIDTH < 0.1
+
+- Fix post build compilation : tokamakd.dll and OgreOde_Core_d.dll are not copied in the runtime directory
+=> in navigatorModule, only ODE plugin is embedded into VC solution, compiled and copied in post-build
+
+- Fix bug after clean : missing Ogre DirectX renderer plugin in runtime dir
+=> check you ve rebuilt fully the navigatorModule (post-build evts performed)
+
+[Navigator]
+- when using graphics cards with TEXTURE_POW2 caps, Navi can use textures non-POW2 but is unable to
+  work with mask image non-POW2, texture is created on 1st POW2 size but not mask image
+  exception : 
+   Mask dimensions must be greater than or equal to the dimensions of the Navi's internal texture.
+   Mask Dimensions: 400x300, Texture Dimensions: 512x512
+
+- VNCPlugin : kbd events OK but kbd mapping is strange azerty vs qwerty (virtual keys to debug)
+=> fixed by using getKeyboardLayout() and MapVirtualKeyEx(), still some minor addons to do
+
+- sometimes crash when quitting with 1 VLC object into libvlc_destroy(mLibVLCInstance), after some investigations:
+  pb occurs with 2 simultaneous videos when destroying 2nd instance (only when libvlc is linked by VStudio)
+=> fixed by adding Static functions in misc/unicode.c, misc/win32_specific.c called only once in libvlc.c + misc/messages.c msg_XXX() logs removed 
+
+- VLCPlugin : add libamem_plugin to play audio with FMod in 3D
+
+- added Progress bar for scene loading
+
+[WorldsServer]
+added time out for autoclosing the connected page

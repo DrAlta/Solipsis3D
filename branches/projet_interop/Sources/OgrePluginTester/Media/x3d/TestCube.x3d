@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Immersive' version='3.2' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.2.xsd'>
+  <head>
+    <component level='1' name='DIS'/>
+    <meta content='TestCube.x3d' name='title'/>
+    <meta content='Don Brutzman' name='creator'/>
+    <meta content='1 November 2008' name='created'/>
+    <meta content='20 January 2009' name='modified'/>
+    <meta content='Test shape with each face labeled.' name='description'/>
+    <meta content='experiment with indices to remove TextureTransform rotations' name='TODO'/>
+    <meta content='http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/TestCube.x3d' name='identifier'/>
+    <meta content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='../license.html' name='license'/>
+  </head>
+  <Scene>
+    <Background skyColor='0.05 0.05 0.1'/>
+    <Group>
+      <Viewpoint description='Front view' orientation='0 1 0 1.57' position='8 0 0'/>
+      <Shape DEF='Front'>
+        <IndexedFaceSet coordIndex='0 1 2 3' texCoordIndex='0 1 2 3'>
+          <Coordinate DEF='Points' point='1 1 1 1 -1 1 1 -1 -1 1 1 -1 -1 1 1 -1 -1 1 -1 -1 -1 -1 1 -1'/>
+          <TextureCoordinate DEF='DefaultTextureCoordinate' point='0 0 1 0 1 1 0 1'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <ImageTexture url='"images/front.png" "http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/images/front.png"'/>
+          <TextureTransform DEF='RotateRight' rotation='-1.57'/>
+        </Appearance>
+      </Shape>
+      <Viewpoint description='Back view' orientation='0 1 0 -1.57' position='-8 0 0'/>
+      <Shape DEF='Back'>
+        <IndexedFaceSet coordIndex='7 6 5 4' texCoordIndex='0 1 2 3'>
+          <Coordinate USE='Points'/>
+          <TextureCoordinate USE='DefaultTextureCoordinate'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <ImageTexture url='"images/back.png" "http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/images/back.png"'/>
+          <TextureTransform USE='RotateRight'/>
+        </Appearance>
+      </Shape>
+      <Viewpoint description='Left view' orientation='0 1 0 3.1416' position='0 0 -8'/>
+      <Shape DEF='Left'>
+        <IndexedFaceSet coordIndex='3 2 6 7' texCoordIndex='0 1 2 3'>
+          <Coordinate USE='Points'/>
+          <TextureCoordinate USE='DefaultTextureCoordinate'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <ImageTexture url='"images/left.png" "http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/images/left.png"'/>
+          <TextureTransform USE='RotateRight'/>
+        </Appearance>
+      </Shape>
+      <Viewpoint description='Right view' position='0 0 8'/>
+      <Shape DEF='Right'>
+        <IndexedFaceSet coordIndex='0 4 5 1' texCoordIndex='0 1 2 3'>
+          <Coordinate USE='Points'/>
+          <TextureCoordinate USE='DefaultTextureCoordinate'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <ImageTexture url='"images/right.png" "http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/images/right.png"'/>
+          <TextureTransform DEF='Rotate180' rotation='3.14159'/>
+        </Appearance>
+      </Shape>
+      <Viewpoint description='Top view' orientation='1 0 0 -1.57' position='0 8 0'/>
+      <Shape DEF='Top'>
+        <IndexedFaceSet coordIndex='0 3 7 4' texCoordIndex='0 1 2 3'>
+          <Coordinate USE='Points'/>
+          <TextureCoordinate USE='DefaultTextureCoordinate'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <ImageTexture url='"images/top.png" "http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/images/top.png"'/>
+          <TextureTransform DEF='RotateLeft' rotation='1.57'/>
+        </Appearance>
+      </Shape>
+      <Viewpoint description='Bottom view' orientation='1 0 0 1.57' position='0 -8 0'/>
+      <Shape DEF='Bottom'>
+        <IndexedFaceSet coordIndex='1 5 6 2' texCoordIndex='0 1 2 3'>
+          <Coordinate USE='Points'/>
+          <TextureCoordinate USE='DefaultTextureCoordinate'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <ImageTexture url='"images/bottom.png" "http://www.web3d.org/x3d/content/examples/Basic/DistributedInteractiveSimulation/images/bottom.png"'/>
+          <TextureTransform USE='Rotate180'/>
+        </Appearance>
+      </Shape>
+    </Group>
+  </Scene>
+</X3D>

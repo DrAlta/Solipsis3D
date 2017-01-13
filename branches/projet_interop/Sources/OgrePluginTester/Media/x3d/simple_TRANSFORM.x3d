@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<Background groundAngle='1.309 1.571' skyAngle='1.309 1.571' skyColor='0 0.2 0.7 0 0.5 1 1 1 1' bottomUrl="..\textures\dirt01.jpg"/>
+		<Transform translation='0 10 0'>
+			<Transform  DEF='T2' translation='25 5 0'>
+				<Shape>
+					<!-- <Sphere DEF='GREEN'  radius='5'/> -->
+					<Box DEF='GREEN' size="20 20 20"/>
+					<Appearance>
+						<Material diffuseColor='0 1 0 ' specularColor='0 0 0.5' shininess='1'/>
+					</Appearance>
+				</Shape>
+			</Transform>
+			<Shape>
+				<!-- <Sphere DEF='BLUE' radius='5'/> -->
+				<Box DEF='BLUE' size="20 20 20"/>
+				<Appearance>
+					<Material diffuseColor='0 0 1' specularColor='0 0 0.5' shininess='1'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		
+		<TimeSensor DEF='TIMER' loop='true' cycleInterval='5' />
+
+
+
+		<!--<PositionInterpolator DEF='PI' 
+			key='0 0.60 0.72 0.90 1' 
+			keyValue='0 0 0 20 20 0 40 20 0 20 20 0 0 0 0' />
+			
+		<ROUTE fromNode='TIMER' fromField='fraction_changed' toNode='PI' toField='set_fraction' /> 
+		<ROUTE fromNode='PI' fromField='value_changed' toNode='T2' toField='translation' /> -->
+	</Scene>
+</X3D> 

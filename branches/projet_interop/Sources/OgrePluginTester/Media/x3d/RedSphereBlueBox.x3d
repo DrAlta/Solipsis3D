@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile='Interchange' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+	<head>
+		<meta content='RedSphereBlueBox.x3d' name='title'/>
+		<meta content='X3D specification example: show simple Shapes, including different Materials and geometry.' name='description'/>
+		<meta content='Don Brutzman and Joe Williams' name='editors'/>
+		<meta content='1 June 2002' name='created'/>
+		<meta content='28 July 2008' name='modified'/>
+		<meta content='http://www.web3d.org/x3d/specifications/ISO-IEC-19776-X3DEncodings-XML-ClassicVRML/Part01/examples.html#SimpleExample' name='reference'/>
+		<meta content='http://www.web3d.org/x3d/content/examples/Basic/X3dSpecification/RedSphereBlueBox.x3d' name='identifier'/>
+		<meta content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit' name='generator'/>
+		<meta content='../license.html' name='license'/>
+	</head>
+	<Scene>
+		<!--<Transform>-->
+			<NavigationInfo avatarSize='0.25 1.6 0.75' headlight='false' type='EXAMINE'/>
+			<DirectionalLight/>
+			<Transform DEF='TRANS_1'  translation='3.0 0.0 1.0'>
+				<Shape   > 
+					<Sphere DEF='sphere_RED' radius='2.3'/>
+					<Appearance>
+						<Material  DEF='MAT' diffuseColor='1.0 0.0 0.0'/>
+					</Appearance>
+				</Shape>
+				<!-- <Transform DEF='TRANS_2' translation='3.0 0.0 1.0'>
+					<TouchSensor DEF='TOUCH' /> 
+					<Shape DEF='sphere_GREEN'>
+						<Sphere radius='2.3'/>
+						<Appearance>
+							<Material diffuseColor='0.0 1.0 0.0'/>
+						</Appearance>
+					</Shape>
+					<Transform DEF='TRANS_3' translation='4.0 0.0 1.0'>
+						<Shape DEF='sphere_BLUE' >
+							<Sphere radius='2.3'/>
+							<Appearance>
+								<Material diffuseColor='0.5 0.0 0.5'/>
+							</Appearance>
+						</Shape>
+					</Transform>
+				</Transform> -->
+			</Transform>
+			<Transform DEF='TRANS_Box' rotation='0.0 0.707 0.707 0.9' translation='-2.4 0.2 1.0'>
+				<Shape>
+					<Box DEF='BLUE_BOX' />
+					<Appearance>
+						<Material diffuseColor='0.0 0.0 1.0'/>
+						<ImageTexture url='..\textures\clouds.jpg'/>
+					</Appearance>
+				</Shape>
+			</Transform>
+		<!--</Transform>-->
+		<TimeSensor DEF='TIMER' loop='true' cycleInterval='5' enabled='false'/>
+
+		<ROUTE fromNode='TIMER' fromField='fraction_changed' toNode='MAT' toField='transparency' />
+		<ROUTE fromNode='TOUCH' fromField='isActive' toNode='TIMER' toField='enabled'/>
+		
+	</Scene>
+</X3D>

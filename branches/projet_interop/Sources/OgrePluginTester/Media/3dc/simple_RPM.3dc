@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SGA_3DContainer>
+	<Group DEF="Mygroupnode"> 
+
+		
+		<!--<Content DEF="X3DFile" type="dae" decoder_url="" wrapper_url="" url="../collada/physics/jenga.dae" />-->
+		<!--<Content DEF="X3DFile" type="x3d" decoder_url="" wrapper_url="" url="../x3d/teapot.x3d" />-->
+		<Content DEF="X3DFile" type="x3d" decoder_url="" wrapper_url="" url="../collada/Cube/cube.dae" />
+		<Transform DEF='TRANS_Box' translation='0 60 0' rotation='0.0 0.707 0.707 0.9' scale='0.5 0.5 0.5'>
+			
+			<Content DEF="DAEFile" type="dae" decoder_url="" wrapper_url="" url="../collada/physics/dice_physic.dae" /> 
+		</Transform>
+		
+		<Match fromNode="DAEFile.pCube1" toNode="X3DFile.box-lib" fields="mass dynamic"/>
+		<!-- <Match fromNode="DAEFile.pCube1" toNode="X3DFile.Body" fields="mass dynamic"/>-->
+		<!-- <Patch  DEF="patch_1" node="X3DFile:box" properties="clickable movable" /> 
+		<ROUTE  fromField="X3DFile.BoxInterpolator.value_changed"  toField="convertor_1" />
+		<VectRotToQuaternionConvertor DEF="convertor_1" />
+		<ROUTE  fromField="convertor_1"  toField="DAEFile.helice.rotate" />  -->
+
+	</Group>
+</SGA_3DContainer> 
+
+

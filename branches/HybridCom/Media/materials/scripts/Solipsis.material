@@ -1,0 +1,203 @@
+material Solipsis/Logo
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			depth_write off
+      
+			texture_unit
+			{
+				texture solipsislogo.png
+				colour_op alpha_blend
+		        //colour_op_ex solipsislogo.png src_manual src_current 1 0 0
+				//alpha_op_ex solipsislogo.png src_manual src_current 0.5				
+			}
+		}
+	}
+}
+
+material Solipsis/Sound
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture Sound-icon.png
+			}
+		}
+	}
+}
+
+material Solipsis/Box
+{
+	technique
+	{
+		pass
+		{
+			ambient 1 1 1 1
+			diffuse 1 1 1 1
+			specular 0 0 0 0
+			emissive 0 0 0
+			
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture glass.png
+			}
+		}
+	}
+}
+
+material Solipsis/ProgressBar
+{
+	technique
+	{
+		pass
+		{
+			ambient 1 1 1
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture ProgressBar.png
+				colour_op alpha_blend
+			}
+		}
+	}
+}
+
+material Solipsis/Panel2D
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+
+			texture_unit
+			{
+				texture SolipsisPanel2D.png
+			}
+		}
+	}
+}
+
+material Solipsis/Panel2DButtons
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+
+			texture_unit
+			{
+				texture SolipsisPanel2DButtons.png
+			}
+		}
+	}
+}
+
+material Solipsis/SkyBox1
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				cubic_texture SolipsisSkybox1.jpg SolipsisSkybox1.jpg SolipsisSkybox1.jpg SolipsisSkybox1.jpg SolipsisSkybox1.jpg SolipsisSkybox1.jpg separateUV
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+material Solipsis/SkyBox2
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				cubic_texture SolipsisSkybox2_front.jpg SolipsisSkybox2_left.jpg SolipsisSkybox2_back.jpg SolipsisSkybox2_right.jpg SolipsisSkybox2_top.jpg SolipsisSkybox2_bottom.jpg separateUV
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+material Solipsis/SkyBox3
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				cubic_texture SolipsisSkybox3_front.bmp SolipsisSkybox3_left.bmp SolipsisSkybox3_back.bmp SolipsisSkybox3_right.bmp SolipsisSkybox3_top.bmp SolipsisSkybox3_bottom.bmp separateUV
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material Solipsis/Facebook
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture facebook-128x128.png
+			}
+		}
+	}
+}
+
+material Solipsis/Twitter
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+	
+			texture_unit
+			{
+				texture twitter-128x128.png
+			}
+		}
+	}
+}
+

@@ -1,0 +1,50 @@
+< !ELEMENT SGA_3DConteneur (group+ , transform+, content+, Route+, Match+, Convertor+ ) >
+
+< !ELEMENT Group ( Transform+, Content+ ) >
+
+< ! ATTLIST Group DEF ID >
+
+< !ELEMENT Transform ( Group+, Content+ ) >
+
+< ! ATTLIST Transform DEF ID
+
+    translation #FIXED ‘0 0 0’
+
+  rotation #FIXED ‘0 0 1 0’
+
+  scale #FIXED ‘1 1 1’  >
+
+< !ELEMENT Content  ANY>
+
+< ! ATTLIST Content DEF  #REQUIRED ID
+
+   type #REQUIRED CDATA
+
+   decoder_url #IMPLIED CDATA
+
+   wrapper_url #IMPLIED CDATA
+     url #REQUIRED CDATA  >
+	 
+< !ELEMENT Route ANY>
+	 
+	  < ! ATTLIST Route fromNode #REQUIRED CDATA toNode #REQUIRED CDATA 
+	 fromFile #REQUIRED CDATA toFile #REQUIRED CDATA 
+	fromField #REQUIRED CDATA toField #REQUIRED CDATA 	 
+	 >
+	 
+< !ELEMENT Match  ANY>
+	  
+	  < ! ATTLIST Match fromFile #REQUIRED CDATA toFile #REQUIRED CDATA 
+	  fromNode #REQUIRED CDATA toNode #REQUIRED CDATA  field #REQUIRED CDATA >
+	  
+< !ELEMENT Convertor  ANY>
+	   
+	   < ! ATTLIST Convertor DEF  #REQUIRED ID
+	  type #REQUIRED CDATA >
+	 
+	
+	 
+	 
+	 
+	 <!--< ! ATTLIST Patch DEF #IMPLIED ID  node #REQUIRED CDATA properties #REQUIRED CDATA  fields #REQUIRED CDATA >-->
+	 

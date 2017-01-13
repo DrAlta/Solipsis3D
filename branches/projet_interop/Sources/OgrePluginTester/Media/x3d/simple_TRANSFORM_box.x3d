@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<Viewpoint description='Pyramid' orientation='0 1 0 .2' position='4 0 25' fieldOfView='0.7854'/>
+		<!--<Transform DEF='T0' translation='0 -5 0' rotation='1 0 0 5'>
+			<Shape DEF='S0'>
+				<Box size="5 5 5"/>
+				<Appearance DEF='MAT_Mat'>
+					<Material diffuseColor='1 0 0 ' specularColor='0 0 0.5' shininess='1'/>
+				</Appearance>
+			</Shape>
+			<!{1}**<Transform DEF='T2' translation='0 -10 0'>
+				<Shape>
+					<Sphere radius='5'/>
+					<Appearance>
+						<Material diffuseColor='0 1 0 ' specularColor='0 0 0.5' shininess='1'/>
+					</Appearance>
+				</Shape>
+			</Transform>**{1}>
+		</Transform>-->
+		<!--<Shape DEF='S2'>
+				<Box size="5 5 5"/>
+				<Appearance>
+					<Material diffuseColor='0 0 1' specularColor='0 0 0.5' shininess='1'/>
+				</Appearance>
+			</Shape>-->
+		<Transform  DEF='T1' translation='0 -10 0'>
+			
+			<!--<Transform translation='0 -15 0'>-->
+				<Shape DEF='S1'>
+					<Box size="5 5 5"/>
+					<Appearance>
+						<Material diffuseColor='0 1 0 ' specularColor='0 0 0.5' shininess='1'/>
+					</Appearance>
+				</Shape>
+			<!--</Transform>-->
+			<!--<Shape USE='S2'/>-->
+
+		</Transform>
+	</Scene>
+</X3D> 

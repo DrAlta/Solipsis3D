@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<X3D profile='Immersive' version='3.0' >
+	<head>
+		<meta name='title' content='Pyramid.x3d'/>
+	</head>
+	<Scene>
+		<!-- <Background groundAngle='1.309 1.571' groundColor='0.1 0.1 0 0.4 0.25 0.2 0.6 0.6 0.6' skyAngle='1.309 1.571' skyColor='0 0.2 0.7 0 0.5 1 1 1 1'/> -->
+		<Background groundAngle='1.309 1.571' skyAngle='1.309 1.571' skyColor='0 0.2 0.7 0 0.5 1 1 1 1' bottomUrl="..\textures\dirt01.jpg"/>
+		<Transform DEF='TRANS_Box_1' translation='0 30 0' rotation='0.0 0.707 0.707 0.9'>
+			<Shape>
+				<Box DEF='BLUE_BOX' size='20 20 20'/>
+				<Appearance>
+					<Material diffuseColor='0.0 0.0 1.0'/>
+				</Appearance>
+			</Shape>
+			<!-- <Transform DEF='TRANS_Box_2' translation='30 30 0' rotation='0.0 0.707 0.707 0.9'>
+					<Shape>
+						<Box DEF='RED_BOX' size='20 20 20'/>
+						<Appearance>
+							<Material diffuseColor='1.0 0.0 0.0'/>
+						</Appearance>
+					</Shape>
+				</Transform> -->
+		</Transform>
+		<Transform DEF='TRANS_Box_3' translation='0 50 0' >
+			<Shape>
+				<Box DEF='GREEN_BOX' size='20 20 20'/>
+				<Appearance>
+					<Material diffuseColor='0.0 1.0 0.0'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		<Transform DEF='TRANS_Sphere' translation='40 80 0' >
+			<Shape>
+				<Sphere DEF='GREEN_SPHERE' radius='20'/>
+				<Appearance>
+					<Material diffuseColor='.8 1.0 0.4'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		<Transform DEF='TRANS_Cylinder' translation='-40 80 0' >
+			<Shape>
+				<Cylinder DEF='CYLINDER' height='20' radius='10'/>
+				<Appearance>
+					<Material diffuseColor='0.1 0.3 0.5'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+
+		<Transform DEF='TRANS_Box_2' translation='-30 30 0' rotation='0.0 0.707 0.707 0.9'>
+			<Shape>
+				<Box DEF='RED_BOX' size='20 20 20'/>
+				<Appearance>
+					<Material diffuseColor='1.0 0.0 0.0'/>
+				</Appearance>
+			</Shape>
+		</Transform>
+		<!-- <Transform DEF='TRANS_Inline_1'  translation='10 0 0' scale='0.08 0.08 0.08'> -->
+			<!-- <Inline url='..\collada\Cube\cube.dae' /> -->
+		<!-- </Transform> -->
+		<!-- <Transform DEF='TRANS_Inline_2'  translation='-10  0 0' scale='0.03 0.03 0.03'>
+			<Inline url='..\collada\Cube\cube_triangulate.dae' />
+		</Transform> -->
+		
+	</Scene>
+</X3D> 
