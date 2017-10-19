@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "CTStringHelpers.h"
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 

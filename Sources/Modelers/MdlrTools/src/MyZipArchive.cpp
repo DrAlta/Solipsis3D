@@ -157,7 +157,7 @@ void MyZipArchive::writeFile(const String& filePath)
     int toAddFileSize = inputFile.tellg();
     char* toAddFileData = new char[toAddFileSize + 1];    
     inputFile.seekg(0,std::ios::beg);
-    inputFile._Read_s(&toAddFileData[0],toAddFileSize,toAddFileSize + 1);
+    inputFile.read(&toAddFileData[0],toAddFileSize + 1);
     writeFile(filePath.c_str(), FileBuffer(toAddFileData, toAddFileSize));
     inputFile.close();
     // Memory buffer will be released by FileBuffer destructor.

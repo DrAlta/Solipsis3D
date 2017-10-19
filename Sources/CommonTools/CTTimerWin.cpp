@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "CTTimer.h"
 #include <xutility>
 #include <stdlib.h>
+#include <algorithm>
 
 namespace CommonTools {
 

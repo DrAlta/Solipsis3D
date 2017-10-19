@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <iostream>
 #include <stdarg.h>
 #include <time.h>
+#define HAVE_STRUCT_TIMESPEC
 
 #if defined(_WINDOWS)
 #define WIN32_LEAN_AND_MEAN
