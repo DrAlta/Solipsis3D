@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>3dsftk3</ProjectName>
+    <ProjectGuid>{B15BDA35-0972-428E-B5DA-F5EE528E36F0}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)3dsftk3_d.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)3dsftk3.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="3dsambm.c" />
+    <ClCompile Include="3dsaset.c" />
+    <ClCompile Include="3dsbbox.c" />
+    <ClCompile Include="3dsbgnd.c" />
+    <ClCompile Include="3dscamm.c" />
+    <ClCompile Include="3dscamr.c" />
+    <ClCompile Include="3dserr.c" />
+    <ClCompile Include="3dsfile.c" />
+    <ClCompile Include="3dshier.c" />
+    <ClCompile Include="3dsiobj.c" />
+    <ClCompile Include="3dskey.c" />
+    <ClCompile Include="3dslites.c" />
+    <ClCompile Include="3dsmatr.c" />
+    <ClCompile Include="3dsmatx.c" />
+    <ClCompile Include="3dsmobj.c" />
+    <ClCompile Include="3dsmset.c" />
+    <ClCompile Include="3dsobjm.c" />
+    <ClCompile Include="3dsomnm.c" />
+    <ClCompile Include="3dsprim.c" />
+    <ClCompile Include="3dsrobj.c" />
+    <ClCompile Include="3dssptm.c" />
+    <ClCompile Include="3dsstrlf.c" />
+    <ClCompile Include="3dsutil.c" />
+    <ClCompile Include="3dsvers.c" />
+    <ClCompile Include="3dsvprt.c" />
+    <ClCompile Include="Assert.c" />
+    <ClCompile Include="Chunk3ds.c" />
+    <ClCompile Include="Dbase3ds.c" />
+    <ClCompile Include="Dumpchnk.c" />
+    <ClCompile Include="Dumpsrc.c" />
+    <ClCompile Include="Dumpstr.c" />
+    <ClCompile Include="Kdata3ds.c" />
+    <ClCompile Include="Kfutils.c" />
+    <ClCompile Include="Mdata3ds.c" />
+    <ClCompile Include="Seekchil.c" />
+    <ClCompile Include="Smartall.c" />
+    <ClCompile Include="Strcmpi.c" />
+    <ClCompile Include="Strdup.c" />
+    <ClCompile Include="swapbyte.c" />
+    <ClCompile Include="Xdata.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3dsambm.h" />
+    <ClInclude Include="3dsaset.h" />
+    <ClInclude Include="3dsbbox.h" />
+    <ClInclude Include="3dsbgnd.h" />
+    <ClInclude Include="3dscamm.h" />
+    <ClInclude Include="3dscamr.h" />
+    <ClInclude Include="3dserr.h" />
+    <ClInclude Include="3dsfile.h" />
+    <ClInclude Include="3dsftkst.h" />
+    <ClInclude Include="3dshier.h" />
+    <ClInclude Include="3dsiobj.h" />
+    <ClInclude Include="3dskey.h" />
+    <ClInclude Include="3dslites.h" />
+    <ClInclude Include="3dsmatr.h" />
+    <ClInclude Include="3dsmatx.h" />
+    <ClInclude Include="3dsmobj.h" />
+    <ClInclude Include="3dsmset.h" />
+    <ClInclude Include="3dsobjm.h" />
+    <ClInclude Include="3dsomnm.h" />
+    <ClInclude Include="3dsprim.h" />
+    <ClInclude Include="3dsrange.h" />
+    <ClInclude Include="3dsrobj.h" />
+    <ClInclude Include="3dssptm.h" />
+    <ClInclude Include="3dsstrlf.h" />
+    <ClInclude Include="3dstype.h" />
+    <ClInclude Include="3dsutil.h" />
+    <ClInclude Include="3dsvers.h" />
+    <ClInclude Include="3dsvprt.h" />
+    <ClInclude Include="Chunk3ds.h" />
+    <ClInclude Include="Chunkinf.h" />
+    <ClInclude Include="Dbase3ds.h" />
+    <ClInclude Include="Dumpchnk.h" />
+    <ClInclude Include="Dumpsrc.h" />
+    <ClInclude Include="Dumpstr.h" />
+    <ClInclude Include="Ftkhead.h" />
+    <ClInclude Include="Ftktail.h" />
+    <ClInclude Include="Kdata3ds.h" />
+    <ClInclude Include="Kfutils.h" />
+    <ClInclude Include="Mdata3ds.h" />
+    <ClInclude Include="Seekchil.h" />
+    <ClInclude Include="Smartall.h" />
+    <ClInclude Include="Strcmpi.h" />
+    <ClInclude Include="Swapbyte.h" />
+    <ClInclude Include="Xdata.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ftkfiles.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

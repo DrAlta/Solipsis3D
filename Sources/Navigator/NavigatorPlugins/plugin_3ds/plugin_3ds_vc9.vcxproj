@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>plugin_3ds</ProjectName>
+    <ProjectGuid>{6F1BEDD7-D31B-4CEE-8B70-D254F1F1F0BE}</ProjectGuid>
+    <RootNamespace>Plugin_3ds</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)3dsftk3\INC;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_3DS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain_d.lib;3dsftk3\source\debug\3dsftk3_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Plugin_3ds_d.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include"
+xcopy "$(ProjectDir)src\*.h" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include\." /y
+xcopy "$(ProjectDir)3dsftk3\INC\*.h" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include\." /y
+if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(ProjectDir)3dsftk3\INC;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_3DS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain.lib;3dsftk3\source\release\3dsftk3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Plugin_3ds.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include"
+xcopy "$(ProjectDir)src\*.h" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include\." /y
+xcopy "$(ProjectDir)3dsftk3\INC\*.h" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\include\." /y
+if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\..\Dependencies\plugin_3ds\lib\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\getopt.c" />
+    <ClCompile Include="src\plugin_3ds.cpp" />
+    <ClCompile Include="src\plugin_3dsDLL.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\getopt.h" />
+    <ClInclude Include="src\plugin_3ds.h" />
+    <ClInclude Include="src\plugin_3dsPrerequisites.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

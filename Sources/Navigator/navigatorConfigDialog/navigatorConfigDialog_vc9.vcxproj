@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>navigatorConfigDialog</ProjectName>
+    <ProjectGuid>{6FE81BEF-D89F-45ED-B044-D8CC0975A825}</ProjectGuid>
+    <RootNamespace>navigatorConfigDialog</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NAVCONFDLG_SELF_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog" mkdir "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog"
+if not exist "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\WIN32" mkdir "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\WIN32"
+copy "$(ProjectDir)include\*.h" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\." /y
+copy "$(ProjectDir)include\WIN32\*.h" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\WIN32\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)" mkdir "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)"
+copy "$(TargetDir)$(TargetName).dll" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;NAVCONFDLG_SELF_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog" mkdir "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog"
+if not exist "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\WIN32" mkdir "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\WIN32"
+copy "$(ProjectDir)include\*.h" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\." /y
+copy "$(ProjectDir)include\WIN32\*.h" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\include\WIN32\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)" mkdir "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)"
+copy "$(TargetDir)$(TargetName).dll" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\$(Configuration)\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\WIN32\NavigatorConfigDialog.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\NavigatorConfigDialog.h" />
+    <ClInclude Include="include\NavigatorConfigDialogPrerequisites.h" />
+    <ClInclude Include="include\WIN32\NavigatorConfigDialogImp.h" />
+    <ClInclude Include="src\WIN32\resource.h" />
+    <ClInclude Include="src\WIN32\winres.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\WIN32\NavigatorConfigDialog.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\WIN32\Solipsis.ico" />
+    <Image Include="src\WIN32\SolipsisLogo.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

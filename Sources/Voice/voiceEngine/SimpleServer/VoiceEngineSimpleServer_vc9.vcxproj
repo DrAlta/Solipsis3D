@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>VoiceEngineSimpleServer</ProjectName>
+    <ProjectGuid>{FB8ECE98-9645-48FE-B3B3-8E2B8F19A376}</ProjectGuid>
+    <RootNamespace>VoiceEngineSimpleServer</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\Dependencies\pthreads\include;..\..\..\..\Dependencies\CommonTools\include;$(BOOST_ROOT);..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include;..\..\..\..\Dependencies\protocols\XmlDatas\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;ENABLE_ECHO;NTEST_PLAY_SOUND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" mkdir "..\..\..\..\Dependencies\VoiceEngineSimpleServer\include"
+xcopy "*.h" "..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" /y
+if not exist "..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\$(Configuration)" mkdir "..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\$(Configuration)"
+copy "$(TargetPath)" "..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\$(Configuration)"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\..\..\Dependencies\pthreads\include;..\..\..\..\Dependencies\CommonTools\include;$(BOOST_ROOT);..\..\..\..\Dependencies\SimpleVoiceEngineProtocol\include;..\..\..\..\Dependencies\protocols\XmlDatas\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NENABLE_ECHO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" mkdir "..\..\..\..\Dependencies\VoiceEngineSimpleServer\include"
+xcopy "*.h" "..\..\..\..\Dependencies\VoiceEngineSimpleServer\include" /y
+if not exist "..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\$(Configuration)" mkdir "..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\$(Configuration)"
+copy "$(TargetPath)" "..\..\..\..\Dependencies\VoiceEngineSimpleServer\lib\$(Configuration)"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Avatar.cpp" />
+    <ClCompile Include="VoiceServer.cpp" />
+    <ClCompile Include="VoiceServerConnection.cpp" />
+    <ClCompile Include="VoiceServerDispatch.cpp" />
+    <ClCompile Include="VoiceServerSocket.cpp" />
+    <ClCompile Include="VoiceServerSource.cpp" />
+    <ClCompile Include="VoiceServerUtil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Avatar.h" />
+    <ClInclude Include="VoiceServer.h" />
+    <ClInclude Include="VoiceServerConnection.h" />
+    <ClInclude Include="VoiceServerDispatch.h" />
+    <ClInclude Include="VoiceServerException.h" />
+    <ClInclude Include="VoiceServerSocket.h" />
+    <ClInclude Include="VoiceServerSource.h" />
+    <ClInclude Include="VoiceServerUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleVoiceEngineProtocol\SimpleVoiceEngineProtocol_vc9.vcxproj">
+      <Project>{ccdfa8b2-da14-4f21-ba0a-5140fa39af3b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\voiceEngine_vc9.vcxproj">
+      <Project>{5f784299-72e2-4482-941d-12485de80c30}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Antlr2.7.6</ProjectName>
+    <ProjectGuid>{EF1D90D8-AE1A-47B7-8FDD-B107D29C9B74}</ProjectGuid>
+    <RootNamespace>Antlr276</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NO_STATIC_CONSTS;AFXDL;_MBC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if exist "..\..\..\Dependencies\Antlr2.7.6\include\antlr" goto includeOK
+mkdir "..\..\..\Dependencies\Antlr2.7.6\include\antlr"
+:includeOK
+copy "include\antlr\*.*" "..\..\..\Dependencies\Antlr2.7.6\include\antlr\." /y
+if exist "..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration)" goto libOK
+mkdir "..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration)"
+:libOK
+copy "$(Configuration)\antlr2.7.6.lib" "..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration)" /y
+
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NO_STATIC_CONSTS;AFXDL;_MBC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if exist "..\..\..\Dependencies\Antlr2.7.6\include\antlr" goto includeOK
+mkdir "..\..\..\Dependencies\Antlr2.7.6\include\antlr"
+:includeOK
+copy "include\antlr\*.*" "..\..\..\Dependencies\Antlr2.7.6\include\antlr\." /y
+if exist "..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration)" goto libOK
+mkdir "..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration)"
+:libOK
+copy "$(Configuration)\antlr2.7.6.lib" "..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration)" /y
+
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ANTLRUtil.cpp" />
+    <ClCompile Include="ASTFactory.cpp" />
+    <ClCompile Include="ASTNULLType.cpp" />
+    <ClCompile Include="ASTRefCount.cpp" />
+    <ClCompile Include="BaseAST.cpp" />
+    <ClCompile Include="BitSet.cpp" />
+    <ClCompile Include="CharBuffer.cpp" />
+    <ClCompile Include="CharScanner.cpp" />
+    <ClCompile Include="CommonAST.cpp" />
+    <ClCompile Include="CommonASTWithHiddenTokens.cpp" />
+    <ClCompile Include="CommonHiddenStreamToken.cpp" />
+    <ClCompile Include="CommonToken.cpp" />
+    <ClCompile Include="dll.cpp" />
+    <ClCompile Include="InputBuffer.cpp" />
+    <ClCompile Include="LLkParser.cpp" />
+    <ClCompile Include="MismatchedCharException.cpp" />
+    <ClCompile Include="MismatchedTokenException.cpp" />
+    <ClCompile Include="NoViableAltException.cpp" />
+    <ClCompile Include="NoViableAltForCharException.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="RecognitionException.cpp" />
+    <ClCompile Include="String.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TokenBuffer.cpp" />
+    <ClCompile Include="TokenRefCount.cpp" />
+    <ClCompile Include="TokenStreamBasicFilter.cpp" />
+    <ClCompile Include="TokenStreamHiddenTokenFilter.cpp" />
+    <ClCompile Include="TokenStreamRewriteEngine.cpp" />
+    <ClCompile Include="TokenStreamSelector.cpp" />
+    <ClCompile Include="TreeParser.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

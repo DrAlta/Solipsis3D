@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>gecode-2.2.0</ProjectName>
+    <ProjectGuid>{AA4C8F77-7789-4AF7-9B69-910A984BEF1D}</ProjectGuid>
+    <RootNamespace>gecode220</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if exist "..\..\..\Dependencies\gecode-2.2.0\include" goto includeOK
+mkdir "..\..\..\Dependencies\gecode-2.2.0\include"
+:includeOK
+xcopy "include" "..\..\..\Dependencies\gecode-2.2.0\include\" /y /E /S
+if exist "..\..\..\Dependencies\gecode-2.2.0\lib" goto libOK
+mkdir "..\..\..\Dependencies\gecode-2.2.0\lib"
+:libOK
+copy "lib\*.lib" "..\..\..\Dependencies\gecode-2.2.0\lib" /y
+if exist "..\..\..\Dependencies\gecode-2.2.0\bin" goto binOK
+mkdir "..\..\..\Dependencies\gecode-2.2.0\bin"
+:binOK
+copy "bin\*.dll" "..\..\..\Dependencies\gecode-2.2.0\bin" /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if exist "..\..\..\Dependencies\gecode-2.2.0\include" goto includeOK
+mkdir "..\..\..\Dependencies\gecode-2.2.0\include"
+:includeOK
+xcopy "include" "..\..\..\Dependencies\gecode-2.2.0\include\" /y /E /S
+if exist "..\..\..\Dependencies\gecode-2.2.0\lib" goto libOK
+mkdir "..\..\..\Dependencies\gecode-2.2.0\lib"
+:libOK
+copy "lib\*.lib" "..\..\..\Dependencies\gecode-2.2.0\lib" /y
+if exist "..\..\..\Dependencies\gecode-2.2.0\bin" goto binOK
+mkdir "..\..\..\Dependencies\gecode-2.2.0\bin"
+:binOK
+copy "bin\*.dll" "..\..\..\Dependencies\gecode-2.2.0\bin" /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

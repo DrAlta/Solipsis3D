@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugNCS|Win32">
+      <Configuration>DebugNCS</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseNCS|Win32">
+      <Configuration>ReleaseNCS</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>peerModuleRakNet</ProjectName>
+    <ProjectGuid>{12E3DE4B-827E-4785-A8AF-16D1A945F3D6}</ProjectGuid>
+    <RootNamespace>peerModuleRakNet</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(RAKNET_PATH)\Source;..\..\..\Dependencies\RakNetObjects\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;USE_WINDOWS_DEBUG;_USRDLL;_CRT_SECURE_NO_WARNINGS;PEERMODULESIMULATOR_EXPORTS;PEERMODULE_SELF_BUILD;NHANDLEVTSYNC;NLOGSNDRCV;NLOGRAKNET;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC_d.lib;tinyxmld.lib;OgreMain_d.lib;CommonTools.lib;XmlDatas.lib;XMLRPCP2NServer.lib;ws2_32.lib;RakNetDLLDebug.lib;RakNetObjects.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Peer.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\$(Configuration);..\..\..\Dependencies\CommonTools\lib\$(Configuration);..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL;..\..\..\Dependencies\protocols\P2NServer\xmlrpc++\$(Configuration)DLL;..\..\..\Dependencies\protocols\P2NServer\ulxmlrpcpp\$(Configuration)DLL;$(RAKNET_PATH)\lib;..\..\..\Dependencies\RakNetObjects\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>postBuildDebug.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(RAKNET_PATH)\Source;..\..\..\Dependencies\RakNetObjects\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PEERMODULESIMULATOR_EXPORTS;PEERMODULE_SELF_BUILD;NHANDLEVTSYNC;NLOGSNDRCV;NLOGRAKNET;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC.lib;tinyxml.lib;OgreMain.lib;CommonTools.lib;XmlDatas.lib;XMLRPCP2NServer.lib;ws2_32.lib;RakNetDLL.lib;RakNetObjects.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Peer.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\$(Configuration);..\..\..\Dependencies\CommonTools\lib\$(Configuration);..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL;..\..\..\Dependencies\protocols\P2NServer\xmlrpc++\$(Configuration)DLL;..\..\..\Dependencies\protocols\P2NServer\ulxmlrpcpp\$(Configuration)DLL;$(RAKNET_PATH)\lib;..\..\..\Dependencies\RakNetObjects\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>postBuildRelease.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(RAKNET_PATH)\Source;..\..\..\Dependencies\RakNetObjects\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;USE_WINDOWS_DEBUG;_USRDLL;_CRT_SECURE_NO_WARNINGS;PEERMODULESIMULATOR_EXPORTS;PEERMODULE_SELF_BUILD;NLOGSNDRCV;NLOGRAKNET;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC_d.lib;tinyxmld.lib;OgreMain_d.lib;CommonTools.lib;XmlDatas.lib;P2NNullClientServer.lib;ws2_32.lib;RakNetDLLDebug.lib;RakNetObjects.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Peer.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\Debug;..\..\..\Dependencies\CommonTools\lib\Debug;..\..\..\Dependencies\protocols\XmlDatas\lib\DebugDLL;..\..\..\Dependencies\protocols\P2NNullClientServer\DebugDLL;$(RAKNET_PATH)\lib;..\..\..\Dependencies\RakNetObjects\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>postBuildDebugNCS.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(RAKNET_PATH)\Source;..\..\..\Dependencies\RakNetObjects\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PEERMODULESIMULATOR_EXPORTS;PEERMODULE_SELF_BUILD;NLOGSNDRCV;NLOGRAKNET;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC.lib;tinyxml.lib;OgreMain.lib;CommonTools.lib;XmlDatas.lib;P2NNullClientServer.lib;ws2_32.lib;RakNetDLL.lib;RakNetObjects.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Peer.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\Release;..\..\..\Dependencies\CommonTools\lib\Release;..\..\..\Dependencies\protocols\XmlDatas\lib\ReleaseDLL;..\..\..\Dependencies\protocols\P2NNullClientServer\ReleaseDLL;$(RAKNET_PATH)\lib;..\..\..\Dependencies\RakNetObjects\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>postBuildReleaseNCS.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AvatarNode.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="OgreHelpers.cpp" />
+    <ClCompile Include="Peer.cpp" />
+    <ClCompile Include="PhysicsEngineManager.cpp" />
+    <ClCompile Include="RMConnection.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AvatarNode.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="IPeer.h" />
+    <ClInclude Include="IPhysicsBody.h" />
+    <ClInclude Include="IPhysicsCharacter.h" />
+    <ClInclude Include="IPhysicsEngine.h" />
+    <ClInclude Include="IPhysicsScene.h" />
+    <ClInclude Include="OgreHelpers.h" />
+    <ClInclude Include="Peer.h" />
+    <ClInclude Include="PeerModule.h" />
+    <ClInclude Include="PhysicsEngineManager.h" />
+    <ClInclude Include="RMConnection.h" />
+    <ClInclude Include="TimeListener.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonTools\CommonTools_vc9.vcxproj">
+      <Project>{2517a49b-1219-4823-8178-2a8b6d5fc63c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\P2N\P2NNullClientServer\P2NNullClientServer_vc9.vcxproj">
+      <Project>{2fe1f5c9-bcd8-43aa-9c15-fe7fcb3819bf}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\P2N\P2NServer\xmlrpc++\XMLRPCP2NServer_vc9.vcxproj">
+      <Project>{3f9ba22f-03a7-4931-8c20-96909d9ec03e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\RakNetObjects\RakNetObjects_vc9.vcxproj">
+      <Project>{f3c1ad5f-9d9a-4d93-b427-01a2f2031d50}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\XmlDatas\XmlDatas_vc9.vcxproj">
+      <Project>{dd2704dc-41ca-4fbb-99fc-204fa6942500}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

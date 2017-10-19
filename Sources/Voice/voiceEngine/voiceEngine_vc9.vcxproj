@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>voiceEngine</ProjectName>
+    <ProjectGuid>{5F784299-72E2-4482-941D-12485DE80C30}</ProjectGuid>
+    <RootNamespace>voiceEngine</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BUILDING_VOICEENGINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Phonetizer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\Phonetizer\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\include" mkdir "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\include"
+xcopy "$(ProjectDir)*.h" "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\include\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)" mkdir "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BUILDING_VOICEENGINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Phonetizer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\Phonetizer\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\include" mkdir "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\include"
+xcopy "$(ProjectDir)*.h" "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\include\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)" mkdir "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\Dependencies\VoiceEngine\lib\$(Configuration)\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="VoiceEngineManager.cpp" />
+    <ClCompile Include="VoicePacket.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DllExport.h" />
+    <ClInclude Include="IVoiceEngine.h" />
+    <ClInclude Include="IVoicePacketListener.h" />
+    <ClInclude Include="VoiceEngineManager.h" />
+    <ClInclude Include="VoicePacket.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonTools\CommonTools_vc9.vcxproj">
+      <Project>{2517a49b-1219-4823-8178-2a8b6d5fc63c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\XmlDatas\XmlDatas_vc9.vcxproj">
+      <Project>{dd2704dc-41ca-4fbb-99fc-204fa6942500}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Phonetizer\Phonetizer_vc9.vcxproj">
+      <Project>{38512799-b050-49d0-8025-c7623d2d1cf1}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

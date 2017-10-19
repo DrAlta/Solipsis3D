@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugNCS|Win32">
+      <Configuration>DebugNCS</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseNCS|Win32">
+      <Configuration>ReleaseNCS</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>navigatorModule</ProjectName>
+    <ProjectGuid>{B71ED042-7AAC-48D8-9BE9-5946D194A25F}</ProjectGuid>
+    <RootNamespace>navigatorModule</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-Zm112 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\naviAwesomium\include;..\..\..\Dependencies\lua\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\MdlrTools\include;..\..\..\Dependencies\AvatarTools\include;.\oSceneLoader\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(FMOD_PATH)\inc;..\..\..\Dependencies\plugin_3ds\include;..\..\..\Dependencies\plugin_skp\include;..\..\..\Dependencies\plugin_skp\lib\Debug;..\..\..\Dependencies\authentFB\include;..\..\..\Dependencies\VoiceEngine\include;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\FaceController\include;..\..\..\Dependencies\navigatorConfigDialog\include;..\..\..\Dependencies\ogreMax\include;..\..\..\Dependencies\md5wrapper\include;..\..\..\Dependencies\DeclarativeModeler\include;..\..\..\Dependencies\TerrainModeler\include;..\..\..\Dependencies\postagger\include;..\..\..\Dependencies\Triangle\include;..\..\..\Dependencies\curl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NAVIGATORMODULE_EXPORTS;NAVIGATORMODULE_SELF_BUILD;UIDEBUG;DEMO_NAVI1;DEMO_NAVI2;DEMO_VNC;DEMO_VLC;DEMO_VOICE;DEMO_PHYSICS1;NSHADOWS;NLOGSNDRCV;DECLARATIVE_MODELER;TERRAIN_MODELER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Prerequisites.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;pthreadVC_d.lib;tinyxmld.lib;XmlDatas.lib;XMLRPCP2NClient.lib;OgreMain_d.lib;OIS_d.lib;Awesomium_d.lib;Navi_d.lib;lua_d.lib;CommonTools.lib;brep_d.lib;csg_d.lib;MdlrTools_d.lib;zlibd.lib;AvatarTools_d.lib;fmodexL_vc.lib;Plugin_3ds_d.lib;Plugin_skp_d.lib;authentFB.lib;FaceController.lib;navigatorConfigDialog.lib;ogreMax_d.lib;DeclarativeModeler.lib;md5wrapper.lib;libcurld.lib;TerrainModeler.lib;postagger.lib;Antlr2.7.6.lib;GecodeCpltSet.lib;GecodeInt.lib;GecodeKernel.lib;GecodeMinimodel.lib;GecodeSearch.lib;GecodeSerialization.lib;GecodeSet.lib;GecodeSupport.lib;triangle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Navigator.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\Debug;..\..\..\Dependencies\naviAwesomium\lib;..\..\..\Dependencies\lua\lib\debuglib;..\..\..\Dependencies\CommonTools\lib\Debug;..\..\..\Dependencies\MdlrTools\lib\Debug;..\..\..\Dependencies\brep\lib;..\..\..\Dependencies\csg\lib;..\..\..\Dependencies\zlib123\lib;..\..\..\Dependencies\protocols\XmlDatas\lib\DebugDLL;..\..\..\Dependencies\protocols\P2NClient\xmlrpc++\DebugDLL;..\..\..\Dependencies\protocols\P2NClient\ulxmlrpcpp\DebugDLL;..\..\..\Dependencies\AvatarTools\lib;$(FMOD_PATH)\lib;..\..\..\Dependencies\plugin_3ds\lib;..\..\..\Dependencies\plugin_skp\lib\Debug;..\..\..\Dependencies\authentFB\lib\Debug;..\..\..\Dependencies\FaceController\lib\Debug;..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Debug;..\..\..\Dependencies\ogreMax\lib;..\..\..\Dependencies\DeclarativeModeler\lib\$(Configuration);..\..\..\Dependencies\gecode-2.2.0\lib;..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration);..\..\..\Dependencies\postagger\lib\$(Configuration);..\..\..\Dependencies\curl\lib\DebugDLL;..\..\..\Dependencies\md5wrapper\lib\Debug;..\..\..\Dependencies\TerrainModeler\lib\Debug;..\..\..\Dependencies\Triangle\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>postBuildDebug.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-Zm112 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\naviAwesomium\include;..\..\..\Dependencies\lua\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\MdlrTools\include;..\..\..\Dependencies\AvatarTools\include;.\oSceneLoader\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(FMOD_PATH)\inc;..\..\..\Dependencies\plugin_3ds\include;..\..\..\Dependencies\plugin_skp\include;..\..\..\Dependencies\plugin_skp\lib\Release;..\..\..\Dependencies\authentFB\include;..\..\..\Dependencies\VoiceEngine\include;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\FaceController\include;..\..\..\Dependencies\navigatorConfigDialog\include;..\..\..\Dependencies\ogreMax\include;..\..\..\Dependencies\md5wrapper\include;..\..\..\Dependencies\DeclarativeModeler\include;..\..\..\Dependencies\TerrainModeler\include;..\..\..\Dependencies\postagger\include;..\..\..\Dependencies\Triangle\include;..\..\..\Dependencies\curl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;NAVIGATORMODULE_EXPORTS;NAVIGATORMODULE_SELF_BUILD;UIDEBUG;DEMO_NAVI1;DEMO_NAVI2;DEMO_VNC;DEMO_VLC;DEMO_VOICE;DEMO_PHYSICS1;NSHADOWS;NLOGSNDRCV;DECLARATIVE_MODELER;TERRAIN_MODELER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Prerequisites.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;pthreadVC.lib;tinyxml.lib;XmlDatas.lib;XMLRPCP2NClient.lib;OgreMain.lib;OIS.lib;Awesomium.lib;Navi.lib;lua.lib;CommonTools.lib;brep.lib;csg.lib;MdlrTools.lib;zlib.lib;AvatarTools.lib;fmodex_vc.lib;Plugin_3ds.lib;Plugin_skp.lib;authentFB.lib;FaceController.lib;navigatorConfigDialog.lib;ogreMax.lib;DeclarativeModeler.lib;md5wrapper.lib;libcurl.lib;postagger.lib;TerrainModeler.lib;Antlr2.7.6.lib;GecodeSupport.lib;GecodeSet.lib;GecodeSerialization.lib;GecodeSearch.lib;GecodeMinimodel.lib;GecodeKernel.lib;GecodeInt.lib;GecodeCpltSet.lib;triangle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Navigator.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\Release;..\..\..\Dependencies\naviAwesomium\lib;..\..\..\Dependencies\lua\lib\releaselib;..\..\..\Dependencies\CommonTools\lib\Release;..\..\..\Dependencies\MdlrTools\lib\Release;..\..\..\Dependencies\brep\lib;..\..\..\Dependencies\csg\lib;..\..\..\Dependencies\zlib123\lib;..\..\..\Dependencies\protocols\XmlDatas\lib\ReleaseDLL;..\..\..\Dependencies\protocols\P2NClient\xmlrpc++\ReleaseDLL;..\..\..\Dependencies\protocols\P2NClient\ulxmlrpcpp\ReleaseDLL;..\..\..\Dependencies\AvatarTools\lib;$(FMOD_PATH)\lib;..\..\..\Dependencies\plugin_3ds\lib;..\..\..\Dependencies\plugin_skp\lib\Release;..\..\..\Dependencies\authentFB\lib\Release;..\..\..\Dependencies\FaceController\lib\Release;..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Release;..\..\..\Dependencies\ogreMax\lib;..\..\..\Dependencies\DeclarativeModeler\lib\$(Configuration);..\..\..\Dependencies\TerrainModeler\lib\$(Configuration);..\..\..\Dependencies\Antlr2.7.6\lib\$(Configuration);..\..\..\Dependencies\postagger\lib\$(Configuration);..\..\..\Dependencies\gecode-2.2.0\lib;..\..\..\Dependencies\curl\lib\ReleaseDLL;..\..\..\Dependencies\md5wrapper\lib\Release;..\..\..\Dependencies\Triangle\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>postBuildRelease.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-Zm112 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;..\..\..\Dependencies\curl\include;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\naviAwesomium\include;..\..\..\Dependencies\lua\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\MdlrTools\include;..\..\..\Dependencies\AvatarTools\include;.\oSceneLoader\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(FMOD_PATH)\inc;..\..\..\Dependencies\plugin_3ds\include;..\..\..\Dependencies\plugin_skp\include;..\..\..\Dependencies\plugin_skp\lib\Debug;..\..\..\Dependencies\authentFB\include;..\..\..\Dependencies\VoiceEngine\include;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\FaceController\include;..\..\..\Dependencies\navigatorConfigDialog\include;..\..\..\Dependencies\ogreMax\include;..\..\..\Dependencies\md5wrapper\include;..\..\..\Dependencies\DeclarativeModeler\include;..\..\..\Dependencies\postagger\include;..\..\..\Dependencies\TerrainModeler\include;..\..\..\Dependencies\Triangle\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NAVIGATORMODULE_EXPORTS;NAVIGATORMODULE_SELF_BUILD;NULLCLIENTSERVER;UIDEBUG;DEMO_NAVI1;DEMO_NAVI2;DEMO_VNC;DEMO_VLC;DEMO_VOICE;DEMO_PHYSICS1;NSHADOWS;NLOGSNDRCV;DECLARATIVE_MODELER;TERRAIN_MODELER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Prerequisites.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;pthreadVC_d.lib;tinyxmld.lib;XmlDatas.lib;P2NNullClientServer.lib;OgreMain_d.lib;OIS_d.lib;Awesomium_d.lib;Navi_d.lib;lua_d.lib;CommonTools.lib;brep_d.lib;csg_d.lib;MdlrTools_d.lib;zlibd.lib;AvatarTools_d.lib;fmodexL_vc.lib;Plugin_3ds_d.lib;Plugin_skp_d.lib;authentFB.lib;FaceController.lib;navigatorConfigDialog.lib;ogreMax_d.lib;md5wrapper.lib;libcurld.lib;DeclarativeModeler.lib;TerrainModeler.lib;postagger.lib;Antlr2.7.6.lib;GecodeCpltSet.lib;GecodeInt.lib;GecodeKernel.lib;GecodeMinimodel.lib;GecodeSearch.lib;GecodeSerialization.lib;GecodeSet.lib;GecodeSupport.lib;triangle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Navigator.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\Debug;..\..\..\Dependencies\naviAwesomium\lib;..\..\..\Dependencies\lua\lib\debuglib;..\..\..\Dependencies\CommonTools\lib\Debug;..\..\..\Dependencies\MdlrTools\lib\Debug;..\..\..\Dependencies\brep\lib;..\..\..\Dependencies\csg\lib;..\..\..\Dependencies\zlib123\lib;..\..\..\Dependencies\protocols\XmlDatas\lib\DebugDLL;..\..\..\Dependencies\protocols\P2NNullClientServer\DebugDLL;..\..\..\Dependencies\AvatarTools\lib;$(FMOD_PATH)\lib;..\..\..\Dependencies\plugin_3ds\lib;..\..\..\Dependencies\plugin_skp\lib\Debug;..\..\..\Dependencies\authentFB\lib\Debug;..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Debug;..\..\..\Dependencies\FaceController\lib\Debug;..\..\..\Dependencies\ogreMax\lib;..\..\..\Dependencies\curl\lib\DebugDLL;..\..\..\Dependencies\md5wrapper\lib\Debug;..\..\..\Dependencies\Antlr2.7.6\lib\Debug;..\..\..\Dependencies\Gecode-2.2.0\lib;..\..\..\Dependencies\postagger\lib\Debug;..\..\..\Dependencies\DeclarativeModeler\lib\Debug;..\..\..\Dependencies\TerrainModeler\lib\Debug;..\..\..\Dependencies\Triangle\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>postBuildDebugNCS.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">
+    <ClCompile>
+      <AdditionalOptions>-Zm112 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;..\..\..\Dependencies\curl\include;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\naviAwesomium\include;..\..\..\Dependencies\lua\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\MdlrTools\include;..\..\..\Dependencies\AvatarTools\include;.\oSceneLoader\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\protocols\P2NClient;..\..\..\Dependencies\protocols\P2NServer;$(FMOD_PATH)\inc;..\..\..\Dependencies\plugin_3ds\include;..\..\..\Dependencies\plugin_skp\include;..\..\..\Dependencies\plugin_skp\lib\Release;..\..\..\Dependencies\authentFB\include;..\..\..\Dependencies\VoiceEngine\include;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\FaceController\include;..\..\..\Dependencies\navigatorConfigDialog\include;..\..\..\Dependencies\ogreMax\include;..\..\..\Dependencies\md5wrapper\include;..\..\..\Dependencies\DeclarativeModeler\include;..\..\..\Dependencies\TerrainModeler\include;..\..\..\Dependencies\postagger\include;..\..\..\Dependencies\Triangle\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;NAVIGATORMODULE_EXPORTS;NAVIGATORMODULE_SELF_BUILD;NULLCLIENTSERVER;UIDEBUG;DEMO_NAVI1;DEMO_NAVI2;DEMO_VNC;DEMO_VLC;DEMO_VOICE;DEMO_PHYSICS1;NSHADOWS;NLOGSNDRCV;DECLARATIVE_MODELER;TERRAIN_MODELER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Prerequisites.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;pthreadVC.lib;tinyxml.lib;XmlDatas.lib;P2NNullClientServer.lib;OgreMain.lib;OIS.lib;Awesomium.lib;Navi.lib;lua.lib;CommonTools.lib;brep.lib;csg.lib;MdlrTools.lib;zlib.lib;AvatarTools.lib;fmodex_vc.lib;Plugin_3ds.lib;Plugin_skp.lib;authentFB.lib;FaceController.lib;navigatorConfigDialog.lib;ogreMax.lib;md5wrapper.lib;libcurl.lib;DeclarativeModeler.lib;TerrainModeler.lib;postagger.lib;Antlr2.7.6.lib;GecodeCpltSet.lib;GecodeInt.lib;GecodeKernel.lib;GecodeMinimodel.lib;GecodeSearch.lib;GecodeSerialization.lib;GecodeSet.lib;GecodeSupport.lib;triangle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Navigator.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\Release;..\..\..\Dependencies\naviAwesomium\lib;..\..\..\Dependencies\lua\lib\releaselib;..\..\..\Dependencies\CommonTools\lib\Release;..\..\..\Dependencies\MdlrTools\lib\Release;..\..\..\Dependencies\brep\lib;..\..\..\Dependencies\csg\lib;..\..\..\Dependencies\zlib123\lib;..\..\..\Dependencies\protocols\XmlDatas\lib\ReleaseDLL;..\..\..\Dependencies\protocols\P2NNullClientServer\ReleaseDLL;..\..\..\Dependencies\AvatarTools\lib;$(FMOD_PATH)\lib;..\..\..\Dependencies\plugin_3ds\lib;..\..\..\Dependencies\plugin_skp\lib\Release;..\..\..\Dependencies\authentFB\lib\Release;..\..\..\Dependencies\FaceController\lib\Release;..\..\..\Dependencies\navigatorConfigDialog\lib\WIN32\Release;..\..\..\Dependencies\ogreMax\lib;..\..\..\Dependencies\curl\lib\ReleaseDLL;..\..\..\Dependencies\md5wrapper\lib\Release;..\..\..\Dependencies\DeclarativeModeler\lib\Release;..\..\..\Dependencies\TerrainModeler\lib\Release;..\..\..\Dependencies\postagger\lib\Release;..\..\..\Dependencies\Antlr2.7.6\lib\Release;..\..\..\Dependencies\Gecode-2.2.0\lib;..\..\..\Dependencies\Triangle\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>postBuildReleaseNCS.bat vc9</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Cameras\CameraSupport.h" />
+    <ClInclude Include="Cameras\CameraSupportManager.h" />
+    <ClInclude Include="Cameras\FirstPersonCameraSupport.h" />
+    <ClInclude Include="Cameras\OrbitalCameraSupport.h" />
+    <ClInclude Include="Configuration\NavigatorConfiguration.h" />
+    <ClInclude Include="MainApplication\AutoCreatedWindow.h" />
+    <ClInclude Include="MainApplication\IApplication.h" />
+    <ClInclude Include="MainApplication\IInstance.h" />
+    <ClInclude Include="MainApplication\Instance.h" />
+    <ClInclude Include="MainApplication\IOgrePeerManagerCallbacks.h" />
+    <ClInclude Include="MainApplication\IWindow.h" />
+    <ClInclude Include="MainApplication\KeyMotion.h" />
+    <ClInclude Include="MainApplication\navigator.h" />
+    <ClInclude Include="MainApplication\navigatorapp.h" />
+    <ClInclude Include="MainApplication\NavigatorFrameListener.h" />
+    <ClInclude Include="MainApplication\NavigatorSound.h" />
+    <ClInclude Include="MainApplication\NavigatorXMLRPCClient.h" />
+    <ClInclude Include="MainApplication\NodeEventListener.h" />
+    <ClInclude Include="MainApplication\OgreApplication.h" />
+    <ClInclude Include="MainApplication\OgreFrameListener.h" />
+    <ClInclude Include="MainApplication\OgrePeer.h" />
+    <ClInclude Include="MainApplication\OgrePeerManager.h" />
+    <ClInclude Include="navigatorGui\Cursor.h" />
+    <ClInclude Include="navigatorGui\GUI_About.h" />
+    <ClInclude Include="navigatorGui\GUI_AuthentFacebook.h" />
+    <ClInclude Include="navigatorGui\GUI_AuthentWorldServer.h" />
+    <ClInclude Include="navigatorGui\GUI_Avatar.h" />
+    <ClInclude Include="navigatorGui\GUI_AvatarProperties.h" />
+    <ClInclude Include="navigatorGui\GUI_Chat.h" />
+    <ClInclude Include="navigatorGui\GUI_ChooseWorld.h" />
+    <ClInclude Include="navigatorGui\GUI_Commands.h" />
+    <ClInclude Include="navigatorGui\GUI_ContextMenu.h" />
+    <ClInclude Include="navigatorGui\GUI_Debug.h" />
+    <ClInclude Include="navigatorGui\GUI_FromServer.h" />
+    <ClInclude Include="navigatorGui\GUI_login.h" />
+    <ClInclude Include="navigatorGui\GUI_MainMenu.h" />
+    <ClInclude Include="navigatorGui\GUI_MessageBox.h" />
+    <ClInclude Include="navigatorGui\GUI_MessageBoxResponse.h" />
+    <ClInclude Include="navigatorGui\GUI_Modeler.h" />
+    <ClInclude Include="navigatorGui\GUI_ModelerProperties.h" />
+    <ClInclude Include="navigatorGui\GUI_ModelerSceneFromText.h" />
+    <ClInclude Include="navigatorGui\GUI_Options.h" />
+    <ClInclude Include="navigatorGui\GUI_Panel.h" />
+    <ClInclude Include="navigatorGui\GUI_StatusBar.h" />
+    <ClInclude Include="navigatorGui\GUI_TerrainModeler.h" />
+    <ClInclude Include="navigatorGui\GUI_WorldsServerInfo.h" />
+    <ClInclude Include="navigatorGui\Mouse.h" />
+    <ClInclude Include="navigatorGui\NavigatorGUI.h" />
+    <ClInclude Include="navigatorGui\Panel2D.h" />
+    <ClInclude Include="navigatorGui\Panel2DExtTextSrcEx.h" />
+    <ClInclude Include="navigatorGui\Panel2DMgr.h" />
+    <ClInclude Include="navigatorGui\Panel2DWWW.h" />
+    <ClInclude Include="NavigatorModule.h" />
+    <ClInclude Include="OgreGraphicObjects\MovableBox.h" />
+    <ClInclude Include="OgreGraphicObjects\MovableText.h" />
+    <ClInclude Include="OgreGraphicObjects\Panel2DButtonOverlayElement.h" />
+    <ClInclude Include="OgreGraphicObjects\Panel2DOverlayElement.h" />
+    <ClInclude Include="OgreGraphicObjects\ProgressBar.h" />
+    <ClInclude Include="OgreGraphicObjects\SoundIcon.h" />
+    <ClInclude Include="OgreTools\ExternalTextureSourceEx.h" />
+    <ClInclude Include="OgreTools\OgreHelpers.h" />
+    <ClInclude Include="oSceneLoader\include\IOSMSceneCallbacks.h" />
+    <ClInclude Include="oSceneLoader\include\OgreOSMScene.h" />
+    <ClInclude Include="oSceneLoader\include\OSMAnimSerializer.h" />
+    <ClInclude Include="Prerequisites.h" />
+    <ClInclude Include="Scripting\LuaBinding.h" />
+    <ClInclude Include="Scripting\NavigatorLua.h" />
+    <ClInclude Include="Tools\DebugHelpers.h" />
+    <ClInclude Include="World\Avatar.h" />
+    <ClInclude Include="World\Modeler.h" />
+    <ClInclude Include="World\Object.h" />
+    <ClInclude Include="World\Scene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Cameras\CameraSupport.cpp" />
+    <ClCompile Include="Cameras\CameraSupportManager.cpp" />
+    <ClCompile Include="Cameras\FirstPersonCameraSupport.cpp" />
+    <ClCompile Include="Cameras\OrbitalCameraSupport.cpp" />
+    <ClCompile Include="Configuration\NavigatorConfiguration.cpp" />
+    <ClCompile Include="MainApplication\AutoCreatedWindow.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="MainApplication\Instance.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="MainApplication\KeyMotion.cpp" />
+    <ClCompile Include="MainApplication\Navigator.cpp" />
+    <ClCompile Include="MainApplication\navigatorapp.cpp" />
+    <ClCompile Include="MainApplication\NavigatorFrameListener.cpp" />
+    <ClCompile Include="MainApplication\NavigatorSound.cpp" />
+    <ClCompile Include="MainApplication\NavigatorXMLRPCClient.cpp" />
+    <ClCompile Include="MainApplication\NodeEventListener.cpp" />
+    <ClCompile Include="MainApplication\OgreApplication.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="MainApplication\OgreFrameListener.cpp" />
+    <ClCompile Include="MainApplication\OgrePeer.cpp" />
+    <ClCompile Include="MainApplication\OgrePeerManager.cpp" />
+    <ClCompile Include="navigatorGui\Cursor.cpp" />
+    <ClCompile Include="navigatorGui\GUI_About.cpp" />
+    <ClCompile Include="navigatorGui\GUI_AuthentFacebook.cpp" />
+    <ClCompile Include="navigatorGui\GUI_AuthentWorldServer.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Avatar.cpp" />
+    <ClCompile Include="navigatorGui\GUI_AvatarProperties.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Chat.cpp" />
+    <ClCompile Include="navigatorGui\GUI_ChooseWorld.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Commands.cpp" />
+    <ClCompile Include="navigatorGui\GUI_ContextMenu.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Debug.cpp" />
+    <ClCompile Include="navigatorGui\GUI_FromServer.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Login.cpp" />
+    <ClCompile Include="navigatorGui\GUI_MainMenu.cpp" />
+    <ClCompile Include="navigatorGui\GUI_MessageBox.cpp" />
+    <ClCompile Include="navigatorGui\gui_modeler.cpp" />
+    <ClCompile Include="navigatorGui\GUI_ModelerProperties.cpp" />
+    <ClCompile Include="navigatorGui\GUI_ModelerSceneFromText.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Options.cpp" />
+    <ClCompile Include="navigatorGui\GUI_Panel.cpp" />
+    <ClCompile Include="navigatorGui\GUI_StatusBar.cpp" />
+    <ClCompile Include="navigatorGui\GUI_TerrainModeler.cpp" />
+    <ClCompile Include="navigatorGui\GUI_WorldsServerInfo.cpp" />
+    <ClCompile Include="navigatorGui\Mouse.cpp" />
+    <ClCompile Include="navigatorGui\NavigatorGUI.cpp" />
+    <ClCompile Include="navigatorGui\Panel2D.cpp" />
+    <ClCompile Include="navigatorGui\Panel2DExtTextSrcEx.cpp" />
+    <ClCompile Include="navigatorGui\Panel2DMgr.cpp" />
+    <ClCompile Include="navigatorGui\Panel2DWWW.cpp" />
+    <ClCompile Include="OgreGraphicObjects\MovableBox.cpp" />
+    <ClCompile Include="OgreGraphicObjects\MovableText.cpp" />
+    <ClCompile Include="OgreGraphicObjects\Panel2DButtonOverlayElement.cpp" />
+    <ClCompile Include="OgreGraphicObjects\Panel2DOverlayElement.cpp" />
+    <ClCompile Include="OgreGraphicObjects\ProgressBar.cpp" />
+    <ClCompile Include="OgreGraphicObjects\SoundIcon.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="OgreTools\OgreHelpers.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="oSceneLoader\src\OgreOSMScene.cpp" />
+    <ClCompile Include="Prerequisites.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">Prerequisites.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Prerequisites.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">Prerequisites.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Prerequisites.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Scripting\LuaBinding.cpp" />
+    <ClCompile Include="Scripting\NavigatorLua.cpp" />
+    <ClCompile Include="Tools\DebugHelpers.cpp" />
+    <ClCompile Include="World\Avatar.cpp" />
+    <ClCompile Include="World\Modeler.cpp" />
+    <ClCompile Include="World\Object.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="World\Scene.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='DebugNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='ReleaseNCS|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\lua\boot.lua" />
+    <None Include="..\..\..\Media\lua\defaultGUI.lua" />
+    <None Include="..\..\..\Media\materials\scripts\Solipsis.material" />
+    <None Include="..\..\..\Media\NaviLocal\uiauthentfb.html" />
+    <None Include="..\..\..\Media\NaviLocal\uiavatarmain.html" />
+    <None Include="..\..\..\Media\NaviLocal\uiavatarprop.html" />
+    <None Include="..\..\..\Media\NaviLocal\uichat.html" />
+    <None Include="..\..\..\Media\NaviLocal\uicommands.html" />
+    <None Include="..\..\..\Media\NaviLocal\uictxtavatar.html" />
+    <None Include="..\..\..\Media\NaviLocal\uictxtvlc.html" />
+    <None Include="..\..\..\Media\NaviLocal\uictxtwww.html" />
+    <None Include="..\..\..\Media\NaviLocal\uidebug.html" />
+    <None Include="..\..\..\Media\NaviLocal\uilogin.html" />
+    <None Include="..\..\..\Media\NaviLocal\uimainmenu.html" />
+    <None Include="..\..\..\Media\NaviLocal\uimdlrmain.html" />
+    <None Include="..\..\..\Media\NaviLocal\uimdlrprop.html" />
+    <None Include="..\..\..\Media\NaviLocal\uimdlrscenefromtext.html" />
+    <None Include="..\..\..\Media\NaviLocal\uimdlrterrain.html" />
+    <None Include="..\..\..\Media\NaviLocal\uioptions.html" />
+    <None Include="..\..\..\Media\overlays\Solipsis.overlay" />
+    <None Include="..\..\..\Media\SolipsisFakeTerrain.cfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\changelog.txt" />
+    <Text Include="..\devrules.txt" />
+    <Text Include="..\done.txt" />
+    <Text Include="..\readme.txt" />
+    <Text Include="..\readmeUser.txt" />
+    <Text Include="..\todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonTools\CommonTools_vc9.vcxproj">
+      <Project>{2517a49b-1219-4823-8178-2a8b6d5fc63c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\P2N\P2NClient\xmlrpc++\XMLRPCP2NClient_vc9.vcxproj">
+      <Project>{df452f0f-5ca2-44a6-bfb9-2e0520bf718a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\P2N\P2NNullClientServer\P2NNullClientServer_vc9.vcxproj">
+      <Project>{2fe1f5c9-bcd8-43aa-9c15-fe7fcb3819bf}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modelers\AvatarTools\AvatarTools_vc9.vcxproj">
+      <Project>{89ad7d88-16ec-4964-99fa-98e1043ac1a8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modelers\DeclarativeModeler\DeclarativeModeler_vc9.vcxproj">
+      <Project>{94b5ed03-e8f8-4168-911a-bfc102d080bf}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modelers\MdlrTools\MdlrTools_vc9.vcxproj">
+      <Project>{16dc2030-a313-4674-800f-1d995ccc344e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modelers\TerrainModeler\terrainModeler_vc9.vcxproj">
+      <Project>{e81ae9ae-4d3d-441d-ac91-87e586f3f768}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Peer\PeerModuleRakNet\peerModuleRakNet_vc9.vcxproj">
+      <Project>{12e3de4b-827e-4785-a8af-16d1a945f3d6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Voice\Phonetizer\Phonetizer_vc9.vcxproj">
+      <Project>{38512799-b050-49d0-8025-c7623d2d1cf1}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Voice\voiceEngine\voiceEngine_vc9.vcxproj">
+      <Project>{5f784299-72e2-4482-941d-12485de80c30}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\authentFB\authentFB_vc9.vcxproj">
+      <Project>{a0e177b2-2f3b-4eac-9dff-b3aa42256993}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\navigatorConfigDialog\navigatorConfigDialog_vc9.vcxproj">
+      <Project>{6fe81bef-d89f-45ed-b044-d8cc0975a825}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\NavigatorPlugins\plugin_3ds\plugin_3ds_vc9.vcxproj">
+      <Project>{6f1bedd7-d31b-4cee-8b70-d254f1f1f0be}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\NavigatorPlugins\plugin_skp\Plugin_skp_vc9.vcxproj">
+      <Project>{cb6be1d0-f46f-4bc2-a4b7-ec16e7944b0f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

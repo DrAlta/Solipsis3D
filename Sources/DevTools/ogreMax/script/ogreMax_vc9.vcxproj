@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{48AFAAA6-65AB-47B1-8DFA-79E9F99948C5}</ProjectGuid>
+    <RootNamespace>ogreMax_vc9</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)/OgreMain/include;$(OGRE_HOME)/include;../../../../Dependencies/tinyxml/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>lib/ogreMax_d.lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "..\..\..\..\Dependencies\ogreMax" mkdir "..\..\..\..\Dependencies\ogreMax"
+if not exist "..\..\..\..\Dependencies\ogreMax\include" mkdir "..\..\..\..\Dependencies\ogreMax\include"
+copy "..\src\*.hpp" "..\..\..\..\Dependencies\ogreMax\include" /y
+if not exist "..\..\..\..\Dependencies\ogreMax\lib" mkdir "..\..\..\..\Dependencies\ogreMax\lib"
+copy "lib\ogreMax_d.lib" "..\..\..\..\Dependencies\ogreMax\lib" /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)/OgreMain/include;$(OGRE_HOME)/include;../../../../Dependencies/tinyxml/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>lib/ogreMax.lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "..\..\..\..\Dependencies\ogreMax" mkdir "..\..\..\..\Dependencies\ogreMax"
+if not exist "..\..\..\..\Dependencies\ogreMax\include" mkdir "..\..\..\..\Dependencies\ogreMax\include"
+copy "..\src\*.hpp" "..\..\..\..\Dependencies\ogreMax\include" /y
+if not exist "..\..\..\..\Dependencies\ogreMax\lib" mkdir "..\..\..\..\Dependencies\ogreMax\lib"
+copy "lib\ogreMax.lib" "..\..\..\..\Dependencies\ogreMax\lib" /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\OgreMaxModel.cpp" />
+    <ClCompile Include="..\src\OgreMaxScene.cpp" />
+    <ClCompile Include="..\src\OgreMaxUtilities.cpp" />
+    <ClCompile Include="..\src\ProgressCalculator.cpp" />
+    <ClCompile Include="..\src\Version.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\OgreMaxModel.hpp" />
+    <ClInclude Include="..\src\OgreMaxPlatform.hpp" />
+    <ClInclude Include="..\src\OgreMaxRenderWindowIterator.hpp" />
+    <ClInclude Include="..\src\OgreMaxScene.hpp" />
+    <ClInclude Include="..\src\OgreMaxTypes.hpp" />
+    <ClInclude Include="..\src\OgreMaxUtilities.hpp" />
+    <ClInclude Include="..\src\ProgressCalculator.hpp" />
+    <ClInclude Include="..\src\Version.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\tinyxml\tinyxml_lib_vc9.vcxproj">
+      <Project>{c406daec-0886-4771-8dea-9d7329b46cc1}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

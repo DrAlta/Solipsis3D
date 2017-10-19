@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>XmlDatas</ProjectName>
+    <ProjectGuid>{DD2704DC-41CA-4FBB-99FC-204FA6942500}</ProjectGuid>
+    <RootNamespace>XmlDatas</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;..\..\..\Dependencies\libiconv\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XMLDATAS_EXPORTS;XMLDATAS_SELF_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC_d.lib;tinyxmld.lib;libiconv.lib;OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)XmlDatas.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;..\..\..\Dependencies\libiconv\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>$(OutDir)XmlDatas.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist ..\..\..\Dependencies\protocols\XmlDatas\include mkdir ..\..\..\Dependencies\protocols\XmlDatas\include
+xcopy *.h ..\..\..\Dependencies\protocols\XmlDatas\include /y
+if not exist "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL" mkdir "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL"
+copy "$(TargetPath)" "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL"
+copy "$(TargetDir)$(TargetName).lib" "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;..\..\..\Dependencies\libiconv\include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XMLDATAS_EXPORTS;XMLDATAS_SELF_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC.lib;tinyxml.lib;libiconv.lib;OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)XmlDatas.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Dependencies\pthreads\lib;..\..\..\Dependencies\tinyxml\lib;..\..\..\Dependencies\libiconv\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\Dependencies\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>$(OutDir)XmlDatas.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist ..\..\..\Dependencies\protocols\XmlDatas\include mkdir ..\..\..\Dependencies\protocols\XmlDatas\include
+xcopy *.h ..\..\..\Dependencies\protocols\XmlDatas\include /y
+if not exist "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL" mkdir "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL"
+copy "$(TargetPath)" "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL"
+copy "$(TargetDir)$(TargetName).lib" "..\..\..\Dependencies\protocols\XmlDatas\lib\$(Configuration)DLL"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="PoolEntry.h" />
+    <ClInclude Include="XmlAction.h" />
+    <ClInclude Include="XmlContent.h" />
+    <ClInclude Include="XmlDatas.h" />
+    <ClInclude Include="XmlDatasBasicTypes.h" />
+    <ClInclude Include="XmlDatasPrerequisites.h" />
+    <ClInclude Include="XmlDatasTypedefs.h" />
+    <ClInclude Include="XmlEntity.h" />
+    <ClInclude Include="XmlEvt.h" />
+    <ClInclude Include="XmlHelpers.h" />
+    <ClInclude Include="XmlLodContent.h" />
+    <ClInclude Include="XmlLogin.h" />
+    <ClInclude Include="XmlSceneContent.h" />
+    <ClInclude Include="XmlSceneLodContent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XmlAction.cpp" />
+    <ClCompile Include="XmlContent.cpp" />
+    <ClCompile Include="XmlEntity.cpp" />
+    <ClCompile Include="XmlEvt.cpp" />
+    <ClCompile Include="XmlHelpers.cpp" />
+    <ClCompile Include="XmlLodContent.cpp" />
+    <ClCompile Include="XmlLogin.cpp" />
+    <ClCompile Include="XmlSceneContent.cpp" />
+    <ClCompile Include="XmlSceneLodContent.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

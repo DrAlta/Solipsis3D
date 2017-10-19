@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>MdlrTools</ProjectName>
+    <ProjectGuid>{16DC2030-A313-4674-800F-1D995CCC344E}</ProjectGuid>
+    <RootNamespace>MdlrTools</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>obj/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>obj/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zl %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\OIS\include;include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies;..\..\..\Dependencies\zlib123\include;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\CommonTools\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>obj/$(Configuration)/$(ProjectName)_d.lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\MdlrTools\include" mkdir "$(ProjectDir)..\..\..\Dependencies\MdlrTools\include"
+xcopy "$(ProjectDir)include\*.h" "$(ProjectDir)..\..\..\Dependencies\MdlrTools\include\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\MdlrTools\lib\debug" mkdir "$(ProjectDir)..\..\..\Dependencies\MdlrTools\lib\debug"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\Dependencies\MdlrTools\lib\debug\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zl %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies;..\..\..\Dependencies\zlib123\include;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;..\..\..\Dependencies\protocols\XmlDatas\include;..\..\..\Dependencies\CommonTools\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>obj/$(Configuration)/$(ProjectName).lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\MdlrTools\include" mkdir "$(ProjectDir)..\..\..\Dependencies\MdlrTools\include"
+xcopy "$(ProjectDir)include\*.h" "$(ProjectDir)..\..\..\Dependencies\MdlrTools\include\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\MdlrTools\lib\release" mkdir "$(ProjectDir)..\..\..\Dependencies\MdlrTools\lib\release"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\Dependencies\MdlrTools\lib\release\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\FileBrowser.cpp" />
+    <ClCompile Include="src\FileBuffer.cpp" />
+    <ClCompile Include="src\minizip\ioapi.c" />
+    <ClCompile Include="src\minizip\iowin32.c" />
+    <ClCompile Include="src\minizip\unzip.c" />
+    <ClCompile Include="src\minizip\zip.c" />
+    <ClCompile Include="src\ModifiedMaterial.cpp" />
+    <ClCompile Include="src\ModifiedMaterialManager.cpp" />
+    <ClCompile Include="src\MyZipArchive.cpp" />
+    <ClCompile Include="src\Object3D.cpp" />
+    <ClCompile Include="src\Selection.cpp" />
+    <ClCompile Include="src\SolidBoolOp.cpp" />
+    <ClCompile Include="src\SolipsisErrorHandler.cpp" />
+    <ClCompile Include="src\Transformations.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\FileBrowser.h" />
+    <ClInclude Include="include\FileBuffer.h" />
+    <ClInclude Include="include\MeshModifier.h" />
+    <ClInclude Include="include\ModifiedMaterial.h" />
+    <ClInclude Include="include\ModifiedMaterialManager.h" />
+    <ClInclude Include="include\MyZipArchive.h" />
+    <ClInclude Include="include\Object3D.h" />
+    <ClInclude Include="include\Path.h" />
+    <ClInclude Include="include\Selection.h" />
+    <ClInclude Include="include\SolidBoolOp.h" />
+    <ClInclude Include="include\SolipsisErrorHandler.h" />
+    <ClInclude Include="include\Transformations.h" />
+    <ClInclude Include="include\VectorModifier.h" />
+    <ClInclude Include="src\minizip\crypt.h" />
+    <ClInclude Include="src\minizip\ioapi.h" />
+    <ClInclude Include="src\minizip\iowin32.h" />
+    <ClInclude Include="src\minizip\unzip.h" />
+    <ClInclude Include="src\minizip\zip.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README" />
+    <None Include="TODO" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonTools\CommonTools_vc9.vcxproj">
+      <Project>{2517a49b-1219-4823-8178-2a8b6d5fc63c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Communication\XmlDatas\XmlDatas_vc9.vcxproj">
+      <Project>{dd2704dc-41ca-4fbb-99fc-204fa6942500}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

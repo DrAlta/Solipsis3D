@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>libiconv</ProjectName>
+    <ProjectGuid>{F726EB96-A5D1-402A-980C-E4D09ED1BB3C}</ProjectGuid>
+    <RootNamespace>libiconv</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PostBuildEvent>
+      <Message>Copying runtime files ...</Message>
+      <Command>if exist "..\..\..\Dependencies\libiconv\include" goto includeOK
+mkdir "..\..\..\Dependencies\libiconv\include"
+copy "win32\include\*.h" "..\..\..\Dependencies\libiconv\include" /y
+:includeOK
+if exist "..\..\..\Dependencies\libiconv\lib" goto libOK
+mkdir "..\..\..\Dependencies\libiconv\lib"
+copy "win32\lib\libcharset.lib" "..\..\..\Dependencies\libiconv\lib" /y
+copy "win32\lib\libiconv.lib" "..\..\..\Dependencies\libiconv\lib" /y
+copy "win32\lib\libcharset1.dll" "..\..\..\Dependencies\libiconv\lib" /y
+copy "win32\lib\libiconv2.dll" "..\..\..\Dependencies\libiconv\lib" /y
+:libOK</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PostBuildEvent>
+      <Message>Copying runtime files ...</Message>
+      <Command>if exist "..\..\..\Dependencies\libiconv\include" goto includeOK
+mkdir "..\..\..\Dependencies\libiconv\include"
+copy "win32\include\*.h" "..\..\..\Dependencies\libiconv\include" /y
+:includeOK
+if exist "..\..\..\Dependencies\libiconv\lib" goto libOK
+mkdir "..\..\..\Dependencies\libiconv\lib"
+copy "win32\lib\libcharset.lib" "..\..\..\Dependencies\libiconv\lib" /y
+copy "win32\lib\libiconv.lib" "..\..\..\Dependencies\libiconv\lib" /y
+copy "win32\lib\libcharset1.dll" "..\..\..\Dependencies\libiconv\lib" /y
+copy "win32\lib\libiconv2.dll" "..\..\..\Dependencies\libiconv\lib" /y
+:libOK</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

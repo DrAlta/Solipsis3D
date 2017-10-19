@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3dsambm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsaset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsbbox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsbgnd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dscamm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dscamr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dserr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsfile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dshier.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsiobj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dskey.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dslites.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsmatr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsmatx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsmobj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsmset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsobjm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsomnm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsprim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsrobj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dssptm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsstrlf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsvers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsvprt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Assert.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk3ds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dbase3ds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dumpchnk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dumpsrc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dumpstr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Kdata3ds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Kfutils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mdata3ds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Seekchil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Smartall.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Strcmpi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Strdup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="swapbyte.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Xdata.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3dsambm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsaset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsbbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsbgnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dscamm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dscamr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dserr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsftkst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dshier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsiobj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dskey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dslites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsmatr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsmatx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsmobj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsmset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsobjm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsomnm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsprim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsrange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsrobj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dssptm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsstrlf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dstype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsvers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsvprt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunkinf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dbase3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dumpchnk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dumpsrc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dumpstr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ftkhead.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ftktail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Kdata3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Kfutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mdata3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Seekchil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Smartall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Strcmpi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Swapbyte.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Xdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ftkfiles.inc">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

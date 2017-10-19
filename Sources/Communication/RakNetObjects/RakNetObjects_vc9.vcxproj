@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>RakNetObjects</ProjectName>
+    <ProjectGuid>{F3C1AD5F-9D9A-4D93-B427-01A2F2031D50}</ProjectGuid>
+    <RootNamespace>RakNetObjects</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Message>Checking RakNet version ...</Message>
+      <Command>$(ProjectDir)..\..\..\Dependencies\lua\bin\debug\lua.exe $(ProjectDir)..\..\..\Common\checkStrDefinedVersion.lua RAKNET_VERSION $(RAKNET_PATH)\Source\RakNetVersion.h 3 4 01 $(ProjectDir)DependentRakNetVersion.h</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;$(RAKNET_PATH)\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NLOGRAKNET;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "..\..\..\Dependencies\RakNetObjects\include" mkdir "..\..\..\Dependencies\RakNetObjects\include"
+copy *.h "..\..\..\Dependencies\RakNetObjects\include"
+if not exist "..\..\..\Dependencies\RakNetObjects\lib\$(Configuration)" mkdir "..\..\..\Dependencies\RakNetObjects\lib\$(Configuration)"
+copy "$(TargetPath)" "..\..\..\Dependencies\RakNetObjects\lib\$(Configuration)"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Message>Checking RakNet version ...</Message>
+      <Command>$(ProjectDir)..\..\..\Dependencies\lua\bin\release\lua.exe $(ProjectDir)..\..\..\Common\checkStrDefinedVersion.lua RAKNET_VERSION $(RAKNET_PATH)\Source\RakNetVersion.h 3 4 01 $(ProjectDir)DependentRakNetVersion.h</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\protocols\XmlDatas\include;$(RAKNET_PATH)\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NLOGRAKNET;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "..\..\..\Dependencies\RakNetObjects\include" mkdir "..\..\..\Dependencies\RakNetObjects\include"
+copy *.h "..\..\..\Dependencies\RakNetObjects\include"
+if not exist "..\..\..\Dependencies\RakNetObjects\lib\$(Configuration)" mkdir "..\..\..\Dependencies\RakNetObjects\lib\$(Configuration)"
+copy "$(TargetPath)" "..\..\..\Dependencies\RakNetObjects\lib\$(Configuration)"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CacheManager.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="RakNetConnection.cpp" />
+    <ClCompile Include="RakNetEntity.cpp" />
+    <ClCompile Include="ReplicationManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CacheManager.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="RakNetConnection.h" />
+    <ClInclude Include="RakNetEntity.h" />
+    <ClInclude Include="ReplicationManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonTools\CommonTools_vc9.vcxproj">
+      <Project>{2517a49b-1219-4823-8178-2a8b6d5fc63c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\XmlDatas\XmlDatas_vc9.vcxproj">
+      <Project>{dd2704dc-41ca-4fbb-99fc-204fa6942500}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

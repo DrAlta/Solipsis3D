@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>P2NNullClientServer</ProjectName>
+    <ProjectGuid>{2FE1F5C9-BCD8-43AA-9C15-FE7FCB3819BF}</ProjectGuid>
+    <RootNamespace>P2NNullClientServer</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\..\Dependencies\pthreads\include;..\..\..\..\Dependencies\tinyxml\include;..\..\..\..\Dependencies\xmlrpc++\include;..\P2NClient;..\..\..\..\Dependencies\protocols\XmlDatas\include;..\P2NServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;P2NNULLCLIENTSERVER_EXPORTS;P2NCLIENT_SELF_BUILD;P2NSERVER_SELF_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\Dependencies\pthreads\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>$(OutDir)P2NNullClientServer.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "..\..\..\..\Dependencies\protocols\P2NNullClientServer" mkdir "..\..\..\..\Dependencies\protocols\P2NNullClientServer"
+if not exist "..\..\..\..\Dependencies\protocols\P2NServer" mkdir "..\..\..\..\Dependencies\protocols\P2NServer"
+copy ..\P2NServer\IP2NServer.h ..\..\..\..\Dependencies\protocols\P2NServer
+if not exist "..\..\..\..\Dependencies\protocols\P2NClient" mkdir "..\..\..\..\Dependencies\protocols\P2NClient"
+copy ..\P2NClient\IP2NClient.h ..\..\..\..\Dependencies\protocols\P2NClient
+if not exist "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL" mkdir "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL"
+copy "$(TargetPath)" "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL"
+copy "$(TargetDir)$(TargetName).lib" "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\..\Dependencies\pthreads\include;..\..\..\..\Dependencies\tinyxml\include;..\..\..\..\Dependencies\xmlrpc++\include;..\P2NClient;..\..\..\..\Dependencies\protocols\XmlDatas\include;..\P2NServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;P2NNULLCLIENTSERVER_EXPORTS;P2NCLIENT_SELF_BUILD;P2NSERVER_SELF_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)P2NNullClientServer.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\..\Dependencies\pthreads\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>$(OutDir)P2NNullClientServer.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "..\..\..\..\Dependencies\protocols\P2NNullClientServer" mkdir "..\..\..\..\Dependencies\protocols\P2NNullClientServer"
+if not exist "..\..\..\..\Dependencies\protocols\P2NServer" mkdir "..\..\..\..\Dependencies\protocols\P2NServer"
+copy ..\P2NServer\IP2NServer.h ..\..\..\..\Dependencies\protocols\P2NServer
+if not exist "..\..\..\..\Dependencies\protocols\P2NClient" mkdir "..\..\..\..\Dependencies\protocols\P2NClient"
+copy ..\P2NClient\IP2NClient.h ..\..\..\..\Dependencies\protocols\P2NClient
+if not exist "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL" mkdir "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL"
+copy "$(TargetPath)" "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL"
+copy "$(TargetDir)$(TargetName).lib" "..\..\..\..\Dependencies\protocols\P2NNullClientServer\$(Configuration)DLL"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="P2NNullClient.cpp" />
+    <ClCompile Include="P2NNullServer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\P2NClient\IP2NClient.h" />
+    <ClInclude Include="..\P2NServer\IP2NServer.h" />
+    <ClInclude Include="P2NNullClient.h" />
+    <ClInclude Include="P2NNullServer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XmlDatas\XmlDatas_vc9.vcxproj">
+      <Project>{dd2704dc-41ca-4fbb-99fc-204fa6942500}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

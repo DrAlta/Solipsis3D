@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>AvatarTools</ProjectName>
+    <ProjectGuid>{89AD7D88-16EC-4964-99FA-98E1043AC1A8}</ProjectGuid>
+    <RootNamespace>MdlrTools</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>obj/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>obj/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zl %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\root\pthreads\include;include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies;..\..\..\Dependencies\MdlrTools\include;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;..\..\..\Dependencies\VoiceEngine\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\FaceController\include;..\..\..\Dependencies\protocols\XmlDatas\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>obj/$(Configuration)/$(ProjectName)_d.lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\AvatarTools\include" mkdir "$(ProjectDir)..\..\..\Dependencies\AvatarTools\include"
+xcopy "$(ProjectDir)include\*.h" "$(ProjectDir)..\..\..\Dependencies\AvatarTools\include\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\AvatarTools\lib" mkdir "$(ProjectDir)..\..\..\Dependencies\AvatarTools\lib"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\Dependencies\AvatarTools\lib\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zl %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>include;$(OGRE_HOME)\Dependencies\include;$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\Dependencies;..\..\..\Dependencies\MdlrTools\include;..\..\..\Dependencies\pthreads\include;..\..\..\Dependencies\tinyxml\include;..\..\..\Dependencies\VoiceEngine\include;..\..\..\Dependencies\CommonTools\include;..\..\..\Dependencies\Phonetizer\include;..\..\..\Dependencies\FaceController\include;..\..\..\Dependencies\protocols\XmlDatas\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>obj/$(Configuration)/$(ProjectName).lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\Dependencies\AvatarTools\include" mkdir "$(ProjectDir)..\..\..\Dependencies\AvatarTools\include"
+xcopy "$(ProjectDir)include\*.h" "$(ProjectDir)..\..\..\Dependencies\AvatarTools\include\." /y
+if not exist "$(ProjectDir)..\..\..\Dependencies\AvatarTools\lib" mkdir "$(ProjectDir)..\..\..\Dependencies\AvatarTools\lib"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\Dependencies\AvatarTools\lib\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AvatarEditor.cpp" />
+    <ClCompile Include="src\BodyPart.cpp" />
+    <ClCompile Include="src\BodyPartModel.cpp" />
+    <ClCompile Include="src\Character.cpp" />
+    <ClCompile Include="src\CharacterInstance.cpp" />
+    <ClCompile Include="src\CharacterManager.cpp" />
+    <ClCompile Include="src\CoupleOfPoses.cpp" />
+    <ClCompile Include="src\Emotion.cpp" />
+    <ClCompile Include="src\Goody.cpp" />
+    <ClCompile Include="src\GoodyModel.cpp" />
+    <ClCompile Include="src\IFaceController.cpp" />
+    <ClCompile Include="src\IFaceControllerCreator.cpp" />
+    <ClCompile Include="src\ManualPoseV2.cpp" />
+    <ClCompile Include="src\ModifiableMaterialObject.cpp" />
+    <ClCompile Include="src\MouthFlapper.cpp" />
+    <ClCompile Include="src\MouthFlapperCreator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\AvatarEditor.h" />
+    <ClInclude Include="include\BodyPart.h" />
+    <ClInclude Include="include\BodyPartModel.h" />
+    <ClInclude Include="include\Character.h" />
+    <ClInclude Include="include\CharacterInstance.h" />
+    <ClInclude Include="include\CharacterManager.h" />
+    <ClInclude Include="include\CoupleOfPoses.h" />
+    <ClInclude Include="include\Emotion.h" />
+    <ClInclude Include="include\Goody.h" />
+    <ClInclude Include="include\GoodyModel.h" />
+    <ClInclude Include="include\ManualPoseV2.h" />
+    <ClInclude Include="include\ModifiableMaterialObject.h" />
+    <ClInclude Include="include\MouthFlapper.h" />
+    <ClInclude Include="include\MouthFlapperCreator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README" />
+    <None Include="TODO" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Voice\FaceController\FaceController_vc9.vcxproj">
+      <Project>{dc8d9e2c-7686-4902-8d07-367c902812e4}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Voice\voiceEngine\voiceEngine_vc9.vcxproj">
+      <Project>{5f784299-72e2-4482-941d-12485de80c30}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\MdlrTools\MdlrTools_vc9.vcxproj">
+      <Project>{16dc2030-a313-4674-800f-1d995ccc344e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

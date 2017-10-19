@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Plugin_skp</ProjectName>
+    <ProjectGuid>{CB6BE1D0-F46F-4BC2-A4B7-EC16E7944B0F}</ProjectGuid>
+    <RootNamespace>Plugin_skp</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME))\Samples\Common\Include;$(OGRE_HOME)\include;$(ProjectDir)lib\msvs2005;..\..\..\..\Dependencies\CommonTools\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_SKP_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain_d.lib;CommonTools.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Plugin_skp_d.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;..\..\..\..\Dependencies\CommonTools\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\include" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\include
+xcopy "$(ProjectDir)src\*.h" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\include\." /y
+if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)\." /y
+copy "$(ProjectDir)lib\msvs2005\*.*" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME))\Samples\Common\Include;$(OGRE_HOME)\include;$(ProjectDir)lib\msvs2005;..\..\..\..\Dependencies\CommonTools\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_SKP_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain.lib;CommonTools.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Plugin_skp.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;..\..\..\..\Dependencies\CommonTools\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files ...</Message>
+      <Command>if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\include" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\include
+xcopy "$(ProjectDir)src\*.h" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\include\." /y
+if not exist "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)" mkdir "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)"
+copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)\." /y
+copy "$(TargetDir)$(TargetName).lib" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)\." /y
+copy "$(ProjectDir)lib\msvs2005\*.*" "$(ProjectDir)..\..\..\..\Dependencies\plugin_skp\lib\$(Configuration)\." /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\GeomUtilities.cpp" />
+    <ClCompile Include="src\plugin_skp.cpp" />
+    <ClCompile Include="src\plugin_skpDLL.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GeomUtilities.h" />
+    <ClInclude Include="src\plugin_skp.h" />
+    <ClInclude Include="src\plugin_skpPrerequisites.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonTools\CommonTools_vc9.vcxproj">
+      <Project>{2517a49b-1219-4823-8178-2a8b6d5fc63c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

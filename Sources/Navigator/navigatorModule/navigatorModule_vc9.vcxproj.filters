@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="oSceneLoader">
+      <UniqueIdentifier>{844eabd2-af29-4af6-84a4-fb33b0e78db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{07425ab7-c3dd-4820-b001-ba3f57d08910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OgreGraphicObjects">
+      <UniqueIdentifier>{2854773a-8c9b-49fe-998b-04170041e824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainApplication">
+      <UniqueIdentifier>{3b9e09ca-1fdc-440c-9d47-f854563169e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cameras">
+      <UniqueIdentifier>{9e0fa0a9-c3a0-4cfc-a766-08e1afcabda4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{b98e9515-3498-4404-9163-8b6b5a6f7586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{1299479a-4ee8-4930-a0d5-dfdf2e77650f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OgreTools">
+      <UniqueIdentifier>{b350c8d5-611e-4e34-b79b-000b1c24a909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration">
+      <UniqueIdentifier>{82a9a892-fb41-4377-b8ee-d8175a6b7b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NavigatorGui">
+      <UniqueIdentifier>{a68fcbd0-660f-4326-a52e-fffac85c2883}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="oSceneLoader\include\IOSMSceneCallbacks.h">
+      <Filter>oSceneLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="oSceneLoader\include\OgreOSMScene.h">
+      <Filter>oSceneLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="oSceneLoader\include\OSMAnimSerializer.h">
+      <Filter>oSceneLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\DebugHelpers.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreGraphicObjects\MovableBox.h">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreGraphicObjects\MovableText.h">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreGraphicObjects\Panel2DButtonOverlayElement.h">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreGraphicObjects\Panel2DOverlayElement.h">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreGraphicObjects\ProgressBar.h">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreGraphicObjects\SoundIcon.h">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\AutoCreatedWindow.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\IApplication.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\IInstance.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\Instance.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\IOgrePeerManagerCallbacks.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\IWindow.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\KeyMotion.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\navigator.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\navigatorapp.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\NavigatorFrameListener.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\NavigatorSound.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\NavigatorXMLRPCClient.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\NodeEventListener.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\OgreApplication.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\OgreFrameListener.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\OgrePeer.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication\OgrePeerManager.h">
+      <Filter>MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="Cameras\CameraSupport.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Cameras\CameraSupportManager.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Cameras\FirstPersonCameraSupport.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="Cameras\OrbitalCameraSupport.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Avatar.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Modeler.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Object.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Scene.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\LuaBinding.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\NavigatorLua.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreTools\ExternalTextureSourceEx.h">
+      <Filter>OgreTools</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreTools\OgreHelpers.h">
+      <Filter>OgreTools</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration\NavigatorConfiguration.h">
+      <Filter>Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\Cursor.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_About.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_AuthentFacebook.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_AuthentWorldServer.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Avatar.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_AvatarProperties.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Chat.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_ChooseWorld.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Commands.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_ContextMenu.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Debug.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_FromServer.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_login.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_MainMenu.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_MessageBox.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_MessageBoxResponse.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Modeler.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_ModelerProperties.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_ModelerSceneFromText.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Options.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_Panel.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_StatusBar.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_TerrainModeler.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\GUI_WorldsServerInfo.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\Mouse.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\NavigatorGUI.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\Panel2D.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\Panel2DExtTextSrcEx.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\Panel2DMgr.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="navigatorGui\Panel2DWWW.h">
+      <Filter>NavigatorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigatorModule.h" />
+    <ClInclude Include="Prerequisites.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="oSceneLoader\src\OgreOSMScene.cpp">
+      <Filter>oSceneLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\DebugHelpers.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreGraphicObjects\MovableBox.cpp">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreGraphicObjects\MovableText.cpp">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreGraphicObjects\Panel2DButtonOverlayElement.cpp">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreGraphicObjects\Panel2DOverlayElement.cpp">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreGraphicObjects\ProgressBar.cpp">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreGraphicObjects\SoundIcon.cpp">
+      <Filter>OgreGraphicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\AutoCreatedWindow.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\Instance.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\KeyMotion.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\Navigator.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\navigatorapp.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\NavigatorFrameListener.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\NavigatorSound.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\NavigatorXMLRPCClient.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\NodeEventListener.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\OgreApplication.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\OgreFrameListener.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\OgrePeer.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApplication\OgrePeerManager.cpp">
+      <Filter>MainApplication</Filter>
+    </ClCompile>
+    <ClCompile Include="Cameras\CameraSupport.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Cameras\CameraSupportManager.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Cameras\FirstPersonCameraSupport.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="Cameras\OrbitalCameraSupport.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Avatar.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Modeler.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Object.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Scene.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\LuaBinding.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\NavigatorLua.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreTools\OgreHelpers.cpp">
+      <Filter>OgreTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration\NavigatorConfiguration.cpp">
+      <Filter>Configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\Cursor.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_About.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_AuthentFacebook.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_AuthentWorldServer.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Avatar.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_AvatarProperties.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Chat.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_ChooseWorld.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Commands.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_ContextMenu.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Debug.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_FromServer.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Login.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_MainMenu.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_MessageBox.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\gui_modeler.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_ModelerProperties.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_ModelerSceneFromText.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Options.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_Panel.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_StatusBar.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_TerrainModeler.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\GUI_WorldsServerInfo.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\Mouse.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\NavigatorGUI.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\Panel2D.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\Panel2DExtTextSrcEx.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\Panel2DMgr.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="navigatorGui\Panel2DWWW.cpp">
+      <Filter>NavigatorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Prerequisites.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Media\lua\boot.lua">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\lua\defaultGUI.lua">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\materials\scripts\Solipsis.material">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\overlays\Solipsis.overlay">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\SolipsisFakeTerrain.cfg">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uiauthentfb.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uiavatarmain.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uiavatarprop.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uichat.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uicommands.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uictxtavatar.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uictxtvlc.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uictxtwww.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uidebug.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uilogin.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uimainmenu.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uimdlrmain.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uimdlrprop.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uimdlrscenefromtext.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uimdlrterrain.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\..\..\Media\NaviLocal\uioptions.html">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\changelog.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="..\devrules.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="..\done.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="..\readme.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="..\readmeUser.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="..\todo.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

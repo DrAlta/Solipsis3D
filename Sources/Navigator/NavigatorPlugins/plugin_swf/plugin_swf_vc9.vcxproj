@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>SWFPlugin</ProjectName>
+    <ProjectGuid>{F2481C43-BA3A-47F1-92F8-27B0FD5C8702}</ProjectGuid>
+    <RootNamespace>SWFPlugin</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\..\Dependencies\pthreads\include;..\..\..\..\Dependencies\hikari\include;..\..\..\..\Dependencies\navigatorModule\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SWFPLUGIN_EXPORTS;OGRE_SWFPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain_d.lib;pthreadVC_d.lib;hikari_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Plugin_SWF_d.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;..\..\..\..\Dependencies\pthreads\lib;..\..\..\..\Dependencies\hikari\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying debug runtime files and Adding plugin into Plugins.cfg</Message>
+      <Command>copy "..\..\..\..\Dependencies\hikari\lib\*.ocx" "..\..\..\..\Common\bin\navigator\$(Configuration)" /y
+copy "..\..\..\..\Dependencies\hikari\lib\hikari_d.dll" "..\..\..\..\Common\bin\navigator\$(Configuration)" /y
+copy "$(OutDir)$(TargetFileName)" "..\..\..\..\Common\bin\navigator\$(Configuration)" /y
+..\..\..\..\Common\addIntoCfg.bat "Plugin=$(TargetFileName)" "..\..\..\..\Common\bin\navigator\$(Configuration)\plugins.cfg"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\OgreMain\include;$(OGRE_HOME)\include;..\..\..\..\Dependencies\pthreads\include;..\..\..\..\Dependencies\hikari\include;..\..\..\..\Dependencies\navigatorModule\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SWFPLUGIN_EXPORTS;OGRE_SWFPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>OgreMain.lib;pthreadVC.lib;hikari.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Plugin_SWF.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib;..\..\..\..\Dependencies\pthreads\lib;..\..\..\..\Dependencies\hikari\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying release runtime files and Adding plugin into Plugins.cfg</Message>
+      <Command>copy "..\..\..\..\Dependencies\hikari\lib\*.ocx" "..\..\..\..\Common\bin\navigator\$(Configuration)" /y
+copy "..\..\..\..\Dependencies\hikari\lib\Hikari.dll" "..\..\..\..\Common\bin\navigator\$(Configuration)" /y
+copy "$(OutDir)$(TargetFileName)" "..\..\..\..\Common\bin\navigator\$(Configuration)" /y
+..\..\..\..\Common\addIntoCfg.bat "Plugin=$(TargetFileName)" "..\..\..\..\Common\bin\navigator\$(Configuration)\plugins.cfg"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\SWFInstance.cpp" />
+    <ClCompile Include="src\SWFPlugin.cpp" />
+    <ClCompile Include="src\SWFPluginDll.cpp" />
+    <ClCompile Include="src\SWFTextureSource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\SWFInstance.h" />
+    <ClInclude Include="src\SWFPlugin.h" />
+    <ClInclude Include="src\SWFPluginPrerequisites.h" />
+    <ClInclude Include="src\SWFTextureSource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NavigatorModule\navigatorModule_vc9.vcxproj">
+      <Project>{b71ed042-7aac-48d8-9be9-5946d194a25f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

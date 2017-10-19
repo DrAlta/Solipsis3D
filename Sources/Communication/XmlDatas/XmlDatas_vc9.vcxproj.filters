@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="XmlDatas">
+      <UniqueIdentifier>{e64a873f-4d05-4702-bb73-8d6afa4f66e4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PoolEntry.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlDatasBasicTypes.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlDatasPrerequisites.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlDatasTypedefs.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlHelpers.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlAction.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlContent.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlDatas.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlEntity.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlEvt.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlLodContent.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlLogin.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlSceneContent.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlSceneLodContent.h">
+      <Filter>XmlDatas</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XmlHelpers.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlAction.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlContent.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlEntity.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlEvt.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlLodContent.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlLogin.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlSceneContent.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlSceneLodContent.cpp">
+      <Filter>XmlDatas</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
